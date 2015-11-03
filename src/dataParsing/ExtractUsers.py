@@ -15,7 +15,7 @@ connWrite = connections[1]
 #print(connRead)
 #print(connWrite)
 
-sqlRead = 'select * from pageview'
+sqlRead = 'select variables from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
 cursor = cnx.cursor()
 
@@ -25,7 +25,7 @@ rows = cursor.fetchall()
 L = set()
 
 for row in rows:
-    l = row[5].split(";")
+    l = row[0].split(";")
     L.add((int(l[3][l[3].rfind(":")+2:-1]),l[1][l[1].rfind(":")+1:],l[5][l[5].rfind(":")+1:]))
 
 print(L)

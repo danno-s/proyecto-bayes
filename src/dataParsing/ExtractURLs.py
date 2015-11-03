@@ -14,7 +14,7 @@ connWrite = connections[1]
 #print(connRead)
 #print(connWrite)
 
-sqlRead = 'select * from pageview'
+sqlRead = 'select url from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
 cursor = cnx.cursor()
 
@@ -24,7 +24,7 @@ rows = cursor.fetchall()
 L = set()
 
 for row in rows:
-	L.update(row[4].split(" "))
+	L.update(row[0].split(" "))
 
 cnx.close()
 

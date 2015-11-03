@@ -21,10 +21,10 @@ cursor = cnx.cursor()
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
 
-L=[]
+L = set()
 
 for row in rows:
-	L.extend(row[4].split(" "))
+	L.update(row[4].split(" "))
 
 cnx.close()
 

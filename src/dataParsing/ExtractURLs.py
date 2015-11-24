@@ -24,7 +24,8 @@ rows = cursor.fetchall()
 L = set()
 
 for row in rows:
-	L.update(row[0].split(" "))
+	l = row[0].split(" ")
+	L.add(l[0])
 
 cnx.close()
 

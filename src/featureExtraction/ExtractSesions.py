@@ -6,15 +6,16 @@ import mysql.connector
 tlimit = 100
 
 def indexinsert(l, t):
-    for i in range(l.length()):
+    for i in range(len(l)):
         if l[i][1] > t :
             return i
-    return l.length()
+    return len(l)
 
 def insesion(l, t):
-    if t - l[-1][1] <= tlimit :
+    if l[0][1] - tlimit <= t <= l[-1][1] + tlimit:
         return True
-    else: return False
+    else:
+        return False
 
 
 
@@ -36,12 +37,9 @@ pageview = cursor.fetchall()
 
 cnx.close()
 
-print(pageview)
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
-
-# urls = [str(item[0]) for item in urls]
 
 userL = list()
 L = list()
@@ -54,16 +52,22 @@ for row in pageview:
     l = l[0]
     if id in userL:
         idxs = [i for i,x in enumerate(userL) if x==id]
+        flag = True
         for i in idxs:
             if insesion(L[i],tstamp):
                 L[i].insert(indexinsert(L[i],tstamp),(l,tstamp))
+                flag = False
                 break
+        if flag:
+            userL.append(id)
+            mlist = list()
+            mlist.append((l,tstamp))
+            L.append(mlist)
     else:
         userL.append(id)
-        L.append(list((l,tstamp)))
-
-print(userL)
-print(L)
+        mlist = list()
+        mlist.append((l,tstamp))
+        L.append(mlist)
 
 
 

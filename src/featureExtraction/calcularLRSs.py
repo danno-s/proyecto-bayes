@@ -11,28 +11,52 @@ connections = json.loads(connectionsJSON)
 connGC = connections[0] #guideCapture
 connPD = connections[1] #parsedData
 
+# Lectura de URLsesions
 sqlRead = 'select idsesion, urls from urlsesions'
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
-L = list()  # urls
+L = list()  # urls sequences
 idL = list() # idsesions
 for row in rows:
-    idL.add(int(row[1]))
-    l = row[0].split(" ")
-    L.add(l[0])
+    idL.append(int(row[0]))
+    L.append(row[1])
 
-print(idL)
-print(L)
+# print(idL)
+# print(L)
 
-# TODO: Computar LRSs de la lista de sesiones.
-# Requiere identificar subsecuencias y contar repeticiones de cada una.
-# subseq = set() # Contiene subsequencias mas largas identificadas.
-# countsubseq = set()
-# Definir condiciones para ser LRS: Repeticiones sobre umbral T, consecutividad, subsecuencia mayor.
-# lrss = set()
+## Calcular LRSs
+
+# Identificar secuencias y contar repeticiones de cada una.
+Seqs = dict() # (urlseq, count)
+for urlseq in L:
+    if urlseq not in Seqs:
+        Seqs[urlseq] = 1
+    else:
+        Seqs[urlseq] += 1
+
+print(Seqs)
+
+# Aplicar criterio de repeticiones sobre umbral T
+T= 15
+RepSeqs = list() # [[urlseq]]
+for urlseq in Seqs:
+    if Seqs[urlseq] > T:
+       RepSeqs.append(urlseq.split(" "))
+
+print("repseqs > " + str(T) + ":")
+print(RepSeqs)
+
+# TODO: Eliminar subsecuencias contenidas dentro de otras.
+# Investigar Suffix Trees (Most common substring problem)
+
+# LRSs = list()
+# for urlseq in RepSeqs:
+#     pass
+# print("LRSs:")
+# print(LRSs)
 
 cnx.close()
 

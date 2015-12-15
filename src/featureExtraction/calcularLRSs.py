@@ -2,6 +2,7 @@
 
 import json
 import mysql.connector
+import itertools
 
 with open('connections.json', 'r') as f:
     connectionsJSON = f.read()
@@ -40,23 +41,41 @@ for urlseq in L:
 print(Seqs)
 
 # Aplicar criterio de repeticiones sobre umbral T
-T= 15
+T= 20
 RepSeqs = list() # [[urlseq]]
 for urlseq in Seqs:
     if Seqs[urlseq] > T:
        RepSeqs.append(urlseq.split(" "))
 
-print("repseqs > " + str(T) + ":")
-print(RepSeqs)
+print("Subsequences repeated > " + str(T) + " :" + str(RepSeqs))
 
-# TODO: Eliminar subsecuencias contenidas dentro de otras.
-# Investigar Suffix Trees (Most common substring problem)
 
-# LRSs = list()
-# for urlseq in RepSeqs:
-#     pass
-# print("LRSs:")
-# print(LRSs)
+## Funcion que verifica si una subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'.
+
+
+def contains(shortest, longest):
+    for i in range(len(longest)-len(shortest)+1):
+        for j in range(len(shortest)):
+            if longest[i+j] != shortest[j]:
+                break
+        else:
+            return True
+    return False
+
+# Eliminar subsecuencias contenidas dentro de otras.
+
+LRSs = list()
+if len(RepSeqs)<=1: # Casos con una o ninguna subsequencia repetida.
+    LRSs = RepSeqs.copy()
+else:
+    for i,j in itertools.permutations(RepSeqs,2):
+        # print("i = " +str(i)+ " j = " + str(j))
+        # print(contains(i,j))
+        if contains(i,j):
+            if not LRSs.__contains__(j):
+                LRSs.append(j)
+
+print("Longest Repeated Subsequences: " + str(LRSs))
 
 cnx.close()
 

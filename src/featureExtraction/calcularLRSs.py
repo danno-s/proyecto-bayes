@@ -16,7 +16,6 @@ connPD = connections[1] #parsedData
 sqlRead = 'select idsesion, urls from urlsesions'
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
-
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
 L = list()  # urls sequences
@@ -25,19 +24,47 @@ for row in rows:
     idL.append(int(row[0]))
     L.append(row[1])
 
+# Lectura de sesions
+
+sqlRead = 'select idsesion, user from sesions'
+cursor.execute(sqlRead)
+rows = cursor.fetchall()
+userD = dict() # (idsesion,user)
+for row in rows:
+    userD[int(row[0])]=row[1]
+# print(userD)
 # print(idL)
 # print(L)
 
 ## Calcular LRSs
 
 # Identificar secuencias y contar repeticiones de cada una.
+#   [Sin discriminar secuencias repetidas por un mismo usuario]
+"""
 Seqs = dict() # (urlseq, count)
 for urlseq in L:
     if urlseq not in Seqs:
         Seqs[urlseq] = 1
     else:
         Seqs[urlseq] += 1
+"""
+# Identificar secuencias y contar repeticiones de cada una.
+#   [Discrimina secuencias repetidas por un mismo usuario]
 
+Seqs = dict() # (urlseq, count)
+userSeqs = dict() #(urlseq, [users])
+
+for urlseq,id in zip(L,idL):
+    if urlseq not in Seqs:
+        Seqs[urlseq] = 0
+        userSeqs[urlseq]= [userD[id]]
+    elif userD[id] not in userSeqs[urlseq]:
+        userSeqs[urlseq].append(userD[id])
+
+for urlseq in Seqs.keys():
+    Seqs[urlseq] = len(userSeqs[urlseq])
+
+print(userSeqs)
 print(Seqs)
 
 # Aplicar criterio de repeticiones sobre umbral T
@@ -76,16 +103,21 @@ else:
                 LRSs.append(j)
 
 print("Longest Repeated Subsequences: " + str(LRSs))
+def LRStoURLSeq(lrs):
+    urlseq = ''
+    for i in range(len(lrs)):
+        urlseq += lrs[i]+' '
+    return urlseq[:-1]
 
+print("Accessed "+ str([Seqs[LRStoURLSeq(lrs)] for lrs in LRSs])+ " times.")
+
+# Construir tabla para LRSs en la base de datos
+
+sqlWrite = ("INSERT INTO lrss (urlseqs,counts) VALUES (%s,%s)")
+
+for seq in LRSs:
+    urlseq = LRStoURLSeq(seq)
+    cursor.execute(sqlWrite,(urlseq,Seqs[urlseq]))
+
+cnx.commit()
 cnx.close()
-
-# Construir tabla para LRSs en la base de datos(?)
-#
-#sqlWrite = ("INSERT INTO lrss (seqs) VALUES (%s)")
-#
-#for seq in lrss:
-#	cursor.execute(sqlWrite,seq)
-#
-#cnx.commit()
-#cnx.close()
-###

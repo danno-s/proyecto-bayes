@@ -11,10 +11,7 @@ connections = json.loads(connectionsJSON)
 connRead = connections[0]
 connWrite = connections[1]
 
-#print(connRead)
-#print(connWrite)
-
-sqlRead = 'select distinct url, urls from pageview'
+sqlRead = 'SELECT DISTINCT url, urls from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
 cursor = cnx.cursor()
 
@@ -35,7 +32,7 @@ cnx.close()
 #for i,urltree in enumerate(URLs):
 #   print("ARBOL DE URL N°"+str(i+1)+": " + json.dumps(urltree, indent=4))
 
-# Función para encontrar URLs únicas:
+# Función para encontrar URLs únicas dentro de un mismo árbol:
 
 #def getURLs(d, urlset):
 #    for k,v in d.items():
@@ -76,8 +73,6 @@ cnx.commit()
 
 sqlWrite = "INSERT INTO urls (urls) VALUES ("
 
-#cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
-#cursor = cnx.cursor()
 for urlstree in URLs:
     urljsonstr = json.dumps(urlstree)
     cursor.execute(sqlWrite +'"'+ urljsonstr.replace('\"','\\"') + '"'+')')

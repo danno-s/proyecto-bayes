@@ -12,7 +12,7 @@ connections = json.loads(connectionsJSON)
 connRead = connections[0]
 connWrite = connections[1]
 
-sqlRead = 'select variables from pageview'
+sqlRead = 'select distinct variables from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
 cursor = cnx.cursor()
 
@@ -27,13 +27,15 @@ for row in rows:
         username = l[b'username'].decode("utf-8")
         user_id = int(l[b'id_usuario'].decode("utf-8"))
         perfil = l[b'perfil'].decode("utf-8")
-        L.add((username, user_id, perfil))
+        L.add((user_id, username, perfil))
     except KeyError:
         print("No se encontraron datos de usuario en la columna \'variables\'.")
         break
+    except TypeError:
+        print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
 
 cnx.close()
-
+print(L)
 if len(L) is not 0:
     cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
     cursor = cnx.cursor()

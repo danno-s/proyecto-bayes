@@ -2,18 +2,15 @@
 
 import json
 import mysql.connector
-
+from phpserialize import *
 
 with open('connections.json', 'r') as f:
-	connectionsJSON = f.read()
+    connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
 
 connRead = connections[0]
 connWrite = connections[1]
-
-#print(connRead)
-#print(connWrite)
 
 sqlRead = 'select variables from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
@@ -23,24 +20,30 @@ cursor.execute(sqlRead)
 rows = cursor.fetchall()
 
 L = set()
-
+# Leer datos serializados de usuario: ID, Nombre de usuario y Perfil
 for row in rows:
-    l = row[0].split(";")
-    L.add((int(l[3][l[3].rfind(":")+2:-1]),l[1][l[1].rfind(":")+1:],l[5][l[5].rfind(":")+1:]))
-
-print(L)
+    l = loads(bytes(row[0], 'UTF-8'))
+    try:
+        username = l[b'username'].decode("utf-8")
+        user_id = int(l[b'id_usuario'].decode("utf-8"))
+        perfil = l[b'perfil'].decode("utf-8")
+        L.add((username, user_id, perfil))
+    except KeyError:
+        print("No se encontraron datos de usuario en la columna \'variables\'.")
+        break
 
 cnx.close()
 
-sqlWrite = ("INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)")
+if len(L) is not 0:
+    cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
+    cursor = cnx.cursor()
+    # Resetear users
+    cursor.execute("TRUNCATE users")
+    cnx.commit()
+    # Guardar nueva info.
+    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"
+    for item in L:
+        cursor.execute(sqlWrite,item)
 
-cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
-cursor = cnx.cursor()
-
-for item in L:
-	sql = sqlWrite + '"' + str(item) + '"'
-	print(sql)
-	cursor.execute(sqlWrite,item)
-
-cnx.commit()
-cnx.close()
+    cnx.commit()
+    cnx.close()

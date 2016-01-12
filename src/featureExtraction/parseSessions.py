@@ -4,7 +4,7 @@ import json
 import mysql.connector
 from phpserialize import *
 import os
-
+from datetime import datetime
 
 with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
     connectionsJSON = f.read()
@@ -14,18 +14,15 @@ connections = json.loads(connectionsJSON)
 connGC = connections[0]
 connPD = connections[1]
 
+
 def getIDof(urls):
     cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
     cursor = cnx.cursor()
-    # Obtener todos los usuarios registrados.
-    sqlRead = "select id from urls where urls = \'" + str(urls)+"\'"
-    print(sqlRead)
+    sqlRead = 'select id_n from urls where urls = '+ "'"+urls+"'"
     cursor.execute(sqlRead)
     rows = cursor.fetchall()
     cnx.close()
-    print(rows)
-    return rows[0]
-
+    return rows[0][0]
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
@@ -60,8 +57,6 @@ for i,row in enumerate(pageview):
     except (KeyError, TypeError):
         print("Dato número " + str(i)+ " no contiene información de usuario.")
 
-print(getIDof(data[156][1]))
-'''
 sessions = list()
 # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
 tlimit = 600    # Tiempo limite en segundos.
@@ -69,19 +64,23 @@ tlimit = 600    # Tiempo limite en segundos.
 for user_id in userL:
     allUserData= [(x[1],x[2]) for x in data if x[0] == user_id] # obtener todos los accesos del usuario.
     tprev = allUserData[0][1]   #tiempo del primer dato.
+    initTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
     url = allUserData[0][0]
     sessionData = list()    # datos de sesión actual.
-    sessionData.append(url) # inicializa sesión actual
+    sessionData.append(getIDof(url)) # inicializa sesión actual
     for i, step in enumerate(allUserData[1:]):
         if step[1] - tprev <= tlimit:   # condición para mantenerse en sesión actual
             sessionData.append(getIDof(step[0]))                 # Agregar datos a sesión actual
         else:
-            sessions.append((user_id, sessionData.copy()))  # guardar sesión actual del usuario
+            endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
+            sessions.append((user_id, sessionData.copy(),initTime.isoformat(' '),endTime.isoformat(' ')))  # guardar sesión actual del usuario
             sessionData.clear()
             sessionData.append(getIDof(step[0]))     # inicializar nueva sesión
+            initTime = datetime.fromtimestamp(step[1]) # TODO: AGREGAR TIMEZONE
         tprev = step[1]     # actualizar timestamp previo.
     else:
-        sessions.append((user_id,sessionData.copy()))   # guardar última sesión del usuario.
+        endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
+        sessions.append((user_id,sessionData.copy(),initTime.isoformat(' '),endTime.isoformat(' ')))   # guardar última sesión del usuario.
 
 for session in sessions:
     print(session)
@@ -96,15 +95,14 @@ cursor = cnx.cursor()
 cursor.execute("TRUNCATE sessions")
 cursor.execute("TRUNCATE urlsessions")
 
-sqlWrite = ("INSERT INTO sessions (user) VALUES (")
+sqlWrite = ("INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)")
 for session in sessions:
-    cursor.execute(sqlWrite + str(session[0])+")")
+    cursor.execute(sqlWrite, (str(session[0]),session[2],session[3]))
 cnx.commit()
 
 sqlWrite = ("INSERT INTO urlsessions (urls) VALUES (")
 for session in sessions:
-    cursor.execute(sqlWrite + '"'+ str(session[1]).replace('\"','\\"') + '"'+')')
+    cursor.execute(sqlWrite + '"'+ str(session[1]) + '"'+')')
 cnx.commit()
 
 cnx.close()
-'''

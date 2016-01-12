@@ -79,8 +79,9 @@ cnx.commit()
 sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"
 
 for urlstree in URLs:
-    urljsonstr = json.dumps(urlstree)
-    cursor.execute(sqlWrite,(hash(urljsonstr) , urljsonstr))
+    urljsonstr = json.dumps(urlstree).replace(' ', '')
+    print(urljsonstr)
+    cursor.execute(sqlWrite,(hash(urljsonstr), urljsonstr))
 
 cnx.commit()
 cnx.close()

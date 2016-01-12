@@ -54,7 +54,7 @@ for user_id in userL:
     tprev = allUserData[0][1]   #tiempo del primer dato.
     url = allUserData[0][0]
     sessionData = list()    # datos de sesión actual.
-    sessionData.append(url) # inicializa sesióna actual
+    sessionData.append(url) # inicializa sesión actual
     for i, step in enumerate(allUserData[1:]):
         if step[1] - tprev <= tlimit:   # condición para mantenerse en sesión actual
             sessionData.append(step[0])                 # Agregar datos a sesión actual
@@ -70,12 +70,12 @@ for session in sessions:
     print(session)
 cnx.close()
 
-# Guardar sesiones en tablas sesions y urlsesions
+# Guardar sesiones en tablas sessions y urlsessions
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 
-# Resetear sesions y urlsesions
+# Resetear sessions y urlsessions
 cursor.execute("TRUNCATE sessions")
 cursor.execute("TRUNCATE urlsessions")
 

@@ -4,6 +4,7 @@ import json
 import mysql.connector
 import hashlib
 import os
+from phpserialize import *
 
 def hash(string):
     return hashlib.md5(string.encode()).hexdigest()
@@ -27,22 +28,21 @@ usersUrls = cursor.fetchall()
 
 cnx.close()
 
-sqlRead = 'select urls from urls'
+sqlRead = 'select id from urls'
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 
 cursor.execute(sqlRead)
 urls = cursor.fetchall()
 
-urls = [str(item[0]) for item in urls]
+urlHash = [item[0] for item in urls]
 
 D = dict()
 
 for row in usersUrls:
-    l = row[1].split(";")
-    print(l)
-    id = int(l[3][l[3].rfind(":")+2:-1])
-    l = row[0].split(" ")
+    l = loads(bytes(row[1], 'UTF-8'))
+    id = int(l[b'id_usuario'].decode("utf-8"))
+    l = hash(row[0])
     if id in D:
         v = D[id]
     else:

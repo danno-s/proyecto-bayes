@@ -2,9 +2,10 @@
 
 import json
 import mysql.connector
+import os
 
 
-with open('connections.json', 'r') as f:
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
 	connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
@@ -13,7 +14,7 @@ connGC = connections[0]
 connPD = connections[1]
 
 
-sqlRead = 'select url, variables from pageview'
+sqlRead = 'select urls, variables from pageview'
 cnx = mysql.connector.connect(user=connGC['user'], password=connGC['passwd'], host=connGC['host'],database=connGC['db'])
 cursor = cnx.cursor()
 
@@ -22,7 +23,7 @@ usersUrls = cursor.fetchall()
 
 cnx.close()
 
-sqlRead = 'select url from urls'
+sqlRead = 'select urls from urls'
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 
@@ -35,6 +36,7 @@ D = dict()
 
 for row in usersUrls:
     l = row[1].split(";")
+    print(l)
     id = int(l[3][l[3].rfind(":")+2:-1])
     l = row[0].split(" ")
     if id in D:

@@ -2,28 +2,35 @@
 
 import json
 import mysql.connector
+import hashlib
+import os
 
-with open('connections.json', 'r') as f:
-    connectionsJSON = f.read()
+
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
+	connectionsJSON = f.read()
+
+def hash(string):
+    return hashlib.md5(string.encode()).hexdigest()
 
 connections = json.loads(connectionsJSON)
 
 connRead = connections[0]
 connWrite = connections[1]
 
-sqlRead = 'SELECT DISTINCT url, urls from pageview'
+sqlRead = 'SELECT DISTINCT url from pageview'
 cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
 cursor = cnx.cursor()
 
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
 
-L = set() # Obtiene URLs desde los eventos capturados.
+L = [x[0] for x in rows] # Obtiene URLs desde los eventos capturados.
 
-URLs = list()    # Obtiene árboles completos de URLs del sitio en las capturas"
-for row in rows:
-    L.add(row[0])
-    URLs.append(json.loads(row[1]))
+sqlRead = 'SELECT DISTINCT urls from pageview'
+cursor.execute(sqlRead)
+rows = cursor.fetchall()
+
+URLs = [json.loads(x[0]) for x in rows]    # Obtiene árboles completos de URLs del sitio en las capturas"
 
 cnx.close()
 
@@ -69,11 +76,11 @@ cnx.commit()
 
 # Guardar Árboles completos de URLs.
 
-sqlWrite = "INSERT INTO urls (urls) VALUES ("
+sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"
 
 for urlstree in URLs:
-    urljsonstr = json.dumps(urlstree)
-    cursor.execute(sqlWrite +'"'+ urljsonstr.replace('\"','\\"') + '"'+')')
+    urljsonstr = json.dumps(urlstree).replace('\"','\\"')
+    cursor.execute(sqlWrite,(hash(urljsonstr) , urljsonstr))
 
 cnx.commit()
 cnx.close()

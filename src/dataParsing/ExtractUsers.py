@@ -3,9 +3,11 @@
 import json
 import mysql.connector
 from phpserialize import *
+import os
 
-with open('connections.json', 'r') as f:
-    connectionsJSON = f.read()
+
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
+	connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
 

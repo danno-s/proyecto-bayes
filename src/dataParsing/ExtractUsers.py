@@ -3,9 +3,11 @@
 import json
 import mysql.connector
 from phpserialize import *
+import os
 
-with open('connections.json', 'r') as f:
-    connectionsJSON = f.read()
+
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
+	connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
 
@@ -41,7 +43,6 @@ if len(L) is not 0:
     cursor = cnx.cursor()
     # Resetear users
     cursor.execute("TRUNCATE users")
-    cnx.commit()
     # Guardar nueva info.
     sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"
     for item in L:

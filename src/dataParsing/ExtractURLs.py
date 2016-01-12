@@ -63,9 +63,7 @@ cursor = cnx.cursor()
 
 ## RESETEAR TABLAS:
 cursor.execute("TRUNCATE url")
-cnx.commit()
 cursor.execute("TRUNCATE urls")
-cnx.commit()
 
 # Guardar URLs desde evento.
 

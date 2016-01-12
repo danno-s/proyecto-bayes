@@ -3,14 +3,28 @@
 import json
 import mysql.connector
 from phpserialize import *
+import os
 
-with open('connections.json', 'r') as f:
+
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
     connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
 
 connGC = connections[0]
 connPD = connections[1]
+
+def getIDof(urls):
+    cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
+    cursor = cnx.cursor()
+    # Obtener todos los usuarios registrados.
+    sqlRead = "select id from urls where urls = \'" + str(urls)+"\'"
+    print(sqlRead)
+    cursor.execute(sqlRead)
+    rows = cursor.fetchall()
+    cnx.close()
+    print(rows)
+    return rows[0]
 
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
@@ -32,6 +46,7 @@ cursor = cnx.cursor()
 cursor.execute(sqlRead)
 pageview = cursor.fetchall()
 
+
 # Asociar todos los capturados a su timestamp y usuario respectivo.
 data = list()
 
@@ -45,6 +60,8 @@ for i,row in enumerate(pageview):
     except (KeyError, TypeError):
         print("Dato número " + str(i)+ " no contiene información de usuario.")
 
+print(getIDof(data[156][1]))
+'''
 sessions = list()
 # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
 tlimit = 600    # Tiempo limite en segundos.
@@ -54,14 +71,14 @@ for user_id in userL:
     tprev = allUserData[0][1]   #tiempo del primer dato.
     url = allUserData[0][0]
     sessionData = list()    # datos de sesión actual.
-    sessionData.append(url) # inicializa sesióna actual
+    sessionData.append(url) # inicializa sesión actual
     for i, step in enumerate(allUserData[1:]):
         if step[1] - tprev <= tlimit:   # condición para mantenerse en sesión actual
-            sessionData.append(step[0])                 # Agregar datos a sesión actual
+            sessionData.append(getIDof(step[0]))                 # Agregar datos a sesión actual
         else:
             sessions.append((user_id, sessionData.copy()))  # guardar sesión actual del usuario
             sessionData.clear()
-            sessionData.append(step[0])     # inicializar nueva sesión
+            sessionData.append(getIDof(step[0]))     # inicializar nueva sesión
         tprev = step[1]     # actualizar timestamp previo.
     else:
         sessions.append((user_id,sessionData.copy()))   # guardar última sesión del usuario.
@@ -70,12 +87,12 @@ for session in sessions:
     print(session)
 cnx.close()
 
-# Guardar sesiones en tablas sesions y urlsesions
+# Guardar sesiones en tablas sessions y urlsessions
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 
-# Resetear sesions y urlsesions
+# Resetear sessions y urlsessions
 cursor.execute("TRUNCATE sessions")
 cursor.execute("TRUNCATE urlsessions")
 
@@ -90,3 +107,4 @@ for session in sessions:
 cnx.commit()
 
 cnx.close()
+'''

@@ -7,7 +7,7 @@ import itertools
 with open('connections.json', 'r') as f:
     connectionsJSON = f.read()
 
-connections = json.loads(connectionsJSON) #a
+connections = json.loads(connectionsJSON)
 
 connGC = connections[0] #guideCapture
 connPD = connections[1] #parsedData

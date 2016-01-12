@@ -29,7 +29,6 @@ cursor = cnx.cursor()
 
 cursor.execute(sqlRead)
 urls = cursor.fetchall()
-print(urls)
 
 urls = [str(item[0]) for item in urls]
 
@@ -37,6 +36,7 @@ D = dict()
 
 for row in usersUrls:
     l = row[1].split(";")
+    print(l)
     id = int(l[3][l[3].rfind(":")+2:-1])
     l = row[0].split(" ")
     if id in D:

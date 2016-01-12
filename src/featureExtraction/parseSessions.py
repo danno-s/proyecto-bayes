@@ -3,22 +3,6 @@
 import json
 import mysql.connector
 from phpserialize import *
-tlimit = 10
-
-def indexinsert(l, t):
-
-    for i in range(len(l)):
-        if l[i][1] > t :
-            return i
-    return len(l)
-
-def insession(t, tinit, tend):
-
-    if tinit <= t <= tend:
-        return True
-    else:
-        return False
-
 
 with open('connections.json', 'r') as f:
     connectionsJSON = f.read()
@@ -31,7 +15,7 @@ connPD = connections[1]
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
-
+# Obtener todos los usuarios registrados.
 sqlRead = 'select id_usuario from users'
 cursor.execute(sqlRead)
 users = cursor.fetchall()
@@ -40,8 +24,7 @@ for row in users:
     userL.append(row[0])
 cnx.close()
 
-data = dict()
-
+# Leer datos capturados
 sqlRead = 'select urls, variables, clickDate from pageview'
 cnx = mysql.connector.connect(user=connGC['user'], password=connGC['passwd'], host=connGC['host'],database=connGC['db'])
 cursor = cnx.cursor()
@@ -49,79 +32,61 @@ cursor = cnx.cursor()
 cursor.execute(sqlRead)
 pageview = cursor.fetchall()
 
-for row in pageview:
-    vars = loads(bytes(row[1], 'UTF-8'))
-    tstamp = int(row[2])
-    urlTree = row[0]
+# Asociar todos los capturados a su timestamp y usuario respectivo.
+data = list()
+
+for i,row in enumerate(pageview):
+    vars = loads(bytes(row[1], 'UTF-8'))    # Cargar variables de usuario
+    tstamp = int(row[2])    # Timestamp
+    urlTree = row[0]    # Arbol de URLs
     try:
         user_id=int(vars[b'id_usuario'].decode("utf-8"))
-        data[user_id] =(urlTree,tstamp)
+        data.append((user_id, urlTree, tstamp))
     except (KeyError, TypeError):
-        break
+        print("Dato número " + str(i)+ " no contiene información de usuario.")
 
-# Acceder a tstamp del usuario 824 => print(data[824][1])
 sessions = list()
+# Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
+tlimit = 600    # Tiempo limite en segundos.
 
-for id in userL:    # Por cada usuario registrado hacer query buscando los datos de su sesión:
-    sqlRead = "select MIN(clickDate) from pageview where variables like \'%"+str(id)+"%\'"
-    cursor.execute(sqlRead)
-    tinit=cursor.fetchall()[0][0]  # Obtener todos los datos capturados para ese usuario.
-    flag = True
-    sessionData = list()
-    while flag:
-        sqlRead = "select urls from pageview where variables like \'%"+str(id)+"%\' AND clickDate between " +str(tinit)+" and "+ str(tinit+tlimit)
-        cursor.execute(sqlRead)
-        data = cursor.fetchall()    # Colección de datos dentro de una sesión.
-        sessionData.append(data)
-        if len(data) is 0:
-            flag = False
-            break
-        tinit = tinit+tlimit+1  # TODO: PROBLEMA ACÁ!
-        openSession = False
-    sessions.append((id,sessionData))
-# "select urls,clickDate from pageview where variables like \'%"+str(id)+"%\' AND clickDate - "+ tINIT +"< "+tlimit
-
-'''
-for id in userL:    # Por cada usuario registrado hacer query buscando los datos de su sesión:
-    sqlRead = "select urls,clickDate from pageview where variables like \'%"+str(id)+"%\'"
-    cursor.execute(sqlRead)
-    rows=cursor.fetchall()  # Obtener todos los datos capturados para ese usuario.
-    tinit = rows[0][1]      # Tiempo inicial de primera sesión
-    sessionData = list()    # Colección de datos dentro de una sesión.
-    openSession = False
-    for step in rows:           # Hasta que se acaben datos del usuario, extraer todas las sesiones
-        print("tNOW in sesion? "+str(step[1] - tinit < tlimit))
-        if step[1] - tinit < tlimit:
-            print("UserID= "+str(id)+" Cantidad de nodos: "+str(len(sessionData)))
-            sessionData.append(step[0])
-            openSession = True
+for user_id in userL:
+    allUserData= [(x[1],x[2]) for x in data if x[0] == user_id] # obtener todos los accesos del usuario.
+    tprev = allUserData[0][1]   #tiempo del primer dato.
+    url = allUserData[0][0]
+    sessionData = list()    # datos de sesión actual.
+    sessionData.append(url) # inicializa sesióna actual
+    for i, step in enumerate(allUserData[1:]):
+        if step[1] - tprev <= tlimit:   # condición para mantenerse en sesión actual
+            sessionData.append(step[0])                 # Agregar datos a sesión actual
         else:
-            openSession = False
-        if not openSession:
-            sessions.append((id,sessionData))    # Almacenar una sesión con su usuario.
-            print("N° de sesiones registradas: "+ str(len(sessions)))
+            sessions.append((user_id, sessionData.copy()))  # guardar sesión actual del usuario
             sessionData.clear()
-            tinit = step[1]+1                     # Reiniciar contador y tiempo final.
-'''
-
+            sessionData.append(step[0])     # inicializar nueva sesión
+        tprev = step[1]     # actualizar timestamp previo.
+    else:
+        sessions.append((user_id,sessionData.copy()))   # guardar última sesión del usuario.
 
 for session in sessions:
     print(session)
 cnx.close()
 
+# Guardar sesiones en tablas sesions y urlsesions
 
-#for key,val in userSessions.items():
-#    print(str(key)+str(val))
+cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
+cursor = cnx.cursor()
 
-# for key in D.keys():
-#     D[key] = str(tuple(D[key]))
-#
-# print(D)
-#
-# sqlWrite = ("INSERT INTO userclusteringfeatures (id_usuario,userFeatureVector) VALUES (%s, %s)")
-#
-# for item in D.items():
-# 	cursor.execute(sqlWrite,item)
-#
-# cnx.commit()
-# cnx.close()
+# Resetear sesions y urlsesions
+cursor.execute("TRUNCATE sesions")
+cursor.execute("TRUNCATE urlsesions")
+
+sqlWrite = ("INSERT INTO sesions (user) VALUES (")
+for session in sessions:
+    cursor.execute(sqlWrite + str(session[0])+")")
+cnx.commit()
+
+sqlWrite = ("INSERT INTO urlsesions (urls) VALUES (")
+for session in sessions:
+    cursor.execute(sqlWrite + '"'+ str(session[1]).replace('\"','\\"') + '"'+')')
+cnx.commit()
+
+cnx.close()

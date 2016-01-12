@@ -76,15 +76,15 @@ cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], ho
 cursor = cnx.cursor()
 
 # Resetear sesions y urlsesions
-cursor.execute("TRUNCATE sesions")
-cursor.execute("TRUNCATE urlsesions")
+cursor.execute("TRUNCATE sessions")
+cursor.execute("TRUNCATE urlsessions")
 
-sqlWrite = ("INSERT INTO sesions (user) VALUES (")
+sqlWrite = ("INSERT INTO sessions (user) VALUES (")
 for session in sessions:
     cursor.execute(sqlWrite + str(session[0])+")")
 cnx.commit()
 
-sqlWrite = ("INSERT INTO urlsesions (urls) VALUES (")
+sqlWrite = ("INSERT INTO urlsessions (urls) VALUES (")
 for session in sessions:
     cursor.execute(sqlWrite + '"'+ str(session[1]).replace('\"','\\"') + '"'+')')
 cnx.commit()

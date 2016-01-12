@@ -2,7 +2,11 @@
 
 import json
 import mysql.connector
+import hashlib
 import os
+
+def hash(string):
+    return hashlib.md5(string.encode()).hexdigest()
 
 
 with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:

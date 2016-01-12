@@ -73,14 +73,14 @@ for user_id in userL:
             sessionData.append(getIDof(step[0]))                 # Agregar datos a sesión actual
         else:
             endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
-            sessions.append((user_id, sessionData.copy(),initTime.isoformat(' '),endTime.isoformat(' ')))  # guardar sesión actual del usuario
+            sessions.append((user_id, sessionData.copy(),initTime,endTime))  # guardar sesión actual del usuario
             sessionData.clear()
             sessionData.append(getIDof(step[0]))     # inicializar nueva sesión
             initTime = datetime.fromtimestamp(step[1]) # TODO: AGREGAR TIMEZONE
         tprev = step[1]     # actualizar timestamp previo.
     else:
         endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
-        sessions.append((user_id,sessionData.copy(),initTime.isoformat(' '),endTime.isoformat(' ')))   # guardar última sesión del usuario.
+        sessions.append((user_id,sessionData.copy(),initTime,endTime))   # guardar última sesión del usuario.
 
 for session in sessions:
     print(session)
@@ -93,16 +93,16 @@ cursor = cnx.cursor()
 
 # Resetear sessions y urlsessions
 cursor.execute("TRUNCATE sessions")
-cursor.execute("TRUNCATE urlsessions")
+cursor.execute("TRUNCATE sessiondata")
 
 sqlWrite = ("INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)")
 for session in sessions:
-    cursor.execute(sqlWrite, (str(session[0]),session[2],session[3]))
+    cursor.execute(sqlWrite, (str(session[0]),session[2].isoformat(' '),session[3].isoformat(' ')))
 cnx.commit()
 
-sqlWrite = ("INSERT INTO urlsessions (urls) VALUES (")
+sqlWrite = ("INSERT INTO sessiondata (urls,date) VALUES (%s,%s)")
 for session in sessions:
-    cursor.execute(sqlWrite + '"'+ str(session[1]) + '"'+')')
+    cursor.execute(sqlWrite,(str(session[1]),session[2].date().isoformat()))
 cnx.commit()
 
 cnx.close()

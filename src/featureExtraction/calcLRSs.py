@@ -3,76 +3,81 @@
 import json
 import mysql.connector
 import itertools
+import os
 
-with open('connections.json', 'r') as f:
-    connectionsJSON = f.read()
+
+with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
+	connectionsJSON = f.read()
 
 connections = json.loads(connectionsJSON)
 
 connGC = connections[0] #guideCapture
 connPD = connections[1] #parsedData
 
-# Lectura de URLsesions
-sqlRead = 'select idsesion, urls from urlsesions'
+# Lectura de sessiondata
+sqlRead = 'select idsession, urls from sessiondata'
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
 cursor = cnx.cursor()
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
 L = list()  # urls sequences
-idL = list() # idsesions
+idL = list() # idsessions
+
 for row in rows:
     idL.append(int(row[0]))
-    L.append(row[1])
+    L.append(str(row[1]).replace('[','').replace(']','').replace(',',''))
 
-# Lectura de sesions
+# Lectura de sessions
 
-sqlRead = 'select idsesion, user from sesions'
+sqlRead = 'select idsession, user from sessions'
 cursor.execute(sqlRead)
 rows = cursor.fetchall()
-userD = dict() # (idsesion,user)
+userD = dict() # (idsession,user)
 for row in rows:
     userD[int(row[0])]=row[1]
+
 # print(userD)
 # print(idL)
 # print(L)
 
 ## Calcular LRSs
+mode = 'COUNT_SPAM_USER'
+if mode is 'COUNT_SPAM_USER':
+    # Identificar secuencias y contar repeticiones de cada una.
+    #   [Sin discriminar secuencias repetidas por un mismo usuario]
 
-# Identificar secuencias y contar repeticiones de cada una.
-#   [Sin discriminar secuencias repetidas por un mismo usuario]
-"""
-Seqs = dict() # (urlseq, count)
-for urlseq in L:
-    if urlseq not in Seqs:
-        Seqs[urlseq] = 1
-    else:
-        Seqs[urlseq] += 1
-"""
-# Identificar secuencias y contar repeticiones de cada una.
-#   [Discrimina secuencias repetidas por un mismo usuario]
+    Seqs = dict() # (urlseq, count)
+    for urlseq in L:
+        if urlseq not in Seqs:
+            Seqs[urlseq] = 1
+        else:
+            Seqs[urlseq] += 1
+else:
+    # Identificar secuencias y contar repeticiones de cada una.
+    #   [Discrimina secuencias repetidas por un mismo usuario]
 
-Seqs = dict() # (urlseq, count)
-userSeqs = dict() #(urlseq, [users])
+    Seqs = dict() # (urlseq, count)
+    userSeqs = dict() #(urlseq, [users])
 
-for urlseq,id in zip(L,idL):
-    if urlseq not in Seqs:
-        Seqs[urlseq] = 0
-        userSeqs[urlseq]= [userD[id]]
-    elif userD[id] not in userSeqs[urlseq]:
-        userSeqs[urlseq].append(userD[id])
+    for urlseq,id in zip(L,idL):
+        if urlseq not in Seqs:
+            Seqs[urlseq] = 0
+            userSeqs[urlseq]= [userD[id]]
+        elif userD[id] not in userSeqs[urlseq]:
+            userSeqs[urlseq].append(userD[id])
 
-for urlseq in Seqs.keys():
-    Seqs[urlseq] = len(userSeqs[urlseq])
+    for urlseq in Seqs.keys():
+        Seqs[urlseq] = len(userSeqs[urlseq])
 
-print(userSeqs)
+    print(userSeqs)
 print(Seqs)
 
 # Aplicar criterio de repeticiones sobre umbral T
-T= 20
+T= 1
 RepSeqs = list() # [[urlseq]]
 for urlseq in Seqs:
     if Seqs[urlseq] > T:
-       RepSeqs.append(urlseq.split(" "))
+       RepSeqs.append(urlseq.split(' '))
 
 print("Subsequences repeated > " + str(T) + " :" + str(RepSeqs))
 
@@ -110,7 +115,7 @@ def LRStoURLSeq(lrs):
     return urlseq[:-1]
 
 print("Accessed "+ str([Seqs[LRStoURLSeq(lrs)] for lrs in LRSs])+ " times.")
-
+'''
 # Construir tabla para LRSs en la base de datos
 
 sqlWrite = ("INSERT INTO lrss (urlseqs,counts) VALUES (%s,%s)")
@@ -121,3 +126,4 @@ for seq in LRSs:
 
 cnx.commit()
 cnx.close()
+'''

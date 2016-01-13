@@ -59,8 +59,11 @@ for i,row in enumerate(pageview):
 
 sessions = list()
 # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
-tlimit = 600    # Tiempo limite en segundos.
-
+tlimit = input('Ingrese tiempo limite [segundos]:')
+if tlimit is '':
+    tlimit = 100    # Tiempo limite en segundos.
+else:
+    tlimit = int(tlimit)
 for user_id in userL:
     allUserData= [(x[1],x[2]) for x in data if x[0] == user_id] # obtener todos los accesos del usuario.
     tprev = allUserData[0][1]   #tiempo del primer dato.

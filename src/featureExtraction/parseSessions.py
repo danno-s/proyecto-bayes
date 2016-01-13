@@ -82,10 +82,11 @@ for user_id in userL:
         endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
         sessions.append((user_id,sessionData.copy(),initTime,endTime))   # guardar última sesión del usuario.
 
-for session in sessions:
-    print(session)
 cnx.close()
 
+ss = [(x[0],x[1],x[2].isoformat(' '),x[3].isoformat(' ')) for x in sessions]
+for s in ss:
+    print(s)
 # Guardar sesiones en tablas sessions y urlsessions
 
 cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
@@ -98,7 +99,6 @@ cursor.execute("TRUNCATE sessiondata")
 sqlWrite = ("INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)")
 for session in sessions:
     cursor.execute(sqlWrite, (str(session[0]),session[2].isoformat(' '),session[3].isoformat(' ')))
-cnx.commit()
 
 sqlWrite = ("INSERT INTO sessiondata (urls,date) VALUES (%s,%s)")
 for session in sessions:

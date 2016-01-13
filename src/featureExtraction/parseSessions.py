@@ -87,7 +87,7 @@ for user_id in userL:
 
 cnx.close()
 
-ss = [(x[0],x[1],x[2].isoformat(' '),x[3].isoformat(' ')) for x in sessions]
+ss = ((x[0],x[1],x[2].isoformat(' '),x[3].isoformat(' ')) for x in sessions)
 for s in ss:
     print(s)
 # Guardar sesiones en tablas sessions y urlsessions

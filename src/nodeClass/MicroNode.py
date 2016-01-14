@@ -1,3 +1,6 @@
+import json
+
+
 class MicroNode:
     """ Class MicroNode, represents inner state of a Node """
 
@@ -53,6 +56,23 @@ class MicroNode:
             if not self.__switch(item,self) == self.__switch(item, micro):
                 return False
         return True
+
+    def __str__(self):
+        L = self.textArea.copy()
+        L.extend(self.select)
+        L.extend(self.multiSelect)
+        L.extend(self.radius)
+        L.extend(self.other)
+        return "".join([str(x) for x in L])
+
+    def toJson(self):
+        string = "{ key : " + str(self.key) + ","
+        string += "text" + str(self.textArea) + ","
+        string += "select" + str(self.select) + ","
+        string += "multi" + str(self.multiSelect) + ","
+        string += "radius" + str(self.radius) + ","
+        string += "other" + str(self.other) + "}"
+        return json.loads(str)
 
     def __switch(self, case, micro):
         switcher = {

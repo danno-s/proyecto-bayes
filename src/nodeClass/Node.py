@@ -1,4 +1,6 @@
 from .MicroNode import MicroNode
+import random
+import json
 
 
 class Node(object):
@@ -49,7 +51,7 @@ class Node(object):
         """
         return self.user == node.user and self.url == node.url
 
-    def equal(self, node):
+    def equals(self, node):
         """
         Check if two nodes have the same user, url and MicroNode
 
@@ -60,3 +62,13 @@ class Node(object):
             bool: True if both Node objects are equal, False otherwise.
         """
         return self.equal(node) and self.microNode.equal(node.microState)
+
+    def toJson(self):
+        string = "{ id : " + random.randint() + "," #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        string += "user : " + str(self.user) + ","
+        string += "url : " + self.url + ","
+        string += "MicroNode : " + json.dumps(self.microNode.toJson()) + "}"
+        return json.loads(string)
+
+    def __str__(self):
+        return str(self.user) + self.url + str(self.microNode)

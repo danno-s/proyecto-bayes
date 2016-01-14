@@ -49,14 +49,14 @@ for row in usersUrls:
         else:
             v = [0]*len(urls)
         for i in range(len(urls)):
-            if urls[i] == l: #PORQUE NO SON IGUALES!!!!!!!!!!!!!!!
+            if urls[i] == l:
                 v[i] = 1
         D[id] = v
     except TypeError:
         print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
 
-for key in D.keys():
-    D[key] = str(tuple(D[key]))
+for key,val in D.items():
+    D[key] = ' '.join([str(i) for i in val])
 
 cursor.execute("TRUNCATE userclusteringfeatures")
 

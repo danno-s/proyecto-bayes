@@ -4,7 +4,6 @@ import json
 import mysql.connector
 import os
 
-
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
 def consecutiveIdxs(indices, repeat):
     for i in indices[:-repeat+1]:
@@ -21,6 +20,32 @@ def subsequences(iterable):
                 yield ' '.join(tuple(pool[i] for i in indices))
 
     yield ' '.join(pool)
+
+# Funcion que verifica si una subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'.
+# Si son iguales, retorna False.
+
+
+def contains(shortest, longest):
+    if shortest == longest:
+        return False
+    for i in range(len(longest)-len(shortest)+1):
+        for j in range(len(shortest)):
+            if longest[i+j] != shortest[j]:
+                break
+        else:
+            return True
+    return False
+
+# Funcion que verifica si una secuencia 'item' esta subcontenida dentro de algun elemento
+# de la lista de secuencias 'iterable'.
+
+
+def isSubContained(item, iterable):
+    for i,val in enumerate(iterable):
+        if contains(item,val):
+            return True
+    return False
+
 
 # Extraer datos de conexión a DB.
 with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
@@ -114,28 +139,6 @@ for seq in Seqs:
        RepSeqs.append(seq)
 
 print("Subsequences repeated > " + str(T) + " :\n" + str(RepSeqs))
-
-
-## Funcion que verifica si una subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'.
-# Si son iguales, retorna False.
-
-def contains(shortest, longest):
-    if shortest == longest:
-        return False
-    for i in range(len(longest)-len(shortest)+1):
-        for j in range(len(shortest)):
-            if longest[i+j] != shortest[j]:
-                break
-        else:
-            return True
-    return False
-
-
-def isSubContained(item, iterable):
-    for i,val in enumerate(iterable):
-        if contains(item,val):
-            return True
-    return False
 
 # Eliminar subsecuencias contenidas dentro de otras.
 LRSs = RepSeqs.copy()

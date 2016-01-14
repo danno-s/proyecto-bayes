@@ -2,36 +2,27 @@
 
 import json
 import mysql.connector
-import itertools
 import os
 
 
-
-def consecutive(indices, repeat):
+# Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
+def consecutiveIdxs(indices, repeat):
     for i in indices[:-repeat+1]:
         yield tuple(x for x in range(i,i+repeat))
 
+# Generador de las subsecuencias posibles a partir de una sesión.
 def subsequences(iterable):
     pool=tuple(iterable)
     n= len(pool)
     if n > 1:
         for r in range(2,n):
-            inGen = (x for x in consecutive(range(n), repeat=r))
+            inGen = (x for x in consecutiveIdxs(range(n), repeat=r))
             for indices in inGen:
                 yield ' '.join(tuple(pool[i] for i in indices))
 
     yield ' '.join(pool)
 
-def subsequence(item):
-    pool=tuple(item)
-    n= len(pool)
-    if n > 1:
-        for r in range(2,n):
-            inGen = (x for x in consecutive(range(n), repeat=r))
-            for indices in inGen:
-                yield ' '.join(tuple(pool[i] for i in indices))
-    yield ' '.join(pool)
-
+# Extraer datos de conexión a DB.
 with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
 	connectionsJSON = f.read()
 
@@ -48,17 +39,14 @@ cursor.execute(sqlRead)
 rows = cursor.fetchall()
 
 allsubseqsL = list()  # urls subsequences of all sessions.
+fullseqsL = list() # sequences of all sessions.
 sessionSubseqs = dict() # (idsession, set of subsequences of current session).
 for row in rows:
     urls = str(row[1]).replace('[','').replace(']','').replace(',','').split(' ')
+    fullseqsL.append(' '.join(urls))
     for ss in subsequences(urls):
         allsubseqsL.append(ss)
-    sessionSubseqs[int(row[0])]=set(subsequence(urls))
-
-#for ss in sorted(allsubseqsL):
-#    print(ss)
-
-print("Buscando LRSs para un total de " + str(len(allsubseqsL)) + " subsecuencias.")
+    sessionSubseqs[int(row[0])]=set(subsequences(urls))
 
 # Lectura de sessions
 
@@ -69,25 +57,26 @@ userD = dict() # (idsession,user)
 for row in rows:
     userD[int(row[0])]=row[1]
 
-# print(userD)
-# print(sessionSubseqs)
-
 ## Calcular LRSs
-mode = 'COUNT_SUBSEQS'
+mode = 'COUNT_SUBSEQS'     #'COUNT_UNIQUE_USER' | 'COUNT_SPAM_USER' | 'COUNT_SUBSEQS'
+
 if mode is 'COUNT_SPAM_USER':
     # Identificar secuencias y contar repeticiones de cada una.
     #   [Sin discriminar secuencias repetidas por un mismo usuario]
 
     Seqs = dict() # (urlseq, count)
-    for urlseq in allsubseqsL:
+    for urlseq in fullseqsL:
         if urlseq not in Seqs:
             Seqs[urlseq] = 1
         else:
             Seqs[urlseq] += 1
+
 elif mode is 'COUNT_SUBSEQS':
     # Identificar subsecuencias y contar repeticiones de cada una.
     #   [Sin discriminar secuencias repetidas por un mismo usuario]
     #   [Considera subsequencias]
+
+    print("Buscando LRSs para un total de " + str(len(allsubseqsL)) + " subsecuencias.")
     Seqs = dict() # (urlseq, count)
     for seq in allsubseqsL:
         for k,v in sessionSubseqs.items():
@@ -95,14 +84,15 @@ elif mode is 'COUNT_SUBSEQS':
                 Seqs[seq] = 1
             elif seq in sessionSubseqs[k]:
                     Seqs[seq] += 1
-else:
+
+elif mode is 'COUNT_UNIQUE_USER':
     # Identificar secuencias y contar repeticiones de cada una.
     #   [Discrimina secuencias repetidas por un mismo usuario]
 
     Seqs = dict() # (urlseq, count)
     userSeqs = dict() #(urlseq, [users])
 
-    for urlseq,id in zip(allsubseqsL, sessionSubseqs.keys()):
+    for urlseq,id in zip(fullseqsL, sessionSubseqs.keys()):
         if urlseq not in Seqs:
             Seqs[urlseq] = 0
             userSeqs[urlseq]= [userD[id]]
@@ -112,11 +102,12 @@ else:
     for urlseq in Seqs.keys():
         Seqs[urlseq] = len(userSeqs[urlseq])
 
-#    print(userSeqs)
-#print(Seqs)
-
 # Aplicar criterio de repeticiones sobre umbral T
-T= 20
+
+
+T= 20   # PARÁMETRO DEL ALGORITMO.
+
+
 RepSeqs = list() # [[urlseq]]
 for seq in Seqs:
     if Seqs[seq] > T:
@@ -154,9 +145,14 @@ if len(RepSeqs)>1: # Casos con mas de una subsequencia repetida.
             LRSs.remove(val)
 
 print("Longest Repeated Subsequences:\n " + str(LRSs))
-print("Accessed "+ str([Seqs[lrs] for lrs in LRSs])+ " times.")
+print("Accessed: \n"+ str([Seqs[lrs] for lrs in LRSs])+ " times.")
 
-# Construir tabla para LRSs en la base de datos
+# Completar tabla para LRSs en la base de datos
+
+# Resetear lrss
+cursor.execute("TRUNCATE lrss")
+
+# Guardar nueva info.
 
 sqlWrite = ("INSERT INTO lrss (seqs,count) VALUES (%s,%s)")
 

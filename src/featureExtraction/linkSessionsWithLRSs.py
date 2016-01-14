@@ -1,67 +1,14 @@
 #!/usr/bin/python
 
-import json
-import mysql.connector
-import os
+from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
+from src.sqlUtils.sqlUtils import sqlWrapper
 
-# Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
-def consecutiveIdxs(indices, repeat):
-    for i in indices[:-repeat+1]:
-        yield tuple(x for x in range(i,i+repeat))
-
-# Generador de las subsecuencias posibles a partir de una sesión.
-def subsequences(iterable):
-    pool=tuple(iterable)
-    n= len(pool)
-    if n > 1:
-        for r in range(2,n):
-            inGen = (x for x in consecutiveIdxs(range(n), repeat=r))
-            for indices in inGen:
-                yield ' '.join(tuple(pool[i] for i in indices))
-
-    yield ' '.join(pool)
-
-# Funcion que verifica si una subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'.
-# Si son iguales, retorna False.
-
-
-def contains(shortest, longest):
-    if shortest == longest:
-        return False
-    for i in range(len(longest)-len(shortest)+1):
-        for j in range(len(shortest)):
-            if longest[i+j] != shortest[j]:
-                break
-        else:
-            return True
-    return False
-
-# Funcion que verifica si una secuencia 'item' esta subcontenida dentro de algun elemento
-# de la lista de secuencias 'iterable'.
-
-
-def isSubContained(item, iterable):
-    for i,val in enumerate(iterable):
-        if contains(item,val):
-            return True
-    return False
-
-
-with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
-    connectionsJSON = f.read()
-
-connections = json.loads(connectionsJSON)
-
-connGC = connections[0]
-connPD = connections[1]
-
+sqlPD = sqlWrapper(db='PD')
 
 # Lectura de sessiondata
+
 sqlRead = 'select idsession, urls from sessiondata'
-cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
-cursor = cnx.cursor()
-cursor.execute(sqlRead)
-rows = cursor.fetchall()
+rows = sqlPD.read(sqlRead)
 
 sessionSubseqs = dict() # (idsession, set of subsequences of current session).
 urlsFull=dict()
@@ -71,12 +18,9 @@ for row in rows:
     urlsFull[int(row[0])]=urls
 
 sqlRead = 'select seqs from lrss'
-cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
-cursor = cnx.cursor()
-
-cursor.execute(sqlRead)
-rows = cursor.fetchall()
+rows = sqlPD.read(sqlRead)
 #lrs_id =[item[0] for item in rows]
+
 lrss = [item[0] for item in rows]
 
 D = dict()
@@ -100,13 +44,9 @@ for session_id,seq in sessionSubseqs.items():
 for key,val in D.items():
     D[key] = ' '.join([str(i) for i in val])
 
-cursor.execute("TRUNCATE sessionlrssfeatures")
+sqlPD.truncate('sessionlrssfeatures')
 
 sqlWrite = ("INSERT INTO sessionlrssfeatures (idsession,sessionFeatureVector) VALUES (%s, %s)")
 
 for k,v in D.items():
-    print(str(sqlWrite)+", " + str((k,v)))
-    cursor.execute(sqlWrite,(k,v))
-
-cnx.commit()
-cnx.close()
+    sqlPD.write(sqlWrite,(k,v))

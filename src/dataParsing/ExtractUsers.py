@@ -1,25 +1,15 @@
 #!/usr/bin/python
 
 import json
-import mysql.connector
 from phpserialize import *
-import os
+from src.sqlUtils.sqlUtils import sqlWrapper
 
 
-with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
-	connectionsJSON = f.read()
-
-connections = json.loads(connectionsJSON)
-
-connRead = connections[0]
-connWrite = connections[1]
+sqlGC = sqlWrapper(db='GC')
+sqlPD = sqlWrapper(db='PD')
 
 sqlRead = 'select distinct variables from pageview'
-cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
-cursor = cnx.cursor()
-
-cursor.execute(sqlRead)
-rows = cursor.fetchall()
+rows = sqlGC.read(sqlRead)
 
 L = set()
 # Leer datos serializados de usuario: ID, Nombre de usuario y Perfil
@@ -36,17 +26,14 @@ for row in rows:
     except TypeError:
         print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
 
-cnx.close()
 print(L)
+
 if len(L) is not 0:
-    cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
-    cursor = cnx.cursor()
+
     # Resetear users
-    cursor.execute("TRUNCATE users")
+    sqlPD.truncate("users")
     # Guardar nueva info.
     sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"
     for item in L:
-        cursor.execute(sqlWrite,item)
+        sqlPD.write(sqlWrite,item)
 
-    cnx.commit()
-    cnx.close()

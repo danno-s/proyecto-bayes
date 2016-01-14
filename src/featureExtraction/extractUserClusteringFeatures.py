@@ -1,39 +1,22 @@
 #!/usr/bin/python
 
 import json
-import mysql.connector
 import hashlib
-import os
+from src.sqlUtils.sqlUtils import sqlWrapper
+
 from phpserialize import *
 
 def hash(string):
     return hashlib.md5(string.encode()).hexdigest()
 
-
-with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
-	connectionsJSON = f.read()
-
-connections = json.loads(connectionsJSON)
-
-connGC = connections[0]
-connPD = connections[1]
-
+sqlGC = sqlWrapper(db='GC')
+sqlPD = sqlWrapper(db='PD')
 
 sqlRead = 'select urls, variables from pageview'
-cnx = mysql.connector.connect(user=connGC['user'], password=connGC['passwd'], host=connGC['host'],database=connGC['db'])
-cursor = cnx.cursor()
-
-cursor.execute(sqlRead)
-usersUrls = cursor.fetchall()
-
-cnx.close()
+usersUrls = sqlGC.read(sqlRead)
 
 sqlRead = 'select id from urls'
-cnx = mysql.connector.connect(user=connPD['user'], password=connPD['passwd'], host=connPD['host'],database=connPD['db'])
-cursor = cnx.cursor()
-
-cursor.execute(sqlRead)
-urls = cursor.fetchall()
+urls = sqlPD.read(sqlRead)
 
 urls = [item[0] for item in urls]
 
@@ -58,12 +41,9 @@ for row in usersUrls:
 for key,val in D.items():
     D[key] = ' '.join([str(i) for i in val])
 
-cursor.execute("TRUNCATE userclusteringfeatures")
+sqlPD.truncate("userclusteringfeatures")
 
 sqlWrite = ("INSERT INTO userclusteringfeatures (id_usuario,userFeatureVector) VALUES (%s, %s)")
 
 for item in D.items():
-	cursor.execute(sqlWrite,item)
-
-cnx.commit()
-cnx.close()
+	sqlPD.write(sqlWrite,item)

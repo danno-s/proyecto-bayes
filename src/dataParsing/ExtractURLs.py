@@ -1,38 +1,24 @@
 #!/usr/bin/python
 
 import json
-import mysql.connector
 import hashlib
-import os
-
-
-with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
-	connectionsJSON = f.read()
+from src.sqlUtils.sqlUtils import sqlWrapper
 
 def hash(string):
     return hashlib.md5(string.encode()).hexdigest()
 
-connections = json.loads(connectionsJSON)
-
-connRead = connections[0]
-connWrite = connections[1]
+sqlGC = sqlWrapper(db='GC')
+sqlPD = sqlWrapper(db='PD')
 
 sqlRead = 'SELECT DISTINCT url from pageview'
-cnx = mysql.connector.connect(user=connRead['user'], password=connRead['passwd'], host=connRead['host'],database=connRead['db'])
-cursor = cnx.cursor()
-
-cursor.execute(sqlRead)
-rows = cursor.fetchall()
+rows = sqlGC.read(sqlRead)
 
 L = [x[0] for x in rows] # Obtiene URLs desde los eventos capturados.
 
 sqlRead = 'SELECT DISTINCT urls from pageview'
-cursor.execute(sqlRead)
-rows = cursor.fetchall()
+rows = sqlGC.read(sqlRead)
 
 URLs = [json.loads(x[0]) for x in rows]    # Obtiene árboles completos de URLs del sitio en las capturas"
-
-cnx.close()
 
 # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
@@ -58,21 +44,16 @@ cnx.close()
 #print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
 
 
-cnx = mysql.connector.connect(user=connWrite['user'], password=connWrite['passwd'], host=connWrite['host'],database=connWrite['db'])
-cursor = cnx.cursor()
-
 ## RESETEAR TABLAS:
-cursor.execute("TRUNCATE url")
-cursor.execute("TRUNCATE urls")
+sqlPD.truncate("url")
+sqlPD.truncate("urls")
 
 # Guardar URLs desde evento.
 
 sqlWrite = "INSERT INTO url (url) VALUES ("
 
 for url in L:
-    cursor.execute(sqlWrite + '"' + url + '");')
-cnx.commit()
-
+    sqlPD.write(sqlWrite + '"' + url + '");')
 
 # Guardar Árboles completos de URLs.
 
@@ -81,7 +62,4 @@ sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"
 for urlstree in URLs:
     urljsonstr = json.dumps(urlstree).replace(' ', '')
     print(urljsonstr)
-    cursor.execute(sqlWrite,(hash(urljsonstr), urljsonstr))
-
-cnx.commit()
-cnx.close()
+    sqlPD.write(sqlWrite,(hash(urljsonstr), urljsonstr))

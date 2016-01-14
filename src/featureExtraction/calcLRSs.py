@@ -15,8 +15,8 @@ allsubseqsL = list()  # urls subsequences of all sessions.
 fullseqsL = list() # sequences of all sessions.
 sessionSubseqs = dict() # (idsession, set of subsequences of current session).
 for row in rows:
-    urls = str(row[1]).replace('[','').replace(']','').replace(',','').split(' ')
-    fullseqsL.append(' '.join(urls))
+    urls = str(row[1]).split(' ')
+    fullseqsL.append(row[1])
     for ss in subsequences(urls):
         allsubseqsL.append(ss)
     sessionSubseqs[int(row[0])]=set(subsequences(urls))

@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-import json
 from phpserialize import *
 from datetime import datetime
 from src.sqlUtils.sqlUtils import sqlWrapper
@@ -12,7 +11,7 @@ sqlPD = sqlWrapper(db='PD')
 def getIDof(urls):
     sqlRead = 'select id_n from urls where urls = '+ "'"+urls+"'"
     rows = sqlPD.read(sqlRead)
-    return rows[0][0]
+    return str(rows[0][0])
 
 # Obtener todos los usuarios registrados.
 sqlRead = 'select id_usuario from users'
@@ -57,14 +56,14 @@ for user_id in userL:
             sessionData.append(getIDof(step[0]))                 # Agregar datos a sesión actual
         else:
             endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
-            sessions.append((user_id, sessionData.copy(),initTime,endTime))  # guardar sesión actual del usuario
+            sessions.append((user_id, ' '.join(sessionData),initTime,endTime))  # guardar sesión actual del usuario
             sessionData.clear()
             sessionData.append(getIDof(step[0]))     # inicializar nueva sesión
             initTime = datetime.fromtimestamp(step[1]) # TODO: AGREGAR TIMEZONE
         tprev = step[1]     # actualizar timestamp previo.
     else:
         endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
-        sessions.append((user_id,sessionData.copy(),initTime,endTime))   # guardar última sesión del usuario.
+        sessions.append((user_id,' '.join(sessionData),initTime,endTime))   # guardar última sesión del usuario.
 
 ss = ((x[0],x[1],x[2].isoformat(' '),x[3].isoformat(' ')) for x in sessions)
 for s in ss:

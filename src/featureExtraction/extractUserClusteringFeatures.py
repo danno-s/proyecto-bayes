@@ -2,7 +2,7 @@
 
 import json
 import hashlib
-from src.sqlUtils.sqlUtils import sqlWrapper
+from src.utils.sqlUtils import sqlWrapper
 
 from phpserialize import *
 

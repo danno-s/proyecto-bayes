@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
-from src.sqlUtils.sqlUtils import sqlWrapper
+from src.utils.sqlUtils import sqlWrapper
 
 sqlPD = sqlWrapper(db='PD')
 

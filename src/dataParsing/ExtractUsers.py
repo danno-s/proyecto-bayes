@@ -2,7 +2,7 @@
 
 import json
 from phpserialize import *
-from src.sqlUtils.sqlUtils import sqlWrapper
+from src.utils.sqlUtils import sqlWrapper
 
 
 sqlGC = sqlWrapper(db='GC')

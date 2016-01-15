@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import os
 import json
 import mysql.connector
@@ -11,14 +9,14 @@ class sqlWrapper:
     def __init__(self,db):
         self.db = db
         if len(self.conns) == 0:
-            self.loadConnections()
+            self.__loadConnections()
 
-    def loadConnections(self):
+    def __loadConnections(self):
         with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
             connectionsJSON = f.read()
         connections = json.loads(connectionsJSON)
-        self.conns['GC'] = connections[0]
-        self.conns['PD'] = connections[1]
+        self.conns['GC'] = connections['guidecapture']
+        self.conns['PD'] = connections['parsedData']
 
     def setDB(self,db):
         self.db = db

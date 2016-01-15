@@ -1,20 +1,25 @@
+"""
+Clase MicroNode, representan los micro estados del modelo.
+
+Contienen información sobre distintos elementos de la pagina: textareas,
+selects, multiselects, radius, y otros,
+"""
+
 import json
 
 
 class MicroNode:
-    """ Class MicroNode, represents inner state of a Node """
 
     def __init__(self, defn):
         """
-        Create new MicroNode object
+        Constructor de la clase MicroNode
 
-        Args:
-            defn (Tuple): A tuple with the names of the defining parameters. The names can be
-                "text", "select", "multi", "radius" or "other".
-
-        Returns:
-            MicroNode object
-
+        Parameters
+        ----------
+        defn : Tuple
+            Tupla con los elementos clave que definen al micro estado.
+            Los elementos son strings, y pueden ser "text", "select", "multi",
+            "radius" u "other"
         """
         self.key = defn
         self.textArea = []
@@ -25,15 +30,20 @@ class MicroNode:
 
     def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
         """
-        Define Node's attributes
+        Define los parametros del micro estado
 
-        Args:
-            textArea (Optional List[int]): textarea object's vector representation. Defaults to None.
-            select (Optional List[int]): selec object's vector representation. Defaults to None.
-            multi (Optional List[int]): multiselect object's vector representation. Defaults to None.
-            radius (Optional List[int]): radious object's vector representation. Defaults to None.
-            other (Optional List[int]): other's vector representation. Defaults to None.
-
+        Parameters
+        ----------
+        textArea : List
+            Vector binario con el estado de los objectos textarea
+        select : List
+            Vector binario con el estado de los objectos select
+        multi : List
+            Vector binario con el estado de los objectos multiselect
+        radius : List
+            Vector binario con el estado de los objectos radius
+        other : ?
+            Vector con el estado de otros objetos de la pagina
         """
         self.textArea = textArea
         self.select = select
@@ -43,13 +53,17 @@ class MicroNode:
 
     def equal(self, micro):
         """
-        Check equality between MicroNode objects
+        Verifica si dos micro estados son iguales
 
-        Args:
-            micro (MicroNode): The MicroNode to compare with
+        Parameters
+        ----------
+        micro : MicroNode
+            El micro estado con el que se compara
 
-        Returns:
-            bool: True if both MicroNode objects are equal, False otherwise.
+        Returns
+        -------
+        bool
+            True si son iguales, False si no.
 
         """
         for item in self.key:
@@ -58,6 +72,14 @@ class MicroNode:
         return True
 
     def __str__(self):
+        """
+        Representacion del micro estado como string
+
+        Returns
+        -------
+        string
+            El string que representa al micro estado
+        """
         L = self.textArea.copy()
         L.extend(self.select)
         L.extend(self.multiSelect)
@@ -66,6 +88,14 @@ class MicroNode:
         return "".join([str(x) for x in L])
 
     def toJson(self):
+        """
+        Representación del micro estado como JSON
+
+        Returns
+        -------
+        JSON object
+            El objeto JSON que representa a este micro estado
+        """
         string = "{ key : " + str(self.key) + ","
         string += "text" + str(self.textArea) + ","
         string += "select" + str(self.select) + ","

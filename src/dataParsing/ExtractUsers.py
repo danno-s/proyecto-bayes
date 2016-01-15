@@ -2,7 +2,7 @@
 
 import json
 from phpserialize import *
-from src.sqlUtils.sqlUtils import sqlWrapper
+from src.utils.sqlUtils import sqlWrapper
 
 
 sqlGC = sqlWrapper(db='GC')
@@ -12,6 +12,7 @@ sqlRead = 'select distinct variables from pageview'
 rows = sqlGC.read(sqlRead)
 
 L = set()
+
 # Leer datos serializados de usuario: ID, Nombre de usuario y Perfil
 for row in rows:
     l = loads(bytes(row[0], 'UTF-8'))

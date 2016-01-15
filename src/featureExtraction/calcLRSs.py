@@ -78,7 +78,7 @@ elif mode is 'COUNT_UNIQUE_USER':
 # Aplicar criterio de repeticiones sobre umbral T
 
 
-T= 20   # PARÁMETRO DEL ALGORITMO.
+T= 5   # PARÁMETRO DEL ALGORITMO.
 
 
 RepSeqs = list() # [[urlseq]]

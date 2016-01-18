@@ -84,7 +84,8 @@ class sqlWrapper:
         ----------
         sqlWrite : string
             La escritura a realizar
-        item :
+        item : List
+            Los item a guardar en la base de datos
 
         Returns
         -------

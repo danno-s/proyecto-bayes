@@ -6,6 +6,7 @@ Calcula las LRS (Longuest repeating sequence) en las sesiones
 
 from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
 from src.utils.sqlUtils import sqlWrapper
+from src.utils.loadConfig import Config
 
 sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
 sqlPD = sqlWrapper(db='PD')
@@ -81,7 +82,7 @@ elif mode is 'COUNT_UNIQUE_USER':
 # Aplicar criterio de repeticiones sobre umbral T
 
 
-T= 5   # PARÁMETRO DEL ALGORITMO.
+T= Config().getValue(attr='LRS_threshold',mode='INT')
 
 
 RepSeqs = list() # [[urlseq]]

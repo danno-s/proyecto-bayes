@@ -1,9 +1,13 @@
 #!/usr/bin/python
 
+"""
+Calcula las LRS (Longuest repeating sequence) en las sesiones
+"""
+
 from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
 from src.utils.sqlUtils import sqlWrapper
 
-sqlGC = sqlWrapper(db='GC')
+sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
 sqlPD = sqlWrapper(db='PD')
 
 
@@ -30,6 +34,8 @@ userD = dict() # (idsession,user)
 for row in rows:
     userD[int(row[0])]=row[1]
 
+Seqs = dict() # (urlseq, count)
+
 ## Calcular LRSs
 mode = 'COUNT_SUBSEQS'     #'COUNT_UNIQUE_USER' | 'COUNT_SPAM_USER' | 'COUNT_SUBSEQS'
 
@@ -37,7 +43,6 @@ if mode is 'COUNT_SPAM_USER':
     # Identificar secuencias y contar repeticiones de cada una.
     #   [Sin discriminar secuencias repetidas por un mismo usuario]
 
-    Seqs = dict() # (urlseq, count)
     for urlseq in fullseqsL:
         if urlseq not in Seqs:
             Seqs[urlseq] = 1
@@ -50,7 +55,6 @@ elif mode is 'COUNT_SUBSEQS':
     #   [Considera subsequencias]
 
     print("Buscando LRSs para un total de " + str(len(allsubseqsL)) + " subsecuencias.")
-    Seqs = dict() # (urlseq, count)
     for seq in allsubseqsL:
         for k,v in sessionSubseqs.items():
             if seq not in Seqs:
@@ -62,7 +66,6 @@ elif mode is 'COUNT_UNIQUE_USER':
     # Identificar secuencias y contar repeticiones de cada una.
     #   [Discrimina secuencias repetidas por un mismo usuario]
 
-    Seqs = dict() # (urlseq, count)
     userSeqs = dict() #(urlseq, [users])
 
     for urlseq,id in zip(fullseqsL, sessionSubseqs.keys()):

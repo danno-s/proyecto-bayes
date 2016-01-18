@@ -1,14 +1,30 @@
 #!/usr/bin/python
 
+"""
+Extrae las distintas sesiones que existen en la base de datos
+"""
+
 from phpserialize import *
 from datetime import datetime
 from src.utils.sqlUtils import sqlWrapper
 
-sqlGC = sqlWrapper(db='GC')
+sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
 sqlPD = sqlWrapper(db='PD')
 
-
 def getIDof(urls):
+    """
+    Obtiene el id en la base de datos de un árbol de urls
+
+    Parameters
+    ----------
+    urls : string
+        El árbol de urls a buscar
+
+    Returns
+    -------
+    int
+        El id del árbol de urls
+    """
     sqlRead = 'select id_n from urls where urls = '+ "'"+urls+"'"
     rows = sqlPD.read(sqlRead)
     return str(rows[0][0])
@@ -37,9 +53,11 @@ for i,row in enumerate(pageview):
     except (KeyError, TypeError):
         print("Dato número " + str(i)+ " no contiene información de usuario.")
 
-sessions = list()
+
 # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
+sessions = list()
 tlimit = input('Ingrese tiempo limite [segundos]:')
+
 if tlimit is '':
     tlimit = 100    # Tiempo limite en segundos.
 else:

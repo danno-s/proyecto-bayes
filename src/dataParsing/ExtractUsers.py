@@ -1,11 +1,15 @@
 #!/usr/bin/python
 
+"""
+Extrae los usuarios diferentes en la base de datos
+"""
+
 import json
 from phpserialize import *
 from src.utils.sqlUtils import sqlWrapper
 
 
-sqlGC = sqlWrapper(db='GC')
+sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
 sqlPD = sqlWrapper(db='PD')
 
 sqlRead = 'select distinct variables from pageview'
@@ -27,14 +31,11 @@ for row in rows:
     except TypeError:
         print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
 
-print(L)
+#  print(L)
 
 if len(L) is not 0:
-
-    # Resetear users
-    sqlPD.truncate("users")
-    # Guardar nueva info.
-    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"
+    sqlPD.truncate("users")  # Limpia la tabla
+    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)" # Guardar usuarios
     for item in L:
         sqlPD.write(sqlWrite,item)
 

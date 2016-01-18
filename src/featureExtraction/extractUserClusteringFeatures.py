@@ -1,13 +1,32 @@
 #!/usr/bin/python
 
+"""
+Extrae vectores descriptores de los usuarios con respecto a los árboles de URLs
+"""
+
 import json
 import hashlib
 from src.utils.sqlUtils import sqlWrapper
 
 from phpserialize import *
 
+
 def hash(string):
+    """
+    Retorna el valor hash de un string, usando MD5
+
+    Parameters
+    ----------
+    string : string
+        El string que se quiere convertir
+
+    Returns
+    -------
+    string
+        El valor del hash
+    """
     return hashlib.md5(string.encode()).hexdigest()
+
 
 sqlGC = sqlWrapper(db='GC')
 sqlPD = sqlWrapper(db='PD')
@@ -30,15 +49,15 @@ for row in usersUrls:
         if id in D:
             v = D[id]
         else:
-            v = [0]*len(urls)
+            v = [0] * len(urls)
         for i in range(len(urls)):
             if urls[i] == l:
                 v[i] = 1
         D[id] = v
     except TypeError:
-        print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
+        print("Texto no corresponde a datos de usuario, variable leida = " + str(l))
 
-for key,val in D.items():
+for key, val in D.items():
     D[key] = ' '.join([str(i) for i in val])
 
 sqlPD.truncate("userclusteringfeatures")
@@ -46,4 +65,4 @@ sqlPD.truncate("userclusteringfeatures")
 sqlWrite = ("INSERT INTO userclusteringfeatures (id_usuario,userFeatureVector) VALUES (%s, %s)")
 
 for item in D.items():
-	sqlPD.write(sqlWrite,item)
+    sqlPD.write(sqlWrite, item)

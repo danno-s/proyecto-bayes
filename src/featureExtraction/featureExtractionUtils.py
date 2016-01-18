@@ -1,17 +1,45 @@
 #!/usr/bin/python
 
+"""
+Módulo contiene funciones usadas por otros scripts
+"""
+
 
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
-
-
 def consecutiveIdxs(indices, repeat):
+    """
+    Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'
+
+    Parameters
+    ----------
+    indices : List
+        Lista de índices !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    repeat : int
+        Tamaño de las tuplas de índices consecutivos
+
+    Yields
+    -------
+    Tuple
+        Las tuplas de índices consecutivos
+    """
     for i in indices[:-repeat+1]:
         yield tuple(x for x in range(i,i+repeat))
 
-# Generador de las subsecuencias posibles a partir de una sesión.
-
 
 def subsequences(iterable):
+    """
+    Generador de las subsecuencias posibles a partir de una sesión
+
+    Parameters
+    ----------
+    iterable : iterable
+        Objeto iterable de donde se generan las secuencias
+
+    Yields
+    -------
+    string
+        Las subsecuencias posibles
+    """
     pool=tuple(iterable)
     n= len(pool)
     if n > 1:
@@ -22,11 +50,23 @@ def subsequences(iterable):
 
     yield ' '.join(pool)
 
-# Funcion que verifica si una subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'.
-# Si son iguales, retorna False.
-
 
 def contains(shortest, longest):
+    """
+    Verifica si la subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'
+
+    Parameters
+    ----------
+    shortest : string
+        Subsecuencia más corta
+    longest : string
+        Subsecuencia más larga
+
+    Returns
+    -------
+    bool
+        True si shortest está contenido en longest, False si son iguales
+    """
     if shortest == longest:
         return False
     for i in range(len(longest)-len(shortest)+1):
@@ -37,11 +77,23 @@ def contains(shortest, longest):
             return True
     return False
 
-# Funcion que verifica si una secuencia 'item' esta subcontenida dentro de algun elemento
-# de la lista de secuencias 'iterable'.
-
 
 def isSubContained(item, iterable):
+    """
+    Verifica si una secuencia 'item' esta subcontenida dentro de algun elemento de la lista de secuencias 'iterable'
+
+    Parameters
+    ----------
+    item : string
+        La secuencia a buscar
+    iterable : List
+        La lista de secuencias en las que se busca
+
+    Returns
+    -------
+    bool
+        True si está contenida, False si no
+    """
     for i,val in enumerate(iterable):
         if contains(item,val):
             return True

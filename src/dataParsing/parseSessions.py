@@ -7,9 +7,11 @@ Extrae las distintas sesiones que existen en la base de datos
 from phpserialize import *
 from datetime import datetime
 from src.utils.sqlUtils import sqlWrapper
+from src.utils.loadConfig import Config
 
 sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
 sqlPD = sqlWrapper(db='PD')
+
 
 def getIDof(urls):
     """
@@ -56,14 +58,12 @@ for i,row in enumerate(pageview):
 
 # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
 sessions = list()
-tlimit = input('Ingrese tiempo limite [segundos]:')
 
-if tlimit is '':
-    tlimit = 100    # Tiempo limite en segundos.
-else:
-    tlimit = int(tlimit)
+tlimit = Config().getValue(attr='session_tlimit',mode='INT')
+
 for user_id in userL:
     allUserData= [(x[1],x[2]) for x in data if x[0] == user_id] # obtener todos los accesos del usuario.
+    #TODO: Arrojar excepción en caso de que no haya suficiente info...
     tprev = allUserData[0][1]   #tiempo del primer dato.
     initTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
     url = allUserData[0][0]
@@ -92,10 +92,10 @@ for s in ss:
 sqlPD.truncate("sessions")
 sqlPD.truncate("sessiondata")
 
-sqlWrite = ("INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)")
+sqlWrite = "INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)"
 for session in sessions:
     sqlPD.write(sqlWrite, (str(session[0]),session[2].isoformat(' '),session[3].isoformat(' ')))
 
-sqlWrite = ("INSERT INTO sessiondata (urls,date) VALUES (%s,%s)")
+sqlWrite = "INSERT INTO sessiondata (urls,date) VALUES (%s,%s)"
 for session in sessions:
     sqlPD.write(sqlWrite,(str(session[1]),session[2].date().isoformat()))

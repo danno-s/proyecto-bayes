@@ -1,7 +1,3 @@
-{
-  "session_tlimit":"500",
-  "LRS_threshold":"20"
-}
 /*
 
 "session_tlimit": Maximium time in seconds between steps that allows the user
@@ -10,3 +6,7 @@
 "LRS_threshold" : Threshold used as minimum repetitions of a sequence in order
                   to be considered as a LongestRepeatingSequence.
 */
+{
+  "session_tlimit":"50",
+  "LRS_threshold":"20"
+}

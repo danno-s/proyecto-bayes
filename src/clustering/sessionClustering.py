@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 from src.utils.sqlUtils import sqlWrapper
 
+
 def sessionClustering():
 
     sqlPD = sqlWrapper(db='PD')

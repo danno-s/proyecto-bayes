@@ -28,14 +28,19 @@ def hash(string):
     return hashlib.md5(string.encode()).hexdigest()
 
 def extractUserClusteringFeatures():
-    sqlGC = sqlWrapper(db='GC')
-    sqlPD = sqlWrapper(db='PD')
+    try:
+        sqlGC = sqlWrapper(db='GC')
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
 
     sqlRead = 'select urls, variables from pageview'
     usersUrls = sqlGC.read(sqlRead)
+    assert len(usersUrls) > 0
 
     sqlRead = 'select id from urls'
     urls = sqlPD.read(sqlRead)
+    assert len(urls)>0
 
     urls = [item[0] for item in urls]
 
@@ -56,6 +61,7 @@ def extractUserClusteringFeatures():
             D[id] = v
         except TypeError:
             print("Texto no corresponde a datos de usuario, variable leida = " + str(l))
+    assert len(D)>0
 
     for key, val in D.items():
         D[key] = ' '.join([str(i) for i in val])

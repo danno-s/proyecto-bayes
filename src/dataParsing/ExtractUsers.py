@@ -10,12 +10,14 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def extractUsers():
-    sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
-    sqlPD = sqlWrapper(db='PD')
-
+    try:
+        sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
     sqlRead = 'select distinct variables from pageview'
     rows = sqlGC.read(sqlRead)
-
+    assert len(rows)>0
     L = set()
 
     # Leer datos serializados de usuario: ID, Nombre de usuario y Perfil
@@ -32,13 +34,13 @@ def extractUsers():
         except TypeError:
             print("Texto no corresponde a datos de usuario, variable leida = "+str(l))
 
+    assert len(L)>0
     #  print(L)
 
-    if len(L) is not 0:
-        sqlPD.truncate("users")  # Limpia la tabla
-        sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)" # Guardar usuarios
-        for item in L:
-            sqlPD.write(sqlWrite,item)
+    sqlPD.truncate("users")  # Limpia la tabla
+    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)" # Guardar usuarios
+    for item in L:
+        sqlPD.write(sqlWrite,item)
 
 if __name__ == '__main__':
     extractUsers()

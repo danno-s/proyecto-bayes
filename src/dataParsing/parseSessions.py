@@ -9,6 +9,7 @@ from datetime import datetime
 from src.utils.sqlUtils import sqlWrapper
 from src.utils.loadConfig import Config
 
+
 def parseSessions():
     sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
     sqlPD = sqlWrapper(db='PD')
@@ -95,7 +96,7 @@ def parseSessions():
 
     sqlWrite = "INSERT INTO sessions (user,inittime,endtime) VALUES (%s,%s,%s)"
     for session in sessions:
-        sqlPD.write(sqlWrite, (str(session[0]),session[2].isoformat(' '),session[3].isoformat(' ')))
+        sqlPD.write(sqlWrite, (session[0],session[2].isoformat(' '),session[3].isoformat(' ')))
 
     sqlWrite = "INSERT INTO sessiondata (urls,date) VALUES (%s,%s)"
     for session in sessions:

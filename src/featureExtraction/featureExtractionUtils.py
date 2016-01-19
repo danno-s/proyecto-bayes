@@ -6,13 +6,13 @@ Módulo contiene funciones usadas por otros scripts
 
 
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
-def consecutiveIdxs(indices, repeat):
+def consecutiveIdxs(idxs, repeat):
     """
     Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'
 
     Parameters
     ----------
-    indices : List
+    idxs : List
         Lista de índices !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     repeat : int
         Tamaño de las tuplas de índices consecutivos
@@ -22,7 +22,7 @@ def consecutiveIdxs(indices, repeat):
     Tuple
         Las tuplas de índices consecutivos
     """
-    for i in indices[:-repeat+1]:
+    for i in idxs[:-repeat+1]:
         yield tuple(x for x in range(i,i+repeat))
 
 
@@ -65,7 +65,7 @@ def contains(shortest, longest):
     Returns
     -------
     bool
-        True si shortest está contenido en longest, False si son iguales
+        True si shortest está contenido en longest, False si no está contenida o son iguales
     """
     if shortest == longest:
         return False

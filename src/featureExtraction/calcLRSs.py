@@ -8,10 +8,10 @@ from src.featureExtraction.featureExtractionUtils import subsequences, isSubCont
 from src.utils.sqlUtils import sqlWrapper
 from src.utils.loadConfig import Config
 
-def calcLRSs():
-    sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
-    sqlPD = sqlWrapper(db='PD')
 
+def calcLRSs():
+
+    sqlPD = sqlWrapper(db='PD')            # Asigna las bases de datos que se accederán
 
     # Lectura de sessiondata
     sqlRead = 'select idsession, urls from sessiondata'
@@ -27,8 +27,11 @@ def calcLRSs():
             allsubseqsL.append(ss)
         sessionSubseqs[int(row[0])]=set(subsequences(urls))
 
-    # Lectura de sessions
+    assert len(sessionSubseqs) > 0
+    assert len(allsubseqsL) > 0
+    assert len(sessionSubseqs) > 0
 
+    # Lectura de sessions
     sqlRead = 'select idsession, user from sessions'
     rows= sqlPD.read(sqlRead)
 
@@ -36,9 +39,12 @@ def calcLRSs():
     for row in rows:
         userD[int(row[0])]=row[1]
 
+    assert len(userD) > 0
+
     Seqs = dict() # (urlseq, count)
 
     ## Calcular LRSs
+
     mode = 'COUNT_SUBSEQS'     #'COUNT_UNIQUE_USER' | 'COUNT_SPAM_USER' | 'COUNT_SUBSEQS'
 
     if mode is 'COUNT_SPAM_USER':
@@ -80,11 +86,13 @@ def calcLRSs():
         for urlseq in Seqs.keys():
             Seqs[urlseq] = len(userSeqs[urlseq])
 
+    assert len(Seqs) > 0
+
     # Aplicar criterio de repeticiones sobre umbral T
 
 
     T= Config().getValue(attr='LRS_threshold',mode='INT')
-
+    assert T > 0
 
     RepSeqs = list() # [[urlseq]]
     for seq in Seqs:

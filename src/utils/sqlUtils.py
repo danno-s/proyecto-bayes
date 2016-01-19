@@ -25,9 +25,15 @@ class sqlWrapper:
         sqlWrapper
             El wrapper creado
         """
-        self.db = db
+        if db.upper() == 'GC' or db.upper() == 'PD':
+            self.db = db
+        else:
+            raise Exception
         if len(self.conns) == 0:
-            self.__loadConnections()
+            try:
+                self.__loadConnections()
+            except:
+                raise ConnectionError
 
     def setDB(self,db):
         """
@@ -104,5 +110,8 @@ class sqlWrapper:
         with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
             connectionsJSON = f.read()
         connections = json.loads(connectionsJSON)
-        self.conns['GC'] = connections['guidecapture']
-        self.conns['PD'] = connections['parsedData']
+        try:
+            self.conns['GC'] = connections['guidecapture']
+            self.conns['PD'] = connections['parsedData']
+        except:
+            raise

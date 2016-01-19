@@ -61,22 +61,25 @@ def calcUserLRSHistograms():
                     v[i] += 1
         D[user_id] = v
 
-    N = 0
-    for vals in D.values():
-        for val in vals:
-            N += val
+    counts = dict()
+    for i,key in enumerate(D.keys()):
+        N = sum(D[key])
+        if N != 0:
+            D[key] = [val/N for val in D[key]]
+        counts[key] = N
+
     for key,val in D.items():
-        D[key] = ' '.join([str("%.4f"%(i/N)) for i in val])
+        D[key]= ' '.join([str("%.4f"%(x)) for x in val])
 
     for k,v in D.items():
         print(str(k)+", "+str(v))
 
     sqlPD.truncate('userlrshistograms')
 
-    sqlWrite = ("INSERT INTO userlrshistograms (id_usuario,lrshistogram) VALUES (%s, %s)")
+    sqlWrite = "INSERT INTO userlrshistograms (id_usuario,lrshistogram,frequency) VALUES (%s, %s,%s)"
 
     for k,v in D.items():
-        sqlPD.write(sqlWrite,(k,v))
+        sqlPD.write(sqlWrite, (k,v,counts[k]))
 
 if __name__ == '__main__':
     calcUserLRSHistograms()

@@ -5,16 +5,26 @@ from src.main import *
 class MyTestCase(unittest.TestCase):
 
     def test_dataParsing(self):
-        parseData()
-        self.assertTrue(True)
+        try:
+            parseData()
+            self.assertTrue(True)
+        except:
+            self.assertTrue(False)
 
     def test_featureExtraction(self):
-        extractFeatures()
-        self.assertTrue(True)
+        try:
+            extractFeatures()
+            self.assertTrue(True)
+        except:
+            self.assertTrue(False)
 
     def test_clustering(self):
-        clustering()
-        self.assertTrue(True)
+        try:
+            clustering()
+            self.assertTrue(True)
+        except:
+            self.assertTrue(False)
+
 
 if __name__ == '__main__':
     unittest.main()

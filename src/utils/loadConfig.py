@@ -14,6 +14,8 @@ class Config:
 
     def getValue(self,attr,mode):
         if mode == 'INT':
-            return int(self.__parameters[attr])
-        return self.__parameters[attr]
-
+            value = int(self.__parameters[attr])
+            assert value > 0
+        else:
+            value = self.__parameters[attr]
+        return value

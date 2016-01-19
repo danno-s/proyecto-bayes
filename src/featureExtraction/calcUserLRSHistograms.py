@@ -9,13 +9,16 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def calcUserLRSHistograms():
-    sqlPD = sqlWrapper(db='PD')
-
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
 
     # Lectura de sessions
 
     sqlRead = 'select idsession, user from sessions'
     rows = sqlPD.read(sqlRead)
+    assert len(rows)>0
     userSessions = dict() # (user_id, set of session ids of user).
 
     for row in rows:
@@ -25,30 +28,27 @@ def calcUserLRSHistograms():
         else:
             sessionIDs = list()
             userSessions[user_id]= sessionIDs
-
-    sessionSubseqs = dict() # (idsession, set of subsequences of current session).
-    for row in rows:
-        urls = str(row[1]).split(' ')
-        sessionSubseqs[int(row[0])]=set(subsequences(urls))
-
+    assert len(userSessions)>0
 
     # Lectura de sessiondata
 
     sqlRead = 'select idsession, urls from sessiondata'
     rows = sqlPD.read(sqlRead)
+    assert len(rows)>0
 
     sessionSubseqs = dict() # (idsession, set of subsequences of current session).
     for row in rows:
         urls = str(row[1]).split(' ')
         sessionSubseqs[int(row[0])]=set(subsequences(urls))
+    assert len(sessionSubseqs)
 
     sqlRead = 'select seqs from lrss'
     rows = sqlPD.read(sqlRead)
+    assert len(rows)>0
 
     lrss = [item[0] for item in rows]
 
     D = dict()
-
     for user_id,sessionIDs in userSessions.items():
         if user_id in D:
             v = D[user_id]
@@ -60,6 +60,7 @@ def calcUserLRSHistograms():
                if isSubContained(lrs,seq):
                     v[i] += 1
         D[user_id] = v
+    assert len(D)>0
 
     counts = dict()
     for i,key in enumerate(D.keys()):
@@ -67,6 +68,7 @@ def calcUserLRSHistograms():
         if N != 0:
             D[key] = [val/N for val in D[key]]
         counts[key] = N
+    assert len(counts)>0
 
     for key,val in D.items():
         D[key]= ' '.join([str("%.4f"%(x)) for x in val])

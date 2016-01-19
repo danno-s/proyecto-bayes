@@ -4,20 +4,27 @@ from src.featureExtraction.featureExtractionUtils import subsequences, isSubCont
 from src.utils.sqlUtils import sqlWrapper
 
 def linkSessionsWithLRSs():
-    sqlPD = sqlWrapper(db='PD')
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
 
     # Lectura de sessiondata
 
     sqlRead = 'select idsession, urls from sessiondata'
     rows = sqlPD.read(sqlRead)
+    assert len(rows)>0
 
     sessionSubseqs = dict() # (idsession, set of subsequences of current session).
     for row in rows:
         urls = str(row[1]).split(' ')
         sessionSubseqs[int(row[0])]=set(subsequences(urls))
 
+    assert len(sessionSubseqs)>0
+
     sqlRead = 'select seqs from lrss'
     rows = sqlPD.read(sqlRead)
+    assert len(rows)>0
 
     lrss = [item[0] for item in rows]
 
@@ -32,6 +39,8 @@ def linkSessionsWithLRSs():
             if isSubContained(lrs,seq):
                 v[i] = 1
         D[session_id] = v
+
+    assert len(D)>0
 
     for k,v in D.items():
         print(str(k)+", "+str(v))

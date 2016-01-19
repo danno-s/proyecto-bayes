@@ -26,16 +26,19 @@ def hash(string):
     return hashlib.md5(string.encode()).hexdigest()
 
 def extractURLs():
-    sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
-    sqlPD = sqlWrapper(db='PD')
-
+    try:
+        sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
     sqlRead = 'SELECT DISTINCT url from pageview'
     rows = sqlGC.read(sqlRead)
-
+    assert len(rows)> 0
     L = [x[0] for x in rows]  # Obtiene URLs desde los eventos capturados.
 
     sqlRead = 'SELECT DISTINCT urls from pageview'
     rows = sqlGC.read(sqlRead)
+    assert len(rows)> 0
 
     URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
 
@@ -62,8 +65,8 @@ def extractURLs():
     #
     # print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
 
-
-    sqlPD.truncate("url")  # Limpia las tablas
+    # Limpia las tablas
+    sqlPD.truncate("url")
     sqlPD.truncate("urls")
 
 

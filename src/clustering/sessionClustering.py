@@ -9,6 +9,7 @@ def sessionClustering():
     sessionLRSfeats = dict()
     sqlRead = ('select idsession,sessionFeatureVector from sessionlrssfeatures')
     rows= sqlPD.read(sqlRead)
+    assert len(rows)>0
     for row in rows:
         sessionLRSfeats[int(row[0])]=[int(x) for x in row[1].split(' ')]
 

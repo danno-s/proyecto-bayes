@@ -7,7 +7,7 @@ Extrae URLs únicas de los eventos en la base de datos, y los árboles completos
 import json
 from src.utils.sqlUtils import sqlWrapper
 
-def getIDof(urls):
+def getMacroID(urls):
     """
     Obtiene el id en la base de datos de un árbol de urls
 
@@ -26,24 +26,23 @@ def getIDof(urls):
         raise
     sqlRead = "select id_n from urls where urls = '"+urls+"'"
     rows = sqlPD.read(sqlRead)
-    print(rows)
     return str(rows[0][0])
 
 elements = ['TextAreas','InputText']
 
 def getTextArea(d,L):
-#    print("getTextArea("+str(d)+")")
     hasValue = d['HasValue']
-    if hasValue == 'true':
-        L.append(1)
-    else:
-        L.append(0)
+    #isHidden = d['IsHidden']
+    if True: #isHidden == 'false' or isHidden == 'true':
+        if hasValue == 'true':
+            L.append(1)
+        else:
+            L.append(0)
 
 def getInputText(d,L):
-#    print("getInputText("+str(d)+")")
     hasValue = d['HasValue']
     isHidden = d['IsHidden']
-    if isHidden == 'false': # or isHidden == 'true':
+    if isHidden == 'false' or isHidden == 'true':
         if hasValue == 'true':
             L.append(1)
         else:
@@ -53,15 +52,11 @@ def getStateVectorFromParent(parent,L,func):
     if parent == '':
         return
     elif isinstance(parent,list) and len(parent) > 0:
-#        print("PARENT:"+str(len(parent)))
         for p in parent:
             if isinstance(p,dict):
                 func(p,L)
     else:
-        try: p = parent['parent']
-        except:
-            print(func.__name__)
-            raise
+        p = parent['parent']
         getStateVectorFromParent(p,L,func = func)
         children = parent['children']
         if isinstance(children,list) and len(children) > 0:
@@ -69,16 +64,16 @@ def getStateVectorFromParent(parent,L,func):
                 getStateVectorFromChildren(ch,L,func=func)
             return
 
-def getStateVectorFromChildren(d,L,func):
-    if d == '':
+
+def getStateVectorFromChildren(p,L,func):
+    if p == '':
         return
-    parent = d['parent']
+    parent = p['parent']
     getStateVectorFromParent(parent,L,func=func)
-    children = d['children']
-#    print("CHILDREN:"+str(len(children)))
+    children = p['children']
     for child in children:
-#        print("child"+str(child))
         getStateVectorFromParent(child,L,func=func)
+
 
 def getStateVector(contentElements,type):
     L = list()
@@ -111,8 +106,7 @@ def extractContentElements():
     allElementsL = list()
     for i,row in enumerate(rows):
         data = dict()
-        print("FILA i= "+str(i) + str(row[0]))
-        macro_id = getIDof(str(row[0]))
+        macro_id = getMacroID(str(row[0]))
         contentElementUnique = json.loads(row[1])
         for element in elements:
             try: data[element] = ' '.join(map(str, getStateVector(contentElementUnique,element)))
@@ -121,39 +115,36 @@ def extractContentElements():
                 raise
         allElementsL.append((macro_id, data['TextAreas'],data['InputText']))
 
-    macro_ids = sorted(set([x[0] for x in allElementsL]))
+    macro_ids = set([x[0] for x in allElementsL])
 
     macroD = dict()
     for id in macro_ids:
-        macroD[id]=[(x[1],x[2]) for x in allElementsL if x[0] == id]
+        micro_states = set()
+        for x in allElementsL:
+            if x[0] == id:
+                micro_states.add((x[1],x[2]))
+        macroD[id]=micro_states
 
-    for k,v in sorted(macroD.items()):
-        print(str(k)+" : \n")
-        [print(str(x)) for x in v]
+    for k,v in macroD.items():
+        print("Macro ID "+str(k)+" : \n")
+        [print("\t"+str(x)) for x in sorted(v)]
         print('\n')
 
-    print("Total different elements:" + str(len(allElementsL)))
-    for v in allElementsL:
-        print(v)
+    print("Total different elements:" + str(sum([len(x) for x in macroD.values()])))
 
-''''
 
     # Limpia las tablas
-    sqlPD.truncate("url")
-    sqlPD.truncate("urls")
 
+    sqlPD.truncate("contentElements")
 
-    sqlWrite = "INSERT INTO url (url) VALUES ("  # Guardar URLs desde evento.
+    sqlWrite = "INSERT INTO contentElements (macro_id"
+    for el in elements:
+        sqlWrite = sqlWrite +','+el
+    sqlWrite = sqlWrite+") VALUES (%s,%s,%s)"  # Guardar URLs desde evento.
 
-    for url in L:
-        sqlPD.write(sqlWrite + '"' + url + '");')
+    for id,values in macroD.items():
+        for l in values:
+            sqlPD.write(sqlWrite,(id,l[0],l[1]))
 
-    sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"  # Guardar Árboles completos de URLs.
-
-    for urlstree in URLs:
-        urljsonstr = json.dumps(urlstree).replace(' ', '')
-        print(urljsonstr)
-        sqlPD.write(sqlWrite, (hash(urljsonstr), urljsonstr))
-'''
 if __name__ == '__main__':
     extractContentElements()

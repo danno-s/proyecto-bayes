@@ -6,27 +6,7 @@ Extrae URLs únicas de los eventos en la base de datos, y los árboles completos
 
 import json
 from src.utils.sqlUtils import sqlWrapper
-
-def getMacroID(urls):
-    """
-    Obtiene el id en la base de datos de un árbol de urls
-
-    Parameters
-    ----------
-    urls : string
-        El árbol de urls a buscar
-    Returns
-    -------
-    int
-        El id del árbol de urls
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select id_n from urls where urls = '"+urls+"'"
-    rows = sqlPD.read(sqlRead)
-    return str(rows[0][0])
+from src.dataParsing.dataParsingUtils import getMacroID
 
 elements = ['TextAreas','InputText']
 
@@ -107,13 +87,14 @@ def extractContentElements():
     for i,row in enumerate(rows):
         data = dict()
         macro_id = getMacroID(str(row[0]))
-        contentElementUnique = json.loads(row[1])
+        raw = row[1]
+        contentElementUnique = json.loads(raw)
         for element in elements:
             try: data[element] = ' '.join(map(str, getStateVector(contentElementUnique,element)))
             except:
                 print(json.dumps(contentElementUnique,indent=2))
                 raise
-        allElementsL.append((macro_id, data['TextAreas'],data['InputText']))
+        allElementsL.append((macro_id,raw, data['TextAreas'],data['InputText']))
 
     macro_ids = set([x[0] for x in allElementsL])
 
@@ -122,29 +103,29 @@ def extractContentElements():
         micro_states = set()
         for x in allElementsL:
             if x[0] == id:
-                micro_states.add((x[1],x[2]))
+                micro_states.add((x[1],x[2],x[3]))
         macroD[id]=micro_states
 
-    for k,v in macroD.items():
-        print("Macro ID "+str(k)+" : \n")
-        [print("\t"+str(x)) for x in sorted(v)]
-        print('\n')
+   # for k,v in macroD.items():
+   #     print("Macro ID "+str(k)+" : \n")
+   #     [print("\t" + str(x) for x in sorted([(a[2], a[3]) for a in v]))]
+   #     print('\n')
 
-    print("Total different elements:" + str(sum([len(x) for x in macroD.values()])))
+    print("Total different micro states:" + str(sum([len(x) for x in macroD.values()])))
 
 
     # Limpia las tablas
 
     sqlPD.truncate("contentElements")
 
-    sqlWrite = "INSERT INTO contentElements (macro_id"
+    sqlWrite = "INSERT INTO contentElements (macro_id,raw"
     for el in elements:
         sqlWrite = sqlWrite +','+el
-    sqlWrite = sqlWrite+") VALUES (%s,%s,%s)"  # Guardar URLs desde evento.
+    sqlWrite = sqlWrite+") VALUES (%s,%s,%s,%s)"  # Guardar URLs desde evento.
 
     for id,values in macroD.items():
         for l in values:
-            sqlPD.write(sqlWrite,(id,l[0],l[1]))
+            sqlPD.write(sqlWrite,(id,l[0],l[1],l[2]))
 
 if __name__ == '__main__':
     extractContentElements()

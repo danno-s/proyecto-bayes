@@ -5,6 +5,7 @@
 """
 
 import random
+import numpy as np
 from src.utils.sqlUtils import sqlWrapper
 
 
@@ -52,10 +53,25 @@ def getsession():
 
     return L
 
+def setsession():
+    a = open("sesiones.txt","w")
+
+    L = [None]*3
+    L[0] = [np.random.choice(range(1,15),random.randint(1,20)).tolist() for x in range(21)]
+    a.write(str(L[0])+ "\n")
+    L[1] = [np.random.choice(range(15,25),random.randint(1,20)).tolist() for x in range(21,28)]
+    a.write(str(L[1])+ "\n")
+    L[2] = [np.random.choice(range(25,31),random.randint(1,20)).tolist() for x in range(28,30)]
+    a.write(str(L[2])+ "\n")
+
+    a.close()
+
+    return L
+
 def generate(n):
     users = simulusers()
     urls = geturls()
-    session = getsession()
+    session = setsession()
 
     sqlPD = sqlWrapper(db='PD')
     sqlPD.truncate("simulated")

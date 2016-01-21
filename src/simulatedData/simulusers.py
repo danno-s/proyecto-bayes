@@ -34,7 +34,7 @@ def noise(list,n):
     for i in range(n):
         r = random.randint(0,1)
         if r==0:
-            l.insert(random.randint(0,len(l)),random.randint(0,30))
+            l.insert(random.randint(0,len(l)),random.choice(l))
         else:
             if len(l)>1:
                 l.pop(random.randint(0,len(l)-1))
@@ -68,6 +68,8 @@ def generate(n):
             ses = noise(ses,3)
             d = random.randint(1450000000,1452534931)
             for s in ses:
+                if s==-1:
+                    print(ses)
                 try:
                     url = urls[s-1]
                 except IndexError:
@@ -75,12 +77,12 @@ def generate(n):
                     print(s)
                     print(ses)
                     exit()
-                L= [s-1,url,d]
+                L= [s,url,d]
                 L.extend(u)
                 sqlPD.write(sqlWrite, L)
                 d += random.randint(1,49)
 
 
 if __name__ == '__main__':
-    generate(5)
+    generate(1)
 

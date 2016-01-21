@@ -81,6 +81,7 @@ def parseSessions():
 
         else:
             endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
+            print(type(sessionData[0]))
             sessions.append((user_id,' '.join(sessionData),initTime,endTime))   # guardar última sesión del usuario.
 
     assert len(sessions) > 0

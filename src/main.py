@@ -24,7 +24,7 @@ def clustering():
     sessionClustering()
 
 if __name__ == '__main__':
-    parseData()
+    # parseData()
     print("\n\nData parsing finished.\n\n")
     extractFeatures()
     print("\n\nFeature Extraction finished.\n\n")

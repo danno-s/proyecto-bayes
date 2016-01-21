@@ -5,6 +5,7 @@
 """
 
 import random
+import numpy as np
 from src.utils.sqlUtils import sqlWrapper
 
 
@@ -34,7 +35,7 @@ def noise(list,n):
     for i in range(n):
         r = random.randint(0,1)
         if r==0:
-            l.insert(random.randint(0,len(l)),random.randint(0,30))
+            l.insert(random.randint(0,len(l)),random.choice(l))
         else:
             if len(l)>1:
                 l.pop(random.randint(0,len(l)-1))
@@ -52,10 +53,25 @@ def getsession():
 
     return L
 
+def setsession():
+    a = open("sesiones.txt","w")
+
+    L = [None]*3
+    L[0] = [np.random.choice(range(1,15),random.randint(1,20)).tolist() for x in range(21)]
+    a.write(str(L[0])+ "\n")
+    L[1] = [np.random.choice(range(15,25),random.randint(1,20)).tolist() for x in range(21,28)]
+    a.write(str(L[1])+ "\n")
+    L[2] = [np.random.choice(range(25,31),random.randint(1,20)).tolist() for x in range(28,30)]
+    a.write(str(L[2])+ "\n")
+
+    a.close()
+
+    return L
+
 def generate(n):
     users = simulusers()
     urls = geturls()
-    session = getsession()
+    session = setsession()
 
     sqlPD = sqlWrapper(db='PD')
     sqlPD.truncate("simulated")
@@ -68,6 +84,8 @@ def generate(n):
             ses = noise(ses,3)
             d = random.randint(1450000000,1452534931)
             for s in ses:
+                if s==-1:
+                    print(ses)
                 try:
                     url = urls[s-1]
                 except IndexError:
@@ -75,12 +93,12 @@ def generate(n):
                     print(s)
                     print(ses)
                     exit()
-                L= [s-1,url,d]
+                L= [s,url,d]
                 L.extend(u)
                 sqlPD.write(sqlWrite, L)
                 d += random.randint(1,49)
 
 
 if __name__ == '__main__':
-    generate(5)
+    generate(1)
 

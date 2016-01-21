@@ -8,9 +8,8 @@ import json
 
 from src.utils.dataParsingUtils import *
 
-elements = ['TextAreas','InputText']
 
-def getTextArea(d,L):
+def getTextAreas(d,L):
     hasValue = d['HasValue']
     #isHidden = d['IsHidden']
     if True: #isHidden == 'false' or isHidden == 'true':
@@ -27,6 +26,11 @@ def getInputText(d,L):
             L.append(1)
         else:
             L.append(0)
+
+elementTypes = ['TextAreas', 'InputText']
+func = {'TextAreas':getTextAreas,'InputText':getInputText}
+
+'''
 
 def getStateVectorFromParent(parent,L,func):
     if parent == '':
@@ -71,6 +75,34 @@ def getStateVector(contentElements,type):
         for child in children:
             getStateVectorFromChildren(child,L,func=func)
     return L
+'''
+def getStateVectorFrom(contentElements,type,L):
+    if len(contentElements) == 0:
+        return
+    valueD = contentElements['value']
+    try:
+        elementL = valueD[type]
+    except:
+        print(valueD)
+        raise
+    if elementL != '':
+        for el in elementL:
+            func[type](el, L)
+    children = contentElements['children']
+    for child in children:
+        getStateVectorFrom(child,type,L)
+
+def getStateVector(contentElements,type):
+    L = list()
+    getStateVectorFrom(contentElements,type,L)
+    return L
+
+
+
+
+
+
+
 
 
 def extractContentElements():
@@ -88,10 +120,10 @@ def extractContentElements():
         macro_id = getMacroID(str(row[0]))
         raw = row[1]
         contentElementUnique = json.loads(raw)
-        for element in elements:
-            try: data[element] = ' '.join(map(str, getStateVector(contentElementUnique,element)))
+        for type in elementTypes:
+            try: data[type] = ' '.join(map(str, getStateVector(contentElementUnique,type)))
             except:
-                print(json.dumps(contentElementUnique,indent=2))
+                #print(json.dumps(contentElementUnique,indent=2))
                 raise
         allElementsL.append((macro_id, data['TextAreas'],data['InputText'],raw))
 
@@ -112,7 +144,7 @@ def extractContentElements():
 
     print("Total different micro states:" + str(sum([len(x) for x in macroD.values()])))
 
-
+'''
     # Limpia las tablas
 
     sqlPD.truncate("contentElements")
@@ -125,6 +157,6 @@ def extractContentElements():
     for id,values in macroD.items():
         for l in values:
             sqlPD.write(sqlWrite,(id,l[0],l[1],l[2]))
-
+'''
 if __name__ == '__main__':
     extractContentElements()

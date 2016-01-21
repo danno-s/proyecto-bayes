@@ -1,9 +1,10 @@
 import unittest
+
 from src.featureExtraction.calcLRSs import calcLRSs
+from src.featureExtraction.calcUserLRSHistograms import calcUserLRSHistograms
 from src.featureExtraction.extractUserClusteringFeatures import extractUserClusteringFeatures
 from src.featureExtraction.linkSessionsWithLRSs import linkSessionsWithLRSs
-from src.featureExtraction.calcUserLRSHistograms import calcUserLRSHistograms
-from src.featureExtraction.featureExtractionUtils import *
+from src.utils.featureExtractionUtils import *
 from src.utils.sqlUtils import sqlWrapper
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
+from src.utils.featureExtractionUtils import subsequences, isSubContained
 from src.utils.sqlUtils import sqlWrapper
 
 def linkSessionsWithLRSs():

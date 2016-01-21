@@ -4,7 +4,7 @@
 Calcula histrogramas sobre los usuarios y sus LRS
 """
 
-from src.featureExtraction.featureExtractionUtils import subsequences, isSubContained
+from src.utils.featureExtractionUtils import subsequences, isSubContained
 from src.utils.sqlUtils import sqlWrapper
 
 

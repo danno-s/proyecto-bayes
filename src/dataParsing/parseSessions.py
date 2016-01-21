@@ -4,32 +4,12 @@
 Extrae las distintas sesiones que existen en la base de datos
 """
 
-from phpserialize import *
 from datetime import datetime
-from src.utils.sqlUtils import sqlWrapper
+
+from phpserialize import *
+
+from src.utils.dataParsingUtils import *
 from src.utils.loadConfig import Config
-
-
-def getIDof(urls):
-    """
-    Obtiene el id en la base de datos de un árbol de urls
-
-    Parameters
-    ----------
-    urls : string
-        El árbol de urls a buscar
-    Returns
-    -------
-    int
-        El id del árbol de urls
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = 'select id_n from urls where urls = '+ "'"+urls+"'"
-    rows = sqlPD.read(sqlRead)
-    return str(rows[0][0])
 
 
 def parseSessions():
@@ -84,16 +64,18 @@ def parseSessions():
         initTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
         url = allUserData[0][0]
         sessionData = list()    # datos de sesión actual.
-        sessionData.append(getIDof(url)) # inicializa sesión actual
+        macro_id = getMacroID(url)
+        sessionData.append(macro_id) # inicializa sesión actual
 
         for i, step in enumerate(allUserData[1:]):
+            macro_id = getMacroID(step[0])
             if step[1] - tprev <= tlimit:   # condición para mantenerse en sesión actual
-                sessionData.append(getIDof(step[0]))                 # Agregar datos a sesión actual
+                sessionData.append(macro_id)                 # Agregar datos a sesión actual
             else:
                 endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
                 sessions.append((user_id, ' '.join(sessionData),initTime,endTime))  # guardar sesión actual del usuario
                 sessionData.clear()
-                sessionData.append(getIDof(step[0]))     # inicializar nueva sesión
+                sessionData.append(macro_id)     # inicializar nueva sesión
                 initTime = datetime.fromtimestamp(step[1]) # TODO: AGREGAR TIMEZONE
             tprev = step[1]     # actualizar timestamp previo.
 

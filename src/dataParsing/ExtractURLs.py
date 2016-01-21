@@ -4,26 +4,9 @@
 Extrae URLs únicas de los eventos en la base de datos, y los árboles completos de URLs del sitio de las capturas
 """
 
-import json
-import hashlib
+from src.utils.dataParsingUtils import hash
 from src.utils.sqlUtils import sqlWrapper
 
-
-def hash(string):
-    """
-    Retorna el valor hash de un string, usando MD5
-
-    Parameters
-    ----------
-    string : string
-        El string que se quiere convertir
-
-    Returns
-    -------
-    string
-        El valor del hash
-    """
-    return hashlib.md5(string.encode()).hexdigest()
 
 def extractURLs():
     try:

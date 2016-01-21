@@ -7,6 +7,6 @@
                   to be considered as a LongestRepeatingSequence.
 */
 {
-  "session_tlimit":"50",
+  "session_tlimit":"70",
   "LRS_threshold":"20"
 }

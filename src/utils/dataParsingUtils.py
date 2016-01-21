@@ -3,6 +3,8 @@
 """
 Módulo contiene funciones usadas por otros scripts
 """
+import hashlib
+
 from src.utils.sqlUtils import sqlWrapper
 def getMacroID(urls):
     """
@@ -47,3 +49,19 @@ def getMicroID(contentElements):
     rows = sqlPD.read(sqlRead)
     return str(rows[0][0])
 
+
+def hash(string):
+    """
+    Retorna el valor hash de un string, usando MD5
+
+    Parameters
+    ----------
+    string : string
+        El string que se quiere convertir
+
+    Returns
+    -------
+    string
+        El valor del hash
+    """
+    return hashlib.md5(string.encode()).hexdigest()

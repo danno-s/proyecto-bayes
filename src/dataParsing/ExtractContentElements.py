@@ -5,8 +5,8 @@ Extrae URLs únicas de los eventos en la base de datos, y los árboles completos
 """
 
 import json
-from src.utils.sqlUtils import sqlWrapper
-from src.dataParsing.dataParsingUtils import *
+
+from src.utils.dataParsingUtils import *
 
 elements = ['TextAreas','InputText']
 

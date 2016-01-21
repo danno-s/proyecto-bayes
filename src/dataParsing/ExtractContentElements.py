@@ -6,7 +6,7 @@ Extrae URLs únicas de los eventos en la base de datos, y los árboles completos
 
 import json
 from src.utils.sqlUtils import sqlWrapper
-from src.dataParsing.dataParsingUtils import getMacroID
+from src.dataParsing.dataParsingUtils import *
 
 elements = ['TextAreas','InputText']
 
@@ -82,7 +82,6 @@ def extractContentElements():
 
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
-    print(str(len(rows)) + " filas:")
     allElementsL = list()
     for i,row in enumerate(rows):
         data = dict()
@@ -94,7 +93,7 @@ def extractContentElements():
             except:
                 print(json.dumps(contentElementUnique,indent=2))
                 raise
-        allElementsL.append((macro_id,raw, data['TextAreas'],data['InputText']))
+        allElementsL.append((macro_id, data['TextAreas'],data['InputText'],raw))
 
     macro_ids = set([x[0] for x in allElementsL])
 
@@ -118,10 +117,10 @@ def extractContentElements():
 
     sqlPD.truncate("contentElements")
 
-    sqlWrite = "INSERT INTO contentElements (macro_id,raw"
+    sqlWrite = "INSERT INTO contentElements (macro_id"
     for el in elements:
         sqlWrite = sqlWrite +','+el
-    sqlWrite = sqlWrite+") VALUES (%s,%s,%s,%s)"  # Guardar URLs desde evento.
+    sqlWrite = sqlWrite+",raw) VALUES (%s,%s,%s,%s)"  # Guardar URLs desde evento.
 
     for id,values in macroD.items():
         for l in values:

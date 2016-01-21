@@ -27,5 +27,23 @@ def getMacroID(urls):
 
 
 def getMicroID(contentElements):
+    """
+    Obtiene el id en la base de datos de un micro estado
 
-    pass
+    Parameters
+    ----------
+    contentElements : string
+        El microestado a buscar
+    Returns
+    -------
+    int
+        El id del microestado
+    """
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
+    sqlRead = "select id from contentElements where raw = '"+contentElements+"'"
+    rows = sqlPD.read(sqlRead)
+    return str(rows[0][0])
+

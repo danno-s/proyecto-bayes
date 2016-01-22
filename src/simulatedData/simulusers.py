@@ -43,7 +43,7 @@ def noise(list,n):
 
 def getsession():
     sqlPD = sqlWrapper(db='PD')
-    sqlRead = 'SELECT urls from sessiondata'
+    sqlRead = 'SELECT urls from sessiondataorigin'
     rows = sqlPD.read(sqlRead)
 
     L = [None]*3
@@ -57,18 +57,18 @@ def setsession():
     a = open("sesiones.txt","w")
 
     L = [None]*3
-    L[0] = [np.random.choice(range(1,15),random.randint(1,20)).tolist() for x in range(21)]
+    L[0] = [np.random.choice(range(1,15),random.randint(1,20)).tolist() for x in range(5)]
     a.write(str(L[0])+ "\n")
-    L[1] = [np.random.choice(range(15,25),random.randint(1,20)).tolist() for x in range(21,28)]
+    L[1] = [np.random.choice(range(15,25),random.randint(1,20)).tolist() for x in range(5,9)]
     a.write(str(L[1])+ "\n")
-    L[2] = [np.random.choice(range(25,31),random.randint(1,20)).tolist() for x in range(28,30)]
+    L[2] = [np.random.choice(range(25,31),random.randint(1,20)).tolist() for x in range(9,12)]
     a.write(str(L[2])+ "\n")
 
     a.close()
 
     return L
 
-def generate(n):
+def generate(n, r = 3):
     users = simulusers()
     urls = geturls()
     session = setsession()
@@ -81,8 +81,8 @@ def generate(n):
         for u in users:
             l = session[u[2]]
             ses = random.choice(l)
-            ses = noise(ses,3)
-            d = random.randint(1450000000,1452534931)
+            ses = noise(ses,r)
+            d = random.randint(1450000000,1462534931)
             for s in ses:
                 if s==-1:
                     print(ses)
@@ -100,5 +100,5 @@ def generate(n):
 
 
 if __name__ == '__main__':
-    generate(1)
+    generate(5)
 

@@ -8,9 +8,8 @@ import json
 
 from src.utils.dataParsingUtils import *
 
-elements = ['TextAreas','InputText']
 
-def getTextArea(d,L):
+def getTextAreas(d,L):
     hasValue = d['HasValue']
     #isHidden = d['IsHidden']
     if True: #isHidden == 'false' or isHidden == 'true':
@@ -18,6 +17,7 @@ def getTextArea(d,L):
             L.append(1)
         else:
             L.append(0)
+
 
 def getInputText(d,L):
     hasValue = d['HasValue']
@@ -28,49 +28,40 @@ def getInputText(d,L):
         else:
             L.append(0)
 
-def getStateVectorFromParent(parent,L,func):
-    if parent == '':
-        return
-    elif isinstance(parent,list) and len(parent) > 0:
-        for p in parent:
-            if isinstance(p,dict):
-                func(p,L)
-    else:
-        p = parent['parent']
-        getStateVectorFromParent(p,L,func = func)
-        children = parent['children']
-        if isinstance(children,list) and len(children) > 0:
-            for ch in children:
-                getStateVectorFromChildren(ch,L,func=func)
-            return
+def getRadioButtons(d,L):
+    selected = d['Selected']
+    L.append(selected)
 
+func = {'TextAreas':getTextAreas,'InputText':getInputText, 'RadioButton':getRadioButtons}
+elementTypes= sorted([x for x in func.keys()])
 
-def getStateVectorFromChildren(p,L,func):
-    if p == '':
+def getStateVectorFrom(contentElements,type,L):
+    if len(contentElements) == 0:
         return
-    parent = p['parent']
-    getStateVectorFromParent(parent,L,func=func)
-    children = p['children']
+    valueD = contentElements['value']
+    try:
+        elementL = valueD[type]
+    except:
+        print(valueD)
+        raise
+    if elementL != '':
+        for el in elementL:
+            func[type](el, L)
+    children = contentElements['children']
     for child in children:
-        getStateVectorFromParent(child,L,func=func)
-
+        getStateVectorFrom(child,type,L)
 
 def getStateVector(contentElements,type):
     L = list()
-    rootD = dict()
-    if type in elements:
-        func = getTextArea
-        try:
-            rootD = contentElements[type]
-        except:
-            raise
-    if len(rootD) > 0:
-        parent = rootD['parent']
-        getStateVectorFromParent(parent,L,func=func)
-        children = rootD['children']
-        for child in children:
-            getStateVectorFromChildren(child,L,func=func)
+    getStateVectorFrom(contentElements,type,L)
     return L
+
+
+
+
+
+
+
 
 
 def extractContentElements():
@@ -88,12 +79,12 @@ def extractContentElements():
         macro_id = getMacroID(str(row[0]))
         raw = row[1]
         contentElementUnique = json.loads(raw)
-        for element in elements:
-            try: data[element] = ' '.join(map(str, getStateVector(contentElementUnique,element)))
+        for type in elementTypes:
+            try: data[type] = ' '.join(map(str, getStateVector(contentElementUnique,type)))
             except:
                 print(json.dumps(contentElementUnique,indent=2))
                 raise
-        allElementsL.append((macro_id, data['TextAreas'],data['InputText'],raw))
+        allElementsL.append((macro_id, data['InputText'],data['RadioButton'],data['TextAreas'],raw))
 
     macro_ids = set([x[0] for x in allElementsL])
 
@@ -102,13 +93,13 @@ def extractContentElements():
         micro_states = set()
         for x in allElementsL:
             if x[0] == id:
-                micro_states.add((x[1],x[2],x[3]))
+                micro_states.add((x[1],x[2],x[3],x[4]))
         macroD[id]=micro_states
 
-   # for k,v in macroD.items():
-   #     print("Macro ID "+str(k)+" : \n")
-   #     [print("\t" + str(x) for x in sorted([(a[2], a[3]) for a in v]))]
-   #     print('\n')
+    for id,values in macroD.items():
+        print("MacroID "+str(id)+" :\n")
+        for l in values:
+            print("\t"+str((id,l[0],l[1],l[2])))
 
     print("Total different micro states:" + str(sum([len(x) for x in macroD.values()])))
 
@@ -118,13 +109,17 @@ def extractContentElements():
     sqlPD.truncate("contentElements")
 
     sqlWrite = "INSERT INTO contentElements (macro_id"
-    for el in elements:
-        sqlWrite = sqlWrite +','+el
-    sqlWrite = sqlWrite+",raw) VALUES (%s,%s,%s,%s)"  # Guardar URLs desde evento.
-
+    for type in elementTypes:
+        sqlWrite = sqlWrite +','+type
+    sqlWrite = sqlWrite+",raw) VALUES (%s,%s"
+    for type in elementTypes:
+        sqlWrite = sqlWrite + ",%s"
+    sqlWrite = sqlWrite+ ")"  # Guardar URLs desde evento.
+    print(sqlWrite)
     for id,values in macroD.items():
         for l in values:
-            sqlPD.write(sqlWrite,(id,l[0],l[1],l[2]))
+            print((id,l[0],l[1],l[2],l[3]))
+            sqlPD.write(sqlWrite,(id,l[0],l[1],l[2],l[3]))
 
 if __name__ == '__main__':
     extractContentElements()

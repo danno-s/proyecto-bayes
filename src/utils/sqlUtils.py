@@ -100,7 +100,11 @@ class sqlWrapper:
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'], host=self.conns[self.db]['host'],database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         if item != None:
-            cursor.execute(sqlWrite,item)
+            try:
+                cursor.execute(sqlWrite,item)
+            except:
+                print(item)
+                raise
         else:
             cursor.execute(sqlWrite)
         cnx.commit()

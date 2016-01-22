@@ -1,81 +1,16 @@
 #!/usr/bin/python
 
 """
-Extrae URLs únicas de los eventos en la base de datos, y los árboles completos de URLs del sitio de las capturas
+Extrae vectores que definen micro-estados únicos de los eventos en la base de datos.
 """
 
 import json
 
 from src.utils.dataParsingUtils import *
+from src.dataParsing.MicroStateVectorExtractor import *
 
-
-def getTextAreas(d,L):
-    hasValue = d['HasValue']
-    #isHidden = d['IsHidden']
-    if True: #isHidden == 'false' or isHidden == 'true':
-        if hasValue == 'true':
-            L.append(1)
-        else:
-            L.append(0)
-
-
-def getInputText(d,L):
-    hasValue = d['HasValue']
-    isHidden = d['IsHidden']
-    if isHidden == 'false' or isHidden == 'true':
-        if hasValue == 'true':
-            L.append(1)
-        else:
-            L.append(0)
-
-def getRadioButtons(d,L):
-    selected = d['Selected']
-    L.append(selected)
-
-def getSelects(d,L):
-    options = d['Selected']
-    if len(options) >0:
-        L.append('-'.join(options))
-
-def getCheckboxes(d,L):
-    quantity = int(d['Quantity'])
-    vector = ['0']*quantity
-    options = d['Selected']
-    if options != '':
-        for i in options:
-            vector[int(i)]='1'
-    L.append('-'.join(vector))
-func = {'TextAreas':getTextAreas,'InputText':getInputText, 'RadioButton':getRadioButtons, 'Selects':getSelects,'Checkbox': getCheckboxes}
-elementTypes= sorted([x for x in func.keys()])
+elementTypes= ['TextAreas','InputText','RadioButton','Selects']
 print('elementTypes:' +str(elementTypes))
-
-def generateStateVectorFrom(contentElements, type, L):
-    if len(contentElements) == 0:
-        return
-    valueD = contentElements['value']
-    try:
-        elementL = valueD[type]
-    except:
-        print(valueD)
-        raise
-    if elementL != '':
-        for el in elementL:
-            func[type](el, L)
-    children = contentElements['children']
-    for child in children:
-        generateStateVectorFrom(child, type, L)
-
-def getStateVectors(contentElements,types):
-    data = dict()
-    for type in elementTypes:
-        L = list()
-        try:
-            generateStateVectorFrom(contentElements, type, L)
-            data[type] = ' '.join(map(str, L))
-        except:
-            print(json.dumps(contentElements,indent=2))
-            raise
-    return data
 
 def extractContentElements():
     try:
@@ -83,6 +18,8 @@ def extractContentElements():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
+
+    msvE = MicroStateVectorExtractor(types=elementTypes)
 
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
@@ -95,7 +32,7 @@ def extractContentElements():
         contentElementUnique = json.loads(raw)
         eL=eL+(macro_id,)
         try:
-            data = getStateVectors(contentElementUnique,elementTypes)
+            data = msvE.getStateVectors(contentElementUnique,elementTypes)
         except:
             print(type + ", Fila: "+  str(i))
             print(json.dumps(contentElementUnique,indent=2))

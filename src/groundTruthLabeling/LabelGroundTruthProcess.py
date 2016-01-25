@@ -67,16 +67,18 @@ def labelGroundTruthProcess():
         YML['db.options']['dbname'] = 'seba_procesos'
         yaml.dump(YML,f,indent=8,default_flow_style=False)
 
-    input("Press ENTER to stop recording when the process is finished...")
+    input("Recording...\nPress ENTER to stop when the process is finished.")
 
     with open('/home/sebastian/www/guidecapture/config/db.yml','w') as f:
         YML['db.options']['dbname'] = dbname
         yaml.dump(YML,f,indent=8,default_flow_style=False)
     if tinit == 1:
         tinit = getFirstDataTime()
-    print("Process captured.")
     tend = getLastDataTime()
-    print(tend)
+    if tend < tinit:
+        print("Nothing was recorded.")
+        return
+    print("Process captured.")
     # Label the finished process:
     print("Labeling data from tstamps "+str(tinit)+ " to " + str(tend) +" with process ID ..."+ str(pID))
     labelData(tinit,tend,rec_id,label=pID)

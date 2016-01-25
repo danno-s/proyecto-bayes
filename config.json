@@ -4,9 +4,19 @@
                  to stay in the same session.
 
 "LRS_threshold" : Threshold used as minimum repetitions of a sequence in order
-                  to be considered as a LongestRepeatingSequence.
+                 to be considered as a LongestRepeatingSequence.
+
+"elementTypes" : Types for the MicroStateVectorExtractor to read and extract the
+                 corresponding vector.
 */
 {
-  "session_tlimit":"70",
-  "LRS_threshold":"20"
+  "session_tlimit":"200",
+  "LRS_threshold":"30",
+  "elementTypes":[
+    "TextAreas",
+    "RadioButton",
+    "Selects",
+    "InputText",
+    "Checkbox"
+  ]
 }

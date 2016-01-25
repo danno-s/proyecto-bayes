@@ -19,3 +19,8 @@ class Config:
         else:
             value = self.__parameters[attr]
         return value
+
+    def getArray(self,attr):
+        jsonArray = self.__parameters[attr]
+        assert len(jsonArray)>0
+        return jsonArray

@@ -4,13 +4,9 @@
 Extrae vectores que definen micro-estados únicos de los eventos en la base de datos.
 """
 
-import json
-
 from src.utils.dataParsingUtils import *
 from src.dataParsing.MicroStateVectorExtractor import *
 
-elementTypes= ['TextAreas','InputText','RadioButton','Selects']
-print('elementTypes:' +str(elementTypes))
 
 def extractContentElements():
     try:
@@ -19,8 +15,9 @@ def extractContentElements():
     except:
         raise
 
-    msvE = MicroStateVectorExtractor(types=elementTypes)
-
+    msvE = MicroStateVectorExtractor()
+    elementTypes = msvE.getElementTypes()
+    print('elementTypes:' +str(elementTypes))
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
     allElementsL = list()
@@ -32,9 +29,9 @@ def extractContentElements():
         contentElementUnique = json.loads(raw)
         eL=eL+(macro_id,)
         try:
-            data = msvE.getStateVectors(contentElementUnique,elementTypes)
+            data = msvE.getStateVectors(contentElementUnique)
         except:
-            print(type + ", Fila: "+  str(i))
+            print("Error en fila: "+  str(i))
             print(json.dumps(contentElementUnique,indent=2))
             raise
         for type in elementTypes:
@@ -74,7 +71,6 @@ def extractContentElements():
 
     # Primero se guarda el marco_id y la estructura json raw
     sqlWrite = "INSERT INTO contentElements (macro_id,raw) VALUES (%s,%s)"
-    print(sqlWrite)
     for id,values in macroD.items():
         for l in values:
             tp = (id,l[-1])

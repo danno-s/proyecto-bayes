@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
 import json
+from src.utils.loadConfig import Config
 
 
 class MicroStateVectorExtractor():
 
-    def __init__(self,types):
+    def __init__(self):
         __allFuncs = {
             'TextAreas':    self.__getTextAreas,
             'InputText':    self.__getInputText,
@@ -13,16 +14,22 @@ class MicroStateVectorExtractor():
             'Selects':      self.__getSelects,
             'Checkbox':     self.__getCheckboxes
             }
-        self.elementTypes = sorted([x for x in __allFuncs.keys() if x in types])
+        self.elementTypes= sorted(Config().getArray(attr='elementTypes'))
+        self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
+        #self.elementTypes = [x for x in sorted(__allFuncs.keys()) if x in types]
         self.funcD = dict()
-        for type in types:
-            self.funcD[type]=__allFuncs[type]
+        for type in self.elementTypes:
+            try:
+                self.funcD[type]=__allFuncs[type]
+            except KeyError:
+                print("Type '"+type+"' is not a valid element type for the extractor.")
+                print("Please check that your types array in Config.json contains only these:\n"+str(self.getAvailableTypes()))
 
     def getElementTypes(self):
-        return self.elementTypes
+        return sorted(self.elementTypes)
 
-    def getAllFunctions(self):
-        return self.__allFuncs
+    def getAvailableTypes(self):
+        return self.availableTypes
 
     def __getTextAreas(self,d,L):
         hasValue = d['HasValue']
@@ -76,7 +83,7 @@ class MicroStateVectorExtractor():
         for child in children:
             self.generateStateVectorFrom(child, type, L)
 
-    def getStateVectors(self,contentElements,types):
+    def getStateVectors(self,contentElements):
         data = dict()
         for type in self.elementTypes:
             L = list()

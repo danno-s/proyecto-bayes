@@ -25,7 +25,7 @@ class sqlWrapper:
         sqlWrapper
             El wrapper creado
         """
-        if db.upper() == 'GC' or db.upper() == 'PD':
+        if db.upper() in ['GC', 'PD', 'GT']:
             self.db = db
         else:
             raise Exception
@@ -117,5 +117,7 @@ class sqlWrapper:
         try:
             self.conns['GC'] = connections['guidecapture']
             self.conns['PD'] = connections['parsedData']
+            self.conns['GT'] = connections['groundTruth']
+
         except:
             raise

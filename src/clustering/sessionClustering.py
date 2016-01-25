@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.cluster import DBSCAN
 from src.utils.sqlUtils import sqlWrapper
-from matplotlib import pyplot
+from matplotlib import pyplot as plt
 
 def sessionClustering():
 
@@ -15,20 +15,22 @@ def sessionClustering():
 
     print(sessionLRSfeats)
     X= [x for x in sessionLRSfeats.values()]
-    print(X)
+    M = len(X[0]) # Dimension of feature vector.
+    print(M)
+    #print(X)
 
     ##############################################################################
     # Compute DBSCAN
-    db = DBSCAN(eps=0.5, min_samples=2,metric='euclidean').fit(X)
+    db = DBSCAN(eps=0.1, min_samples=2,metric='euclidean').fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
 
-    print(labels)
+    #print(labels)
 
     unique_labels = set(labels)
 
-    print(core_samples_mask)
+    #print(core_samples_mask)
     clusteredData = dict()
     for k in unique_labels:
         print('LABEL=' + str(k))
@@ -47,8 +49,6 @@ def sessionClustering():
         print(str(k)+": "+str(v))
 
 
-    # TODO: Visualizar info de cluster por variable... centroide, max y min.
-
     def getCentroid(cluster):
         N = len(cluster[0])
         return [sum([value[x]/len(v) for value in v]) for x in range(N)]
@@ -60,23 +60,26 @@ def sessionClustering():
         return [min([value[x] for value in v]) for x in range(N)]
 
     data = list()
+
+
+    f, ax = plt.subplots(n_clusters_, sharex=True, sharey=True)
+    # Fine-tune figure; make subplots close to each other and hide x ticks for
+    # all but bottom plot.
+    f.subplots_adjust(hspace=0)
+    plt.setp([a.get_xticklabels() for a in f.axes[:-1]], visible=False)
     for k,v in clusteredData.items():
         low = getMin(v)
         c = getCentroid(v)
         up = getMax(v)
-        print(low)
-        print(c)
-        print(up)
-        var = list()
-        for i in range(len(c)):
-            var.append([low[i],c[i],up[i]])
-        varvar = list()
-        for i in [0]*3:
-            for varInd,H in enumerate(var):
-                varvar.append([varInd,H[i]])
-        pyplot.plot(varvar)
-        pyplot.show()
-        print(varvar)
+        idx = range(M)
+        ax[k].plot(idx,low,'g.')
+        ax[k].plot(idx,up,'r.')
+        ax[k].plot(idx,c,'b.',markersize=10)
+
+
+    plt.xlim([-1,M+1])
+    plt.ylim([-0.5,1.5])
+    plt.show()
 
 #        print(var)
 

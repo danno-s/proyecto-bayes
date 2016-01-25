@@ -5,7 +5,7 @@ Extrae los usuarios diferentes en la base de datos
 """
 
 import json
-from phpserialize import *
+#from phpserialize import *
 from src.utils.sqlUtils import sqlWrapper
 
 
@@ -22,12 +22,12 @@ def extractUsers():
 
     # Leer datos serializados de usuario: ID, Nombre de usuario y Perfil
     for row in rows:
-        l = loads(bytes(row[0], 'UTF-8'))
+        l = json.loads(row[0])
         try:
-            username = l[b'username'].decode("utf-8")
-            user_id = int(l[b'id_usuario'].decode("utf-8"))
-            perfil = l[b'perfil'].decode("utf-8")
-            L.add((user_id, username, perfil))
+            username = l['user']
+            user_id = int(l['id_usuario'])
+            profile = l['profile']
+            L.add((user_id, username, profile))
         except KeyError:
             print("No se encontraron datos de usuario en la columna \'variables\'.")
             break

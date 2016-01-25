@@ -8,7 +8,6 @@ import json
 import hashlib
 from src.utils.sqlUtils import sqlWrapper
 
-from phpserialize import *
 
 
 def hash(string):
@@ -47,9 +46,9 @@ def extractUserClusteringFeatures():
     D = dict()
 
     for row in usersUrls:
-        l = loads(bytes(row[1], 'UTF-8'))
+        l = json.loads(row[1])
         try:
-            id = int(l[b'id_usuario'].decode("utf-8"))
+            id = int(l['id_usuario'])
             l = hash(json.dumps(json.loads(row[0])).replace(' ', ''))
             if id in D:
                 v = D[id]

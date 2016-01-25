@@ -6,8 +6,7 @@ Extrae las distintas sesiones que existen en la base de datos
 
 from datetime import datetime
 
-from phpserialize import *
-
+import json
 from src.utils.dataParsingUtils import *
 from src.utils.loadConfig import Config
 
@@ -38,11 +37,11 @@ def parseSessions():
     data = list()
 
     for i,row in enumerate(pageview):
-        vars = loads(bytes(row[1], 'UTF-8'))    # Cargar variables de usuario
+        vars = json.loads(row[1])    # Cargar variables de usuario
         tstamp = int(row[2])    # Timestamp
         urlTree = row[0]    # Arbol de URLs
         try:
-            user_id=int(vars[b'id_usuario'].decode("utf-8"))
+            user_id=int(vars['id_usuario'])
             data.append((user_id, urlTree, tstamp))
         except (KeyError, TypeError):
             print("Dato número " + str(i)+ " no contiene información de usuario.")
@@ -81,7 +80,6 @@ def parseSessions():
 
         else:
             endTime = datetime.fromtimestamp(tprev) # TODO: AGREGAR TIMEZONE
-            print(type(sessionData[0]))
             sessions.append((user_id,' '.join(sessionData),initTime,endTime))   # guardar última sesión del usuario.
 
     assert len(sessions) > 0

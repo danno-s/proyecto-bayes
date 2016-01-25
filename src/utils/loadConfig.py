@@ -12,10 +12,11 @@ class Config:
     def __init__(self):
         pass
 
-    def getValue(self,attr,mode):
-        if mode == 'INT':
-            value = int(self.__parameters[attr])
-            assert value > 0
+    def getValue(self, attr, mode=None):
+        if mode is not None:
+            if mode == 'INT':
+                value = int(self.__parameters[attr])
+                assert value > 0
         else:
             value = self.__parameters[attr]
         return value

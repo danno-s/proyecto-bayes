@@ -8,15 +8,19 @@
 
 "elementTypes" : Types for the MicroStateVectorExtractor to read and extract the
                  corresponding vector.
+"simulate":      If "true", simulates data and performs the UserEmpathetic process on
+                 that data. If "false", performs the UserEmpathetic process on the data
+                 captured and stored in the databases established in connections.json .
 */
 {
-  "session_tlimit":"200",
-  "LRS_threshold":"30",
+  "session_tlimit":"20",
+  "LRS_threshold":"10",
   "elementTypes":[
     "TextAreas",
     "RadioButton",
     "Selects",
     "InputText",
     "Checkbox"
-  ]
+  ],
+  "simulate": "false"
 }

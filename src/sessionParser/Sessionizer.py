@@ -1,0 +1,2 @@
+class Sessionizer:
+    pass

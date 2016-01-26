@@ -1,9 +1,16 @@
 from src.utils.sqlUtils import sqlWrapper
 import yaml
 
-processes = {0:'Filtrar proyectos',
-             1:'Otros'}
-
+processes = {
+0:	"Filtrar Presentación de Proyectos (Municipal, Secreduc, Revisor Central)",
+1:	"Crear proyecto (Municipal)",
+2:	"Revisar ficha proyecto (Municipal, Secreduc, Revisor Central)",
+3:	"Cargar informes (Municipal, Secreduc, Revisor Central)",
+4:	"Revisar documentos de proyecto (Secreduc)",
+5:	"Editar Registro Observado (Municipal)",
+6:	"Priorizar proyectos (Secreduc)",
+7:	"Gestionar Proyectos (Revisor Central)"
+}
 
 def getLastDataTime():
     sqlGT = sqlWrapper(db='GT') # Asigna las bases de datos que se accederán
@@ -44,6 +51,12 @@ def labelData(tinit,tend,rec_id,label=''):
 
 
 def labelGroundTruthProcess():
+    print("****************************************")
+    print("\t\tLista de Procesos:")
+    print("****************************************\n")
+    for k,v in processes.items():
+        print(str(k)+":\t"+str(v))
+    print("\n")
 
     tinit = getLastDataTime() +1
     rec_id = getLastRecID() + 1

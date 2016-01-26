@@ -12,11 +12,11 @@ class SessionParser:
         self.__loadNodes()
 
     def parseSessions(self):
-        self.sessionizer.sessionize()
+        self.sessionizer.sessionize(self)
 
     def __loadNodes(self):
         sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read("SELECT clickDate,urls_id,profile,micro_id from nodes")
+        rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes")
         for row in rows:
             self.nodes.append((row[0],row[1],row[2],MicroNode(int(row[3]))))
 

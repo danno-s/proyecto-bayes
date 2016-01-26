@@ -4,6 +4,7 @@ from src.nodeClass import *
 
 class MacroSessionizer(Sessionizer):
 
-    def sessionize(self,data):
+    def sessionize(self,sParser):
+        nodes = sParser.nodes
         # TODO: Funcion para sesionizar los datos...
         pass

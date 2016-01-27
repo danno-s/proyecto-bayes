@@ -15,13 +15,13 @@ class CompleteSessionizer(Sessionizer):
                                                                 # (clickDate, urls_id, profile, micro_id)
 
     def extractCompleteSessionsOf(self,user_id,nodes):
-        profile = nodes[0][2]
         sessions = list()
         userSessions= self.getNodesOf(user_id,nodes)
         if len(userSessions)==0:    return sessions
+        profile = userSessions[0][2]
         firstStep = userSessions[0]
         tprev = firstStep[0]   #tiempo del primer dato.
-        initTime = datetime.fromtimestamp(tprev)
+        initTime = tprev
         macro_id = firstStep[1]
         micro_id = firstStep[3]
 
@@ -33,19 +33,18 @@ class CompleteSessionizer(Sessionizer):
             if step[0] - tprev <= self.tlimit:   # condición para mantenerse en sesión actual
                 sessionData.append((macro_id,micro_id))                 # Agregar datos a sesión actual
             else:
-                endTime = datetime.fromtimestamp(tprev)
-
-                sessions.append((profile,' '.join([str(x) for x in sessionData]),initTime,endTime))  # guardar sesión actual del usuario
+                endTime = tprev
+                sessions.append(self.__toSession(profile, sessionData,initTime,endTime))  # guardar sesión actual del usuario
 
                 sessionData.clear()
                 sessionData.append((macro_id,micro_id))     # inicializar nueva sesión
-                initTime = datetime.fromtimestamp(step[0])
+                initTime = step[0]
 
             tprev = step[0]     # actualizar timestamp previo.
 
         else:
-            endTime = datetime.fromtimestamp(tprev)
-            sessions.append((profile,' '.join([str(x) for x in sessionData]), initTime, endTime))   # guardar última sesión del usuario.
+            endTime = tprev
+            sessions.append(self.__toSession(profile,sessionData, initTime, endTime))   # guardar última sesión del usuario.
 
         return sessions
 
@@ -67,6 +66,8 @@ class CompleteSessionizer(Sessionizer):
 
         return ss
 
+    def __toSession(self, profile, sessionData, initTime, endTime):
+        return profile,' '.join([','.join([str(i) for i in x]) for x in sessionData]), datetime.fromtimestamp(initTime), datetime.fromtimestamp(endTime)
 
 
 

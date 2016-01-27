@@ -7,7 +7,7 @@ from src.utils.dataParsingUtils import *
 class FilteredSessionizer(Sessionizer):
     def __init__(self):
         Sessionizer.__init__(self)
-        self.filter = StepFilter()
+        self.filter = LastMacroIDStepFilter()
         pass
 
     # Obtener todos los nodos del usuario con ID user_id..
@@ -16,38 +16,37 @@ class FilteredSessionizer(Sessionizer):
                                                                 # (clickDate, urls_id, profile, micro_id)
 
     def extractFilteredSessionsOf(self,user_id,nodes):
-        profile = nodes[0][2]
         sessions = list()
         userSessions= self.getNodesOf(user_id,nodes)
-        if len(userSessions)==0:    return sessions
+        if len(userSessions) == 0: return sessions
+        profile = userSessions[0][2]
         prevStep = userSessions[0]
-
-        initTime = datetime.fromtimestamp(prevStep[0]) #tiempo del primer dato.
+        initTime = prevStep[0] #tiempo del primer dato.
         macro_id = prevStep[1]
         micro_id = prevStep[3]
 
         sessionData = list()    # datos de sesión actual.
-        sessionData.append((macro_id,micro_id)) # inicializa sesión actual
+
         for i, step in enumerate(userSessions[1:]):
             macro_id = step[1]
             micro_id = step[3]
             if step[0] - prevStep[0] <= self.tlimit:   # condición para mantenerse en sesión actual
                 if self.filter.accepts(prevStep,step):
-                    sessionData.append((macro_id,micro_id))                 # Agregar datos a sesión actual
+                    sessionData.append([prevStep[1],prevStep[3]])                 # Agregar datos a sesión actual
             else:
-                endTime = datetime.fromtimestamp(prevStep[0])
+                endTime = prevStep[0]
 
-                sessions.append((profile,' '.join([str(x) for x in sessionData]),initTime,endTime))  # guardar sesión actual del usuario
+                sessions.append(self.__toSession(profile,sessionData,initTime,endTime))  # guardar sesión actual del usuario
 
                 sessionData.clear()
-                sessionData.append((macro_id,micro_id))     # inicializar nueva sesión
-                initTime = datetime.fromtimestamp(step[0])
-
+                sessionData.append([prevStep[1],prevStep[3]])     # inicializar nueva sesión
+                initTime = step[0]
 
             prevStep = step # actualizar step previo.
         else:
-            endTime = datetime.fromtimestamp(prevStep[0])
-            sessions.append((profile,' '.join([str(x) for x in sessionData]), initTime, endTime))   # guardar última sesión del usuario.
+            sessionData.append([macro_id,micro_id])     # inicializar nueva sesión
+            endTime = step[0]
+            sessions.append(self.__toSession(profile,sessionData,initTime,endTime))   # guardar última sesión del usuario.
 
         return sessions
 
@@ -69,10 +68,15 @@ class FilteredSessionizer(Sessionizer):
 
         return ss
 
+    def __toSession(self, profile, sessionData, initTime, endTime):
+        return profile,' '.join([','.join([str(i) for i in x]) for x in sessionData]), datetime.fromtimestamp(initTime), datetime.fromtimestamp(endTime)
+
 
 class StepFilter:
 
     def __init__(self): pass
+
+class LastMacroIDStepFilter(StepFilter):
 
     def accepts(self,prevStep, step):
         if prevStep[1] == step[1]:

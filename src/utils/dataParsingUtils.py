@@ -49,6 +49,47 @@ def getMicroID(contentElements):
     rows = sqlPD.read(sqlRead)
     return str(rows[0][0])
 
+def getProfileOf(user_id):
+    """
+    Obtiene el perfil del usuario con ID user_id
+
+    Parameters
+    ----------
+    user_id : int
+        El ID del usuario.
+    Returns
+    -------
+    string
+        string con el perfil del usuario.
+    """
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
+    sqlRead = "select perfil from users where id_usuario = "+ str(user_id)
+    rows = sqlPD.read(sqlRead)
+    return rows[0][0]
+
+
+def getAllUserIDs():
+    """
+    Obtiene una lista con las id de los usuarios desde la base de datos
+
+    Parameters
+    ----------
+    Returns
+    -------
+    list
+        list de IDs de usuarios en forma de int
+    """
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
+    sqlRead = "select id_usuario from users"
+    rows = sqlPD.read(sqlRead)
+    return [int(row[0]) for row in rows]
+
 
 def hash(string):
     """

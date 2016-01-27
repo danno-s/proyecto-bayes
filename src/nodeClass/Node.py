@@ -32,7 +32,7 @@ class Node(object):
 
     def toJson(self):
         Dict = dict(id_node=self.id, id_user=self.id_user, profile=self.profile, id_url=self.id_url,
-                    clickdate=self.clickdate,microNode=self.microNode)
+                    clickdate=self.clickdate,microNode=self.microNode.toDict())
         return json.dumps(Dict)
 
     def __str__(self):

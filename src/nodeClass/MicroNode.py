@@ -10,46 +10,38 @@ import json
 
 class MicroNode:
 
-    def __init__(self, defn):
-        """
-        Constructor de la clase MicroNode
+    def __init__(self, str, key):
+        self.key = key
+        self.id = str[0][0]
+        self.id_macro = str[0][1]
+        self.textArea = [int(x) for x in str[0][2].split(" ")]
+        self.inputText = [int(x) for x in str[0][3].split(" ")]
+        self.radioButton = [int(x) for x in str[0][4].split(" ")]
+        self.selects = [int(x) for x in str[0][5].split(" ")]
+        self.checkbox = [[int(y) for y in x.split("-")] for x in str[0][6].split(" ")]
 
-        Parameters
-        ----------
-        defn : Tuple
-            Tupla con los elementos clave que definen al micro estado.
-            Los elementos son strings, y pueden ser "text", "select", "multi",
-            "radius" u "other"
-        """
-        self.key = defn
-        self.textArea = []
-        self.select = []
-        self.multiSelect = []
-        self.radius = []
-        self.other = None
-
-    def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
-        """
-        Define los parametros del micro estado
-
-        Parameters
-        ----------
-        textArea : List
-            Vector binario con el estado de los objectos textarea
-        select : List
-            Vector binario con el estado de los objectos select
-        multi : List
-            Vector binario con el estado de los objectos multiselect
-        radius : List
-            Vector binario con el estado de los objectos radius
-        other : ?
-            Vector con el estado de otros objetos de la pagina
-        """
-        self.textArea = textArea
-        self.select = select
-        self.multiSelect = multi
-        self.radius = radius
-        self.other = other
+    # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
+    #     """
+    #     Define los parametros del micro estado
+    #
+    #     Parameters
+    #     ----------
+    #     textArea : List
+    #         Vector binario con el estado de los objectos textarea
+    #     select : List
+    #         Vector binario con el estado de los objectos select
+    #     multi : List
+    #         Vector binario con el estado de los objectos multiselect
+    #     radius : List
+    #         Vector binario con el estado de los objectos radius
+    #     other : ?
+    #         Vector con el estado de otros objetos de la pagina
+    #     """
+    #     self.textArea = textArea
+    #     self.select = select
+    #     self.multiSelect = multi
+    #     self.radius = radius
+    #     self.other = other
 
     def equal(self, micro):
         """
@@ -71,45 +63,41 @@ class MicroNode:
                 return False
         return True
 
-    def __str__(self):
+    # def __str__(self):
+    #     """
+    #     Representacion del micro estado como string
+    #
+    #     Returns
+    #     -------
+    #     string
+    #         El string que representa al micro estado
+    #     """
+    #     L = self.textArea.copy()
+    #     L.extend(self.select)
+    #     L.extend(self.multiSelect)
+    #     L.extend(self.radius)
+    #     L.extend(self.other)
+    #     return "".join([str(x) for x in L])
+
+    def toDict(self):
         """
-        Representacion del micro estado como string
+        Representación del micro estado como diccionario
 
         Returns
         -------
-        string
-            El string que representa al micro estado
+        Dict
+            El diccionario que representa a este micro estado
         """
-        L = self.textArea.copy()
-        L.extend(self.select)
-        L.extend(self.multiSelect)
-        L.extend(self.radius)
-        L.extend(self.other)
-        return "".join([str(x) for x in L])
-
-    def toJson(self):
-        """
-        Representación del micro estado como JSON
-
-        Returns
-        -------
-        JSON object
-            El objeto JSON que representa a este micro estado
-        """
-        string = "{ key : " + str(self.key) + ","
-        string += "text" + str(self.textArea) + ","
-        string += "select" + str(self.select) + ","
-        string += "multi" + str(self.multiSelect) + ","
-        string += "radius" + str(self.radius) + ","
-        string += "other" + str(self.other) + "}"
-        return json.loads(str)
+        Dict = dict(key=self.key, id=self.id, textArea=self.textArea, inputText=self.inputText,
+                    radioButton=self.radioButton, selects=self.selects, checkbox=self.checkbox)
+        return Dict
 
     def __switch(self, case, micro):
         switcher = {
-            "text" : micro.textArea,
-            "select" : micro.select,
-            "multi" : micro.multiSelect,
-            "radius" : micro.radius,
-            "other" : micro.other,
+            "textArea" : micro.textArea,
+            "inputText" : micro.inputText,
+            "radioButton" : micro.radioButton,
+            "selects" : micro.selects,
+            "checkbox" : micro.checkbox
         }
         return switcher.get(case, "nothing")

@@ -1,4 +1,4 @@
-from src.sessionParser import Sessionizer
+from src.sessionParser.Sessionizer import Sessionizer
 from src.nodeClass import Node
 from src.nodeClass import MicroNode
 from src.utils.sqlUtils import sqlWrapper
@@ -10,14 +10,24 @@ class SessionParser:
         self.nodes = list()
         self.sessionizer = s
         self.__loadNodes()
+        self.sessions = list()
 
     def parseSessions(self):
-        self.sessionizer.sessionize()
+        self.sessions = self.sessionizer.sessionize(self)
+
+    def printSessions(self):
+        for s in self.sessions:
+            print(s)
 
     def __loadNodes(self):
         sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read("SELECT clickDate,urls_id,profile,micro_id from nodes")
+        rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes")
         for row in rows:
-            self.nodes.append((row[0],row[1],row[2],MicroNode(int(row[3]))))
+            self.nodes.append((row[0],row[1],row[2],int(row[3])))  # (clickDate, user_id, urls_id, profile,micro_id)
 
 
+if __name__ == "__main__":
+    from src.sessionParser.MacroSessionizer import MacroSessionizer
+    a = SessionParser(MacroSessionizer())
+    a.parseSessions()
+    a.printSessions()

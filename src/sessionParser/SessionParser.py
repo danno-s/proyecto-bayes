@@ -15,8 +15,13 @@ class SessionParser:
         self.sessions = self.sessionizer.sessionize(self)
 
     def printSessions(self):
+        print('USER_ID \t\t || \t\t PROFILE \t\t || \t\t SESSION  \t\t\t\t\t\t || \t\t TIME')
         for s in self.sessions:
-            print(s)
+            for x in s[:-2]:
+                print(x,end=';\t')
+            print('\n')
+            print(s[-2]+"\t\t"+s[-1],end='\n')
+            print('\n')
 
     def __loadNodes(self):
         sqlCD = sqlWrapper('CD')

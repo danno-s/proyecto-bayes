@@ -45,7 +45,7 @@ class FilteredSessionizer(Sessionizer):
             prevStep = step # actualizar step previo.
         else:
             sessionData.append([macro_id,micro_id])     # inicializar nueva sesión
-            endTime = step[0]
+            endTime = prevStep[0]
             sessions.append(self.__toSession(profile,sessionData,initTime,endTime))   # guardar última sesión del usuario.
 
         return sessions

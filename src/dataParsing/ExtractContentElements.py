@@ -17,7 +17,7 @@ def extractContentElements():
 
     msvE = MicroStateVectorExtractor()
     elementTypes = msvE.getElementTypes()
-    print('elementTypes:' +str(elementTypes))
+    # print('elementTypes:' +str(elementTypes))
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
     allElementsL = list()
@@ -53,14 +53,14 @@ def extractContentElements():
         macroD[id]=micro_states
 
     for id,values in macroD.items():
-        print("MacroID "+str(id)+" :\n")
+        # print("MacroID "+str(id)+" :\n")
         for l in values:
             tp = (id,)
             for x in l[:-1]:
                 tp += (x,)
-            print("\t"+str(tp))
+            # print("\t"+str(tp))
 
-    print("Total different micro states:" + str(sum([len(x) for x in macroD.values()])))
+    # print("Total different micro states:" + str(sum([len(x) for x in macroD.values()])))
 
 
     # Limpia las tablas

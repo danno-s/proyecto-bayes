@@ -62,7 +62,7 @@ def extractURLs():
     for urlstree in URLs:
         #urljsonstr = json.dumps(urlstree).replace(' ', '')
         urljsonstr = urlstree[0].replace(' ', '')
-        print(urljsonstr)
+        # print(urljsonstr)
         sqlPD.write(sqlWrite, (hash(urljsonstr), urljsonstr))
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@ from src.nodeClass.Node import Node
 
 
 class Session:
+
     def __init__(self, sequence, profile="", initTime="", endTime="", user_id=""):
         self.initTime = initTime
         self.endTime = endTime
@@ -22,7 +23,7 @@ class Session:
             node = node.next
         return sequence
 
-    def getFirstNode(self,steps):
+    def getFirstNode(self,steps = None):
         """
 
         Parameters
@@ -33,6 +34,9 @@ class Session:
         -------
         a Node object with the nested list of the session.
         """
+        if not steps:
+            steps = self.sequence
+
         firstStep = steps[0]
         macro_id = firstStep[0]
         micro_id = firstStep[1]

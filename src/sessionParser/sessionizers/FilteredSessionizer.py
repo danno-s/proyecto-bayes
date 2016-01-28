@@ -24,36 +24,30 @@ class FilteredSessionizer(Sessionizer):
         micro_id = prevStep[3]
 
         sessionData = list()    # datos de sesión actual.
-        sessionData.append(str(macro_id)+","+str(micro_id)) # inicializa sesión actual
+        sessionData.append((macro_id,micro_id)) # inicializa sesión actual
 
         for step in stepsGen:
             macro_id = step[1]
             micro_id = step[3]
             if step[0] - prevStep[0] <= self.tlimit:   # condición para mantenerse en sesión actual
                 if self.filter.filter(prevStep,step):
-                    sessionData.append(self.stepToIDPair(prevStep))                 # Agregar datos a sesión actual
+                    sessionData.append((prevStep[1],prevStep[3]))                 # Agregar datos a sesión actual
             else:
                 endTime = prevStep[0]
-                sessionData.append(self.stepToIDPair(prevStep))
-                sessions.append(self.__toSession(sessionData,profile,initTime,endTime,user_id))  # guardar sesión actual del usuario
+                sessionData.append((prevStep[1],prevStep[3]))
+                sessions.append(self.toSession(sessionData,profile,initTime,endTime,user_id))  # guardar sesión actual del usuario
 
                 sessionData.clear()
-                sessionData.append(self.stepToIDPair(step))     # inicializar nueva sesión
+                sessionData.append((step[1],step[3]))     # inicializar nueva sesión
                 initTime = step[0]
             prevStep = step # actualizar step previo.
         else:
-            sessionData.append(str(macro_id)+","+str(micro_id))     # inicializar nueva sesión
+            sessionData.append((macro_id,micro_id))     # inicializar nueva sesión
             endTime = prevStep[0]
-            sessions.append(self.__toSession(sessionData,profile,initTime,endTime, user_id))   # guardar última sesión del usuario.
+            sessions.append(self.toSession(sessionData,profile,initTime,endTime, user_id))   # guardar última sesión del usuario.
 
         return sessions
 
-
-
-    def stepToIDPair(self,step):
-        return str(step[1])+","+str(step[3])
-    def __toSession(self, sessionData, profile, initTime, endTime, user_id):
-        return Session(' '.join(sessionData),profile=profile,initTime=datetime.fromtimestamp(initTime).isoformat(' '), endTime=datetime.fromtimestamp(endTime).isoformat(' '),user_id=user_id)
 
 
 class Filters:

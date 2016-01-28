@@ -1,6 +1,7 @@
 from src.utils.loadConfig import Config
 from src.utils.dataParsingUtils import *
-
+from src.sessionClass.Session import Session
+from datetime import datetime
 
 class Sessionizer:
     def __init__(self):
@@ -24,3 +25,6 @@ class Sessionizer:
                     sessions.append(s)
         assert len(sessions) > 0
         return sessions
+
+    def toSession(self, sessionData, profile, initTime, endTime, user_id):
+        return Session(sessionData,profile=profile,initTime=datetime.fromtimestamp(initTime).isoformat(' '), endTime=datetime.fromtimestamp(endTime).isoformat(' '),user_id=user_id)

@@ -2,7 +2,7 @@ from src.nodeClass.Node import Node
 
 
 class Session:
-    def __init__(self, sequence, profile=None, initTime=None, endTime=None, user_id=None):
+    def __init__(self, sequence, profile="", initTime=None, endTime=None, user_id=None):
         if initTime:
             self.initTime = initTime
         else:

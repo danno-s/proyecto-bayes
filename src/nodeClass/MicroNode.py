@@ -92,6 +92,15 @@ class MicroNode:
                     radioButton=self.radioButton, selects=self.selects, checkbox=self.checkbox)
         return Dict
 
+    def toList(self):
+        L = self.textArea.copy()
+        L.extend(self.inputText)
+        L.extend(self.radioButton)
+        L.extend(self.selects)
+        L.extend([item for sublist in self.checkbox for item in sublist])
+
+        return L
+
     def __switch(self, case, micro):
         switcher = {
             "textArea" : micro.textArea,

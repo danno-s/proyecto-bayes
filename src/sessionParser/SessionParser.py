@@ -39,6 +39,7 @@ class SessionParser:
         for row in rows:
             yield (row[0], row[2], row[3], row[4]) # (clickDate, urls_id, profile, micro_id)
 
+
 if __name__ == "__main__":
     from src.sessionParser.sessionizers.FilteredSessionizer import FilteredSessionizer
     f = SessionParser(FilteredSessionizer())
@@ -56,22 +57,7 @@ if __name__ == "__main__":
     f2.parseSessions()
     f2.printSessions()
     print('\n')
-#    from src.sessionParser.sessionizers.MacroSessionizer import MacroSessionizer
-#    m = SessionParser(MacroSessionizer())
-#    m.parseSessions()
-#    m.printSessions()
-
-    def genTest(userL):
-        for i in userL:
-            yield i
-
-    class a:
-        def __init__(self):
-            self.gen = genTest(['a','b','c','d'])
-    class caca:
-        def __init__(self):pass
-        def userReader(self,gen):
-            for i in gen:
-                print(i)
-    a = a()
-    caca().userReader(a.gen)
+    from src.sessionParser.sessionizers.MacroSessionizer import MacroSessionizer
+    m = SessionParser(MacroSessionizer())
+    m.parseSessions()
+    m.printSessions()

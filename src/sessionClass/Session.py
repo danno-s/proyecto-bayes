@@ -2,7 +2,7 @@ from src.nodeClass.Node import Node
 
 
 class Session:
-    def __init__(self,node, initTime=None, endTime=None):
+    def __init__(self, sequence, profile=None, initTime=None, endTime=None, user_id=None):
         if initTime:
             self.initTime = initTime
         else:
@@ -11,21 +11,54 @@ class Session:
             self.endTime = endTime
         else:
             self.endTime = ""
-        self.firstNode = node
-        self.profile = self.firstNode.profile
-        self.nodeSequence= self.__getNodeSequence(self.firstNode)
+        if user_id:
+            self.user_id = user_id
+        else:
+            self.user_id = ""
 
-    def __getNodeSequence(self,node=None):
-        if node is None: node = self.firstNode
+        if profile:
+            self.profile = profile
+        self.sequence = sequence   #string with format "1,2 2,44 3,1" (con microNodos) o "1 2 3 4" (sin microNodos)
+
+    def __getSequenceFromNode(self,node):
         sequence = list()
         while node:
-            if node.id_url:
+            if node.urls_id:
                 if node.microNode:
-                    sequence.append((node.id_url, node.microNode))
+                    sequence.append((node.urls_id, node.microNode))
                 else:
-                    sequence.append((node.id_url,""))
+                    sequence.append((node.urls_id,""))
             node = node.next
         return sequence
 
+    def getFirstNode(self,s):
+        """
+
+        Parameters
+        ----------
+        s : a session str with format "1,2 2,44 3,1" (con microNodos) o "1 2 3 4" (sin microNodos)
+
+        Returns
+        -------
+        a Node object with the nested list of the session.
+        """
+        steps = s.split(' ')
+        firstStep = steps[0]
+        tp = firstStep.split(',')
+        macro_id = tp[0]
+        micro_id = tp[1]
+        firstNode = Node(id_user=self.user_id, profile=self.profile, id_url=macro_id,microNode=micro_id)
+        currentNode = firstNode
+        for step in steps[1:]:
+            tp = step.split(',')
+            macro_id = tp[0]
+            micro_id = tp[1]
+            newNode = Node(id_user=self.user_id, profile=self.profile, id_url=macro_id,microNode=micro_id)
+            currentNode.addNext(newNode)
+            currentNode = currentNode.next
+        return firstNode
+
+
+
     def __str__(self):
-        return str(self.profile)+":\t "+ ' >> '.join([str(x) for x in self.nodeSequence]) +" :\t " + str(self.initTime) +" >> "+ str(self.endTime)
+        return str(self.profile)+":\t"+str(self.sequence) +" :\t " + str(self.initTime) +" >> "+ str(self.endTime)

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from src.sessionParser.sessionizers.Sessionizer import Sessionizer
-from src.utils.dataParsingUtils import *
+from src.sessionClass.Session import Session
 
 
 class CompleteSessionizer(Sessionizer):
@@ -14,60 +14,43 @@ class CompleteSessionizer(Sessionizer):
         return [(x[0],x[2],x[3],x[4]) for x in nodes if x[1] == user_id]
                                                                 # (clickDate, urls_id, profile, micro_id)
 
-    def extractCompleteSessionsOf(self,user_id,nodes):
+    def extractSessionsOf(self, user_id, stepsGen):
         sessions = list()
-        userSessions= self.getNodesOf(user_id,nodes)
-        if len(userSessions)==0:    return sessions
-        profile = userSessions[0][2]
-        firstStep = userSessions[0]
-        tprev = firstStep[0]   #tiempo del primer dato.
-        initTime = tprev
-        macro_id = firstStep[1]
-        micro_id = firstStep[3]
+        try:
+            prevStep = stepsGen.__next__()
+        except StopIteration:
+            return sessions
+        initTime = prevStep[0] #tiempo del primer dato.
+        macro_id = prevStep[1]
+        profile = prevStep[2]
+        micro_id = prevStep[3]
 
         sessionData = list()    # datos de sesión actual.
-        sessionData.append((macro_id,micro_id)) # inicializa sesión actual
-        for i, step in enumerate(userSessions[1:]):
+        sessionData.append(str(macro_id)+","+str(micro_id)) # inicializa sesión actual
+        for step in stepsGen:
             macro_id = step[1]
             micro_id = step[3]
-            if step[0] - tprev <= self.tlimit:   # condición para mantenerse en sesión actual
-                sessionData.append((macro_id,micro_id))                 # Agregar datos a sesión actual
+            if step[0] - prevStep[0] <= self.tlimit:   # condición para mantenerse en sesión actual
+                sessionData.append(str(macro_id)+","+str(micro_id))                 # Agregar datos a sesión actual
             else:
-                endTime = tprev
-                sessions.append(self.__toSession(profile, sessionData,initTime,endTime))  # guardar sesión actual del usuario
+                endTime = prevStep[0]
+                sessions.append(self.__toSession(sessionData, profile,initTime,endTime, user_id))  # guardar sesión actual del usuario
 
                 sessionData.clear()
-                sessionData.append((macro_id,micro_id))     # inicializar nueva sesión
+                sessionData.append(str(macro_id)+","+str(micro_id))     # inicializar nueva sesión
                 initTime = step[0]
 
-            tprev = step[0]     # actualizar timestamp previo.
+            prevStep = step     # actualizar timestamp previo.
 
         else:
-            endTime = tprev
-            sessions.append(self.__toSession(profile,sessionData, initTime, endTime))   # guardar última sesión del usuario.
+            endTime = prevStep[0]
+            sessions.append(self.__toSession(sessionData, profile, initTime, endTime, user_id))   # guardar última sesión del usuario.
 
         return sessions
 
-    def sessionize(self,sParser):
-        nodes = sParser.nodes # (clickDate, user_id, urls_id, profile,micro_id)
-        # Obtener todos los usuarios.
-        userL = getAllUserIDs()
-        assert len(userL)>0
+    def __toSession(self, sessionData, profile, initTime, endTime, user_id):
+        return Session(' '.join(sessionData),profile=profile,initTime=datetime.fromtimestamp(initTime).isoformat(' '), endTime=datetime.fromtimestamp(endTime).isoformat(' '),user_id=user_id)
 
-        # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
-        sessions = dict()
-        for user_id in userL:
-            user_sessions = self.extractCompleteSessionsOf(user_id,nodes)
-            if len(user_sessions)>0:
-                sessions[user_id] =user_sessions
-        assert len(sessions) > 0
-
-        ss = ((k, x[0], x[1], x[2].isoformat(' '), x[3].isoformat(' ')) for k in sessions.keys() for x in sessions[k])
-            # (user_id, profile, sessionData, initTime, endTime)
-        return ss
-
-    def __toSession(self, profile, sessionData, initTime, endTime):
-        return profile,' '.join([','.join([str(i) for i in x]) for x in sessionData]), datetime.fromtimestamp(initTime), datetime.fromtimestamp(endTime)
 
 
 

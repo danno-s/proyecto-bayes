@@ -47,4 +47,4 @@ class Node(object):
         return json.dumps(Dict)
 
     def __str__(self):
-        return str((self.profile, self.id_url,self.microNode))
+        return str(self.profile)+":("+ str(self.id_url)+","+str(self.microNode)+")"

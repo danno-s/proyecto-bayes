@@ -2,7 +2,8 @@ from datetime import datetime
 
 from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 from src.utils.dataParsingUtils import *
-
+from src.nodeClass.Node import Node
+from src.sessionClass.Session import Session
 
 class FilteredSessionizer(Sessionizer):
     def __init__(self):
@@ -35,11 +36,11 @@ class FilteredSessionizer(Sessionizer):
                     sessionData.append([prevStep[1],prevStep[3]])                 # Agregar datos a sesión actual
             else:
                 endTime = prevStep[0]
-
+                sessionData.append([prevStep[1],prevStep[3]])
                 sessions.append(self.__toSession(profile,sessionData,initTime,endTime))  # guardar sesión actual del usuario
 
                 sessionData.clear()
-                sessionData.append([prevStep[1],prevStep[3]])     # inicializar nueva sesión
+                sessionData.append([step[1],step[3]])     # inicializar nueva sesión
                 initTime = step[0]
 
             prevStep = step # actualizar step previo.
@@ -57,19 +58,50 @@ class FilteredSessionizer(Sessionizer):
         assert len(userL)>0
 
         # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
-        sessions = dict()
+        userSessionsD = dict()
         for user_id in userL:
-            user_sessions = self.extractFilteredSessionsOf(user_id,nodes)
-            if len(user_sessions)>0:
-                sessions[user_id] =user_sessions
-        assert len(sessions) > 0
+            user_steps = self.extractFilteredSessionsOf(user_id,nodes)
+            if len(user_steps)>0:
+                userSessionsD[user_id] = user_steps
+        assert len(userSessionsD) > 0
+        #(k, x[0], x[1], x[2], x[3])
+        sessions = list()
+        for k in userSessionsD.keys():
+            for x in userSessionsD[k]:
+                s = (k,x[0],x[1],x[2],x[3])
+                node = self.getFirstNode(s)
+                sessions.append(Session(node,initTime=s[3],endTime=s[4]))
+        return sessions
 
-        ss = ((k, x[0], x[1], x[2].isoformat(' '), x[3].isoformat(' ')) for k in sessions.keys() for x in sessions[k])
+    def getFirstNode(self,s):
+        """
 
-        return ss
+        Parameters
+        ----------
+        s : a session tuple with format (profile, sessionData, initTime, endTime)
+
+        Returns
+        -------
+        a Node object with the nested list of the session.
+        """
+        steps = s[2].split(' ')
+        firstStep = steps[0]
+        tp = firstStep.split(',')
+        macro_id = tp[0]
+        micro_id = tp[1]
+        firstNode = Node(id_user=s[0], profile=s[1], id_url=macro_id,microNode=micro_id)
+        currentNode = firstNode
+        for step in steps[1:]:
+            tp = step.split(',')
+            macro_id = tp[0]
+            micro_id = tp[1]
+            newNode = Node(id_user=s[0], profile=s[1], id_url=macro_id,microNode=micro_id)
+            currentNode.addNext(newNode)
+            currentNode = currentNode.next
+        return firstNode
 
     def __toSession(self, profile, sessionData, initTime, endTime):
-        return profile,' '.join([','.join([str(i) for i in x]) for x in sessionData]), datetime.fromtimestamp(initTime), datetime.fromtimestamp(endTime)
+        return profile,' '.join([','.join([str(i) for i in x]) for x in sessionData]), datetime.fromtimestamp(initTime).isoformat(' '), datetime.fromtimestamp(endTime).isoformat(' ')
 
 
 class StepFilter:
@@ -83,6 +115,5 @@ class LastMacroIDStepFilter(StepFilter):
             return False
         else:
             return True
-
 
 

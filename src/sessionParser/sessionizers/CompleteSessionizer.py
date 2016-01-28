@@ -63,7 +63,7 @@ class CompleteSessionizer(Sessionizer):
         assert len(sessions) > 0
 
         ss = ((k, x[0], x[1], x[2].isoformat(' '), x[3].isoformat(' ')) for k in sessions.keys() for x in sessions[k])
-
+            # (user_id, profile, sessionData, initTime, endTime)
         return ss
 
     def __toSession(self, profile, sessionData, initTime, endTime):

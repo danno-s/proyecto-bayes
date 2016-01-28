@@ -1,6 +1,6 @@
 from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 from src.utils.sqlUtils import sqlWrapper
-
+from src.nodeClass.Node import Node
 
 class SessionParser:
 
@@ -15,14 +15,8 @@ class SessionParser:
         self.sessions = self.sessionizer.sessionize(self)
 
     def printSessions(self):
-        print('USER_ID \t\t || \t\t PROFILE \t\t || \t\t SESSION  \t\t\t\t\t\t || \t\t TIME')
         for s in self.sessions:
-            for x in s[:-2]:
-                print(x,end=';\t')
-            print('\n')
-            print(s[-2]+"\t\t"+s[-1],end='\n')
-            print('\n')
-
+            print(s)
     def __loadNodes(self):
         sqlCD = sqlWrapper('CD')
         rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes")
@@ -31,17 +25,17 @@ class SessionParser:
 
 
 if __name__ == "__main__":
-    from src.sessionParser.sessionizers.MacroSessionizer import MacroSessionizer
-    m = SessionParser(MacroSessionizer())
-    m.parseSessions()
-    m.printSessions()
-    print('\n')
-    from src.sessionParser.sessionizers.CompleteSessionizer import CompleteSessionizer
-    a = SessionParser(CompleteSessionizer())
-    a.parseSessions()
-    a.printSessions()
-    print('\n')
     from src.sessionParser.sessionizers.FilteredSessionizer import FilteredSessionizer
     f = SessionParser(FilteredSessionizer())
     f.parseSessions()
     f.printSessions()
+    print('\n')
+#    from src.sessionParser.sessionizers.CompleteSessionizer import CompleteSessionizer
+#    a = SessionParser(CompleteSessionizer())
+#    a.parseSessions()
+#    a.printSessions()
+#    print('\n')
+#    from src.sessionParser.sessionizers.MacroSessionizer import MacroSessionizer
+#    m = SessionParser(MacroSessionizer())
+#    m.parseSessions()
+#    m.printSessions()

@@ -9,20 +9,20 @@ from .MicroNode import MicroNode
 
 class Node(object):
 
-    def __init__(self, str=None,id=None, id_user=None,profile=None,id_url=None,microNode= None):
+    def __init__(self, str=None,id=None, user_id=None,profile=None,urls_id=None,microNode= None):
         if str:
-            self.id = str[0][0]
-            self.id_user = str[0][1]
-            self.clickdate = str[0][2]
-            self.id_url = str[0][3]
-            self.profile = str[0][4]
-            self.microNode = str[0][5]
+            self.id = str[0]
+            self.user_id = str[1]
+            self.clickdate = str[2]
+            self.urls_id = str[3]
+            self.profile = str[4]
+            self.microNode = str[5]
         if id:
             self.id = id
-        if id_user:
-            self.id_user = id_user
-        if id_url:
-            self.id_url = id_url
+        if user_id:
+            self.user_id = user_id
+        if urls_id:
+            self.urls_id = urls_id
         if profile:
             self.profile = profile
         if microNode:
@@ -36,15 +36,15 @@ class Node(object):
         self.next = node
 
     def belongs(self, node):
-        return self.profile == node.profile and self.id_url == node.id_url
+        return self.profile == node.profile and self.urls_id == node.urls_id
 
     def equal(self, node):
         return self.belongs(node) and self.microNode.equal(node.microNode)
 
     def toJson(self):
-        Dict = dict(id_node=self.id, id_user=self.id_user, profile=self.profile, id_url=self.id_url,
+        Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
                     clickdate=self.clickdate,microNode=self.microNode.toDict())
         return json.dumps(Dict)
 
     def __str__(self):
-        return str(self.profile)+":("+ str(self.id_url)+","+str(self.microNode)+")"
+        return str(self.profile)+":("+ str(self.urls_id)+","+str(self.microNode)+")"

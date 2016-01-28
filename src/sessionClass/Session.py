@@ -2,19 +2,10 @@ from src.nodeClass.Node import Node
 
 
 class Session:
-    def __init__(self, sequence, profile="", initTime=None, endTime=None, user_id=None):
-        if initTime:
-            self.initTime = initTime
-        else:
-            self.initTime = ""
-        if endTime:
-            self.endTime = endTime
-        else:
-            self.endTime = ""
-        if user_id:
-            self.user_id = user_id
-        else:
-            self.user_id = ""
+    def __init__(self, sequence, profile="", initTime="", endTime="", user_id=""):
+        self.initTime = initTime
+        self.endTime = endTime
+        self.user_id = user_id
 
         if profile:
             self.profile = profile

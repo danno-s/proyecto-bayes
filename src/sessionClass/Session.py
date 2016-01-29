@@ -7,9 +7,7 @@ class Session:
         self.initTime = initTime
         self.endTime = endTime
         self.user_id = user_id
-
-        if profile:
-            self.profile = profile
+        self.profile = profile
         self.sequence = sequence   # lista de tuplas (urls_id, micro_id), o (urls_id, None)
 
     def __getSequenceFromNode(self,node):
@@ -66,3 +64,14 @@ class Session:
                 tps.append("("+ str(x[0])+")")
         s = ' >> '.join(tps)
         return s
+
+    def toSQLItem(self):
+        #(profile, sequence, user_id, inittime, endtime)
+        steps = list()
+        for x in self.sequence:
+            if x[1]:
+                step=str(x[0])+","+str(x[1])
+            else:
+                step=str(x[0])
+            steps.append(step)
+        return (self.profile,' '.join(steps),self.user_id,self.initTime,self.endTime)

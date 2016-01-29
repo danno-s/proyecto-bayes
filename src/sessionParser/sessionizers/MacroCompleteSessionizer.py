@@ -1,13 +1,19 @@
 from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 
-class CompleteSessionizer(Sessionizer):
+class MacroCompleteSessionizer(Sessionizer):
 
     def __init__(self):
         Sessionizer.__init__(self)
+        pass
 
-    def bufferAccepts(self, sb, prevStep, step):    #TODO: (args, vals)
+    def bufferAccepts(self,sb,prevStep,step):
         return True
 
     def toIDPair(self, macro_id, micro_id):
-        return (macro_id,micro_id)
+        return (macro_id,None)
+
+
+
+
+

@@ -102,16 +102,14 @@ def calcLRSs():
     print("Accessed: \n"+ str([Seqs[lrs] for lrs in LRSs])+ " times.")
 
     # Completar tabla para LRSs en la base de datos
-    '''
     # Resetear lrss
-    sqlPD.truncate("lrss")
+    sqlCD.truncate("lrss")
 
     # Guardar nueva info.
 
-    sqlWrite = ("INSERT INTO lrss (seqs,count) VALUES (%s,%s)")
+    sqlWrite = "INSERT INTO lrss (sequence,count) VALUES (%s,%s)"
     for seq in LRSs:
-        sqlPD.write(sqlWrite,(seq,Seqs[seq]))
-    '''
+        sqlCD.write(sqlWrite,(seq,Seqs[seq]))
 
 if __name__ == '__main__':
     calcLRSs()

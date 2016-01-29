@@ -15,6 +15,11 @@ class SessionParser:
 
     def parseSessions(self):
         self.sessions = self.sessionizer.sessionize(self)
+        sqlCD = sqlWrapper('CD')
+        sqlCD.truncate('sessions')
+        sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES (%s,%s,%s,%s,%s)"
+        for session in self.sessions:
+            sqlCD.write(sqlWrite,session.toSQLItem())
 
     def printSessions(self):
         for s in self.sessions:
@@ -36,3 +41,4 @@ class SessionParser:
         rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id="+str(user_id))
         for row in rows:
             yield (row[0], row[2], row[3], row[4]) # (clickDate, urls_id, profile, micro_id)
+

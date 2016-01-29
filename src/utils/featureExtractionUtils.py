@@ -3,7 +3,7 @@
 """
 Módulo contiene funciones usadas por otros scripts
 """
-
+from src.utils.sqlUtils import sqlWrapper
 
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
 def consecutiveIdxs(idxs, repeat):
@@ -98,3 +98,11 @@ def isSubContained(item, iterable):
         if contains(item,val):
             return True
     return False
+
+
+def getAllLRSs():
+    sqlCD = sqlWrapper('CD')
+    sqlRead = 'select sequence from lrss'
+    rows = sqlCD.read(sqlRead)
+    assert len(rows)>0
+    return [item[0] for item in rows]

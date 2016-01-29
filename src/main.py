@@ -4,7 +4,6 @@ from src.dataParsing.ExtractContentElements import extractContentElements
 from src.dataParsing.parseSessions import parseSessions
 from src.featureExtraction.calcLRSs import calcLRSs
 from src.featureExtraction.calcUserLRSHistograms import calcUserLRSHistograms
-from src.featureExtraction.extractUserClusteringFeatures import extractUserClusteringFeatures
 from src.featureExtraction.linkSessionsWithLRSs import linkSessionsWithLRSs
 from src.clustering.sessionClustering import sessionClustering
 from src.simulatedData.ExtractSimlUsers import extractSimUsers
@@ -30,8 +29,6 @@ def simulate():
 def extractFeatures():
     calcLRSs()
     print("...LRS extraction finished...\n")
-    extractUserClusteringFeatures()
-    print("...User clustering features extraction finished...\n")
     calcUserLRSHistograms()
     print("...User-LRS Histograms calculations finished...\n")
     linkSessionsWithLRSs()

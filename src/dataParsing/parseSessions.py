@@ -9,13 +9,25 @@ from src.sessionParser.sessionizers.EdgesSessionizer import EdgesSessionizer
 from src.sessionParser.sessionizers.MacroCompleteSessionizer import MacroCompleteSessionizer
 from src.sessionParser.sessionizers.MacroEdgesSessionizer import MacroEdgesSessionizer
 from src.sessionParser.SessionParser import SessionParser
-
+from src.utils.loadConfig import Config
 
 def parseSessions():
 
-    a = SessionParser(EdgesSessionizer())
-    a.parseSessions()
-    a.printSessions()
+    sessionizer_mode = Config().getValue("sessionizer_mode")
+    if sessionizer_mode == "MacroComplete":
+        sessionizer = MacroCompleteSessionizer()
+    elif sessionizer_mode == "Complete":
+        sessionizer = CompleteSessionizer()
+    elif sessionizer_mode == "MacroEdges":
+        sessionizer = MacroEdgesSessionizer()
+    elif sessionizer_mode == "Edges":
+        sessionizer = EdgesSessionizer()
+    else:
+        raise Exception #TODO: crear configuration exception.
+
+    sp = SessionParser(sessionizer)
+    sp.parseSessions()
+    sp.printSessions()
 
 if __name__ == '__main__':
     parseSessions()

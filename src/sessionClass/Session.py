@@ -48,6 +48,8 @@ class Session:
             currentNode = currentNode.next
         return firstNode
 
+    def accept(self, visitor):
+        visitor.metSession(self)
 
 
     def __str__(self):

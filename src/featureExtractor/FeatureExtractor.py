@@ -4,7 +4,7 @@ from src.utils.featureExtractionUtils import getAllSessionIDs
 
 class FeatureExtractor:
 
-        def __init__(self,userFeaturesL,sessionFeaturesL):
+        def __init__(self, userFeaturesL = None, sessionFeaturesL = None):
             """
 
             Parameters
@@ -16,8 +16,8 @@ class FeatureExtractor:
             -------
 
             """
-            self.userFeaturesL = userFeaturesL
-            self.sessionFeaturesL = sessionFeaturesL
+            self.userFeaturesL = userFeaturesL or []
+            self.sessionFeaturesL = sessionFeaturesL or []
             self.users = getAllUserIDs()
             self.sessionIDs = getAllSessionIDs()
 

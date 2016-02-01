@@ -1,6 +1,6 @@
-from src.featureExtraction.features.Feature import UserFeature
-from src.utils.sqlUtils import sqlWrapper
+from src.featureExtractor.features.Feature import UserFeature
 from src.utils.dataParsingUtils import getAllURLsIDs
+from src.utils.sqlUtils import sqlWrapper
 
 
 class UserURLsBelongingFeature(UserFeature):

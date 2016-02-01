@@ -42,21 +42,10 @@ class FeatureExtractor:
         def __extractSessionFeature(self,feature):
             sqlFT = sqlWrapper('FT')
             sqlFT.truncate(feature.tablename)
-            print(str(feature.__name__)+":\n")
+            print("\n"+str(feature.__name__)+":\n")
             for sessionID in self.sessionIDs:
                 f = feature(sessionID)
                 f.extract()
                 sqlFT.write(f.sqlWrite, f.toSQLItem())
                 print(f)
 
-
-if __name__ == '__main__':
-    from src.featureExtraction.features.UserURLsBelongingFeature import UserURLsBelongingFeature
-    from src.featureExtraction.features.UserLRSHistogramFeature import UserLRSHistogramFeature
-    from src.featureExtraction.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
-
-    ufL = [UserURLsBelongingFeature, UserLRSHistogramFeature]
-    sfL = [SessionLRSBelongingFeature]
-    fE = FeatureExtractor(ufL,sfL)
-    fE.extractUserFeatures()
-    fE.extractSessionFeatures()

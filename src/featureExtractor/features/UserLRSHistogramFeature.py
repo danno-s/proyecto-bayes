@@ -1,7 +1,8 @@
-from src.featureExtraction.features.Feature import UserFeature
-from src.utils.sqlUtils import sqlWrapper
+from src.featureExtractor.features.Feature import UserFeature
 from src.utils.featureExtractionUtils import getAllLRSs
 from src.utils.featureExtractionUtils import isSubContained, subsequences
+from src.utils.sqlUtils import sqlWrapper
+
 
 class UserLRSHistogramFeature(UserFeature):
     LRSs = getAllLRSs()

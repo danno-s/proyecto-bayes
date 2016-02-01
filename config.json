@@ -26,9 +26,23 @@
                   "MacroComplete"
                   "Edges"
                   "MacroEdges"
+
+"user_features" : Types of user features for the FeatureExtractor to extract.
+                  "user_features":
+                  [
+                    "UserURLsBelonging",
+                    "UserLRSHistogram"
+                  ]
+
+"session_features":Types of session features for the FeatureExtractor to extract.
+                  "session_features":
+                  [
+                    "SessionLRSBelonging"
+                  ]
+
 */
 {
-  "session_tlimit":"100",
+  "session_tlimit":"60",
   "LRS_threshold":"10",
   "elementTypes":[
     "TextAreas",
@@ -38,5 +52,13 @@
     "Checkbox"
   ],
   "simulate": "false",
-  "sessionizer_mode":"Edges"
+  "sessionizer_mode":"MacroEdges",
+  "user_features":[
+    "UserURLsBelonging",
+    "UserLRSHistogram"
+  ],
+  "session_features":[
+    "SessionLRSBelonging"
+  ]
+
 }

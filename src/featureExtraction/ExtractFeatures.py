@@ -1,7 +1,6 @@
 from src.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 from src.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
 from src.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
-
 from src.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.utils.loadConfig import Config
 

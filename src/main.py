@@ -3,6 +3,7 @@ from src.dataParsing.ExtractUsers import extractUsers
 from src.dataParsing.ExtractContentElements import extractContentElements
 from src.dataParsing.parseSessions import parseSessions
 from src.featureExtraction.calcLRSs import calcLRSs
+from src.featureExtraction.ExtractFeatures import extractFeatures
 from src.clustering.sessionClustering import sessionClustering
 from src.simulatedData.ExtractSimlUsers import extractSimUsers
 from src.simulatedData.parseSimulSession import parseSimulSession
@@ -10,27 +11,31 @@ from src.simulatedData.simulusers import *
 from src.utils.loadConfig import Config
 
 def parseData():
+    print("...Extracting URLs...\n")
     extractURLs()
-    print("...URL extraction finished...\n")
+    print("...URLs extraction finished...\n")
+    print("...Extracting Users...\n")
     extractUsers()
     print("...Users extraction finished...\n")
+    print("...Extracting Content Elements...\n")
     extractContentElements()
     print("...Content elements extraction finished...\n")
+    print("...Parsing Sessions...\n")
     parseSessions()
-    print("...Sessions extraction finished...\n")
+    print("...Sessions parsing finished...\n")
 
 def simulate():
     generate(1, 3)
     extractSimUsers()
     parseSimulSession()
 
-def extractFeatures():
+def extractFeats():
+    print("...Extracting LRSs...\n")
     calcLRSs()
     print("...LRS extraction finished...\n")
-#    print("...User-LRS Histograms calculations finished...\n")
-
-#    print("...Sesssion-LRSs belongings table extraction finished...\n")
-
+    print("...Extracting Features...\n")
+    extractFeatures()
+    print("...Features extraction finished...\n")
 
 def clustering():
     sessionClustering()
@@ -42,11 +47,9 @@ if __name__ == '__main__':
 
     if not simulation:
         parseData()
-        print("\n\nData parsing finished.\n\n")
-        extractFeatures()
-        print("\n\nFeature Extraction finished.\n\n")
-        clustering()
-        print("\n\nClustering finished.\n\n")
+        extractFeats()
+        #clustering()
+        #print("\n\nClustering finished.\n\n")
 
         print("\n\nUserEmpathetic process finished.\n\n")
 
@@ -54,7 +57,7 @@ if __name__ == '__main__':
     else:
         simulate()
         print("\n\nSimulated data Generation finished.\n\n")
-        extractFeatures()
+        extractFeats()
         print("\n\nFeature Extraction finished.\n\n")
         clustering()
         print("\n\nClustering finished.\n\n")

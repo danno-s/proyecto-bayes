@@ -30,10 +30,10 @@ class sqlWrapper:
         else:
             raise Exception
         if len(self.conns) == 0:
-            try:
-                self.__loadConnections()
-            except:
-                raise ConnectionError
+            # try:
+            self.__loadConnections()
+            # except:
+            #    raise ConnectionError
 
     def setDB(self,db):
         """
@@ -118,8 +118,8 @@ class sqlWrapper:
             self.conns['GC'] = connections['guidecapture']
             self.conns['PD'] = connections['parsedData']
             self.conns['CD'] = connections['coreData']
-            self.conns['GT'] = connections['groundTruth']
-            self.conns['FT'] = connections['features']
+            # self.conns['GT'] = connections['groundTruth']
+            # self.conns['FT'] = connections['features']
 
 
         except:

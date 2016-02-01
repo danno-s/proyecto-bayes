@@ -5,8 +5,6 @@ from src.dataParsing.parseSessions import parseSessions
 from src.featureExtraction.calcLRSs import calcLRSs
 from src.featureExtraction.ExtractFeatures import extractFeatures
 from src.clustering.sessionClustering import sessionClustering
-from src.simulatedData.ExtractSimlUsers import extractSimUsers
-from src.simulatedData.parseSimulSession import parseSimulSession
 from src.simulatedData.simulusers import *
 from src.utils.loadConfig import Config
 
@@ -25,9 +23,7 @@ def parseData():
     print("...Sessions parsing finished...\n")
 
 def simulate():
-    generate(1, 3)
-    extractSimUsers()
-    parseSimulSession()
+    generate(1)
 
 def extractFeats():
     print("...Extracting LRSs...\n")

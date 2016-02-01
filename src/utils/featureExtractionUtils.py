@@ -106,3 +106,10 @@ def getAllLRSs():
     rows = sqlCD.read(sqlRead)
     assert len(rows)>0
     return [item[0] for item in rows]
+
+def getAllSessionIDs():
+    sqlCD = sqlWrapper('CD')
+    sqlRead = 'select id from sessions'
+    rows = sqlCD.read(sqlRead)
+    assert len(rows)>0
+    return [item[0] for item in rows]

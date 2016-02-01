@@ -10,7 +10,7 @@ class UserLRSHistogramFeature(UserFeature):
 
     def __init__(self,user):
         UserFeature.__init__(self)
-        self.histogram = [0.0] * len(self.LRSs[0])
+        self.histogram = [0.0] * len(self.LRSs)
         self.user = int(user)
         self.count = 0
         pass

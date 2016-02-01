@@ -1,9 +1,6 @@
 import unittest
 
 from src.featureExtraction.calcLRSs import calcLRSs
-from src.featureExtraction.calcUserLRSHistograms import calcUserLRSHistograms
-from src.featureExtraction.extractUserClusteringFeatures import extractUserClusteringFeatures
-from src.featureExtraction.linkSessionsWithLRSs import linkSessionsWithLRSs
 from src.utils.featureExtractionUtils import *
 from src.utils.sqlUtils import sqlWrapper
 
@@ -42,7 +39,7 @@ class MyTestCase(unittest.TestCase):
                     self.assertTrue(x == '1' or x == '0')
         except:
             self.assertTrue(False)
-    '''
+
     def test_linkSessionWithLRSs(self):
         linkSessionsWithLRSs()
         try:
@@ -77,7 +74,7 @@ class MyTestCase(unittest.TestCase):
                     self.assertAlmostEquals(s,1.0,0.1)
         except:
             self.assertTrue(False)
-
+'''
     def test_consecutiveIdxs(self):
         s = [0,1,2,3,4]
         gen = consecutiveIdxs(s,5)

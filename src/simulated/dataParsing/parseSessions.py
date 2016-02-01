@@ -4,12 +4,12 @@
 Extrae las distintas sesiones que existen en la base de datos
 """
 
-from src.userempathetic.sessionParser.sessionizers.CompleteSessionizer import CompleteSessionizer
-from src.userempathetic.sessionParser.sessionizers.EdgesSessionizer import EdgesSessionizer
-from src.userempathetic.sessionParser.sessionizers.MacroCompleteSessionizer import MacroCompleteSessionizer
-from src.userempathetic.sessionParser.sessionizers.MacroEdgesSessionizer import MacroEdgesSessionizer
-from src.userempathetic.sessionParser.SessionParser import SessionParser
-from src.userempathetic.utils.loadConfig import Config
+from src.simulated.sessionParser.sessionizers.CompleteSessionizer import CompleteSessionizer
+from src.simulated.sessionParser.sessionizers.EdgesSessionizer import EdgesSessionizer
+from src.simulated.sessionParser.sessionizers.MacroCompleteSessionizer import MacroCompleteSessionizer
+from src.simulated.sessionParser.sessionizers.MacroEdgesSessionizer import MacroEdgesSessionizer
+from src.simulated.sessionParser.SessionParser import SessionParser
+from src.simulated.utils.loadConfig import Config
 
 def parseSessions(simulate=None):
 

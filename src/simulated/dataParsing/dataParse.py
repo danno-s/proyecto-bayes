@@ -3,9 +3,9 @@
 from datetime import datetime
 import json
 
-from src.userempathetic.utils.dataParsingUtils import *
-from src.userempathetic.dataParsing.ExtractURLs import extractURLs
-from src.userempathetic.dataParsing.ExtractContentElements import extractContentElements
+from src.simulated.utils.dataParsingUtils import *
+from src.simulated.dataParsing.ExtractURLs import extractURLs
+from src.simulated.dataParsing.ExtractContentElements import extractContentElements
 
 
 def __query(n):

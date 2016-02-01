@@ -6,7 +6,7 @@
 
 import random
 import numpy as np
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 def simulusers():
     n = 200

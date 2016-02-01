@@ -4,8 +4,8 @@
 Extrae URLs únicas de los eventos en la base de datos, y los árboles completos de URLs del sitio de las capturas
 """
 
-from src.userempathetic.utils.dataParsingUtils import hash
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.dataParsingUtils import hash
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 
 def extractURLs():

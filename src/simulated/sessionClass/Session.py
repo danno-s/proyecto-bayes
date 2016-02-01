@@ -1,4 +1,4 @@
-from src.userempathetic.nodeClass.Node import Node
+from src.simulated.nodeClass.Node import Node
 
 
 class Session:

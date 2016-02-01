@@ -3,7 +3,7 @@
 """
 Módulo contiene funciones usadas por otros scripts
 """
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
 def consecutiveIdxs(idxs, repeat):

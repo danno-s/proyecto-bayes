@@ -1,12 +1,12 @@
 import unittest
 
-from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
-from src.userempathetic.utils.featureExtractionUtils import *
-from src.userempathetic.utils.sqlUtils import sqlWrapper
-from src.userempathetic.featureExtractor.FeatureExtractor import FeatureExtractor
-from src.userempathetic.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
-from src.userempathetic.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
-from src.userempathetic.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
+from src.simulated.featureExtraction.calcLRSs import calcLRSs
+from src.simulated.utils.featureExtractionUtils import *
+from src.simulated.utils.sqlUtils import sqlWrapper
+from src.simulated.featureExtractor.FeatureExtractor import FeatureExtractor
+from src.simulated.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
+from src.simulated.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
+from src.simulated.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 
 class MyTestCase(unittest.TestCase):
     sqlCD = sqlWrapper('CD')

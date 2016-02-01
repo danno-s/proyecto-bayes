@@ -1,6 +1,6 @@
-from src.userempathetic.featureExtractor.features.Feature import UserFeature
-from src.userempathetic.utils.dataParsingUtils import getAllURLsIDs
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.featureExtractor.features.Feature import UserFeature
+from src.simulated.utils.dataParsingUtils import getAllURLsIDs
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 
 class UserURLsBelongingFeature(UserFeature):

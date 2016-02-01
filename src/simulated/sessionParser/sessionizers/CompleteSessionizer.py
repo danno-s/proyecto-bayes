@@ -1,4 +1,4 @@
-from src.userempathetic.sessionParser.sessionizers.Sessionizer import Sessionizer
+from src.simulated.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 
 class CompleteSessionizer(Sessionizer):

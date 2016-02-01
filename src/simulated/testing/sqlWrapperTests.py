@@ -1,5 +1,5 @@
 import unittest
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 
 class MyTestCase(unittest.TestCase):

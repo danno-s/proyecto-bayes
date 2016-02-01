@@ -1,6 +1,6 @@
-from src.userempathetic.utils.sqlUtils import sqlWrapper
-from src.userempathetic.utils.dataParsingUtils import getAllUserIDs
-from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
+from src.simulated.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.dataParsingUtils import getAllUserIDs
+from src.simulated.utils.featureExtractionUtils import getAllSessionIDs
 
 class FeatureExtractor:
 

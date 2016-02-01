@@ -1,4 +1,4 @@
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.sqlUtils import sqlWrapper
 import yaml
 
 processes = {

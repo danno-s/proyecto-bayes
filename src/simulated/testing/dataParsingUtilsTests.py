@@ -1,5 +1,5 @@
 import unittest
-from src.userempathetic.utils.dataParsingUtils import *
+from src.simulated.utils.dataParsingUtils import *
 
 class MyTestCase(unittest.TestCase):
     def test_getAllUserIDs(self):

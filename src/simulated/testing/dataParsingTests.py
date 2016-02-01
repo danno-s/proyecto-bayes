@@ -1,8 +1,8 @@
 import unittest
-from src.userempathetic.dataParsing.ExtractURLs import extractURLs
-from src.userempathetic.dataParsing.ExtractUsers import extractUsers
-from src.userempathetic.dataParsing.parseSessions import parseSessions
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.dataParsing.ExtractURLs import extractURLs
+from src.simulated.dataParsing.ExtractUsers import extractUsers
+from src.simulated.dataParsing.parseSessions import parseSessions
+from src.simulated.utils.sqlUtils import sqlWrapper
 import json
 import datetime
 

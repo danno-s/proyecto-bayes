@@ -1,7 +1,7 @@
-from src.userempathetic.featureExtractor.features.Feature import UserFeature
-from src.userempathetic.utils.featureExtractionUtils import getAllLRSs
-from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.featureExtractor.features.Feature import UserFeature
+from src.simulated.utils.featureExtractionUtils import getAllLRSs
+from src.simulated.utils.featureExtractionUtils import isSubContained, subsequences
+from src.simulated.utils.sqlUtils import sqlWrapper
 
 
 class UserLRSHistogramFeature(UserFeature):

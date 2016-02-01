@@ -5,7 +5,7 @@ Módulo contiene funciones usadas por otros scripts
 """
 import hashlib
 
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.simulated.utils.sqlUtils import sqlWrapper
 def getMacroID(urls):
     """
     Obtiene el id en la base de datos de un árbol de urls

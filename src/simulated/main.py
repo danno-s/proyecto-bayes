@@ -1,13 +1,13 @@
-from src.userempathetic.dataParsing.ExtractURLs import extractURLs
-from src.userempathetic.dataParsing.ExtractUsers import extractUsers
-from src.userempathetic.dataParsing.ExtractContentElements import extractContentElements
-from src.userempathetic.dataParsing.dataParse import dataParse
-from src.userempathetic.dataParsing.parseSessions import parseSessions
-from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
-from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures
-from src.userempathetic.clustering.sessionClustering import sessionClustering
-from src.userempathetic.simulatedData.simulusers import *
-from src.userempathetic.utils.loadConfig import Config
+from src.simulated.dataParsing.ExtractURLs import extractURLs
+from src.simulated.dataParsing.ExtractUsers import extractUsers
+from src.simulated.dataParsing.ExtractContentElements import extractContentElements
+from src.simulated.dataParsing.dataParse import dataParse
+from src.simulated.dataParsing.parseSessions import parseSessions
+from src.simulated.featureExtraction.calcLRSs import calcLRSs
+from src.simulated.featureExtraction.ExtractFeatures import extractFeatures
+from src.simulated.clustering.sessionClustering import sessionClustering
+from src.simulated.simulatedData.simulusers import *
+from src.simulated.utils.loadConfig import Config
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         clustering()
         print("\n\nClustering finished.\n\n")
 
-        print("\n\nUserEmpathetic process finished.\n\n")
+        print("\n\nsimulated process finished.\n\n")
 
     ## Modo Simulado
     else:
@@ -67,4 +67,4 @@ if __name__ == '__main__':
         clustering()
         print("\n\nClustering finished.\n\n")
 
-        print("\n\nUserEmpathetic process simulation finished.\n\n")
+        print("\n\nsimulated process simulation finished.\n\n")

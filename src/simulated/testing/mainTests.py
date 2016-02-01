@@ -1,5 +1,5 @@
 import unittest
-from src.userempathetic.main import *
+from src.simulated.main import *
 
 
 class MyTestCase(unittest.TestCase):

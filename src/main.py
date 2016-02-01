@@ -31,6 +31,7 @@ def parseData():
 def simulate():
     print("\n\n...Generating data...\n\n")
     generate(1)
+    parseSessions(simulate='true')
 
 def extractFeats():
     print("...Extracting LRSs...\n")

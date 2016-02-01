@@ -4,11 +4,13 @@ from src.utils.dataParsingUtils import *
 
 class SessionParser:
 
-    def __init__(self,s):
+    def __init__(self,s,mode=None):
         assert isinstance(s,Sessionizer)
         self.nodesD = self.__loadNodes()
         self.sessionizer = s
         self.sessions = list()
+        self.mode = mode or 'normal'
+
         #for k,v in self.nodesD.items():
         #    print(str(k)+": "+'\n\t'.join([str(x) for x in v]))
         #self.nodesD = self.__loadNodes()
@@ -32,13 +34,15 @@ class SessionParser:
         # Extraer datos de nodos para cada usuario
         nodesD = dict()
         for user_id in userL:
-            nodesD[user_id] = self.userStepsGen(user_id)
-
+            if self.mode == 'simulate':
+                nodesD[user_id] = self.userStepsGen(user_id,'simulatednodes')
+            else:
+                nodesD[user_id] = self.userStepsGen(user_id)
         return nodesD
 
-    def userStepsGen(self,user_id):
+    def userStepsGen(self,user_id,nodestable=None):
         sqlCD = sqlWrapper('CD')
-        rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id="+str(user_id))
+        nodestable = nodestable or 'nodes'
+        rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from "+ nodestable+ "WHERE user_id="+str(user_id))
         for row in rows:
             yield (row[0], row[2], row[3], row[4]) # (clickDate, urls_id, profile, micro_id)
-

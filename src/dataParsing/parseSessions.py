@@ -11,7 +11,7 @@ from src.sessionParser.sessionizers.MacroEdgesSessionizer import MacroEdgesSessi
 from src.sessionParser.SessionParser import SessionParser
 from src.utils.loadConfig import Config
 
-def parseSessions():
+def parseSessions(simulate=None):
 
     sessionizer_mode = Config().getValue("sessionizer_mode")
     if sessionizer_mode == "MacroComplete":
@@ -25,7 +25,10 @@ def parseSessions():
     else:
         raise Exception #TODO: crear configuration exception.
 
-    sp = SessionParser(sessionizer)
+    if simulate == 'true':
+        sp = SessionParser(sessionizer,mode='simulate')
+    else:
+        sp = SessionParser(sessionizer)
     sp.parseSessions()
     sp.printSessions()
 

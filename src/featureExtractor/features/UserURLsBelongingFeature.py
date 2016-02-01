@@ -4,12 +4,12 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 class UserURLsBelongingFeature(UserFeature):
-    URLs = getAllURLsIDs()
     tablename = 'userurlsbelongingfeatures'
     sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,vector) VALUES (%s,%s)'
 
     def __init__(self,user):
         UserFeature.__init__(self)
+        self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
         self.user = int(user)
         pass

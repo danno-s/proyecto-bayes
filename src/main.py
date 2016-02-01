@@ -1,6 +1,7 @@
 from src.dataParsing.ExtractURLs import extractURLs
 from src.dataParsing.ExtractUsers import extractUsers
 from src.dataParsing.ExtractContentElements import extractContentElements
+from src.dataParsing.dataParse import dataParse
 from src.dataParsing.parseSessions import parseSessions
 from src.featureExtraction.calcLRSs import calcLRSs
 from src.featureExtraction.ExtractFeatures import extractFeatures
@@ -18,11 +19,17 @@ def parseData():
     print("...Extracting Content Elements...\n")
     extractContentElements()
     print("...Content elements extraction finished...\n")
+
+    print("...Parsing Data...\n")
+    dataParse()
+    print("...Data parsing finished...\n")
+
     print("...Parsing Sessions...\n")
     parseSessions()
     print("...Sessions parsing finished...\n")
 
 def simulate():
+    print("\n\n...Generating data...\n\n")
     generate(1)
 
 def extractFeats():
@@ -34,6 +41,7 @@ def extractFeats():
     print("...Features extraction finished...\n")
 
 def clustering():
+    print("\n\n...Performing clustering...\n\n")
     sessionClustering()
 
 if __name__ == '__main__':
@@ -42,10 +50,10 @@ if __name__ == '__main__':
     ## Modo normal
 
     if not simulation:
-        parseData()
-        extractFeats()
-        #clustering()
-        #print("\n\nClustering finished.\n\n")
+        #parseData()
+        #extractFeats()
+        clustering()
+        print("\n\nClustering finished.\n\n")
 
         print("\n\nUserEmpathetic process finished.\n\n")
 

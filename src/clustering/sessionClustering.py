@@ -5,10 +5,10 @@ from matplotlib import pyplot as plt
 
 def sessionClustering():
 
-    sqlPD = sqlWrapper(db='PD')
+    sqlFT = sqlWrapper(db='FT')
     sessionLRSfeats = dict()
-    sqlRead = ('select idsession,sessionFeatureVector from sessionlrssfeatures')
-    rows= sqlPD.read(sqlRead)
+    sqlRead = ('select session_id,vector from sessionlrsbelongingfeatures')
+    rows= sqlFT.read(sqlRead)
     assert len(rows)>0
     for row in rows:
         sessionLRSfeats[int(row[0])]=[int(x) for x in row[1].split(' ')]
@@ -21,7 +21,7 @@ def sessionClustering():
 
     ##############################################################################
     # Compute DBSCAN
-    db = DBSCAN(eps=0.1, min_samples=2,metric='euclidean').fit(X)
+    db = DBSCAN(eps=0.9, min_samples=4,metric='euclidean').fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_

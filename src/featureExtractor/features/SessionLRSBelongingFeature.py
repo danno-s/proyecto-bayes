@@ -5,12 +5,13 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 class SessionLRSBelongingFeature(SessionFeature):
-    LRSs = getAllLRSs()
+
     tablename = 'sessionlrsbelongingfeatures'
     sqlWrite = 'INSERT INTO '+tablename+ ' (session_id,vector) VALUES (%s,%s)'
 
     def __init__(self,session_id):
         SessionFeature.__init__(self)
+        self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)
 

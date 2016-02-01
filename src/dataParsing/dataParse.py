@@ -13,8 +13,6 @@ def __query(n):
 
 
 def dataParse():
-    extractURLs()
-    extractContentElements()
 
     sqlGC = sqlWrapper(db='GC')
     sqlCD = sqlWrapper(db='CD')
@@ -26,7 +24,6 @@ def dataParse():
 
     while True:
         info = sqlGC.read(__query(i))
-
         if not info:
             break
         url = getMacroID(info[0][0])

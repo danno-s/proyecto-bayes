@@ -51,8 +51,8 @@
     "InputText",
     "Checkbox"
   ],
-  "simulate": "false",
-  "sessionizer_mode":"MacroEdges",
+  "simulate": "true",
+  "sessionizer_mode":"Edges",
   "user_features":[
     "UserURLsBelonging",
     "UserLRSHistogram"

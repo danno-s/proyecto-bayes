@@ -20,7 +20,7 @@ def extractContentElements():
     # print('elementTypes:' +str(elementTypes))
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
-    elementsD = dict()
+    elementsL = list()
     for i,row in enumerate(rows):
         macro_id = getMacroID(str(row[0]))
         raw = row[1]
@@ -34,13 +34,13 @@ def extractContentElements():
             raise
         for type in elementTypes:
             eL = eL+(data[type],)
-        elementsD[eL] = raw
+        eL = eL+ (raw,)
+        elementsL.append(eL)
+    uniqueElementsS= list(sorted(set(elementsL),key=lambda s: int(s[0])))
 
-    uniqueElementsS= list(sorted(set(elementsD.keys()),key=lambda s: int(s[0])))
+#    for tp in uniqueElementsS:
+ #       print(str(tp))
 
-    for tp in uniqueElementsS:
-        print(str(tp))
-        tp = tp+(elementsD[tp],)
 
 
 
@@ -61,7 +61,6 @@ def extractContentElements():
     sqlWrite += ",%s)"
 #    print(sqlWrite)
     for tp in uniqueElementsS:
-        tp = tp+(elementsD[tp],)
         sqlPD.write(sqlWrite,tp)
 
 

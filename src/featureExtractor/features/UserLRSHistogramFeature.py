@@ -5,12 +5,12 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 class UserLRSHistogramFeature(UserFeature):
-    LRSs = getAllLRSs()
     tablename = 'userlrshistogramfeatures'
     sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
 
     def __init__(self,user):
         UserFeature.__init__(self)
+        self.LRSs = getAllLRSs()
         self.histogram = [0.0] * len(self.LRSs)
         self.user = int(user)
         self.count = 0

@@ -74,8 +74,6 @@ def getsession():
 
 def generate(n):
     users = simulusers()
-    # urls = geturls()
-    # micro = getmicro()
     session = getsession()
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 

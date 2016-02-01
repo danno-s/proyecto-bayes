@@ -32,10 +32,12 @@ class FeatureExtractor:
         def __extractUserFeature(self,feature):
             sqlFT = sqlWrapper('FT')
             sqlFT.truncate(feature.tablename)
+            print(str(feature.__name__)+":\n")
             for user in self.users:
                 f = feature(user)
                 f.extract()
                 sqlFT.write(f.sqlWrite, f.toSQLItem())
+                print(f)
 
         def __extractSessionFeature(self,feature):
             feature.extract(self)
@@ -45,7 +47,8 @@ class FeatureExtractor:
 
 if __name__ == '__main__':
     from src.featureExtraction.features.UserURLsBelongingFeature import UserURLsBelongingFeature
-    ufL = [UserURLsBelongingFeature]
+    from src.featureExtraction.features.UserLRSHistogramFeature import UserLRSHistogramFeature
+    ufL = [UserURLsBelongingFeature, UserLRSHistogramFeature]
     sfL = [""]
     fE = FeatureExtractor(ufL,sfL)
     fE.extractUserFeatures()

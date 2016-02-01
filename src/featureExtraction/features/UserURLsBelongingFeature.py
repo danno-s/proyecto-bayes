@@ -2,6 +2,7 @@ from src.featureExtraction.features.Feature import UserFeature
 from src.utils.sqlUtils import sqlWrapper
 from src.utils.dataParsingUtils import getAllURLsIDs
 
+
 class UserURLsBelongingFeature(UserFeature):
     URLs = getAllURLsIDs()
     tablename = 'userurlsbelongingfeatures'

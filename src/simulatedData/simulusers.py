@@ -11,9 +11,21 @@ from src.utils.sqlUtils import sqlWrapper
 def simulusers():
     n = 200
 
+    usern = ["U8213221", "U6355477", "jefe_local"]
+    user = [None]*n
+    for i in range(n):
+        user[i] = random.choice(usern)
+
     id = random.sample(range(2000), n)
     perfil = [0]*int(0.70*n)+[1]*int(0.23*n)+[2]*int(0.07*n)
     random.shuffle(perfil)
+
+    sqlPD = sqlWrapper(db='PD')
+    sqlPD.truncate("users")  # Limpia la tabla
+    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)" # Guardar usuarios
+
+    for i in range(len(id)):
+        sqlPD.write(sqlWrite,(id[i],user[i],perfil[i]))
 
     return list(zip(id,perfil))
 

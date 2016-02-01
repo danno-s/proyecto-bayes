@@ -8,37 +8,28 @@ from src.utils.featureExtractionUtils import subsequences, isSubContained
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
 
-
 def calcLRSs():
 
-    sqlPD = sqlWrapper(db='PD')            # Asigna las bases de datos que se accederán
-
-    # Lectura de sessiondata
-    sqlRead = 'select idsession, urls from sessiondata'
-    rows = sqlPD.read(sqlRead)
+    sqlCD = sqlWrapper(db='CD')            # Asigna las bases de datos que se accederán
+    # Lectura de sessions
+    sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
+    rows = sqlCD.read(sqlRead)
 
     allsubseqsL = list()  # urls subsequences of all sessions.
     fullseqsL = list() # sequences of all sessions.
     sessionSubseqs = dict() # (idsession, set of subsequences of current session).
+    userD = dict() # (idsession,user)
     for row in rows:
-        urls = str(row[1]).split(' ')
-        fullseqsL.append(row[1])
-        for ss in subsequences(urls):
+        userD[int(row[0])]=row[3]
+        steps = str(row[2]).split(' ')
+        fullseqsL.append(row[2])
+        for ss in subsequences(steps):
             allsubseqsL.append(ss)
-        sessionSubseqs[int(row[0])]=set(subsequences(urls))
+        sessionSubseqs[int(row[0])]=set(subsequences(steps))
 
     assert len(sessionSubseqs) > 0
     assert len(allsubseqsL) > 0
     assert len(sessionSubseqs) > 0
-
-    # Lectura de sessions
-    sqlRead = 'select idsession, user from sessions'
-    rows= sqlPD.read(sqlRead)
-
-    userD = dict() # (idsession,user)
-    for row in rows:
-        userD[int(row[0])]=row[1]
-
     assert len(userD) > 0
 
     Seqs = dict() # (urlseq, count)
@@ -90,7 +81,6 @@ def calcLRSs():
 
     # Aplicar criterio de repeticiones sobre umbral T
 
-
     T= Config().getValue(attr='LRS_threshold',mode='INT')
     assert T > 0
 
@@ -112,16 +102,14 @@ def calcLRSs():
     print("Accessed: \n"+ str([Seqs[lrs] for lrs in LRSs])+ " times.")
 
     # Completar tabla para LRSs en la base de datos
-
     # Resetear lrss
-    sqlPD.truncate("lrss")
+    sqlCD.truncate("lrss")
 
     # Guardar nueva info.
 
-    sqlWrite = ("INSERT INTO lrss (seqs,count) VALUES (%s,%s)")
+    sqlWrite = "INSERT INTO lrss (sequence,count) VALUES (%s,%s)"
     for seq in LRSs:
-        sqlPD.write(sqlWrite,(seq,Seqs[seq]))
-
+        sqlCD.write(sqlWrite,(seq,Seqs[seq]))
 
 if __name__ == '__main__':
     calcLRSs()

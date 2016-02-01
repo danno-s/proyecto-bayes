@@ -19,6 +19,27 @@
 "simulate":      If "true", simulates data and performs the UserEmpathetic process on
                  that data. If "false", performs the UserEmpathetic process on the data
                  captured and stored in the databases established in connections.json .
+
+"sessionizer_mode":  Name of the sessionizer mode to be used from SessionParser. Must be one of
+                the following:
+                  "Complete"
+                  "MacroComplete"
+                  "Edges"
+                  "MacroEdges"
+
+"user_features" : Types of user features for the FeatureExtractor to extract.
+                  "user_features":
+                  [
+                    "UserURLsBelonging",
+                    "UserLRSHistogram"
+                  ]
+
+"session_features":Types of session features for the FeatureExtractor to extract.
+                  "session_features":
+                  [
+                    "SessionLRSBelonging"
+                  ]
+
 */
 {
   "session_tlimit":"60",
@@ -30,5 +51,14 @@
     "InputText",
     "Checkbox"
   ],
-  "simulate": "false"
+  "simulate": "false",
+  "sessionizer_mode":"MacroEdges",
+  "user_features":[
+    "UserURLsBelonging",
+    "UserLRSHistogram"
+  ],
+  "session_features":[
+    "SessionLRSBelonging"
+  ]
+
 }

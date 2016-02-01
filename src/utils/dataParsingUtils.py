@@ -90,6 +90,24 @@ def getAllUserIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
+def getAllURLsIDs():
+    """
+    Obtiene una lista con las id de las urls desde la base de datos
+
+    Parameters
+    ----------
+    Returns
+    -------
+    list
+        list de IDs de urls en forma de int
+    """
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
+    sqlRead = "select id_n from urls"
+    rows = sqlPD.read(sqlRead)
+    return [int(row[0]) for row in rows]
 
 def hash(string):
     """

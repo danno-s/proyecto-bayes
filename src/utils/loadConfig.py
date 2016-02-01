@@ -17,9 +17,8 @@ class Config:
             if mode == 'INT':
                 value = int(self.__parameters[attr])
                 assert value > 0
-        else:
-            value = self.__parameters[attr]
-        return value
+            return value
+        return self.__parameters[attr]
 
     def getArray(self,attr):
         jsonArray = self.__parameters[attr]

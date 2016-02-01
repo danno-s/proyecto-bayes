@@ -1,52 +1,36 @@
 import unittest
 
 from src.featureExtraction.calcLRSs import calcLRSs
-from src.featureExtraction.calcUserLRSHistograms import calcUserLRSHistograms
-from src.featureExtraction.extractUserClusteringFeatures import extractUserClusteringFeatures
-from src.featureExtraction.linkSessionsWithLRSs import linkSessionsWithLRSs
 from src.utils.featureExtractionUtils import *
 from src.utils.sqlUtils import sqlWrapper
-
+from src.featureExtractor.FeatureExtractor import FeatureExtractor
+from src.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
+from src.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
+from src.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 
 class MyTestCase(unittest.TestCase):
-    sql = sqlWrapper('PD')
-
+    sqlCD = sqlWrapper('CD')
+    sqlFT = sqlWrapper('FT')
     def test_calcLRSs(self):
-        try:
-            calcLRSs()
-            rows = self.sql.read('SELECT * FROM lrss')
-            self.assertTrue(len(rows) != 0)
-            for row in rows:
-                id = row[0]
-                seq = row[1]
-                count = row[2]
-                self.assertTrue(isinstance(id,int))
-                self.assertTrue(isinstance(seq,str))
-                self.assertTrue(isinstance(count,int))
-                L=seq.split(' ')
-                self.assertTrue(len(L)>0)
-        except:
-            self.assertTrue(False)
+        calcLRSs()
+        rows = self.sqlCD.read('SELECT * FROM lrss')
+        self.assertTrue(len(rows) != 0)
+        for row in rows:
+            id = row[0]
+            seq = row[1]
+            count = row[2]
+            self.assertTrue(isinstance(id,int))
+            self.assertTrue(isinstance(seq,str))
+            self.assertTrue(isinstance(count,int))
+            L=seq.split(' ')
+            self.assertTrue(len(L)>0)
 
-    def test_extractUserClusteringFeatures(self):
-        extractUserClusteringFeatures()
+    def test_extractUserURLsBelongingFeatures(self):
+        ufL = [UserURLsBelongingFeature]
+        fE = FeatureExtractor(userFeaturesL = ufL)
+        fE.extractUserFeatures()
         try:
-            rows = self.sql.read('SELECT * FROM userclusteringfeatures')
-            self.assertTrue(len(rows) != 0)
-            for row in rows:
-                id = row[0]
-                featurevector = row[1].split(' ')
-                self.assertTrue(isinstance(id,int))
-                self.assertTrue(len(featurevector)>0)
-                for x in featurevector:
-                    self.assertTrue(x == '1' or x == '0')
-        except:
-            self.assertTrue(False)
-
-    def test_linkSessionWithLRSs(self):
-        linkSessionsWithLRSs()
-        try:
-            rows = self.sql.read('SELECT * FROM sessionlrssfeatures')
+            rows = self.sqlFT.read('SELECT * FROM userurlsbelongingfeatures')
             self.assertTrue(len(rows) != 0)
             for row in rows:
                 id = row[0]
@@ -58,10 +42,11 @@ class MyTestCase(unittest.TestCase):
         except:
             self.assertTrue(False)
 
-    def test_calcUserLRSHistograms(self):
-        calcUserLRSHistograms()
-    #    try:
-        rows = self.sql.read('SELECT * FROM userlrshistograms')
+    def test_extractUserLRSHistogramFeatures(self):
+        ufL = [UserLRSHistogramFeature]
+        fE = FeatureExtractor(userFeaturesL = ufL)
+        fE.extractUserFeatures()
+        rows = self.sqlFT.read('SELECT * FROM userlrshistogramfeatures')
         self.assertTrue(len(rows) != 0)
         try:
             for row in rows:
@@ -75,6 +60,23 @@ class MyTestCase(unittest.TestCase):
                 s = sum(hist_f)
                 if s != 0.0:
                     self.assertAlmostEquals(s,1.0,0.1)
+        except:
+            self.assertTrue(False)
+
+    def test_extractSessionLRSBelongingFeatures(self):
+        sfL = [SessionLRSBelongingFeature]
+        fE = FeatureExtractor(sessionFeaturesL = sfL)
+        fE.extractUserFeatures()
+        try:
+            rows = self.sqlFT.read('SELECT * FROM sessionlrsbelongingfeatures')
+            self.assertTrue(len(rows) != 0)
+            for row in rows:
+                id = row[0]
+                featurevector = row[1].split(' ')
+                self.assertTrue(isinstance(id,int))
+                self.assertTrue(len(featurevector)>0)
+                for x in featurevector:
+                    self.assertTrue(x == '1' or x == '0')
         except:
             self.assertTrue(False)
 

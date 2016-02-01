@@ -24,13 +24,11 @@ def parseData():
     dataParse()
     print("...Data parsing finished...\n")
 
-    print("...Parsing Sessions...\n")
-    parseSessions()
-    print("...Sessions parsing finished...\n")
 
 def simulate():
     print("\n\n...Generating data...\n\n")
     generate(1)
+
 
 def extractFeats():
     print("...Extracting LRSs...\n")
@@ -50,8 +48,11 @@ if __name__ == '__main__':
     ## Modo normal
 
     if not simulation:
-        #parseData()
-        #extractFeats()
+        parseData()
+        print("...Parsing Sessions...\n")
+        parseSessions()
+        print("...Sessions parsing finished...\n")
+        extractFeats()
         clustering()
         print("\n\nClustering finished.\n\n")
 
@@ -60,7 +61,7 @@ if __name__ == '__main__':
     ## Modo Simulado
     else:
         simulate()
-        print("\n\nSimulated data Generation finished.\n\n")
+        print("\n\nSimulated data and sessions generation finished.\n\n")
         extractFeats()
         print("\n\nFeature Extraction finished.\n\n")
         clustering()

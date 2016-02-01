@@ -9,6 +9,7 @@ class SessionParser:
         self.nodesD = self.__loadNodes()
         self.sessionizer = s
         self.sessions = list()
+
         #for k,v in self.nodesD.items():
         #    print(str(k)+": "+'\n\t'.join([str(x) for x in v]))
         #self.nodesD = self.__loadNodes()
@@ -33,7 +34,6 @@ class SessionParser:
         nodesD = dict()
         for user_id in userL:
             nodesD[user_id] = self.userStepsGen(user_id)
-
         return nodesD
 
     def userStepsGen(self,user_id):
@@ -41,4 +41,3 @@ class SessionParser:
         rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id="+str(user_id))
         for row in rows:
             yield (row[0], row[2], row[3], row[4]) # (clickDate, urls_id, profile, micro_id)
-

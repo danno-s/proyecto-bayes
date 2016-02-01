@@ -21,7 +21,7 @@ def sessionClustering():
 
     ##############################################################################
     # Compute DBSCAN
-    db = DBSCAN(eps=0.9, min_samples=4,metric='euclidean').fit(X)
+    db = DBSCAN(eps=0.1, min_samples=2,metric='hamming').fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
@@ -61,27 +61,26 @@ def sessionClustering():
 
     data = list()
 
+    if len(clusteredData) > 1:
+        f, ax = plt.subplots(n_clusters_, sharex=True, sharey=True)
+        # Fine-tune figure; make subplots close to each other and hide x ticks for
+        # all but bottom plot.
+        f.subplots_adjust(hspace=0)
+        plt.setp([a.get_xticklabels() for a in f.axes[:-1]], visible=False)
+        for k,v in clusteredData.items():
+            low = getMin(v)
+            c = getCentroid(v)
+            up = getMax(v)
+            idx = range(M)
+            ax[k].plot(idx,low,'g.')
+            ax[k].plot(idx,up,'r.')
+            ax[k].plot(idx,c,'b.',markersize=10)
 
-    f, ax = plt.subplots(n_clusters_, sharex=True, sharey=True)
-    # Fine-tune figure; make subplots close to each other and hide x ticks for
-    # all but bottom plot.
-    f.subplots_adjust(hspace=0)
-    plt.setp([a.get_xticklabels() for a in f.axes[:-1]], visible=False)
-    for k,v in clusteredData.items():
-        low = getMin(v)
-        c = getCentroid(v)
-        up = getMax(v)
-        idx = range(M)
-        ax[k].plot(idx,low,'g.')
-        ax[k].plot(idx,up,'r.')
-        ax[k].plot(idx,c,'b.',markersize=10)
 
+        plt.xlim([-1,M+1])
+        plt.ylim([-0.5,1.5])
+        plt.show()
 
-    plt.xlim([-1,M+1])
-    plt.ylim([-0.5,1.5])
-    plt.show()
-
-#        print(var)
 
 if __name__ == '__main__':
     sessionClustering()

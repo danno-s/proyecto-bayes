@@ -42,7 +42,7 @@
 
 */
 {
-  "session_tlimit":"60",
+  "session_tlimit":"600",
   "LRS_threshold":"10",
   "elementTypes":[
     "TextAreas",
@@ -51,7 +51,7 @@
     "InputText",
     "Checkbox"
   ],
-  "simulate": "true",
+  "simulate": "false",
   "sessionizer_mode":"Edges",
   "user_features":[
     "UserURLsBelonging",

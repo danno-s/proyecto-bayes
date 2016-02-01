@@ -1,6 +1,7 @@
 from src.featureExtractor.features.Feature import UserFeature
 from src.utils.dataParsingUtils import getAllURLsIDs
 from src.utils.sqlUtils import sqlWrapper
+from src.utils.loadConfig import Config
 
 
 class UserURLsBelongingFeature(UserFeature):
@@ -12,6 +13,7 @@ class UserURLsBelongingFeature(UserFeature):
         self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
         self.user = int(user)
+        self.simmode = Config().getValue("simulate")
         pass
 
     def extract(self):

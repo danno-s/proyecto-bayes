@@ -3,6 +3,7 @@ from sklearn.cluster import DBSCAN
 from src.simulated.utils.sqlUtils import sqlWrapper
 from matplotlib import pyplot as plt
 
+
 def sessionClustering():
 
     sqlFT = sqlWrapper(db='FT')

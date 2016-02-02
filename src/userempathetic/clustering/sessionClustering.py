@@ -3,6 +3,22 @@ from sklearn.cluster import DBSCAN
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 from matplotlib import pyplot as plt
 
+
+def getCentroid(cluster):
+    N = len(cluster[0])
+    return [sum([value[x]/len(cluster) for value in cluster]) for x in range(N)]
+
+
+def getMax(cluster):
+    N = len(cluster[0])
+    return [max([value[x] for value in cluster]) for x in range(N)]
+
+
+def getMin(cluster):
+    N = len(cluster[0])
+    return [min([value[x] for value in cluster]) for x in range(N)]
+
+
 def sessionClustering():
 
     sqlFT = sqlWrapper(db='FT')
@@ -13,15 +29,13 @@ def sessionClustering():
     for row in rows:
         sessionLRSfeats[int(row[0])]=[int(x) for x in row[1].split(' ')]
 
-    print(sessionLRSfeats)
     X= [x for x in sessionLRSfeats.values()]
     M = len(X[0]) # Dimension of feature vector.
-    print(M)
     #print(X)
 
     ##############################################################################
     # Compute DBSCAN
-    db = DBSCAN(eps=0.1, min_samples=2,metric='hamming').fit(X)
+    db = DBSCAN(eps=0.5, min_samples=5,metric='euclidean').fit(X)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
     core_samples_mask[db.core_sample_indices_] = True
     labels = db.labels_
@@ -33,36 +47,27 @@ def sessionClustering():
     #print(core_samples_mask)
     clusteredData = dict()
     for k in unique_labels:
-        print('LABEL=' + str(k))
+        #   print('LABEL=' + str(k))
         if k == -1:
-            print('k=' + str(k)+' is noise...')
-
+        #print('k=' + str(k)+' is noise...')
+            pass
         else:
             class_member_mask = (labels == k)
             xy=[x for x,i,j in zip(X,class_member_mask,core_samples_mask) if i & j]
             clusteredData[k]=xy
+
     # Number of clusters in labels, ignoring noise if present.
     n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
-   # print(clusteredData)
+    #print(clusteredData)
     print('Estimated number of clusters: %d' % n_clusters_)
     for k,v in clusteredData.items():
-        print(str(k)+": "+str(v))
+        print("Cluster "+ str(k)+",\t"+str(len(v))+" elementos:\n"+ str(v))
 
 
-    def getCentroid(cluster):
-        N = len(cluster[0])
-        return [sum([value[x]/len(v) for value in v]) for x in range(N)]
-    def getMax(cluster):
-        N = len(cluster[0])
-        return [max([value[x] for value in v]) for x in range(N)]
-    def getMin(cluster):
-        N = len(cluster[0])
-        return [min([value[x] for value in v]) for x in range(N)]
-
-    data = list()
 
     if len(clusteredData) > 1:
         f, ax = plt.subplots(n_clusters_, sharex=True, sharey=True)
+
         # Fine-tune figure; make subplots close to each other and hide x ticks for
         # all but bottom plot.
         f.subplots_adjust(hspace=0)
@@ -76,9 +81,12 @@ def sessionClustering():
             ax[k].plot(idx,up,'r.')
             ax[k].plot(idx,c,'b.',markersize=10)
 
-
-        plt.xlim([-1,M+1])
-        plt.ylim([-0.5,1.5])
+        plt.xlim([-0.2,M-1+0.2])
+        plt.yticks([0, 1])
+        plt.margins(0.2)
+        plt.xlabel("LRSs index.")
+        ax[n_clusters_/2].set_ylabel("Utilización del LRS")
+        ax[0].set_title("Uso de LRSs por sesión representativa de cada cluster")
         plt.show()
 
 

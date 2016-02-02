@@ -6,8 +6,6 @@ from src.userempathetic.dataParsing.parseSessions import parseSessions
 from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
 from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures
 from src.userempathetic.clustering.sessionClustering import sessionClustering
-from src.userempathetic.simulatedData.simulusers import *
-from src.userempathetic.utils.loadConfig import Config
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -24,12 +22,6 @@ def parseData():
     dataParse()
     print("...Data parsing finished...\n")
 
-
-def simulate():
-    print("\n\n...Generating data...\n\n")
-    generate(1)
-
-
 def extractFeats():
     print("...Extracting LRSs...\n")
     calcLRSs()
@@ -39,32 +31,25 @@ def extractFeats():
     print("...Features extraction finished...\n")
 
 def clustering():
-    print("\n\n...Performing clustering...\n\n")
+    print("\n\n...Performing session clustering...\n\n")
     sessionClustering()
 
 if __name__ == '__main__':
-
-    simulation = Config().getValue("simulate").lower() == "true"
-    ## Modo normal
-
-    if not simulation:
+    print("0 = dataParsing\n"+
+          "1 = sessionParsing\n"+
+          "2 = featureExtraction\n"+
+          "3 = clustering\n")
+    a= int(input("Ingrese paso de inicio:"))
+    if a <= 0:
         parseData()
+    if a <= 1:
         print("...Parsing Sessions...\n")
         parseSessions()
         print("...Sessions parsing finished...\n")
+    if a <= 2:
         extractFeats()
+    if a <= 3:
         clustering()
         print("\n\nClustering finished.\n\n")
 
-        print("\n\nUserEmpathetic process finished.\n\n")
-
-    ## Modo Simulado
-    else:
-        simulate()
-        print("\n\nSimulated data and sessions generation finished.\n\n")
-        extractFeats()
-        print("\n\nFeature Extraction finished.\n\n")
-        clustering()
-        print("\n\nClustering finished.\n\n")
-
-        print("\n\nUserEmpathetic process simulation finished.\n\n")
+    print("\n\nUserEmpathetic process finished.\n\n")

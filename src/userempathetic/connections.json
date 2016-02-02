@@ -1,0 +1,39 @@
+{ "guidecapture" :
+  {
+    "passwd": "root",
+    "host": "localhost",
+    "name": "local",
+    "db": "seba_guidecapture",
+    "user": "root"
+  },
+  "parsedData" :
+  {
+    "passwd": "root",
+    "host": "localhost",
+    "name": "local",
+    "db": "seba_parseddata",
+    "user": "root"
+  },
+  "groundTruth":
+  {
+    "passwd": "root",
+    "host": "localhost",
+    "name": "local",
+    "db": "seba_procesos",
+    "user": "root"
+  },
+  "coreData": {
+    "passwd": "root",
+    "host": "localhost",
+    "name": "local",
+    "db": "seba_coredata",
+    "user": "root"
+  },
+  "features": {
+    "passwd": "root",
+    "host": "localhost",
+    "name": "local",
+    "db": "seba_features",
+    "user": "root"
+  }
+}

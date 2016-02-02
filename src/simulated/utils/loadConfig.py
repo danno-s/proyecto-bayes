@@ -2,7 +2,7 @@ import json
 import os
 import jsmin
 
-with open(os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + '/config.json', 'r') as f:
+with open(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))) + '/config.json', 'r') as f:
     configurationJSON = jsmin.jsmin(f.read())
 
 

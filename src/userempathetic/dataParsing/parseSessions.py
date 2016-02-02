@@ -11,7 +11,7 @@ from src.userempathetic.sessionParser.sessionizers.MacroEdgesSessionizer import 
 from src.userempathetic.sessionParser.SessionParser import SessionParser
 from src.userempathetic.utils.loadConfig import Config
 
-def parseSessions(simulate=None):
+def parseSessions():
 
     sessionizer_mode = Config().getValue("sessionizer_mode")
     if sessionizer_mode == "MacroComplete":
@@ -25,10 +25,7 @@ def parseSessions(simulate=None):
     else:
         raise Exception #TODO: crear configuration exception.
 
-    if simulate == 'true':
-        sp = SessionParser(sessionizer,mode='simulate')
-    else:
-        sp = SessionParser(sessionizer)
+    sp = SessionParser(sessionizer)
     sp.parseSessions()
     sp.printSessions()
 

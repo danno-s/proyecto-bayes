@@ -42,8 +42,8 @@
 
 */
 {
-  "session_tlimit":"600",
-  "LRS_threshold":"10",
+  "session_tlimit":"30",
+  "LRS_threshold":"20",
   "elementTypes":[
     "TextAreas",
     "RadioButton",
@@ -52,7 +52,7 @@
     "Checkbox"
   ],
   "simulate": "false",
-  "sessionizer_mode":"Edges",
+  "sessionizer_mode":"MacroEdges",
   "user_features":[
     "UserURLsBelonging",
     "UserLRSHistogram"

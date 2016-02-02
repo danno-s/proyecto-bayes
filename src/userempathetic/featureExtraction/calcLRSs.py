@@ -98,6 +98,7 @@ def calcLRSs():
             if isSubContained(val,LRSs) and val in LRSs:
                 LRSs.remove(val)
 
+    LRSs.sort()
     print("Longest Repeated Subsequences:\n " + str(LRSs))
     print("Accessed: \n"+ str([Seqs[lrs] for lrs in LRSs])+ " times.")
 

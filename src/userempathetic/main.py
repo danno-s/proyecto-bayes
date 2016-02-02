@@ -5,7 +5,7 @@ from src.userempathetic.dataParsing.dataParse import dataParse
 from src.userempathetic.dataParsing.parseSessions import parseSessions
 from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
 from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures
-from src.userempathetic.clustering.sessionClustering import sessionClustering
+from src.userempathetic.clustering.ExtractClusters import clustering
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -30,9 +30,6 @@ def extractFeats():
     extractFeatures()
     print("...Features extraction finished...\n")
 
-def clustering():
-    print("\n\n...Performing session clustering...\n\n")
-    sessionClustering()
 
 if __name__ == '__main__':
     print("0 = dataParsing\n"+
@@ -49,6 +46,7 @@ if __name__ == '__main__':
     if a <= 2:
         extractFeats()
     if a <= 3:
+        print("\n\n...Performing session clustering...\n\n")
         clustering()
         print("\n\nClustering finished.\n\n")
 

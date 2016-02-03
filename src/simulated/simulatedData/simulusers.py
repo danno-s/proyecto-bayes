@@ -78,9 +78,15 @@ def getsession():
     lr = len(rows)
 
     L = [None]*3
-    L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr*0.7)]]]
-    L[1] = [y.split(' ') for y in [x[0] for x in rows[int(lr*0.7):int(lr*0.94)]]]
-    L[2] = [y.split(' ') for y in [x[0] for x in rows[int(lr*0.94):]]]
+
+    if "," in rows[0]:
+        L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr*0.7)]]]
+        L[1] = [y.split(' ') for y in [x[0] for x in rows[int(lr*0.7):int(lr*0.94)]]]
+        L[2] = [y.split(' ') for y in [x[0] for x in rows[int(lr*0.94):]]]
+    else:
+        L[0] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[:int(lr*0.7)]]]
+        L[1] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr*0.7):int(lr*0.94)]]]
+        L[2] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr*0.94):]]]
 
     return L
 
@@ -100,11 +106,11 @@ def generate(n):
             ses = noise(ses,prob)
             d = random.randint(1450000000,1462534931)
             for s in ses:
-                url = [int(x) for x in s.split(",")]
-                try:
+                if type(s) is str:
+                    url = [int(x) for x in s.split(",")]
                     L= [u[0],d,url[0],u[1],url[1]]
-                except IndexError:
-                    print(url)
+                else:
+                    L = [u[0],d,s,u[1],None]
                 sqlCD.write(sqlWrite, L)
                 d += random.randint(1,59)
 

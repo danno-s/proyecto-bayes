@@ -12,7 +12,7 @@ def calcLRSs():
 
     sqlCD = sqlWrapper(db='CD')            # Asigna las bases de datos que se accederán
     # Lectura de sessions
-    sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
+    sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from simulsessions'
     rows = sqlCD.read(sqlRead)
 
     allsubseqsL = list()  # urls subsequences of all sessions.

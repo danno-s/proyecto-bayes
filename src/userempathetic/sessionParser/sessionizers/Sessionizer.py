@@ -13,13 +13,10 @@ class Sessionizer:
     def __init__(self):
         self.tlimit = Config().getValue(attr='session_tlimit',mode='INT')
 
-    def extractSessionsOf(self,user_id,stepGen):
-        pass
-
     def sessionize(self,sParser):
         # Obtener todos los usuarios.
         userL = getAllUserIDs()
-        assert len(userL)>0
+        # assert len(userL)>0
         nodesD = sParser.nodesD # nodesD[user_id]= stepGen: (clickDate,urls_id, profile,microNode)
 
         # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
@@ -29,7 +26,7 @@ class Sessionizer:
             if len(user_sessions)>0:
                 for s in user_sessions:
                     sessions.append(s)
-        assert len(sessions) > 0
+        # assert len(sessions) > 0
         return sessions
 
     def extractSessionsOf(self, user_id, stepsGen):

@@ -17,8 +17,8 @@ class SessionParser:
     def parseSessions(self):
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
-        sqlCD.truncate('sessions')
-        sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES (%s,%s,%s,%s,%s)"
+        sqlCD.truncate('simulsessions')
+        sqlWrite = "INSERT INTO simulsessions (profile, sequence, user_id, inittime, endtime) VALUES (%s,%s,%s,%s,%s)"
         for session in self.sessions:
             sqlCD.write(sqlWrite,session.toSQLItem())
 

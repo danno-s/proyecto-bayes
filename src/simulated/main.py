@@ -2,12 +2,12 @@ from src.simulated.dataParsing.ExtractURLs import extractURLs
 from src.simulated.dataParsing.ExtractUsers import extractUsers
 from src.simulated.dataParsing.ExtractContentElements import extractContentElements
 from src.simulated.dataParsing.dataParse import dataParse
-from src.simulated.dataParsing.parseSessions import parseSessions
+from src.simulated.dataParsing.parseSessions import parseSessions as simulParseSession
 from src.simulated.featureExtraction.calcLRSs import calcLRSs
 from src.simulated.featureExtraction.ExtractFeatures import extractFeatures
-from src.simulated.clustering.sessionClustering import sessionClustering
 from src.simulated.simulatedData.simulusers import *
 from src.simulated.utils.loadConfig import Config
+from src.userempathetic.dataParsing.parseSessions import parseSessions
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -40,31 +40,23 @@ def extractFeats():
 
 def clustering():
     print("\n\n...Performing clustering...\n\n")
-    sessionClustering()
+    # sessionClustering()
 
 if __name__ == '__main__':
 
     simulation = Config().getValue("simulate").lower() == "true"
     ## Modo normal
 
-    if not simulation:
-        parseData()
-        print("...Parsing Sessions...\n")
-        parseSessions()
-        print("...Sessions parsing finished...\n")
-        extractFeats()
-        clustering()
-        print("\n\nClustering finished.\n\n")
+    parseData()
+    print("...Parsing Sessions...\n")
+    parseSessions()
+    print("...Sessions parsing finished...\n")
+    simulate()
+    simulParseSession()
+    print("\n\nSimulated data and sessions generation finished.\n\n")
+    extractFeats()
+    print("\n\nFeature Extraction finished.\n\n")
+    clustering()
+    print("\n\nClustering finished.\n\n")
 
-        print("\n\nsimulated process finished.\n\n")
-
-    ## Modo Simulado
-    else:
-        simulate()
-        print("\n\nSimulated data and sessions generation finished.\n\n")
-        extractFeats()
-        print("\n\nFeature Extraction finished.\n\n")
-        clustering()
-        print("\n\nClustering finished.\n\n")
-
-        print("\n\nsimulated process simulation finished.\n\n")
+    print("\n\nsimulated process simulation finished.\n\n")

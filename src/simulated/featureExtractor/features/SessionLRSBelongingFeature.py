@@ -18,7 +18,7 @@ class SessionLRSBelongingFeature(SessionFeature):
 
     def extract(self):
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where id='+str(self.session_id)
+        sqlRead = 'select sequence from simulsessions where id='+str(self.session_id)
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
         for row in session:

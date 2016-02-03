@@ -13,9 +13,6 @@ class Sessionizer:
     def __init__(self):
         self.tlimit = Config().getValue(attr='session_tlimit',mode='INT')
 
-    def extractSessionsOf(self,user_id,stepGen):
-        pass
-
     def sessionize(self,sParser):
         # Obtener todos los usuarios.
         userL = getAllUserIDs()

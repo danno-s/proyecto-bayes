@@ -43,7 +43,7 @@ class MyTestCase(unittest.TestCase):
     def test_parseSessions(self):
         parseSessions()
         try:
-            rows = self.sql.read('SELECT * FROM sessions')
+            rows = self.sql.read('SELECT * FROM simulsessions')
             self.assertTrue(len(rows) != 0)
             for row in rows:
                 id = row[0]

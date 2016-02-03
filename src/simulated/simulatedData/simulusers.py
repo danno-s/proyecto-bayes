@@ -101,7 +101,10 @@ def generate(n):
             d = random.randint(1450000000,1462534931)
             for s in ses:
                 url = [int(x) for x in s.split(",")]
-                L= [u[0],d,url[0],u[1],url[1]]
+                try:
+                    L= [u[0],d,url[0],u[1],url[1]]
+                except IndexError:
+                    print(url)
                 sqlCD.write(sqlWrite, L)
                 d += random.randint(1,59)
 

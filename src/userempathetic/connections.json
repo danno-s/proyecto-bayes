@@ -3,7 +3,7 @@
     "passwd": "root",
     "host": "localhost",
     "name": "local",
-    "db": "seba_guidecapture",
+    "db": "guidecapture",
     "user": "root"
   },
   "parsedData" :
@@ -11,7 +11,7 @@
     "passwd": "root",
     "host": "localhost",
     "name": "local",
-    "db": "seba_parseddata",
+    "db": "parsedData",
     "user": "root"
   },
   "groundTruth":
@@ -26,7 +26,7 @@
     "passwd": "root",
     "host": "localhost",
     "name": "local",
-    "db": "seba_coredata",
+    "db": "coreData",
     "user": "root"
   },
   "features": {

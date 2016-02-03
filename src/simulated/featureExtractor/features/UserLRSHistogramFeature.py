@@ -18,7 +18,7 @@ class UserLRSHistogramFeature(UserFeature):
 
     def extract(self):
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where user_id='+str(self.user)
+        sqlRead = 'select sequence from simulsessions where user_id='+str(self.user)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
         for row in userSeq:

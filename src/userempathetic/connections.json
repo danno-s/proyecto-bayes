@@ -33,7 +33,7 @@
     "passwd": "root",
     "host": "localhost",
     "name": "local",
-    "db": "seba_features",
+    "db": "features",
     "user": "root"
   }
 }

@@ -8,6 +8,7 @@ from src.simulated.featureExtraction.ExtractFeatures import extractFeatures
 from src.simulated.simulatedData.simulusers import *
 from src.simulated.utils.loadConfig import Config
 from src.userempathetic.dataParsing.parseSessions import parseSessions
+from src.userempathetic.clustering.ExtractClusters import clustering
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -38,25 +39,31 @@ def extractFeats():
     extractFeatures()
     print("...Features extraction finished...\n")
 
-def clustering():
-    print("\n\n...Performing clustering...\n\n")
-    # sessionClustering()
-
 if __name__ == '__main__':
+    print("0 = dataParsing\n"+
+          "1 = sessionParsing\n"+
+          "2 = simulateData\n"+
+          "3 = simulSessionParsing\n"+
+          "4 = featureExtraction\n"+
+          "5 = clustering\n")
+    a= int(input("Ingrese paso de inicio:"))
+    if a <= 0:
+        parseData()
+    if a <= 1:
+        print("...Parsing Sessions...\n")
+        parseSessions()
+        print("...Sessions parsing finished...\n")
+    if a <= 2:
+        print("...Simulating Data...\n")
+        simulate()
+    if a <= 3:
+        simulParseSession()
+        print("...Simulation finished...\n")
+    if a <= 4:
+        extractFeats()
+    if a <= 5:
+        print("\n\n...Performing session clustering...\n\n")
+        clustering()
+        print("\n\nClustering finished.\n\n")
 
-    simulation = Config().getValue("simulate").lower() == "true"
-    ## Modo normal
-
-    parseData()
-    print("...Parsing Sessions...\n")
-    parseSessions()
-    print("...Sessions parsing finished...\n")
-    simulate()
-    # simulParseSession()
-    # print("\n\nSimulated data and sessions generation finished.\n\n")
-    # extractFeats()
-    # print("\n\nFeature Extraction finished.\n\n")
-    # clustering()
-    # print("\n\nClustering finished.\n\n")
-    #
-    # print("\n\nsimulated process simulation finished.\n\n")
+    print("\n\nUserEmpathetic process finished.\n\n")

@@ -34,6 +34,7 @@ class FeatureExtractor:
             sqlFT.truncate(feature.tablename)
             print("\n"+str(feature.__name__)+":\n")
             for user in self.users:
+                print(user)
                 f = feature(user)
                 f.extract()
                 sqlFT.write(f.sqlWrite, f.toSQLItem())

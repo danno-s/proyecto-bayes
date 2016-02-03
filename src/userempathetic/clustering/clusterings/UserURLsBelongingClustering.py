@@ -13,7 +13,7 @@ class UserURLsBelongingClustering(UserClustering):
 
     def __init__(self):
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.03, min_samples=1,metric='manhattan')
+        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=8,metric='manhattan')
         self.clustersD = dict()
         self.n_clusters = 0
         self.X, self.ids = self.__getData()

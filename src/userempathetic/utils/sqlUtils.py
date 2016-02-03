@@ -119,7 +119,7 @@ class sqlWrapper:
             self.conns['PD'] = connections['parsedData']
             self.conns['CD'] = connections['coreData']
             # self.conns['GT'] = connections['groundTruth']
-            # self.conns['FT'] = connections['features']
+            self.conns['FT'] = connections['features']
 
 
         except:

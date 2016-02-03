@@ -38,6 +38,6 @@ class SessionParser:
 
     def userStepsGen(self,user_id):
         sqlCD = sqlWrapper('CD')
-        rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id="+str(user_id))
+        rows= sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from simulatednodes WHERE user_id="+str(user_id))
         for row in rows:
             yield (row[0], row[2], row[3], row[4]) # (clickDate, urls_id, profile, micro_id)

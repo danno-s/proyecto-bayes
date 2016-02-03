@@ -13,7 +13,7 @@ class SessionLRSBelongingClustering(SessionClustering):
 
     def __init__(self):
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.03, min_samples=2,metric='manhattan')
+        self.clusteringAlgorithm = DBSCAN(eps=0.5, min_samples=5,metric='manhattan')
         self.clustersD = dict()
         self.n_clusters = 0
         self.X, self.ids = self.__getData()

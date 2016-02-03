@@ -43,7 +43,7 @@
 */
 {
   "session_tlimit":"30",
-  "LRS_threshold":"20",
+  "LRS_threshold":"15",
   "elementTypes":[
     "TextAreas",
     "RadioButton",

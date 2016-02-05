@@ -1,3 +1,9 @@
+#!/usr/bin/python
+
+"""
+Extrae vectores descriptores de los datos
+"""
+
 from src.simulated.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 from src.simulated.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
 from src.simulated.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature

@@ -1,6 +1,26 @@
+"""
+Clase Cluster
+
+Representa un cluster y sus características
+"""
+
 class Cluster:
 
     def __init__(self, elements, label, clusteringType=None):
+        """
+        Constructor de la clase
+
+        Parameters
+        ----------
+        elements : List
+            Los elementos del cluster
+        label : String
+            Nombre del cluster
+        clusteringType : String
+            Tipo de cluster
+        -------
+
+        """
         self.label = label
         self.elements = [x[0] for x in elements]
         self.ids = [x[1] for x in elements]
@@ -10,12 +30,36 @@ class Cluster:
         self.clusteringType = clusteringType or ""
 
     def getCentroid(self):
+        """
+        Retorna los centros del cluster
+
+        Returns
+        -------
+        List
+            Lista con los centros del cluster
+        """
         return [sum([value[x]/self.n_elements for value in self.elements]) for x in range(self.features_dim)]
 
     def getMax(self):
+        """
+        ????
+
+        Returns
+        -------
+        List
+
+        """
         return [max([value[x] for value in self.elements]) for x in range(self.features_dim)]
 
     def getMin(self):
+        """
+        ????
+
+        Returns
+        -------
+        List
+
+        """
         return [min([value[x] for value in self.elements]) for x in range(self.features_dim)]
 
 

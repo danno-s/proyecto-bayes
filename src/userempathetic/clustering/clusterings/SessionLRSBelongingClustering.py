@@ -1,3 +1,9 @@
+"""
+Clase SessionLRSBelongingClustering
+
+Crea clusters de uso de LRSs por sesión
+"""
+
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN

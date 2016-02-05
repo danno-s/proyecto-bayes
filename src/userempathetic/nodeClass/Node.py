@@ -1,5 +1,5 @@
 """
-
+Clase Node, representa un Nodo (paso) de una sesión
 """
 
 import random

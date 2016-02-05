@@ -1,3 +1,7 @@
+"""
+Clase Session, representa una sesión en el sistema
+"""
+
 from src.simulated.nodeClass.Node import Node
 
 

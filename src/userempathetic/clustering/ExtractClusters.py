@@ -1,3 +1,9 @@
+#!/usr/bin/python
+
+"""
+Extrae clusters de los datos
+"""
+
 from src.userempathetic.clustering.ClusterExtractor import ClusterExtractor
 
 def clustering():

@@ -1,3 +1,9 @@
+"""
+Clase ClusterExtractor
+
+Extrae clusters de datos
+"""
+
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 from matplotlib import pyplot as plt
 
@@ -34,17 +40,17 @@ class ClusterExtractor:
             self.userClusterD[clustering]=c.getClusters()
             print('Estimated number of clusters: %d' % c.n_clusters)
             self.printUserClusters()
-        """
-        def __clusterizeUsers(self,clustering):
-            sqlFT = sqlWrapper('FT')
-            sqlFT.truncate(clustering.tablename)
-            print("\n"+str(clustering.__name__)+":\n")
-            for user in self.users:
-                f = clustering(user)
-                f.extract()
-                sqlFT.write(f.sqlWrite, f.toSQLItem())
-                print(f)
-        """
+        # """
+        # def __clusterizeUsers(self,clustering):
+        #     sqlFT = sqlWrapper('FT')
+        #     sqlFT.truncate(clustering.tablename)
+        #     print("\n"+str(clustering.__name__)+":\n")
+        #     for user in self.users:
+        #         f = clustering(user)
+        #         f.extract()
+        #         sqlFT.write(f.sqlWrite, f.toSQLItem())
+        #         print(f)
+        # """
 
         def __clusterizeSessions(self,clustering):
             c = clustering()

@@ -1,4 +1,6 @@
-
+"""
+Clase abstracta Metrics, representa métricas para comparar sesiones, nodos o micronodos
+"""
 from abc import ABCMeta, abstractmethod
 from scipy.spatial import distance
 

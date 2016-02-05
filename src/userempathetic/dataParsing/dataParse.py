@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+"""
+Extrae datos desde pageview y los guarda en nodes en un formato adecuado
+"""
+
 from datetime import datetime
 import json
 
@@ -13,6 +17,9 @@ def __query(n):
 
 
 def dataParse():
+    """
+    Extrae datos desde pageview y los guarda en nodes en un formato adecuado
+    """
 
     sqlGC = sqlWrapper(db='GC')
     sqlCD = sqlWrapper(db='CD')

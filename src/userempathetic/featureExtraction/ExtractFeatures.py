@@ -1,3 +1,9 @@
+#!/usr/bin/python
+
+"""
+Extrae vectores descriptores de los datos
+"""
+
 from src.userempathetic.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 from src.userempathetic.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
 from src.userempathetic.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature

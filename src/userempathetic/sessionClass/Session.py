@@ -1,3 +1,7 @@
+"""
+Clase Session, representa una sesión en el sistema
+"""
+
 from src.userempathetic.nodeClass.Node import Node
 
 

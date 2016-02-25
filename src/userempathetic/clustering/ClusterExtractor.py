@@ -38,11 +38,6 @@ class ClusterExtractor:
             self.printSessionClusters()
 
         def __clusterizeUsers(self,clustering):
-            c = clustering()
-            c.clusterize()
-            self.userClusterD[clustering]=c.getClusters()
-
-        def __clusterizeUsers(self,clustering):
             sqlCL = sqlWrapper('CL')
             sqlCL.truncate(clustering.tablename)
             print("\n"+str(clustering.__name__)+":\n")
@@ -56,10 +51,16 @@ class ClusterExtractor:
 
 
         def __clusterizeSessions(self,clustering):
+            sqlCL = sqlWrapper('CL')
+            sqlCL.truncate(clustering.tablename)
+            print("\n"+str(clustering.__name__)+":\n")
             c = clustering()
             c.clusterize()
+            clusters = c.getClusters()
             self.sessionClusterD[clustering]=c.getClusters()
             print('Estimated number of Session clusters: %d' % c.n_clusters)
+            for cluster in clusters.values():
+                sqlCL.write(c.sqlWrite, cluster.toSQLItem())
 
         def printSessionClusters(self):
 
@@ -151,8 +152,8 @@ if __name__ == '__main__':
     cE = ClusterExtractor(sessionClusteringsL = [SessionLRSBelongingClustering],userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
     cE.extractSessionClusters()
     cE.extractUserClusters()
-   # cE.visualizeClusters()
+    cE.visualizeClusters()
 
-    print("\n\nTEST QL\n\n")
+    print("\n\nTEST Combining clusters\n\n")
     combineUserClusterings(cE)
 

@@ -11,8 +11,8 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
 
 class UserURLsBelongingClustering(UserClustering):
-    #tablename = 'sessionlrsbelongingclusters'
-    #sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
+    tablename = 'userurlsbelongingclusters'
+    sqlWrite = 'INSERT INTO '+tablename+ ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "URLs IDs"
     ylabel = "Utilización de URLs"
     title = "Uso de URLs por usuario representativo de cada cluster"

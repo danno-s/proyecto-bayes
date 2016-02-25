@@ -11,8 +11,8 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
 
 class SessionLRSBelongingClustering(SessionClustering):
-    #tablename = 'sessionlrsbelongingclusters'
-    #sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
+    tablename = 'sessionlrsbelongingclusters'
+    sqlWrite = 'INSERT INTO '+tablename+ ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Utilización del LRS"
     title = "Uso de LRSs por sesión representativa de cada cluster"

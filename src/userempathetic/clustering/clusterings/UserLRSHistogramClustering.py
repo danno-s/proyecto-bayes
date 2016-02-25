@@ -11,8 +11,8 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
 
 class UserLRSHistogramClustering(UserClustering):
-    #tablename = 'userlrshistogramclusters'
-    #sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
+    tablename = 'userlrshistogramclusters'
+    sqlWrite = 'INSERT INTO '+tablename+ ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"

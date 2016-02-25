@@ -67,3 +67,7 @@ class Cluster:
         return "Cluster "+ str(self.label)+",\t#"+str(self.size) + " inliers"\
                                                                     "\n Elements IDs:\n"+ str(self.ids)+\
                                                                     "\n Elements Features:\n"+ str(self.elements)
+
+    def toSQLItem(self):
+        return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()])
+

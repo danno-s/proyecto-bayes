@@ -41,19 +41,19 @@ class ClusterExtractor:
             c = clustering()
             c.clusterize()
             self.userClusterD[clustering]=c.getClusters()
-            print('Estimated number of User clusters: %d' % c.n_clusters)
 
-        # """
-        # def __clusterizeUsers(self,clustering):
-        #     sqlFT = sqlWrapper('FT')
-        #     sqlFT.truncate(clustering.tablename)
-        #     print("\n"+str(clustering.__name__)+":\n")
-        #     for user in self.users:
-        #         f = clustering(user)
-        #         f.extract()
-        #         sqlFT.write(f.sqlWrite, f.toSQLItem())
-        #         print(f)
-        # """
+        def __clusterizeUsers(self,clustering):
+            sqlCL = sqlWrapper('CL')
+            sqlCL.truncate(clustering.tablename)
+            print("\n"+str(clustering.__name__)+":\n")
+            c = clustering()
+            c.clusterize()
+            clusters = c.getClusters()
+            self.userClusterD[clustering]=clusters
+            print('Estimated number of User clusters: %d' % c.n_clusters)
+            for cluster in clusters.values():
+                sqlCL.write(c.sqlWrite, cluster.toSQLItem())
+
 
         def __clusterizeSessions(self,clustering):
             c = clustering()

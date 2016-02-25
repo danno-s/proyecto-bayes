@@ -24,8 +24,8 @@ class Cluster:
         self.label = label
         self.elements = [x[0] for x in elements]
         self.ids = [x[1] for x in elements]
-        self.n_elements = len(self.elements)
-        assert self.n_elements > 0
+        self.size = len(self.elements)
+        assert self.size > 0
         self.features_dim = len(self.elements[0])
         self.clusteringType = clusteringType or ""
 
@@ -38,7 +38,7 @@ class Cluster:
         List
             Lista con los centros del cluster
         """
-        return [sum([value[x]/self.n_elements for value in self.elements]) for x in range(self.features_dim)]
+        return [sum([value[x] / self.size for value in self.elements]) for x in range(self.features_dim)]
 
     def getMax(self):
         """
@@ -64,6 +64,6 @@ class Cluster:
 
 
     def __str__(self):
-        return "Cluster "+ str(self.label)+",\t#"+str(self.n_elements)+" inliers"\
+        return "Cluster "+ str(self.label)+",\t#"+str(self.size) + " inliers"\
                                                                     "\n Elements IDs:\n"+ str(self.ids)+\
                                                                     "\n Elements Features:\n"+ str(self.elements)

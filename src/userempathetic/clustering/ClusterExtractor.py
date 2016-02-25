@@ -30,16 +30,19 @@ class ClusterExtractor:
         def extractUserClusters(self):
             for userClustering in self.userClusteringsL:
                 self.__clusterizeUsers(userClustering)
+            self.printUserClusters()
 
         def extractSessionClusters(self):
             for sessionClustering in self.sessionClusteringsL:
                 self.__clusterizeSessions(sessionClustering)
+            self.printSessionClusters()
+
         def __clusterizeUsers(self,clustering):
             c = clustering()
             c.clusterize()
             self.userClusterD[clustering]=c.getClusters()
-            print('Estimated number of clusters: %d' % c.n_clusters)
-            self.printUserClusters()
+            print('Estimated number of User clusters: %d' % c.n_clusters)
+
         # """
         # def __clusterizeUsers(self,clustering):
         #     sqlFT = sqlWrapper('FT')
@@ -56,8 +59,7 @@ class ClusterExtractor:
             c = clustering()
             c.clusterize()
             self.sessionClusterD[clustering]=c.getClusters()
-            print('Estimated number of clusters: %d' % c.n_clusters)
-            self.printSessionClusters()
+            print('Estimated number of Session clusters: %d' % c.n_clusters)
 
         def printSessionClusters(self):
 
@@ -95,9 +97,8 @@ class ClusterExtractor:
                         c = v.getCentroid()
                         up = v.getMax()
                         idx = range(features_dim)
-                        ax[k].plot(idx,low,'g.')
-                        ax[k].plot(idx,up,'r.')
-                        ax[k].plot(idx,c,'b.',markersize=10)
+                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[low,up],capsize=3,markersize=8)
+
                         ax[k].text(1.01, 0.5, '#' +str(k),
                                 verticalalignment='center', horizontalalignment='left',
                                 transform=ax[k].transAxes,
@@ -125,9 +126,7 @@ class ClusterExtractor:
                         c = v.getCentroid()
                         up = v.getMax()
                         idx = range(features_dim)
-                        ax[k].plot(idx,low,'g.')
-                        ax[k].plot(idx,up,'r.')
-                        ax[k].plot(idx,c,'b.',markersize=10)
+                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[low,up],capsize=3,markersize=8)
                         ax[k].text(1.01, 0.5, '#' +str(k),
                                 verticalalignment='center', horizontalalignment='left',
                                 transform=ax[k].transAxes,
@@ -145,8 +144,15 @@ class ClusterExtractor:
 if __name__ == '__main__':
     from src.userempathetic.clustering.clusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
     from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+    from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    from src.userempathetic.utils.clusteringUtils import *
 
-    cE = ClusterExtractor(sessionClusteringsL = [SessionLRSBelongingClustering],userClusteringsL=[UserURLsBelongingClustering])
+
+    cE = ClusterExtractor(sessionClusteringsL = [SessionLRSBelongingClustering],userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
     cE.extractSessionClusters()
     cE.extractUserClusters()
-    cE.visualizeClusters()
+   # cE.visualizeClusters()
+
+    print("\n\nTEST QL\n\n")
+    combineUserClusterings(cE)
+

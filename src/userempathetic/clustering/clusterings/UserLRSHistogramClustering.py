@@ -1,7 +1,7 @@
 """
 Clase SessionLRSBelongingClustering
 
-Crea clusters de uso de LRSs por usuario
+Crea clusters de uso de LRSs por sesión
 """
 
 from src.userempathetic.clustering.clusterings.Clustering import UserClustering
@@ -10,16 +10,16 @@ from sklearn.cluster import DBSCAN
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
 
-class UserURLsBelongingClustering(UserClustering):
-    #tablename = 'sessionlrsbelongingclusters'
+class UserLRSHistogramClustering(UserClustering):
+    #tablename = 'userlrshistogramclusters'
     #sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
-    xlabel = "URLs IDs"
-    ylabel = "Utilización de URLs"
-    title = "Uso de URLs por usuario representativo de cada cluster"
+    xlabel = "LRSs IDs"
+    ylabel = "Frecuencia relativa del LRS"
+    title = "Histograma de LRSs de usuario representativo de cada cluster"
 
     def __init__(self):
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=8,metric='manhattan')
+        self.clusteringAlgorithm = DBSCAN(eps=0.3, min_samples=8,metric='euclidean')
         self.clustersD = dict()
         self.n_clusters = 0
         self.X, self.ids = self.__getData()
@@ -35,7 +35,7 @@ class UserURLsBelongingClustering(UserClustering):
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy=[(x,id) for x,id,i,j in zip(self.X,self.ids,class_member_mask,core_samples_mask) if i & j]
             if k != -1:
-                self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=UserURLsBelongingClustering)
+                self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=UserLRSHistogramClustering)
             else:
                 #if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
@@ -47,14 +47,14 @@ class UserURLsBelongingClustering(UserClustering):
 
     def __getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = ('select user_id,vector from userurlsbelongingfeatures')
+        sqlRead = ('select user_id,histogram from userlrshistogramfeatures')
         rows= sqlFT.read(sqlRead)
         assert len(rows)>0
         X = list()
         ids = list()
         for row in rows:
             ids.append(int(row[0]))
-            X.append([int(x) for x in row[1].split(' ')])
+            X.append([float(x) for x in row[1].split(' ')])
         return X,ids
 
     def getClusters(self):

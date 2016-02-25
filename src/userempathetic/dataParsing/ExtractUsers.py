@@ -5,7 +5,6 @@ Extrae los usuarios diferentes en la base de datos
 """
 
 import json
-#from phpserialize import *
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 

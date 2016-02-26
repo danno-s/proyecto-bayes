@@ -70,6 +70,26 @@ def getProfileOf(user_id):
     rows = sqlPD.read(sqlRead)
     return rows[0][0]
 
+def getUserOfSession(session_id):
+    """
+    Obtiene el ID del usuario que realizó la sesión de ID session_id
+
+    Parameters
+    ----------
+    session_id : int
+        El ID de la sesión.
+    Returns
+    -------
+    int
+        int con el ID del usuario.
+    """
+    try:
+        sqlCD = sqlWrapper(db='CD')
+    except:
+        raise
+    sqlRead = "select user_id from sessions where id = "+ str(session_id)
+    rows = sqlCD.read(sqlRead)
+    return rows[0][0]
 
 def getAllUserIDs():
     """

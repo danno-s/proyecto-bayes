@@ -98,7 +98,7 @@ class ClusterExtractor:
                         c = v.getCentroid()
                         up = v.getMax()
                         idx = range(features_dim)
-                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[low,up],capsize=3,markersize=8)
+                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[[x-y for x,y in zip(c,low)],[x-y for x,y in zip(up,c)]],capsize=3,markersize=8)
 
                         ax[k].text(1.01, 0.5, '#' +str(k),
                                 verticalalignment='center', horizontalalignment='left',
@@ -127,7 +127,7 @@ class ClusterExtractor:
                         c = v.getCentroid()
                         up = v.getMax()
                         idx = range(features_dim)
-                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[low,up],capsize=3,markersize=8)
+                        ax[k].errorbar(idx, c,fmt='b.',ecolor='r', yerr=[[x-y for x,y in zip(c,low)],[x-y for x,y in zip(up,c)]],capsize=3,markersize=8)
                         ax[k].text(1.01, 0.5, '#' +str(k),
                                 verticalalignment='center', horizontalalignment='left',
                                 transform=ax[k].transAxes,
@@ -144,14 +144,15 @@ class ClusterExtractor:
 
 if __name__ == '__main__':
     from src.userempathetic.clustering.clusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
+    from src.userempathetic.clustering.clusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
     from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
     from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
     from src.userempathetic.utils.clusteringUtils import *
 
 
-    cE = ClusterExtractor(sessionClusteringsL = [SessionLRSBelongingClustering],userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
-    cE.extractSessionClusters()
+    cE = ClusterExtractor(sessionClusteringsL = [SessionLRSBelongingClustering,SessionUserClustersBelongingClustering],userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
     cE.extractUserClusters()
+    cE.extractSessionClusters()
     cE.visualizeClusters()
 
     print("\n\nTEST Combining clusters\n\n")

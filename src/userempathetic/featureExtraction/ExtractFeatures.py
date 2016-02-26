@@ -5,6 +5,7 @@ Extrae vectores descriptores de los datos
 """
 
 from src.userempathetic.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
+from src.userempathetic.featureExtractor.features.SessionUserClustersBelongingFeature import SessionUserClustersBelongingFeature
 from src.userempathetic.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
 from src.userempathetic.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
 from src.userempathetic.featureExtractor.FeatureExtractor import FeatureExtractor
@@ -23,6 +24,8 @@ def extractFeatures():
     session_features = Config().getArray("session_features")
     if "SessionLRSBelonging" in session_features:
         sfL.append(SessionLRSBelongingFeature)
+    if "SessionUserClustersBelonging" in session_features:
+        sfL.append(SessionUserClustersBelongingFeature)
 
     fE = FeatureExtractor(ufL,sfL)
     fE.extractUserFeatures()

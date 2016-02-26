@@ -1,4 +1,5 @@
 from src.userempathetic.clusterClass.Cluster import Cluster
+from src.userempathetic.utils.sqlUtils import sqlWrapper
 import itertools
 
 def intersectionIDs(clusterIDs1, clusterIDs2):
@@ -23,3 +24,30 @@ def clusteringIntersections(clustersL1, clustersL2):
             print(pair)
             print("Intersected Items: "+ str(n_intersected))
             print(inter)
+
+
+def getAllUserClusters(clusterType):
+    """
+    Obtiene una lista con las id de las urls desde la base de datos
+
+    Parameters
+    ----------
+    clusterType
+        Nombre de la tabla correspondiente al tipo de User Clusters que se desea obtener.
+    Returns
+    -------
+    dict
+        dict de clusters, donde cada elemento tiene todas las IDs de usuario pertenecientes a ese cluster.
+    """
+    try:
+        sqlCL = sqlWrapper(db='CL')
+    except:
+        raise
+    sqlRead = "select cluster_id,members from "+ clusterType
+    rows = sqlCL.read(sqlRead)
+    userClustersD = dict()
+
+    for row in rows:
+        userClustersD[int(row[0])] = [int(x) for x in row[1].split(' ')]
+
+    return userClustersD

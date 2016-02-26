@@ -10,8 +10,8 @@ class Session:
     def __init__(self, sequence, profile="", initTime="", endTime="", user_id=""):
         self.initTime = initTime
         self.endTime = endTime
-        self.user_id = user_id
-        self.profile = profile
+        self.user_id = user_id # int
+        self.profile = profile  #int
         self.sequence = sequence   # lista de tuplas (urls_id, micro_id), o (urls_id, None)
 
     def __getSequenceFromNode(self,node):

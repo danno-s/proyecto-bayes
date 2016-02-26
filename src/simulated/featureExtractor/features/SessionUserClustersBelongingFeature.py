@@ -24,4 +24,4 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         return str(self.user)+": "+ str(self.vector)
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str(x) for x in self.vector])
+        return str(self.session_id), ' '.join([str(x) for x in self.vector])

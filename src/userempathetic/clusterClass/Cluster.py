@@ -4,8 +4,8 @@ Clase Cluster
 Representa un cluster y sus características
 """
 
-class Cluster:
 
+class Cluster:
     def __init__(self, elements, label, clusteringType=None):
         """
         Constructor de la clase
@@ -62,12 +62,10 @@ class Cluster:
         """
         return [min([value[x] for value in self.elements]) for x in range(self.features_dim)]
 
-
     def __str__(self):
-        return "Cluster "+ str(self.label)+",\t#"+str(self.size) + " inliers"\
-                                                                    "\n Elements IDs:\n"+ str(self.ids)+\
-                                                                    "\n Elements Features:\n"+ str(self.elements)
+        return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
+                                                                        "\n Elements IDs:\n" + str(self.ids) + \
+               "\n Elements Features:\n" + str(self.elements)
 
     def toSQLItem(self):
         return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()])
-

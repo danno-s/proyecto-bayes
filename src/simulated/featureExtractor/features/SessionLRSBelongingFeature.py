@@ -1,24 +1,22 @@
 from src.simulated.featureExtractor.features.Feature import SessionFeature
 from src.simulated.utils.featureExtractionUtils import getAllLRSs
 from src.simulated.utils.featureExtractionUtils import isSubContained, subsequences
-from src.simulated.utils.sqlUtils import sqlWrapper
+from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 class SessionLRSBelongingFeature(SessionFeature):
-
     tablename = 'sessionlrsbelongingfeatures'
-    sqlWrite = 'INSERT INTO '+tablename+ ' (session_id,vector) VALUES (%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
 
-    def __init__(self,session_id):
+    def __init__(self, session_id):
         SessionFeature.__init__(self)
         self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)
 
-
     def extract(self):
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from simulsessions where id='+str(self.session_id)
+        sqlRead = 'select sequence from simulsessions where id=' + str(self.session_id)
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
         for row in session:
@@ -29,7 +27,8 @@ class SessionLRSBelongingFeature(SessionFeature):
                     self.vector[i] = 1
 
     def __str__(self):
-        return "Session "+str(self.session_id)+": "+ str(self.vector) #' '.join([str("%.4f"%(x)) for x in self.histogram])
+        return "Session " + str(self.session_id) + ": " + str(
+            self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
 
     def toSQLItem(self):
         return str(self.session_id), ' '.join([str(x) for x in self.vector])

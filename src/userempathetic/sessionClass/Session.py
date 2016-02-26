@@ -6,26 +6,27 @@ from src.userempathetic.nodeClass.Node import Node
 
 
 class Session:
-
-    def __init__(self, sequence, profile="", initTime="", endTime="", user_id=""):
+    def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None):
         self.initTime = initTime
         self.endTime = endTime
-        self.user_id = user_id # int
-        self.profile = profile  #int
-        self.sequence = sequence   # lista de tuplas (urls_id, micro_id), o (urls_id, None)
+        self.user_id = user_id  # int
+        self.profile = profile  # int
+        self.sequence = sequence  # lista de tuplas (urls_id, micro_id), o (urls_id, None)
+        if session_id:
+            self.session_id = session_id
 
-    def __getSequenceFromNode(self,node):
+    def __getSequenceFromNode(self, node):
         sequence = list()
         while node:
             if node.urls_id:
                 if node.microNode:
                     sequence.append((node.urls_id, node.microNode))
                 else:
-                    sequence.append((node.urls_id,None))
+                    sequence.append((node.urls_id, None))
             node = node.next
         return sequence
 
-    def getFirstNode(self,steps = None):
+    def getFirstNode(self, steps=None):
         """
 
         Parameters
@@ -42,12 +43,12 @@ class Session:
         firstStep = steps[0]
         macro_id = firstStep[0]
         micro_id = firstStep[1]
-        firstNode = Node(id_user=self.user_id, profile=self.profile, id_url=macro_id,microNode=micro_id)
+        firstNode = Node(user_id=self.user_id, profile=self.profile, urls_id=macro_id, microNode=micro_id)
         currentNode = firstNode
         for step in steps[1:]:
             macro_id = step[0]
             micro_id = step[1]
-            newNode = Node(id_user=self.user_id, profile=self.profile, id_url=macro_id,microNode=micro_id)
+            newNode = Node(user_id=self.user_id, profile=self.profile, urls_id=macro_id, microNode=micro_id)
             currentNode.addNext(newNode)
             currentNode = currentNode.next
         return firstNode
@@ -55,27 +56,27 @@ class Session:
     def accept(self, visitor):
         visitor.metSession(self)
 
-
     def __str__(self):
-        return str(self.profile)+":\t"+self.__sequenceToStr(self.sequence) +" ;\t " + str(self.initTime) +" >> "+ str(self.endTime)
+        return str(self.profile) + ":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
+            self.initTime) + " >> " + str(self.endTime)
 
-    def __sequenceToStr(self,sequence):
+    def __sequenceToStr(self, sequence):
         tps = list()
         for x in sequence:
             if x[1]:
-                tps.append("("+ str(x[0])+","+str(x[1])+")")
+                tps.append("(" + str(x[0]) + "," + str(x[1]) + ")")
             else:
-                tps.append("("+ str(x[0])+")")
+                tps.append("(" + str(x[0]) + ")")
         s = ' >> '.join(tps)
         return s
 
     def toSQLItem(self):
-        #(profile, sequence, user_id, inittime, endtime)
+        # (profile, sequence, user_id, inittime, endtime)
         steps = list()
         for x in self.sequence:
             if x[1]:
-                step=str(x[0])+","+str(x[1])
+                step = str(x[0]) + "," + str(x[1])
             else:
-                step=str(x[0])
+                step = str(x[0])
             steps.append(step)
-        return (self.profile,' '.join(steps),self.user_id,self.initTime,self.endTime)
+        return (self.profile, ' '.join(steps), self.user_id, self.initTime, self.endTime)

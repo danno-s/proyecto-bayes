@@ -11,8 +11,8 @@ from src.simulated.sessionParser.sessionizers.MacroEdgesSessionizer import Macro
 from src.simulated.sessionParser.SessionParser import SessionParser
 from src.simulated.utils.loadConfig import Config
 
-def parseSessions():
 
+def parseSessions():
     sessionizer_mode = Config().getValue("sessionizer_mode")
     if sessionizer_mode == "MacroComplete":
         sessionizer = MacroCompleteSessionizer()
@@ -23,11 +23,12 @@ def parseSessions():
     elif sessionizer_mode == "Edges":
         sessionizer = EdgesSessionizer()
     else:
-        raise Exception #TODO: crear configuration exception.
+        raise Exception  # TODO: crear configuration exception.
 
     sp = SessionParser(sessionizer)
     sp.parseSessions()
     sp.printSessions()
+
 
 if __name__ == '__main__':
     parseSessions()

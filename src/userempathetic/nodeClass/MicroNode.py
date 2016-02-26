@@ -5,11 +5,8 @@ Contienen información sobre distintos elementos de la pagina: textareas,
 selects, multiselects, radius, y otros,
 """
 
-import json
-
 
 class MicroNode:
-
     def __init__(self, str, key):
         self.key = key
         self.id = str[0][0]
@@ -59,7 +56,7 @@ class MicroNode:
 
         """
         for item in self.key:
-            if not self.__switch(item,self) == self.__switch(item, micro):
+            if not self.__switch(item, self) == self.__switch(item, micro):
                 return False
         return True
 
@@ -106,10 +103,10 @@ class MicroNode:
 
     def __switch(self, case, micro):
         switcher = {
-            "textArea" : micro.textArea,
-            "inputText" : micro.inputText,
-            "radioButton" : micro.radioButton,
-            "selects" : micro.selects,
-            "checkbox" : micro.checkbox
+            "textArea": micro.textArea,
+            "inputText": micro.inputText,
+            "radioButton": micro.radioButton,
+            "selects": micro.selects,
+            "checkbox": micro.checkbox
         }
         return switcher.get(case, "nothing")

@@ -16,14 +16,14 @@ def extractURLs():
         raise
     sqlRead = 'SELECT DISTINCT url from pageview'
     rows = sqlGC.read(sqlRead)
-    assert len(rows)> 0
+    assert len(rows) > 0
     L = [x[0] for x in rows]  # Obtiene URLs desde los eventos capturados.
 
     sqlRead = 'SELECT DISTINCT urls from pageview'
     rows = sqlGC.read(sqlRead)
-    assert len(rows)> 0
+    assert len(rows) > 0
     URLs = [x for x in rows]
-    #URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
+    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
@@ -60,10 +60,11 @@ def extractURLs():
     sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"  # Guardar Árboles completos de URLs.
 
     for urlstree in URLs:
-        #urljsonstr = json.dumps(urlstree).replace(' ', '')
+        # urljsonstr = json.dumps(urlstree).replace(' ', '')
         urljsonstr = urlstree[0].replace(' ', '')
         # print(urljsonstr)
         sqlPD.write(sqlWrite, (hash(urljsonstr), urljsonstr))
+
 
 if __name__ == '__main__':
     extractURLs()

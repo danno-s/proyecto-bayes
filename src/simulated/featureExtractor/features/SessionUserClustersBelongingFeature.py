@@ -1,14 +1,13 @@
 from src.simulated.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.clusteringUtils import getAllUserClusters
 from src.simulated.utils.dataParsingUtils import getUserOfSession
-from src.simulated.utils.sqlUtils import sqlWrapper
 
 
 class SessionUserClustersBelongingFeature(SessionFeature):
     tablename = 'sessionuserclustersbelongingfeatures'
-    sqlWrite = 'INSERT INTO '+tablename+ ' (session_id,vector) VALUES (%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
 
-    def __init__(self,session_id):
+    def __init__(self, session_id):
         SessionFeature.__init__(self)
         self.userClusters = getAllUserClusters("userurlsbelongingclusters")
         self.vector = [0] * len(self.userClusters)
@@ -21,7 +20,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
                 self.vector[cluster_id] = 1
 
     def __str__(self):
-        return str(self.user)+": "+ str(self.vector)
+        return str(self.user) + ": " + str(self.vector)
 
     def toSQLItem(self):
         return str(self.session_id), ' '.join([str(x) for x in self.vector])

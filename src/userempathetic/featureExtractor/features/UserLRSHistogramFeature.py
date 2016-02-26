@@ -6,9 +6,9 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 class UserLRSHistogramFeature(UserFeature):
     tablename = 'userlrshistogramfeatures'
-    sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,histogram,count) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,histogram,count) VALUES (%s,%s,%s)'
 
-    def __init__(self,user):
+    def __init__(self, user):
         UserFeature.__init__(self)
         self.LRSs = getAllLRSs()
         self.histogram = [0.0] * len(self.LRSs)
@@ -18,7 +18,7 @@ class UserLRSHistogramFeature(UserFeature):
 
     def extract(self):
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where user_id='+str(self.user)
+        sqlRead = 'select sequence from sessions where user_id=' + str(self.user)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
         for row in userSeq:
@@ -30,11 +30,10 @@ class UserLRSHistogramFeature(UserFeature):
 
         self.count = sum(self.histogram)
         if self.count != 0:
-            self.histogram = [val/self.count for val in self.histogram]
-
+            self.histogram = [val / self.count for val in self.histogram]
 
     def __str__(self):
-        return str(self.user)+": "+ str(self.histogram) #' '.join([str("%.4f"%(x)) for x in self.histogram])
+        return str(self.user) + ": " + str(self.histogram)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str("%.4f"%(x)) for x in self.histogram]), str(self.count)
+        return str(self.user), ' '.join([str("%.4f" % x) for x in self.histogram]), str(self.count)

@@ -21,31 +21,27 @@ def extractContentElements():
     sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
     rows = sqlGC.read(sqlRead)
     elementsL = list()
-    for i,row in enumerate(rows):
+    for i, row in enumerate(rows):
         macro_id = getMacroID(str(row[0]))
         raw = row[1]
         contentElementUnique = json.loads(raw)
-        eL=(macro_id,)
+        eL = (macro_id,)
         try:
             data = msvE.getStateVectors(contentElementUnique)
         except:
-            print("Error en fila: "+  str(i))
-            print(json.dumps(contentElementUnique,indent=2))
+            print("Error en fila: " + str(i))
+            print(json.dumps(contentElementUnique, indent=2))
             raise
         for type in elementTypes:
-            eL = eL+(data[type],)
-        eL = eL+ (raw,)
+            eL = eL + (data[type],)
+        eL = eL + (raw,)
         elementsL.append(eL)
-    uniqueElementsS= list(sorted(set(elementsL),key=lambda s: int(s[0])))
+    uniqueElementsS = list(sorted(set(elementsL), key=lambda s: int(s[0])))
 
-#    for tp in uniqueElementsS:
- #       print(str(tp))
-
-
-
+    #    for tp in uniqueElementsS:
+    #       print(str(tp))
 
     print("Total different micro states:" + str(len(uniqueElementsS)))
-
 
     # Limpia las tablas
 
@@ -54,14 +50,14 @@ def extractContentElements():
     # Guarda sets únicos de elementos con sus macro_id en tabla contentElements.
     sqlWrite = "INSERT INTO contentElements (macro_id"
     for el in elementTypes:
-        sqlWrite += ','+el
+        sqlWrite += ',' + el
     sqlWrite += ",raw) VALUES (%s"
     for el in elementTypes:
         sqlWrite += ",%s"
     sqlWrite += ",%s)"
-#    print(sqlWrite)
+    #    print(sqlWrite)
     for tp in uniqueElementsS:
-        sqlPD.write(sqlWrite,tp)
+        sqlPD.write(sqlWrite, tp)
 
 
 if __name__ == '__main__':

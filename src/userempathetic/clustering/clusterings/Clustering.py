@@ -4,11 +4,12 @@ Clase Clustering
 Clase abstracta (...)
 """
 
+
 class Clustering:
     def __init__(self):
         pass
 
-    def getCentroid(self,cluster):
+    def getCentroid(self, cluster):
         """
         Retorna los centros del cluster
 
@@ -23,9 +24,9 @@ class Clustering:
             Lista con los centros del cluster
         """
         N = len(cluster[0])
-        return [sum([value[x]/len(cluster) for value in cluster]) for x in range(N)]
+        return [sum([value[x] / len(cluster) for value in cluster]) for x in range(N)]
 
-    def getMax(self,cluster):
+    def getMax(self, cluster):
         """
         ???
         Parameters
@@ -41,7 +42,7 @@ class Clustering:
         N = len(cluster[0])
         return [max([value[x] for value in cluster]) for x in range(N)]
 
-    def getMin(self,cluster):
+    def getMin(self, cluster):
         """
         ???
         Parameters

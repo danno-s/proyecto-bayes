@@ -4,12 +4,9 @@
 Extrae datos desde pageview y los guarda en nodes en un formato adecuado
 """
 
-from datetime import datetime
 import json
 
 from src.userempathetic.utils.dataParsingUtils import *
-from src.userempathetic.dataParsing.ExtractURLs import extractURLs
-from src.userempathetic.dataParsing.ExtractContentElements import extractContentElements
 
 
 def __query(n):
@@ -39,11 +36,12 @@ def dataParse():
         profile = json.loads(info[0][1])['profile']
         click = info[0][2]
 
-        sqlCD.write(sqlWrite,(usr,click,url,profile,micro))
+        sqlCD.write(sqlWrite, (usr, click, url, profile, micro))
 
         i += 1
 
-    print(i-1)
+    print(i - 1)
+
 
 if __name__ == '__main__':
     dataParse()

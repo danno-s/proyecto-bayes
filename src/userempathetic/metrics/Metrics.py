@@ -4,24 +4,23 @@ Clase abstracta Metrics, representa métricas para comparar sesiones, nodos o mi
 from abc import ABCMeta, abstractmethod
 from scipy.spatial import distance
 
-class Metrics:
 
+class Metrics:
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def metSession(self, session):  pass
+    def metSession(self, session): pass
 
     @abstractmethod
-    def metNode(self, node):  pass
+    def metNode(self, node): pass
 
     @abstractmethod
     def metMicro(self, micro): pass
 
 
 class Euclidean(Metrics):
-
     def __init__(self):
-        self.L=list()
+        self.L = list()
         self.p = None
 
     def metSession(self, session):
@@ -33,9 +32,9 @@ class Euclidean(Metrics):
     def metNode(self, node):
         node.microNode.accept(self)
 
-    def metMicro(self,micro):
+    def metMicro(self, micro):
         if not self.p:
             pass
         else:
-            self.L.extend(distance.euclidean(self.p,micro.toList()))
+            self.L.extend(distance.euclidean(self.p, micro.toList()))
         self.p = micro.toList()

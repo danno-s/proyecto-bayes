@@ -1,12 +1,11 @@
 class SessionBuffer:
-
     def __init__(self):
         self.session = list()
 
-    def at(self,i):
+    def at(self, i):
         return self.session[i]
 
-    def remove(self,i):
+    def remove(self, i):
         self.session.remove(self.session[i])
 
     def append(self, other):
@@ -30,7 +29,7 @@ class SessionBuffer:
         self.session.clear()
 
     def isEmpty(self):
-        return len(self.session)==0
+        return len(self.session) == 0
 
     def __str__(self):
         return ' '.join([str(s) for s in self.session])

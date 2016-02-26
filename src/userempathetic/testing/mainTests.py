@@ -20,7 +20,8 @@ class MyTestCase(unittest.TestCase):
 
     def test_clustering(self):
         try:
-            clustering()
+            userclustering()
+            sessionclustering()
             self.assertTrue(True)
         except:
             self.assertTrue(False)

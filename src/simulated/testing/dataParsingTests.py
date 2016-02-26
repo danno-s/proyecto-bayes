@@ -35,7 +35,7 @@ class MyTestCase(unittest.TestCase):
                 id = row[0]
                 name = row[1]
                 perfil = row[2]
-                self.assertTrue(isinstance(id,int))
+                self.assertTrue(isinstance(id, int))
                 self.assertTrue(name != '' and perfil != '')
         except:
             self.assertTrue(False)
@@ -50,11 +50,12 @@ class MyTestCase(unittest.TestCase):
                 user = row[1]
                 tinit = row[2]
                 tend = row[3]
-                self.assertTrue(isinstance(id,int) and isinstance(user,int))
-                self.assertTrue(tinit,datetime.datetime)
-                self.assertTrue(tend,datetime.datetime)
+                self.assertTrue(isinstance(id, int) and isinstance(user, int))
+                self.assertTrue(tinit, datetime.datetime)
+                self.assertTrue(tend, datetime.datetime)
         except:
             self.assertTrue(False)
+
 
 if __name__ == '__main__':
     unittest.main()

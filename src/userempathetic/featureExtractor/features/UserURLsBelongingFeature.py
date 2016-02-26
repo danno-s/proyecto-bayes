@@ -5,9 +5,9 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 class UserURLsBelongingFeature(UserFeature):
     tablename = 'userurlsbelongingfeatures'
-    sqlWrite = 'INSERT INTO '+tablename+ ' (user_id,vector) VALUES (%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector) VALUES (%s,%s)'
 
-    def __init__(self,user):
+    def __init__(self, user):
         UserFeature.__init__(self)
         self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
@@ -16,7 +16,7 @@ class UserURLsBelongingFeature(UserFeature):
 
     def extract(self):
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select urls_id, user_id from nodes where user_id='+str(self.user)
+        sqlRead = 'select urls_id, user_id from nodes where user_id=' + str(self.user)
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
 
@@ -27,7 +27,7 @@ class UserURLsBelongingFeature(UserFeature):
                     self.vector[i] = 1
 
     def __str__(self):
-        return str(self.user)+": "+ str(self.vector)
+        return str(self.user) + ": " + str(self.vector)
 
     def toSQLItem(self):
         return str(self.user), ' '.join([str(x) for x in self.vector])

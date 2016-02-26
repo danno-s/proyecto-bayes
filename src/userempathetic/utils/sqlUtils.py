@@ -11,7 +11,7 @@ class sqlWrapper:
     """ Diccionario donde se encuentran los datos de conexión a las bases de datos """
     conns = dict()
 
-    def __init__(self,db):
+    def __init__(self, db):
         """
         Constructor de la clase
 
@@ -25,7 +25,7 @@ class sqlWrapper:
         sqlWrapper
             El wrapper creado
         """
-        if db.upper() in ['GC', 'PD', 'GT','CD','FT','CL']:
+        if db.upper() in ['GC', 'PD', 'GT', 'CD', 'FT', 'CL']:
             self.db = db
         else:
             raise Exception
@@ -35,7 +35,7 @@ class sqlWrapper:
             # except:
             #    raise ConnectionError
 
-    def setDB(self,db):
+    def setDB(self, db):
         """
         Define la base de datos a la que se conectara
 
@@ -46,7 +46,7 @@ class sqlWrapper:
         """
         self.db = db
 
-    def truncate(self,table):
+    def truncate(self, table):
         """
         Trunca la tabla indicada
 
@@ -55,13 +55,14 @@ class sqlWrapper:
         table : string
             El nombre de la tabla a truncar
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'], host=self.conns[self.db]['host'],database=self.conns[self.db]['db'])
+        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
-        cursor.execute('TRUNCATE '+table)
+        cursor.execute('TRUNCATE ' + table)
         cnx.commit()
         cnx.close()
 
-    def read(self,sqlRead):
+    def read(self, sqlRead):
         """
         Efectúa la consulta sqlRead
 
@@ -75,14 +76,15 @@ class sqlWrapper:
         List
             La tabla de los resultados de la consulta, en forma de lista
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'], host=self.conns[self.db]['host'],database=self.conns[self.db]['db'])
+        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         cursor.execute(sqlRead)
         rows = cursor.fetchall()
         cnx.close()
         return rows
 
-    def write(self,sqlWrite,item = None):
+    def write(self, sqlWrite, item=None):
         """
         Efectúa la escritura sqlWrite
 
@@ -97,11 +99,12 @@ class sqlWrapper:
         -------
 
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'], host=self.conns[self.db]['host'],database=self.conns[self.db]['db'])
+        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         if item is not None:
             try:
-                cursor.execute(sqlWrite,item)
+                cursor.execute(sqlWrite, item)
             except:
                 print(item)
                 raise
@@ -121,7 +124,5 @@ class sqlWrapper:
             self.conns['GT'] = connections['groundTruth']
             self.conns['FT'] = connections['features']
             self.conns['CL'] = connections['clusters']
-
-
         except:
             raise

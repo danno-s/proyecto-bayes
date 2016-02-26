@@ -4,8 +4,9 @@ from src.userempathetic.dataParsing.ExtractContentElements import extractContent
 from src.userempathetic.dataParsing.dataParse import dataParse
 from src.userempathetic.dataParsing.parseSessions import parseSessions
 from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
-from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures
-from src.userempathetic.clustering.ExtractClusters import clustering
+from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures, extractPostClusteringFeatures
+from src.userempathetic.clustering.ExtractClusters import userclustering, sessionclustering
+
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -22,6 +23,7 @@ def parseData():
     dataParse()
     print("...Data parsing finished...\n")
 
+
 def extractFeats():
     print("...Extracting LRSs...\n")
     calcLRSs()
@@ -32,11 +34,13 @@ def extractFeats():
 
 
 if __name__ == '__main__':
-    print("0 = dataParsing\n"+
-          "1 = sessionParsing\n"+
-          "2 = featureExtraction\n"+
-          "3 = clustering\n")
-    a= int(input("Ingrese paso de inicio:"))
+    print("0 = dataParsing\n" +
+          "1 = sessionParsing\n" +
+          "2 = featureExtraction\n" +
+          "3 = userClustering\n" +
+          "4 = postUserClustering featureExtraction\n" +
+          "5 = sessionClustering\n")
+    a = int(input("Ingrese paso de inicio:"))
     if a <= 0:
         parseData()
     if a <= 1:
@@ -46,8 +50,16 @@ if __name__ == '__main__':
     if a <= 2:
         extractFeats()
     if a <= 3:
+        print("\n\n...Performing users clustering...\n\n")
+        userclustering()
+        print("\n\n User Clustering finished.\n\n")
+    if a <= 4:
+        print("...Extracting PostUserClustering Features...\n")
+        extractPostClusteringFeatures()
+        print("...PostUserClustering Features extraction finished...\n")
+    if a <= 5:
         print("\n\n...Performing session clustering...\n\n")
-        clustering()
-        print("\n\nClustering finished.\n\n")
+        sessionclustering()
+        print("\n\n Session Clustering finished.\n\n")
 
     print("\n\nUserEmpathetic process finished.\n\n")

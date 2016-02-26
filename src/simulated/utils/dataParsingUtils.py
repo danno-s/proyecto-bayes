@@ -6,6 +6,8 @@ Módulo contiene funciones usadas por otros scripts
 import hashlib
 
 from src.simulated.utils.sqlUtils import sqlWrapper
+
+
 def getMacroID(urls):
     """
     Obtiene el id en la base de datos de un árbol de urls
@@ -23,7 +25,7 @@ def getMacroID(urls):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select id_n from urls where urls = '"+urls+"'"
+    sqlRead = "select id_n from urls where urls = '" + urls + "'"
     rows = sqlPD.read(sqlRead)
     return str(rows[0][0])
 
@@ -45,9 +47,10 @@ def getMicroID(contentElements):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select id from contentElements where raw = '"+contentElements+"'"
+    sqlRead = "select id from contentElements where raw = '" + contentElements + "'"
     rows = sqlPD.read(sqlRead)
     return str(rows[0][0])
+
 
 def getProfileOf(user_id):
     """
@@ -66,9 +69,10 @@ def getProfileOf(user_id):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select perfil from users where id_usuario = "+ str(user_id)
+    sqlRead = "select perfil from users where id_usuario = " + str(user_id)
     rows = sqlPD.read(sqlRead)
     return rows[0][0]
+
 
 def getUserOfSession(session_id):
     """
@@ -87,7 +91,7 @@ def getUserOfSession(session_id):
         sqlCD = sqlWrapper(db='CD')
     except:
         raise
-    sqlRead = "select user_id from simulsessions where id = "+ str(session_id)
+    sqlRead = "select user_id from simulsessions where id = " + str(session_id)
     rows = sqlCD.read(sqlRead)
     return rows[0][0]
 
@@ -111,6 +115,7 @@ def getAllUserIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
+
 def getAllURLsIDs():
     """
     Obtiene una lista con las id de las urls desde la base de datos
@@ -129,6 +134,7 @@ def getAllURLsIDs():
     sqlRead = "select id_n from urls"
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
+
 
 def hash(string):
     """

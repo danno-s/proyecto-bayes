@@ -1,9 +1,3 @@
-from src.userempathetic.sessionClass.Session import Session
-from src.userempathetic.nodeClass.Node import Node
-from src.userempathetic.nodeClass.MicroNode import MicroNode
-from src.userempathetic.utils.sqlUtils import sqlWrapper
-from datetime import datetime
-
 '''
 def initSession(session_id):
     raw_session = getRawSessionData(session_id)
@@ -33,16 +27,16 @@ def getRawSessionData(session_id, sessionTable='sessions'):
 
 
 class NodeComparator:
-    def __init__(self, sID1, sID2, metric= None):
-        #self.s1 = initSession(sID1)
-        #self.s2 = initSession(sID2)
+    def __init__(self, sID1, sID2, metric=None):
+        # self.s1 = initSession(sID1)
+        # self.s2 = initSession(sID2)
         if metric:
             self.metric = metric
-        #print(self.s1)
-        #print(self.s2)
+            # print(self.s1)
+            # print(self.s2)
 
-    def compare(self,metric):
+    def compare(self, metric):
         metric.compare(self)
 
-#if __name__ == '__main__':
- #   SessionComparator(1,2)
+        # if __name__ == '__main__':
+        #   SessionComparator(1,2)

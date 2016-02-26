@@ -5,6 +5,7 @@ Módulo contiene funciones usadas por otros scripts
 """
 from src.simulated.utils.sqlUtils import sqlWrapper
 
+
 # Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
 def consecutiveIdxs(idxs, repeat):
     """
@@ -22,8 +23,8 @@ def consecutiveIdxs(idxs, repeat):
     Tuple
         Las tuplas de índices consecutivos
     """
-    for i in idxs[:-repeat+1]:
-        yield tuple(x for x in range(i,i+repeat))
+    for i in idxs[:-repeat + 1]:
+        yield tuple(x for x in range(i, i + repeat))
 
 
 def subsequences(iterable):
@@ -40,10 +41,10 @@ def subsequences(iterable):
     string
         Las subsecuencias posibles
     """
-    pool=tuple(iterable)
-    n= len(pool)
+    pool = tuple(iterable)
+    n = len(pool)
     if n > 1:
-        for r in range(2,n):
+        for r in range(2, n):
             inGen = (x for x in consecutiveIdxs(range(n), repeat=r))
             for indices in inGen:
                 yield ' '.join(tuple(pool[i] for i in indices))
@@ -69,9 +70,9 @@ def contains(shortest, longest):
     """
     if shortest == longest:
         return False
-    for i in range(len(longest)-len(shortest)+1):
+    for i in range(len(longest) - len(shortest) + 1):
         for j in range(len(shortest)):
-            if longest[i+j] != shortest[j]:
+            if longest[i + j] != shortest[j]:
                 break
         else:
             return True
@@ -94,8 +95,8 @@ def isSubContained(item, iterable):
     bool
         True si está contenida, False si no
     """
-    for i,val in enumerate(iterable):
-        if contains(item,val):
+    for i, val in enumerate(iterable):
+        if contains(item, val):
             return True
     return False
 
@@ -104,12 +105,13 @@ def getAllLRSs():
     sqlCD = sqlWrapper('CD')
     sqlRead = 'select sequence from lrss'
     rows = sqlCD.read(sqlRead)
-    assert len(rows)>0
+    assert len(rows) > 0
     return [item[0] for item in rows]
+
 
 def getAllSessionIDs():
     sqlCD = sqlWrapper('CD')
     sqlRead = 'select id from simulsessions'
     rows = sqlCD.read(sqlRead)
-    assert len(rows)>0
+    assert len(rows) > 0
     return [item[0] for item in rows]

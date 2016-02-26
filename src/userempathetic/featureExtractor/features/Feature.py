@@ -1,4 +1,4 @@
-from abc import ABCMeta,abstractmethod
+from abc import ABCMeta, abstractmethod
 
 
 class Feature:
@@ -10,7 +10,7 @@ class Feature:
     def extract(self): pass
 
     @abstractmethod
-    def toSQLItem(self):pass
+    def toSQLItem(self): pass
 
 
 class UserFeature(Feature):
@@ -23,11 +23,12 @@ class UserFeature(Feature):
     def extract(self): pass
 
     @abstractmethod
-    def toSQLItem(self):pass
+    def toSQLItem(self): pass
 
 
 class SessionFeature(Feature):
     __metaclass__ = ABCMeta
+
     def __init__(self):
         Feature.__init__(self)
 
@@ -35,4 +36,4 @@ class SessionFeature(Feature):
     def extract(self): pass
 
     @abstractmethod
-    def toSQLItem(self):pass
+    def toSQLItem(self): pass

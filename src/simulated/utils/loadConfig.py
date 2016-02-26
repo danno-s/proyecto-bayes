@@ -17,10 +17,10 @@ class Config:
             if mode == 'INT':
                 value = int(self.__parameters[attr])
                 assert value > 0
-            return value
+                return value
         return self.__parameters[attr]
 
-    def getArray(self,attr):
+    def getArray(self, attr):
         jsonArray = self.__parameters[attr]
-        assert len(jsonArray)>0
+        assert len(jsonArray) > 0
         return jsonArray

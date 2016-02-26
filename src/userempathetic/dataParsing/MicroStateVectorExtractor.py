@@ -4,26 +4,26 @@ import json
 from src.userempathetic.utils.loadConfig import Config
 
 
-class MicroStateVectorExtractor():
-
+class MicroStateVectorExtractor:
     def __init__(self):
         __allFuncs = {
-            'TextAreas':    self.__getTextAreas,
-            'InputText':    self.__getInputText,
-            'RadioButton':  self.__getRadioButtons,
-            'Selects':      self.__getSelects,
-            'Checkbox':     self.__getCheckboxes
-            }
-        self.elementTypes= sorted(Config().getArray(attr='elementTypes'))
+            'TextAreas': self.__getTextAreas,
+            'InputText': self.__getInputText,
+            'RadioButton': self.__getRadioButtons,
+            'Selects': self.__getSelects,
+            'Checkbox': self.__getCheckboxes
+        }
+        self.elementTypes = sorted(Config().getArray(attr='elementTypes'))
         self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
-        #self.elementTypes = [x for x in sorted(__allFuncs.keys()) if x in types]
+        # self.elementTypes = [x for x in sorted(__allFuncs.keys()) if x in types]
         self.funcD = dict()
         for type in self.elementTypes:
             try:
-                self.funcD[type]=__allFuncs[type]
+                self.funcD[type] = __allFuncs[type]
             except KeyError:
-                print("Type '"+type+"' is not a valid element type for the extractor.")
-                print("Please check that your types array in Config.json contains only these:\n"+str(self.getAvailableTypes()))
+                print("Type '" + type + "' is not a valid element type for the extractor.")
+                print("Please check that your types array in Config.json contains only these:\n" + str(
+                    self.getAvailableTypes()))
 
     def getElementTypes(self):
         return sorted(self.elementTypes)
@@ -31,16 +31,16 @@ class MicroStateVectorExtractor():
     def getAvailableTypes(self):
         return self.availableTypes
 
-    def __getTextAreas(self,d,L):
+    def __getTextAreas(self, d, L):
         hasValue = d['HasValue']
-        #isHidden = d['IsHidden']
-        if True: #isHidden == 'false' or isHidden == 'true':
+        # isHidden = d['IsHidden']
+        if True:  # isHidden == 'false' or isHidden == 'true':
             if hasValue == 'true':
                 L.append(1)
             else:
                 L.append(0)
 
-    def __getInputText(self,d,L):
+    def __getInputText(self, d, L):
         hasValue = d['HasValue']
         isHidden = d['IsHidden']
         if isHidden == 'false' or isHidden == 'true':
@@ -49,25 +49,25 @@ class MicroStateVectorExtractor():
             else:
                 L.append(0)
 
-    def __getRadioButtons(self,d,L):
+    def __getRadioButtons(self, d, L):
         selected = d['Selected']
         L.append(selected)
 
-    def __getSelects(self,d,L):
+    def __getSelects(self, d, L):
         options = d['Selected']
-        if len(options) >0:
+        if len(options) > 0:
             L.append('-'.join(options))
 
-    def __getCheckboxes(self,d,L):
+    def __getCheckboxes(self, d, L):
         quantity = int(d['Quantity'])
-        vector = ['0']*quantity
+        vector = ['0'] * quantity
         options = d['Selected']
         if options != '':
             for i in options:
-                vector[int(i)]='1'
+                vector[int(i)] = '1'
         L.append('-'.join(vector))
 
-    def generateStateVectorFrom(self,contentElements, type, L):
+    def generateStateVectorFrom(self, contentElements, type, L):
         if len(contentElements) == 0:
             return
         valueD = contentElements['value']
@@ -83,7 +83,7 @@ class MicroStateVectorExtractor():
         for child in children:
             self.generateStateVectorFrom(child, type, L)
 
-    def getStateVectors(self,contentElements):
+    def getStateVectors(self, contentElements):
         data = dict()
         for type in self.elementTypes:
             L = list()
@@ -91,6 +91,6 @@ class MicroStateVectorExtractor():
                 self.generateStateVectorFrom(contentElements, type, L)
                 data[type] = ' '.join(map(str, L))
             except:
-                print(json.dumps(contentElements,indent=2))
+                print(json.dumps(contentElements, indent=2))
                 raise
         return data

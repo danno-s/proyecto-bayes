@@ -2,14 +2,11 @@
 Clase Node, representa un Nodo (paso) de una sesión
 """
 
-import random
 import json
-from .MicroNode import MicroNode
 
 
 class Node(object):
-
-    def __init__(self, str=None,id=None, user_id=None,profile=None,urls_id=None,microNode= None):
+    def __init__(self, str=None, id=None, user_id=None, profile=None, urls_id=None, microNode=None):
         if str:
             self.id = str[0]
             self.user_id = str[1]
@@ -43,11 +40,11 @@ class Node(object):
 
     def toJson(self):
         Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
-                    clickdate=self.clickdate,microNode=self.microNode.toDict())
+                    clickdate=self.clickdate, microNode=self.microNode.toDict())
         return json.dumps(Dict)
 
     def accept(self, visitor):
         visitor.metNode(self)
 
     def __str__(self):
-        return str(self.profile)+":("+ str(self.urls_id)+","+str(self.microNode)+")"
+        return str(self.profile) + ":(" + str(self.urls_id) + "," + str(self.microNode) + ")"

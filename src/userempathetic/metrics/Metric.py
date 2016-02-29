@@ -32,7 +32,6 @@ class NodeMetric(Metric):
         Metric.__init__(self)
 
     def compare(self, comparator):
-        assert isinstance(comparator, NodeComparator)
         n1 = comparator.n1
         n2 = comparator.n2
         value = self.distance(n1, n2)

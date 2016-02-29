@@ -6,24 +6,22 @@ Extrae clusters de los datos
 
 from src.userempathetic.clustering.ClusterExtractor import ClusterExtractor
 
-
-def userclustering():
+def createClusterExtractor():
     from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
     from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
-    cE = ClusterExtractor(userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
-    cE.extractUserClusters()
-    cE.visualizeUserClusters()
-
-
-def sessionclustering():
     from src.userempathetic.clustering.clusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
     from src.userempathetic.clustering.clusterings.SessionUserClustersBelongingClustering import \
         SessionUserClustersBelongingClustering
-    cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering])
-    cE.extractSessionClusters()
-    cE.visualizeSessionClusters()
+    return ClusterExtractor(userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering],sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering])
 
+def userclustering(cE):
+    cE.extractUserClusters()
+
+def sessionclustering(cE):
+    cE.extractSessionClusters()
 
 if __name__ == '__main__':
-    userclustering()
-    sessionclustering()
+    cE = createClusterExtractor()
+    userclustering(cE)
+    sessionclustering(cE)
+    cE.visualizeClusters()

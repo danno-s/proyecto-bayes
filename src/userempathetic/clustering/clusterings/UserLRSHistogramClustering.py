@@ -38,6 +38,7 @@ class UserLRSHistogramClustering(UserClustering):
             if k != -1:
                 self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=UserLRSHistogramClustering)
             else:
+                print("# outliers = "+ str(len(xy)))
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
                 pass

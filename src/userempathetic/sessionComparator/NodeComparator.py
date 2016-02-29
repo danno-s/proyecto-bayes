@@ -1,42 +1,18 @@
-'''
-def initSession(session_id):
-    raw_session = getRawSessionData(session_id)
-    sequence = raw_session[0].split(' ')
-    if ',' not in raw_session[0]:
-        session_type = 'macro'
-        for i,macroid in enumerate(sequence):
-            sequence[i] = (macroid, None)
-    else:
-        session_type = 'full'
-        for i,pair in enumerate(sequence):
-            pair = pair.split(',')
-            sequence[i] = (pair[0], pair[1])
-    profile = int(raw_session[1])
-    user_id = int(raw_session[4])
-    inittime = raw_session[2]
-    endtime = raw_session[3]
-
-    return Session(sequence,profile=profile,initTime=inittime, endTime=endtime,user_id=user_id)
-
-def getRawSessionData(session_id, sessionTable='sessions'):
-    sqlCD = sqlWrapper('CD')
-    row = sqlCD.read("SELECT sequence,profile,inittime,endtime,user_id FROM "+sessionTable+" WHERE id = "+ str(session_id))
-    return row[0]
-
-'''
+from src.userempathetic.nodeClass.MicroNode import MicroNode
+from src.userempathetic.utils.comparatorUtils import getMicroNode
 
 
 class NodeComparator:
-    def __init__(self, sID1, sID2, metric=None):
-        # self.s1 = initSession(sID1)
-        # self.s2 = initSession(sID2)
+    def __init__(self, node1, node2, metric=None):
+        self.n1 = getMicroNode(node1[1])
+        self.n2 = getMicroNode(node2[1])
         if metric:
             self.metric = metric
-            # print(self.s1)
-            # print(self.s2)
 
-    def compare(self, metric):
-        metric.compare(self)
+    def compareNodes(self, metric):
+        return metric.compare(self)
 
-        # if __name__ == '__main__':
-        #   SessionComparator(1,2)
+if __name__ == '__main__':
+    a= NodeComparator((1,3),(1,1))
+    from src.userempathetic.metrics.MicroMetrics.MicroMetrics import MicroDistance
+    print(a.compareNodes(MicroDistance()))

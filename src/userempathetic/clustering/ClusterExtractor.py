@@ -43,7 +43,7 @@ class ClusterExtractor:
         c.clusterize()
         clusters = c.getClusters()
         self.userClusterD[clustering] = clusters
-        print('Estimated number of User clusters: %d' % c.n_clusters)
+        print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
         for cluster in clusters.values():
             sqlCL.write(c.sqlWrite, cluster.toSQLItem())
 
@@ -55,7 +55,7 @@ class ClusterExtractor:
         c.clusterize()
         clusters = c.getClusters()
         self.sessionClusterD[clustering] = c.getClusters()
-        print('Estimated number of Session clusters: %d' % c.n_clusters)
+        print('Estimated number of Session clusters: %d' % c.n_clusters, '\n')
         for cluster in clusters.values():
             sqlCL.write(c.sqlWrite, cluster.toSQLItem())
 
@@ -103,7 +103,7 @@ class ClusterExtractor:
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                    ax[k].text(1.05, 0.5, "-> "+ str(v.size),
+                    ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')
@@ -137,7 +137,7 @@ class ClusterExtractor:
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                    ax[k].text(1.05, 0.5, "-> "+ str(v.size),
+                    ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')
@@ -176,7 +176,7 @@ class ClusterExtractor:
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                    ax[k].text(1.05, 0.5, "-> "+ str(v.size),
+                    ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')
@@ -213,7 +213,7 @@ class ClusterExtractor:
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                    ax[k].text(1.05, 0.5, "-> "+ str(v.size),
+                    ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
                                verticalalignment='center', horizontalalignment='left',
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')

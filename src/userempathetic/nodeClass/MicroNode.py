@@ -11,11 +11,21 @@ class MicroNode:
         self.key = key
         self.id = str[0][0]
         self.id_macro = str[0][1]
-        self.textArea = [int(x) for x in str[0][2].split(" ")]
-        self.inputText = [int(x) for x in str[0][3].split(" ")]
-        self.radioButton = [int(x) for x in str[0][4].split(" ")]
-        self.selects = [int(x) for x in str[0][5].split(" ")]
-        self.checkbox = [[int(y) for y in x.split("-")] for x in str[0][6].split(" ")]
+        self.textArea = []
+        self.inputText = []
+        self.radioButton = []
+        self.selects = []
+        self.checkbox = []
+        if str[0][2] != '':
+            self.textArea = [int(x) for x in str[0][2].split(" ")]
+        if str[0][3] != '':
+            self.inputText = [int(x) for x in str[0][3].split(" ")]
+        if str[0][4] != '':
+            self.radioButton = [int(x) for x in str[0][4].split(" ")]
+        if str[0][5] != '':
+            self.selects = [int(x) for x in str[0][5].split(" ")]
+        if str[0][6] != '':
+            self.checkbox = [[int(y) for y in x.split("-")] for x in str[0][6].split(" ")]
 
     # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
     #     """

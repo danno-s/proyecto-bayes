@@ -52,3 +52,5 @@ def getAllUserClusters(clusterType):
         userClustersD[int(row[0])] = [int(x) for x in row[1].split(' ')]
 
     return userClustersD
+
+

@@ -1,64 +1,72 @@
-"""
-Clase Cluster
-
-Representa un cluster y sus características
-"""
 
 
 class Cluster:
+    """
+    Clase que representa un cluster, con sus elementos contenidos y etiqueta respectiva.
+    """
     def __init__(self, elements, label, clusteringType=None):
-        """
-        Constructor de la clase
+        """Constructor
 
         Parameters
         ----------
-        elements : List
-            Los elementos del cluster
-        label : String
-            Nombre del cluster
-        clusteringType : String
-            Tipo de cluster
+        elements : ([float],[int])
+            tupla representando los elementos inliers del cluster de la forma ([vector],[id]).
+            Las ids pueden ser de usuario o sesión, dependiendo del clustering utilizado.
+        label : str
+            etiqueta con número del cluster respecto del clustering realizado.
+        clusteringType : str
+            tipo de cluster
         -------
 
         """
+        #TODO: VERIFICAR parámetro ELEMENTS
         self.label = label
-        self.elements = [x[0] for x in elements]
-        self.ids = [x[1] for x in elements]
+        self.elements = [x[0] for x in elements]    # vectores de características
+        self.ids = [x[1] for x in elements]         # ids de elementos
         self.size = len(self.elements)
         assert self.size > 0
         self.features_dim = len(self.elements[0])
         self.clusteringType = clusteringType or ""
 
     def getCentroid(self):
-        """
-        Retorna los centros del cluster
+        """Retorna el vector característico del centroide del cluster
+
+        Notes
+            El "centroide" de un cluster es definido como el vector de característica obtenido al promediar cada una de
+            las dimensiones de los vectores de características de todos los inliers del cluster.
 
         Returns
         -------
-        List
-            Lista con los centros del cluster
+        [float] | [int]
+            vector característico del centroide del cluster
         """
         return [sum([value[x] / self.size for value in self.elements]) for x in range(self.features_dim)]
 
     def getMax(self):
-        """
-        ????
+        """Retorna el vector característico del máximo del cluster
+
+        Notes
+            El "máximo" de un cluster es definido como el vector de característica obtenido al obtener el
+            máximo en cada una de las dimensiones de los vectores de características de todos los inliers del cluster.
 
         Returns
         -------
-        List
-
+        [float] | [int]
+            vector característico del máximo del cluster
         """
         return [max([value[x] for value in self.elements]) for x in range(self.features_dim)]
 
     def getMin(self):
-        """
-        ????
+        """Retorna el vector característico del mínimo del cluster
+
+        Notes
+            El "mínimo" de un cluster es definido como el vector de característica obtenido al obtener el
+            mínimo en cada una de las dimensiones de los vectores de características de todos los inliers del cluster.
 
         Returns
         -------
-        List
-
+        [float] | [int]
+            vector característico del mínimo del cluster
         """
         return [min([value[x] for value in self.elements]) for x in range(self.features_dim)]
 

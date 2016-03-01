@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 """
-Calcula las LRS (Longuest repeating sequence) en las sesiones
+Calcula las LRS (Longuest repeating sequence) de las sesiones
 """
 
 from src.userempathetic.utils.featureExtractionUtils import subsequences, isSubContained
@@ -10,8 +10,14 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def calcLRSs():
-    sqlCD = sqlWrapper(db='CD')  # Asigna las bases de datos que se accederán
+    """Calcula los LRSs en base a las sesiones extraídas.
+
+    Returns
+    -------
+
+    """
     # Lectura de sessions
+    sqlCD = sqlWrapper(db='CD')  # Asigna las bases de datos que se accederán
     sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
     rows = sqlCD.read(sqlRead)
 

@@ -53,7 +53,7 @@
     "Checkbox"
   ],
   "simulate": "false",
-  "sessionizer_mode":"Edges",
+  "sessionizer_mode":"Complete",
   "user_features":[
     "UserURLsBelonging",
     "UserLRSHistogram"

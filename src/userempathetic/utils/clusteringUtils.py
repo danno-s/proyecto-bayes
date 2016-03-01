@@ -4,10 +4,32 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def intersectionIDs(clusterIDs1, clusterIDs2):
+    """
+
+    Parameters
+    ----------
+    clusterIDs1
+        Lista de IDs de clusters
+    clusterIDs2
+        Lista de IDs de clusters
+    Returns
+    -------
+        lista de elementos presentes en ambos clusters
+    """
     return [val for val in clusterIDs1 if val in clusterIDs2]
 
 
 def combineUserClusterings(cE):
+    """Método de prueba para combinar clusters de usuarios obtenidos con distintas características en un único cluster de usuario.
+    Parameters
+    ----------
+    cE : ClusterExtractor
+        un ClusterExtractor con clusters ya calculados.
+
+    Returns
+    -------
+
+    """
     from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
     from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 
@@ -17,6 +39,18 @@ def combineUserClusterings(cE):
 
 
 def clusteringIntersections(clustersL1, clustersL2):
+    """Calcula elementos de la intersección entre dos Clusters
+
+    Parameters
+    ----------
+    clustersL1 : list
+        Elementos del cluster 1
+    clustersL2 : list
+        Elementos del cluster 2
+    Returns
+    -------
+
+    """
     pairs = [x for x in itertools.product(clustersL1, clustersL2)]
     for pair in pairs:
         inter = intersectionIDs(pair[0], pair[1])
@@ -28,12 +62,11 @@ def clusteringIntersections(clustersL1, clustersL2):
 
 
 def getAllUserClusters(clusterType):
-    """
-    Obtiene una lista con las id de las urls desde la base de datos
+    """Obtiene una lista con las id de las urls desde la base de datos
 
     Parameters
     ----------
-    clusterType
+    clusterType : str
         Nombre de la tabla correspondiente al tipo de User Clusters que se desea obtener.
     Returns
     -------

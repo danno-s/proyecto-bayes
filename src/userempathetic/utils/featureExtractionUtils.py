@@ -1,20 +1,16 @@
 #!/usr/bin/python
 
-"""
-Módulo contiene funciones usadas por otros scripts
-"""
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-# Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'.
+
 def consecutiveIdxs(idxs, repeat):
-    """
-    Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'indices'
+    """Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'idxs'
 
     Parameters
     ----------
-    idxs : List
-        Lista de índices !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    idxs : [int]
+        Lista de índices.
     repeat : int
         Tamaño de las tuplas de índices consecutivos
 
@@ -28,8 +24,7 @@ def consecutiveIdxs(idxs, repeat):
 
 
 def subsequences(iterable):
-    """
-    Generador de las subsecuencias posibles a partir de una sesión
+    """Generador de las subsecuencias posibles a partir de una sesión
 
     Parameters
     ----------
@@ -38,7 +33,7 @@ def subsequences(iterable):
 
     Yields
     -------
-    string
+    str
         Las subsecuencias posibles
     """
     pool = tuple(iterable)
@@ -53,8 +48,7 @@ def subsequences(iterable):
 
 
 def contains(shortest, longest):
-    """
-    Verifica si la subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'
+    """Verifica si la subsecuencia 'shortest' esta contenida dentro de la subsecuencia 'longest'
 
     Parameters
     ----------
@@ -80,8 +74,7 @@ def contains(shortest, longest):
 
 
 def isSubContained(item, iterable):
-    """
-    Verifica si una secuencia 'item' esta subcontenida dentro de algun elemento de la lista de secuencias 'iterable'
+    """Verifica si una secuencia 'item' esta subcontenida dentro de algun elemento de la lista de secuencias 'iterable'
 
     Parameters
     ----------
@@ -102,6 +95,13 @@ def isSubContained(item, iterable):
 
 
 def getAllLRSs():
+    """Permite obtener una lista con todas las secuencias LRS extraídas.
+
+    Returns
+    -------
+    [string]
+        Lista de secuencias LRS.
+    """
     sqlCD = sqlWrapper('CD')
     sqlRead = 'select sequence from lrss'
     rows = sqlCD.read(sqlRead)
@@ -110,6 +110,12 @@ def getAllLRSs():
 
 
 def getAllSessionIDs():
+    """Obtiene una lista con las IDs de sesiones extraídas.
+    Returns
+    -------
+    [int]
+
+    """
     sqlCD = sqlWrapper('CD')
     sqlRead = 'select id from sessions'
     rows = sqlCD.read(sqlRead)

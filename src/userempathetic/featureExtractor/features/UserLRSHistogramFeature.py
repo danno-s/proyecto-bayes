@@ -17,17 +17,25 @@ class UserLRSHistogramFeature(UserFeature):
         pass
 
     def extract(self):
+        """Implementación de extracción de feature
+
+        Returns
+        -------
+
+        """
+        # Lectura de sesiones del usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
         sqlRead = 'select sequence from sessions where user_id=' + str(self.user)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
+        # Cálculo de histograma de uso de LRSs.
         for row in userSeq:
             seq = row[0].split(' ')
             subseqs = set(subsequences(seq))
             for i, lrs in enumerate(self.LRSs):
                 if lrs in subseqs or isSubContained(lrs, subseqs):
                     self.histogram[i] += 1
-
+        # Normalización de frecuencias.
         self.count = sum(self.histogram)
         if self.count != 0:
             self.histogram = [val / self.count for val in self.histogram]

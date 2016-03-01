@@ -1,31 +1,31 @@
-"""
-Clase MicroNode, representan los micro estados del modelo.
-
-Contienen información sobre distintos elementos de la pagina: textareas,
-selects, multiselects, radius, y otros,
-"""
-
-
 class MicroNode:
-    def __init__(self, str, key):
+    """
+    Clase MicroNode, representa los micro estados del modelo.
+
+    Contienen información sobre distintos elementos de la pagina: textareas,
+    selects, multiselects, radius, y otros,
+    """
+    def __init__(self, sqlStr, key):
         self.key = key
-        self.id = str[0][0]
-        self.id_macro = str[0][1]
+        self.id = sqlStr[0][0]
+        self.id_macro = sqlStr[0][1]
         self.textArea = []
         self.inputText = []
         self.radioButton = []
         self.selects = []
         self.checkbox = []
-        if str[0][2] != '':
-            self.textArea = [int(x) for x in str[0][2].split(" ")]
-        if str[0][3] != '':
-            self.inputText = [int(x) for x in str[0][3].split(" ")]
-        if str[0][4] != '':
-            self.radioButton = [int(x) for x in str[0][4].split(" ")]
-        if str[0][5] != '':
-            self.selects = [int(x) for x in str[0][5].split(" ")]
-        if str[0][6] != '':
-            self.checkbox = [[int(y) for y in x.split("-")] for x in str[0][6].split(" ")]
+        if sqlStr[0][2] != '':
+            self.textArea = [int(x) for x in sqlStr[0][2].split(" ")]
+        if sqlStr[0][3] != '':
+            self.inputText = [int(x) for x in sqlStr[0][3].split(" ")]
+        if sqlStr[0][4] != '':
+            self.radioButton = [int(x) for x in sqlStr[0][4].split(" ")]
+        if sqlStr[0][5] != '':
+            self.selects = [int(x) for x in sqlStr[0][5].split(" ")]
+        if sqlStr[0][6] != '':
+            self.checkbox = [[int(y) for y in x.split("-")] for x in sqlStr[0][6].split(" ")]
+        pass
+
 
     # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
     #     """

@@ -4,22 +4,43 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 class UserURLsBelongingFeature(UserFeature):
+    """
+    Implementación de feature correspondiente al vector de pertenencia a URLs (URLs Belonging vector) para un usuario.
+    Esto indica los árboles de URLs usados por el usuario, en todas sus sesiones conocidas.
+    """
     tablename = 'userurlsbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector) VALUES (%s,%s)'
 
-    def __init__(self, user):
+    def __init__(self, user_id):
+        """
+
+        Parameters
+        ----------
+        user_id : str | int
+            id de usuario
+
+        Returns
+        -------
+
+        """
         UserFeature.__init__(self)
         self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
-        self.user = int(user)
-        pass
+        self.user = int(user_id)
 
     def extract(self):
+        """Implementación de extracción de feature.
+
+        Returns
+        -------
+
+        """
+        # Lectura de nodos de usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
         sqlRead = 'select urls_id, user_id from nodes where user_id=' + str(self.user)
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
-
+        # Cálculo de vector de uso de URLs.
         for row in userUrls:
             l = row[0]
             for i in range(len(self.URLs)):

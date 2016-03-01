@@ -11,7 +11,7 @@ from src.simulated.utils.sqlUtils import sqlWrapper
 
 def simulusers():
     n = 200
-
+    #n = 20
     usern = ["U8213221", "U6355477", "jefe_local"]
     user = [None] * n
     for i in range(n):

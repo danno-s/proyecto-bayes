@@ -7,7 +7,7 @@ from src.simulated.featureExtraction.calcLRSs import calcLRSs
 from src.simulated.simulatedData.simulusers import *
 from src.userempathetic.dataParsing.parseSessions import parseSessions
 from src.simulated.featureExtraction.ExtractFeatures import extractFeatures, extractPostClusteringFeatures
-from src.userempathetic.clustering.ExtractClusters import userclustering, sessionclustering
+from src.userempathetic.clustering.ExtractClusters import createClusterExtractor, userclustering, sessionclustering
 
 
 def parseData():
@@ -64,9 +64,10 @@ if __name__ == '__main__':
         print("...Simulation finished...\n")
     if a <= 4:
         extractFeats()
+    cE = createClusterExtractor()
     if a <= 5:
         print("\n\n...Performing users clustering...\n\n")
-        userclustering()
+        userclustering(cE)
         print("\n\n User Clustering finished.\n\n")
     if a <= 6:
         print("...Extracting PostUserClustering Features...\n")
@@ -74,7 +75,8 @@ if __name__ == '__main__':
         print("...PostUserClustering Features extraction finished...\n")
     if a <= 7:
         print("\n\n...Performing session clustering...\n\n")
-        sessionclustering()
+        sessionclustering(cE)
+        cE.visualizeClusters()
         print("\n\n Session Clustering finished.\n\n")
 
     print("\n\nUserEmpathetic process finished.\n\n")

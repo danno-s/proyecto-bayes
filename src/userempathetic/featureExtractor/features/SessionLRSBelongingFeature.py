@@ -5,20 +5,42 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 class SessionLRSBelongingFeature(SessionFeature):
+    """
+    Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
+    """
     tablename = 'sessionlrsbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
 
     def __init__(self, session_id):
+        """Constructor
+
+        Parameters
+        ----------
+        session_id : int
+            id de sesión.
+
+        Returns
+        -------
+
+        """
         SessionFeature.__init__(self)
         self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)
 
     def extract(self):
+        """Implementación de extracción de feature.
+
+        Returns
+        -------
+
+        """
+        # Lectura de sesion desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
         sqlRead = 'select sequence from sessions where id=' + str(self.session_id)
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
+        # Cálculo de subsecuencias y correspondencia con uso de LRSs.
         for row in session:
             seq = row[0].split(' ')
             subseqs = set(subsequences(seq))

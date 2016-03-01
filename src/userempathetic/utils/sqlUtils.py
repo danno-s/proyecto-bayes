@@ -1,5 +1,5 @@
 """
-Clase genera wrappers para la conexión a bases de datos
+Módulo para lectura y escritura en bases de datos SQL, mediante la librería mysql.connector
 """
 
 import os
@@ -8,17 +8,18 @@ import mysql.connector
 
 
 class sqlWrapper:
-    """ Diccionario donde se encuentran los datos de conexión a las bases de datos """
-    conns = dict()
+    """
+    Clase genera wrappers para la conexión a bases de datos SQL
+    """
+    conns = dict() # Diccionario donde se encuentran los datos de conexión a las bases de datos
 
     def __init__(self, db):
-        """
-        Constructor de la clase
+        """Constructor de la clase
 
         Parameters
         ----------
-        db : string
-            La base de datos a la que se conectara
+        db : str
+            Abreviatura de la base de datos a la que se desea acceder
 
         Returns
         -------
@@ -33,26 +34,24 @@ class sqlWrapper:
             # try:
             self.__loadConnections()
             # except:
-            #    raise ConnectionError
+            #    raise ConnectionError #TODO: Definir excepciones de este estilo
 
     def setDB(self, db):
-        """
-        Define la base de datos a la que se conectara
+        """Define la base de datos a la que se conectara
 
         Parameters
         ----------
-        db : string
-            El nombre de la base de datos a conectar
+        db : str
+            Abreviatura de la base de datos a la que se desea acceder
         """
         self.db = db
 
     def truncate(self, table):
-        """
-        Trunca la tabla indicada
+        """Trunca la tabla indicada
 
         Parameters
         ----------
-        table : string
+        table : str
             El nombre de la tabla a truncar
         """
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
@@ -63,18 +62,17 @@ class sqlWrapper:
         cnx.close()
 
     def read(self, sqlRead):
-        """
-        Efectúa la consulta sqlRead
+        """Efectúa la consulta sqlRead
 
         Parameters
         ----------
-        sqlRead : string
-            La consulta que se hará
+        sqlRead : str
+            La consulta que se hará a la base de datos del sqlWrapper.
 
         Returns
         -------
         List
-            La tabla de los resultados de la consulta, en forma de lista
+            La tabla de los resultados de la consulta, en forma de lista de tuplas.
         """
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
@@ -85,12 +83,15 @@ class sqlWrapper:
         return rows
 
     def write(self, sqlWrite, item=None):
-        """
-        Efectúa la escritura sqlWrite
+        """Efectúa la escritura sqlWrite.
+
+        Notes
+            Se pueden incluir los valores dentro del atributo sqlWrite o ser pasados a través de item. En cuyo caso,
+        el query debe contener los caracteres %s indicando cuantos valores son pasados.
 
         Parameters
         ----------
-        sqlWrite : string
+        sqlWrite : str
             La escritura a realizar
         item : List
             Los item a guardar en la base de datos
@@ -114,6 +115,11 @@ class sqlWrapper:
         cnx.close()
 
     def __loadConnections(self):
+        """Carga archivo de conexiones con datos de acceso a cada base de datos y las asocia a las abreviaturas definidas.
+        Returns
+        -------
+
+        """
         with open(os.path.dirname(os.path.dirname(__file__)) + '/connections.json', 'r') as f:
             connectionsJSON = f.read()
         connections = json.loads(connectionsJSON)

@@ -1,12 +1,8 @@
 #!/usr/bin/python
 
-"""
-Módulo contiene funciones usadas por otros scripts
-"""
 import hashlib
 
 from src.userempathetic.utils.sqlUtils import sqlWrapper
-
 
 def getMacroID(urls):
     """
@@ -14,7 +10,7 @@ def getMacroID(urls):
 
     Parameters
     ----------
-    urls : string
+    urls : str
         El árbol de urls a buscar
     Returns
     -------
@@ -36,7 +32,7 @@ def getMicroID(contentElements):
 
     Parameters
     ----------
-    contentElements : string
+    contentElements : str
         El microestado a buscar
     Returns
     -------
@@ -62,8 +58,8 @@ def getProfileOf(user_id):
         El ID del usuario.
     Returns
     -------
-    string
-        string con el perfil del usuario.
+    str
+        el perfil del usuario.
     """
     try:
         sqlPD = sqlWrapper(db='PD')
@@ -136,18 +132,18 @@ def getAllURLsIDs():
     return [int(row[0]) for row in rows]
 
 
-def hash(string):
+def hash(str):
     """
-    Retorna el valor hash de un string, usando MD5
+    Retorna el valor hash de un str, usando MD5
 
     Parameters
     ----------
-    string : string
-        El string que se quiere convertir
+    str : str
+        El str que se quiere convertir
 
     Returns
     -------
-    string
+    str
         El valor del hash
     """
-    return hashlib.md5(string.encode()).hexdigest()
+    return hashlib.md5(str.encode()).hexdigest()

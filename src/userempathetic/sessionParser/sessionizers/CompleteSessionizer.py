@@ -2,11 +2,37 @@ from src.userempathetic.sessionParser.sessionizers.Sessionizer import Sessionize
 
 
 class CompleteSessionizer(Sessionizer):
+    """
+    Sessionizer que considera todos los pasos capturados para formar una sesión.
+    """
     def __init__(self):
         Sessionizer.__init__(self)
 
     def bufferAccepts(self, sb, prevStep, step):  # TODO: (args, vals)
+        """Siempre acepta el paso actual.
+        Parameters
+        ----------
+        sb
+        prevStep
+        step
+
+        Returns
+        -------
+        bool
+            True.
+        """
         return True
 
     def toIDPair(self, macro_id, micro_id):
+        """Retorna la tupla con ambos IDs.
+
+        Parameters
+        ----------
+        macro_id
+        micro_id
+
+        Returns
+        -------
+        (int, int)
+        """
         return (macro_id, micro_id)

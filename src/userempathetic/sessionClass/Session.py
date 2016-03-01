@@ -1,21 +1,57 @@
 """
-Clase Session, representa una sesión en el sistema
+Modelo de representación de una sesión.
 """
 
 from src.userempathetic.nodeClass.Node import Node
 
 
 class Session:
+    """
+    Clase Session, representa una sesión en el sistema
+    """
     def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None):
+        """ Constructor de una Session.
+
+        Parameters
+        ----------
+        sequence : [tuple]
+            lista de tuplas (macro_id, micro_id), o (macro_id, None).
+        profile : int
+            perfil de usuario que realizó la sesión.
+        initTime : datetime | str
+            tiempo de inicio de sesión
+        endTime : datetime | str
+            tiempo de término de sesión
+        user_id : int
+            id de usuario.
+        session_id : int
+            id de la sesión.
+
+        Returns
+        -------
+
+        """
         self.initTime = initTime
         self.endTime = endTime
-        self.user_id = user_id  # int
-        self.profile = profile  # int
-        self.sequence = sequence  # lista de tuplas (urls_id, micro_id), o (urls_id, None)
+        self.user_id = user_id
+        self.profile = profile
+        self.sequence = sequence
         if session_id:
             self.session_id = session_id
 
     def __getSequenceFromNode(self, node):
+        """Permite obtener una secuencia de nodos a partir de la lista enlazada definida por el primer nodo 'node'
+
+        Parameters
+        ----------
+        node : Node
+            Primer nodo de una sesión.
+
+        Returns
+        -------
+        [tuple]
+            (node.urls_id, None) | (node.urls_id, node.microNode)
+        """
         sequence = list()
         while node:
             if node.urls_id:
@@ -27,11 +63,12 @@ class Session:
         return sequence
 
     def getFirstNode(self, steps=None):
-        """
+        """Permite obtener un objeto Nodo que representa el inicio de una sesión representada como lista enlazada.
 
         Parameters
         ----------
-        steps : lista de tuplas (urls_id, micro_id), o (urls_id, None)
+        steps : [tuple]
+            (urls_id, micro_id) | (urls_id, None)
 
         Returns
         -------
@@ -54,13 +91,41 @@ class Session:
         return firstNode
 
     def accept(self, visitor):
+        """
+        ????????????????????????????????????????????????????
+        Parameters
+        ----------
+        visitor
+
+        Returns
+        -------
+
+        """
         visitor.metSession(self)
 
     def __str__(self):
+        """ Retorna representación de str de esta sesión.
+
+        Returns
+        -------
+        str
+            string con la información de la sesión.
+        """
         return str(self.profile) + ":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
             self.initTime) + " >> " + str(self.endTime)
 
     def __sequenceToStr(self, sequence):
+        """ Retorna la representación de string de una secuencia de nodos.
+
+        Parameters
+        ----------
+        sequence : [tuple]
+            Lista de nodos (macro_id, micro_id)
+        Returns
+        -------
+        str
+            string con cadena de pares (macro_id, micro_id)
+        """
         tps = list()
         for x in sequence:
             if x[1]:
@@ -71,7 +136,13 @@ class Session:
         return s
 
     def toSQLItem(self):
-        # (profile, sequence, user_id, inittime, endtime)
+        """ Permite transformar la sesión a un item que el sqlWrapper puede escribir en una base de datos.
+
+        Returns
+        -------
+        str
+            string con item (profile, sequence, user_id, inittime, endtime) para el sqlWrapper
+        """
         steps = list()
         for x in self.sequence:
             if x[1]:

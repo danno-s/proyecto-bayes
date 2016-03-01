@@ -9,17 +9,17 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 class ClusterExtractor:
     def __init__(self, userClusteringsL=None, sessionClusteringsL=None):
+        """Constructor
+
+        Parameters
+        ----------
+        userClusteringsL
+        sessionClusteringsL
+
+        Returns
+        -------
+
         """
-
-            Parameters
-            ----------
-            userClusteringsL : lista de NOMBRES de clases UserClustering
-            sessionClusteringsL: lista de NOMBRES de clases SessionClustering
-
-            Returns
-            -------
-
-            """
         self.userClusteringsL = userClusteringsL or []
         self.sessionClusteringsL = sessionClusteringsL or []
         self.userClusterD = dict()

@@ -7,6 +7,21 @@ import json
 
 class Node(object):
     def __init__(self, str=None, id=None, user_id=None, profile=None, urls_id=None, microNode=None):
+        """
+
+        Parameters
+        ----------
+        str
+        id
+        user_id
+        profile
+        urls_id
+        microNode
+
+        Returns
+        -------
+
+        """
         if str:
             self.id = str[0]
             self.user_id = str[1]

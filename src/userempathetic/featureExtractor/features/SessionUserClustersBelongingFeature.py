@@ -10,7 +10,6 @@ class SessionUserClustersBelongingFeature(SessionFeature):
     """
     tablename = 'sessionuserclustersbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
-
     def __init__(self, session_id, simulation=False):
         """Constructor
 

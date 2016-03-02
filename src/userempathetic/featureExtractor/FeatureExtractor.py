@@ -75,7 +75,7 @@ class FeatureExtractor:
         sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
-            f = feature(user, simulation= self.simulation)
+            f = feature(user, simulation=self.simulation)
             if not self.simulation:
                 f.extract()
             else:
@@ -99,7 +99,7 @@ class FeatureExtractor:
         sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for sessionID in self.sessionIDs:
-            f = feature(sessionID, simulation= self.simulation)
+            f = feature(sessionID, simulation=self.simulation)
             if not self.simulation:
                 f.extract()
             else:

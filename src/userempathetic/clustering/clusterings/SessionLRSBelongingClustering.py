@@ -27,7 +27,7 @@ class SessionLRSBelongingClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.5, min_samples=5, metric='manhattan')
+        self.clusteringAlgorithm = DBSCAN(eps=2.5, min_samples=15, metric='euclidean')
         self.X, self.ids = self.__getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
@@ -44,13 +44,14 @@ class SessionLRSBelongingClustering(SessionClustering):
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
         unique_labels = set(self.clusteringAlgorithm.labels_)
+        n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
+        print("# outliers = %d" % n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy = [(x, id) for x, id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
                 self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=SessionLRSBelongingClustering)
             else:
-                print("# outliers = "+ str(len(xy)))
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
                 pass

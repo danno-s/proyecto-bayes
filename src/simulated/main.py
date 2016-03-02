@@ -7,7 +7,7 @@ from src.simulated.simulatedData.simulusers import *
 from src.userempathetic.dataParsing.parseSessions import parseSessions
 from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures, extractPostClusteringFeatures
 from src.userempathetic.clustering.ExtractClusters import createClusterExtractor, userclustering, sessionclustering
-
+import json
 
 def parseData():
     print("...Extracting URLs...\n")
@@ -27,7 +27,9 @@ def parseData():
 
 def simulate():
     print("\n\n...Generating data...\n\n")
-    generate(1)
+    with open("simulatedData/simulConfig.json", "r") as f:
+        file = f.read()
+    generate(json.loads(file))
 
 
 def extractFeats():

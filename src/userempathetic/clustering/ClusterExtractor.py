@@ -65,12 +65,18 @@ class ClusterExtractor:
         sqlCL.truncate(clustering.tablename)
         print("\n" + str(clustering.__name__) + ":\n")
         c = clustering()
-        c.clusterize()
-        clusters = c.getClusters()
-        self.userClusterD[clustering] = clusters
-        print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
-        for cluster in clusters.values():
-            sqlCL.write(c.sqlWrite, cluster.toSQLItem())
+        try:
+            c.clusterize()
+            clusters = c.getClusters()
+            self.userClusterD[clustering] = clusters
+            print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
+            for cluster in clusters.values():
+                sqlCL.write(c.sqlWrite, cluster.toSQLItem())
+        except Exception: #TODO: Crear excepcion para esto.
+            print('No se obtuvieron clusters con '+str(clustering.__name__))
+
+
+
 
     def __clusterizeSessions(self, clustering):
         """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.

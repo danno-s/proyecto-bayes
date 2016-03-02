@@ -34,7 +34,7 @@ class UserLRSHistogramClustering(UserClustering):
         UserClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=0.3, min_samples=8, metric='euclidean')
         self.X, self.ids = self.__getData()
-        self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
+        self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
         """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
@@ -76,3 +76,15 @@ class UserLRSHistogramClustering(UserClustering):
             X.append([float(x) for x in row[1].split(' ')])
         return X, ids
 
+
+    def __getDimension(self):
+        """Entrega la dimensión del vector de características utilizado en el clustering.
+
+        Returns
+        -------
+        int
+            Numero de dimensiones de los vectores de características. 0 si no se pudieron cargar los vectores.
+        """
+        if self.X == None:
+            return 0
+        return len(self.X[0])

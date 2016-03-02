@@ -29,9 +29,12 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         SessionClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=8, metric='manhattan')
         self.X, self.ids = self.__getData()
-        self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
+        self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
+        if self.X == None:
+            print("No se detectaron UserClustersBelongingFeatures")
+            return
         # Compute DBSCAN
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
@@ -60,7 +63,22 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         X = list()
         ids = list()
         for row in rows:
+            vector = row[1].split(' ')
+            for x in vector:
+                if x == '':
+                    return None,None
             ids.append(int(row[0]))
-            X.append([int(x) for x in row[1].split(' ')])
+            X.append([int(x) for x in vector])
         return X, ids
 
+    def __getDimension(self):
+        """Entrega la dimensión del vector de características utilizado en el clustering.
+
+        Returns
+        -------
+        int
+            Numero de dimensiones de los vectores de características.
+        """
+        if self.X == None:
+            return 0
+        return len(self.X[0])

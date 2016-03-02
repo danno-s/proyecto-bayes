@@ -28,7 +28,7 @@ class UserURLsBelongingClustering(UserClustering):
         UserClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=8, metric='manhattan') #TODO: Configurar parámetros desde archivo de config.
         self.X, self.ids = self.__getData()
-        self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
+        self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
         """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
@@ -70,3 +70,15 @@ class UserURLsBelongingClustering(UserClustering):
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
 
+
+    def __getDimension(self):
+        """Entrega la dimensión del vector de características utilizado en el clustering.
+
+        Returns
+        -------
+        int
+            Numero de dimensiones de los vectores de características.
+        """
+        if self.X == None:
+            return 0
+        return len(self.X[0])

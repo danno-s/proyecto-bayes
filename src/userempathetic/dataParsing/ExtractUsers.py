@@ -1,14 +1,18 @@
 #!/usr/bin/python
 
-"""
-Extrae los usuarios diferentes en la base de datos
-"""
+
 
 import json
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def extractUsers():
+    """Extrae los usuarios con ID única que están en la base de datos de captura.
+
+    Returns
+    -------
+
+    """
     try:
         sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
         sqlPD = sqlWrapper(db='PD')

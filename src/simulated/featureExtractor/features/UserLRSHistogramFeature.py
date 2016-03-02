@@ -1,4 +1,4 @@
-from src.simulated.featureExtractor.features.Feature import UserFeature
+from src.userempathetic.featureExtractor.features.Feature import UserFeature
 from src.userempathetic.utils.featureExtractionUtils import getAllLRSs, isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 

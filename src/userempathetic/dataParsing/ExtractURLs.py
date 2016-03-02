@@ -1,14 +1,19 @@
 #!/usr/bin/python
 
-"""
-Extrae URLs únicas de los eventos en la base de datos, y los árboles completos de URLs del sitio de las capturas
-"""
+
 
 from src.userempathetic.utils.dataParsingUtils import hash
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def extractURLs():
+    """Extrae URLs únicas de los datos capturados en la base de datos, y los árboles completos de URLs del
+    sitio de las capturas.
+
+    Returns
+    -------
+
+    """
     try:
         sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
         sqlPD = sqlWrapper(db='PD')

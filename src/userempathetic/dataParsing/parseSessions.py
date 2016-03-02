@@ -13,6 +13,12 @@ from src.userempathetic.utils.loadConfig import Config
 
 
 def parseSessions():
+    """ Extrae sesiones dependiendo de los sessionizers definidos en el archivo de configuración del sistema.
+
+    Returns
+    -------
+
+    """
     sessionizer_mode = Config().getValue("sessionizer_mode")
     if sessionizer_mode == "MacroComplete":
         sessionizer = MacroCompleteSessionizer()

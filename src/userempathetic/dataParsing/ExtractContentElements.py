@@ -9,6 +9,12 @@ from src.userempathetic.dataParsing.MicroStateVectorExtractor import *
 
 
 def extractContentElements():
+    """Extrae vectores de los elementos de contenido de cada estado y los almacena en la tabla respectiva.
+
+    Returns
+    -------
+
+    """
     try:
         sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
         sqlPD = sqlWrapper(db='PD')

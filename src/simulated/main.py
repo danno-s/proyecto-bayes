@@ -1,7 +1,7 @@
-from src.simulated.dataParsing.ExtractURLs import extractURLs
-from src.simulated.dataParsing.ExtractUsers import extractUsers
-from src.simulated.dataParsing.ExtractContentElements import extractContentElements
-from src.simulated.dataParsing.dataParse import dataParse
+from src.userempathetic.dataParsing.ExtractURLs import extractURLs
+from src.userempathetic.dataParsing.ExtractUsers import extractUsers
+from src.userempathetic.dataParsing.ExtractContentElements import extractContentElements
+from src.userempathetic.dataParsing.dataParse import dataParse
 from src.simulated.dataParsing.parseSessions import parseSessions as simulParseSession
 from src.simulated.featureExtraction.calcLRSs import calcLRSs
 from src.simulated.simulatedData.simulusers import *

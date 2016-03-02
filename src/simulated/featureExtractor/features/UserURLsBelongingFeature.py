@@ -1,4 +1,4 @@
-from src.simulated.featureExtractor.features.Feature import UserFeature
+from src.userempathetic.featureExtractor.features.Feature import UserFeature
 from src.userempathetic.utils.dataParsingUtils import getAllURLsIDs
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 

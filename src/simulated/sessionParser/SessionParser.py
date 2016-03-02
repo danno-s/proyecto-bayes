@@ -3,17 +3,34 @@ from src.userempathetic.utils.dataParsingUtils import *
 
 
 class SessionParser:
-    def __init__(self, s):
-        assert isinstance(s, Sessionizer)
-        self.nodesD = self.__loadNodes()
-        self.sessionizer = s
+    """
+    Clase encargada de cargar nodos y utilizar un Sessionizer para obtener sesiones.
+    También guarda las sesiones en la tabla correspondiente.
+    """
+    def __init__(self, sessionizer):
+        """Constructor del SessionParser. Requiere indicarle el Sessionizer a utilizar.
+
+        Parameters
+        ----------
+        sessionizer : Sessionizer
+            una instancia de alguna clase que extienda Sessionizer.
+
+        Returns
+        -------
+
+        """
+        assert isinstance(sessionizer, Sessionizer)
+        self.__loadNodes() # carga self.nodesD con los generadores de nodos capturados asociados a cada usuario.
+        self.sessionizer = sessionizer
         self.sessions = list()
 
-        # for k,v in self.nodesD.items():
-        #    print(str(k)+": "+'\n\t'.join([str(x) for x in v]))
-        # self.nodesD = self.__loadNodes()
-
     def parseSessions(self):
+        """Método que obtiene sesiones desde el Sessionizer y las guarda en la tabla de la DB.
+
+        Returns
+        -------
+
+        """
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
         sqlCD.truncate('simulsessions')
@@ -22,23 +39,27 @@ class SessionParser:
             sqlCD.write(sqlWrite, session.toSQLItem())
 
     def printSessions(self):
+        """Imprime en consola las sesiones contenidas en el SessionParser.
+
+        Returns
+        -------
+
+        """
         for s in self.sessions:
             print(s)
 
     def __loadNodes(self):
+        """Carga variable de instancia self.nodesD con diccionario [user_id] = generador de nodos (steps).
+
+        Returns
+        -------
+
+        """
         # Obtener todos los usuarios.
         userL = getAllUserIDs()
         assert len(userL) > 0
-
         # Extraer datos de nodos para cada usuario
-        nodesD = dict()
+        self.nodesD = dict()
         for user_id in userL:
-            nodesD[user_id] = self.userStepsGen(user_id)
-        return nodesD
+            self.nodesD[user_id] = simulUserStepsGen(user_id)
 
-    def userStepsGen(self, user_id):
-        sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read(
-            "SELECT clickDate,user_id,urls_id,profile,micro_id from simulatednodes WHERE user_id=" + str(user_id))
-        for row in rows:
-            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)

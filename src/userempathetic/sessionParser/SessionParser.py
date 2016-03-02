@@ -66,26 +66,7 @@ class SessionParser:
         # Extraer datos de nodos para cada usuario
         self.nodesD = dict()
         for user_id in userL:
-            self.nodesD[user_id] = self.userStepsGen(user_id)
+            self.nodesD[user_id] = userStepsGen(user_id)
 
 
-    def userStepsGen(self, user_id):
-        """ Generador que permite obtener todos los nodos capturados del usuario indicado.
 
-        Parameters
-        ----------
-        user_id : int
-            id del usuario
-
-        Yields
-        ----------
-        tuple
-            (clickDate, urls_id, profile, micro_id)
-        Returns
-        -------
-
-        """
-        sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id))
-        for row in rows:
-            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)

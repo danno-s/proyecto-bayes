@@ -14,6 +14,13 @@ from src.userempathetic.utils.loadConfig import Config
 
 
 def extractFeatures():
+    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
+    requieren de haber realizado clustering previamente.
+
+    Returns
+    -------
+
+    """
     ufL = list()
     user_features = Config().getArray("user_features")
     if "UserURLsBelonging" in user_features:
@@ -32,6 +39,13 @@ def extractFeatures():
 
 
 def extractPostClusteringFeatures():
+    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema
+    que requieren haber realizado clustering previamente.
+
+    Returns
+    -------
+
+    """
     sfL = list()
     session_features = Config().getArray("session_features")
     if "SessionUserClustersBelonging" in session_features:

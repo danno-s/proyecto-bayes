@@ -1,4 +1,4 @@
-from src.simulated.featureExtractor.features.Feature import SessionFeature
+from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.clusteringUtils import getAllUserClusters
 from src.userempathetic.utils.dataParsingUtils import getUserOfSimulSession
 

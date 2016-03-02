@@ -1,9 +1,5 @@
 #!/usr/bin/python
 
-"""
-Extrae datos desde pageview y los guarda en nodes en un formato adecuado
-"""
-
 import json
 
 from src.userempathetic.utils.dataParsingUtils import *
@@ -14,10 +10,12 @@ def __query(n):
 
 
 def dataParse():
-    """
-    Extrae datos desde pageview y los guarda en nodes en un formato adecuado
-    """
+    """Extrae datos desde pageview y los guarda en nodes en un formato adecuado
 
+    Returns
+    -------
+
+    """
     sqlGC = sqlWrapper(db='GC')
     sqlCD = sqlWrapper(db='CD')
 

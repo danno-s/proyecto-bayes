@@ -1,11 +1,23 @@
 #!/usr/bin/python
-
+"""
+Extractor de los micro estados del sitio para los datos capturados.
+"""
 import json
 from src.userempathetic.utils.loadConfig import Config
 
 
 class MicroStateVectorExtractor:
+    """
+    Clase encargada de extraer los vectores de micro estado del sitio y almacenarlos en un diccionario.
+    Los elementos a extraer se definen en el archivo de configuración del sistema.
+    """
     def __init__(self):
+        """Constructor
+
+        Returns
+        -------
+
+        """
         __allFuncs = {
             'TextAreas': self.__getTextAreas,
             'InputText': self.__getInputText,
@@ -15,23 +27,48 @@ class MicroStateVectorExtractor:
         }
         self.elementTypes = sorted(Config().getArray(attr='elementTypes'))
         self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
-        # self.elementTypes = [x for x in sorted(__allFuncs.keys()) if x in types]
         self.funcD = dict()
         for type in self.elementTypes:
             try:
                 self.funcD[type] = __allFuncs[type]
             except KeyError:
                 print("Type '" + type + "' is not a valid element type for the extractor.")
-                print("Please check that your types array in Config.json contains only these:\n" + str(
+                print("Please check that the types array in Config.json contains only these:\n" + str(
                     self.getAvailableTypes()))
 
     def getElementTypes(self):
+        """Retorna una lista los tipos de elementos de micro estado a extraer, cargados desde configuración.
+
+        Returns
+        -------
+        [str]
+            tipos de elementos cargados desde configuración.
+        """
         return sorted(self.elementTypes)
 
     def getAvailableTypes(self):
+        """Retorna una lista con los tipos de elementos de micro estado que es posible extraer.
+
+        Returns
+        -------
+        [str]
+            tipos de elementos de micro estado que es posible extraer.
+        """
         return self.availableTypes
 
     def __getTextAreas(self, d, L):
+        """Agrega a la lista L de entrada el valor de estado del elemento textArea ingresado en d.
+
+        Parameters
+        ----------
+        d : dict
+            diccionario de un elemento de contenido textArea.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos textArea.
+
+        Returns
+        -------
+        """
         hasValue = d['HasValue']
         # isHidden = d['IsHidden']
         if True:  # isHidden == 'false' or isHidden == 'true':
@@ -41,6 +78,18 @@ class MicroStateVectorExtractor:
                 L.append(0)
 
     def __getInputText(self, d, L):
+        """Agrega a la lista L de entrada el valor de estado del elemento inputText ingresado en d.
+
+        Parameters
+        ----------
+        d : dict
+            diccionario de un elemento de contenido inputText.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos inputText.
+
+        Returns
+        -------
+        """
         hasValue = d['HasValue']
         isHidden = d['IsHidden']
         if isHidden == 'false' or isHidden == 'true':
@@ -50,15 +99,51 @@ class MicroStateVectorExtractor:
                 L.append(0)
 
     def __getRadioButtons(self, d, L):
+        """Agrega a la lista L de entrada el valor de estado del elemento radioButton ingresado en d.
+
+        Parameters
+        ----------
+        d : dict
+            diccionario de un elemento de contenido radioButton.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos radioButton.
+
+        Returns
+        -------
+        """
         selected = d['Selected']
         L.append(selected)
 
     def __getSelects(self, d, L):
+        """Agrega a la lista L de entrada el valor de estado del elemento select ingresado en d.
+
+        Parameters
+        ----------
+        d : dict
+            diccionario de un elemento de contenido select.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos select, agrupados si es el caso.
+
+        Returns
+        -------
+        """
         options = d['Selected']
         if len(options) > 0:
             L.append('-'.join(options))
 
     def __getCheckboxes(self, d, L):
+        """Agrega a la lista L de entrada el valor de estado del elemento checkbox ingresado en d.
+
+        Parameters
+        ----------
+        d : dict
+            diccionario de un elemento de contenido checkbox.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos checkbox, agrupados si es el caso.
+
+        Returns
+        -------
+        """
         quantity = int(d['Quantity'])
         vector = ['0'] * quantity
         options = d['Selected']
@@ -68,6 +153,22 @@ class MicroStateVectorExtractor:
         L.append('-'.join(vector))
 
     def generateStateVectorFrom(self, contentElements, type, L):
+        """Función recursiva que recorre contentElements y va creando el vectore de estado en L para el tipo de
+         elemento indicado en type.
+
+        Parameters
+        ----------
+        contentElements : dict
+            json de elementos de contenido extraido de la captura.
+        type : str
+            tipo de elemento a extraer.
+        L : list
+            vector de estado que contendrá los estados de todos los elementos del tipo indicado.
+
+        Returns
+        -------
+
+        """
         if len(contentElements) == 0:
             return
         valueD = contentElements['value']
@@ -84,6 +185,20 @@ class MicroStateVectorExtractor:
             self.generateStateVectorFrom(child, type, L)
 
     def getStateVectors(self, contentElements):
+        """Función que recorre todos los tipos de elementos cargados en el MicroStateVectorExtractor y los retorna en
+        un diccionario.
+
+        Parameters
+        ----------
+        contentElements : dict
+            json de elementos de contenido extraido de la captura.
+
+        Returns
+        -------
+        dict
+            diccionario de vectores de estado obtenidos, que utiliza como llave el str del tipo de elemento.
+
+        """
         data = dict()
         for type in self.elementTypes:
             L = list()

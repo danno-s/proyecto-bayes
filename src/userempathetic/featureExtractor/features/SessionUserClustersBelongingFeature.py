@@ -30,10 +30,28 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         self.user = getUserOfSession(self.session_id)
 
     def extract(self):
-        # Cálculo de vector de uso de URLs.
+        """Implementación de extracción de feature.
+
+        Returns
+        -------
+
+        """
         for cluster_id, members in self.userClusters.items():
             if self.user in members:
                 self.vector[cluster_id] = 1
+
+    def extractSimulated(self):
+        """Realiza exactamente lo mismo que extract.
+
+        See Also
+            extract
+
+        Returns
+        -------
+
+        """
+        self.extract()
+
 
     def __str__(self):
         return str(self.user) + ": " + str(self.vector)

@@ -131,6 +131,26 @@ def getAllURLsIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
+def userStepsGen(user_id):
+        """ Generador que permite obtener todos los nodos capturados del usuario indicado.
+
+        Parameters
+        ----------
+        user_id : int
+            id del usuario
+
+        Yields
+        ----------
+        tuple
+            (clickDate, urls_id, profile, micro_id)
+        Returns
+        -------
+
+        """
+        sqlCD = sqlWrapper('CD')
+        rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id))
+        for row in rows:
+            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
 
 def hash(str):
     """
@@ -169,3 +189,25 @@ def getUserOfSimulSession(session_id):
     sqlRead = "select user_id from simulsessions where id = " + str(session_id)
     rows = sqlCD.read(sqlRead)
     return rows[0][0]
+
+def simulUserStepsGen(user_id):
+        """ Generador que permite obtener todos los nodos simulados del usuario indicado.
+
+        Parameters
+        ----------
+        user_id : int
+            id del usuario
+
+        Yields
+        ----------
+        tuple
+            (clickDate, urls_id, profile, micro_id)
+        Returns
+        -------
+
+        """
+        sqlCD = sqlWrapper('CD')
+        rows = sqlCD.read(
+            "SELECT clickDate,user_id,urls_id,profile,micro_id from simulatednodes WHERE user_id=" + str(user_id))
+        for row in rows:
+            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)

@@ -47,6 +47,25 @@ class UserURLsBelongingFeature(UserFeature):
                 if self.URLs[i] == l:
                     self.vector[i] = 1
 
+    def extractSimulated(self):
+        """Implementación de extracción de feature para usuarios simulados.
+
+        Returns
+        -------
+
+        """
+        # Lectura de nodos simulados de usuario desde 'coreData'
+        sqlCD = sqlWrapper(db='CD')
+        sqlRead = 'select urls_id, user_id from simulatednodes where user_id=' + str(self.user)
+        userUrls = sqlCD.read(sqlRead)
+        assert len(userUrls) > 0
+
+        for row in userUrls:
+            l = row[0]
+            for i in range(len(self.URLs)):
+                if self.URLs[i] == l:
+                    self.vector[i] = 1
+
     def __str__(self):
         return str(self.user) + ": " + str(self.vector)
 

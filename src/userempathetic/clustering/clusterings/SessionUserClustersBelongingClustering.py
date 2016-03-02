@@ -1,9 +1,3 @@
-"""
-Clase SessionLRSBelongingClustering
-
-Crea clusters de uso de LRSs por sesión
-"""
-
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -12,6 +6,13 @@ from src.userempathetic.clusterClass.Cluster import Cluster
 
 
 class SessionUserClustersBelongingClustering(SessionClustering):
+    """Clase SessionUserClustersBelongingClustering implementa un SessionClustering que realiza clustering utilizando
+    el feature UserClustersBelongingFeature.
+
+    See Also
+        UserClustersBelongingFeature
+    """
+
     tablename = 'sessionuserclustersbelongingclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "User Cluster IDs"
@@ -19,10 +20,14 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
 
     def __init__(self):
+        """Constructor
+
+        Returns
+        -------
+
+        """
         SessionClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=8, metric='manhattan')
-        self.clustersD = dict()
-        self.n_clusters = 0
         self.X, self.ids = self.__getData()
         self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
 
@@ -59,5 +64,3 @@ class SessionUserClustersBelongingClustering(SessionClustering):
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
 
-    def getClusters(self):
-        return self.clustersD

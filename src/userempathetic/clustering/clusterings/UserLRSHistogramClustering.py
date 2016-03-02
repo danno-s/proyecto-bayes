@@ -12,6 +12,12 @@ from src.userempathetic.clusterClass.Cluster import Cluster
 
 
 class UserLRSHistogramClustering(UserClustering):
+    """Clase UserLRSHistogramClustering implementa un UserClustering que realiza clustering utilizando
+    el feature UserLRSHistogramFeature.
+
+    See Also
+        UserLRSHistogramFeature
+    """
     tablename = 'userlrshistogramclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "LRSs IDs"
@@ -19,14 +25,25 @@ class UserLRSHistogramClustering(UserClustering):
     title = "Histograma de LRSs de usuario representativo de cada cluster"
 
     def __init__(self):
+        """Constructor
+
+        Returns
+        -------
+
+        """
         UserClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=0.3, min_samples=8, metric='euclidean')
-        self.clustersD = dict()
-        self.n_clusters = 0
         self.X, self.ids = self.__getData()
         self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
 
     def clusterize(self):
+        """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
+        quedan almacenados en la instancia del Clustering que ejecute esta función.
+
+        Returns
+        -------
+
+        """
         # Compute DBSCAN
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
@@ -59,5 +76,3 @@ class UserLRSHistogramClustering(UserClustering):
             X.append([float(x) for x in row[1].split(' ')])
         return X, ids
 
-    def getClusters(self):
-        return self.clustersD

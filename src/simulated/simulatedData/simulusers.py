@@ -160,8 +160,8 @@ def generate(file):
 
     Parameters
     ----------
-    n : int
-        Número de sesiones por usuario a crear
+    file : JSON
+        Archivo de configuracion en formato JSON
     """
     users = simulusers(file["users"])
     session = getsession()

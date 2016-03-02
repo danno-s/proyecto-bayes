@@ -131,7 +131,7 @@ def getAllURLsIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
-def userStepsGen(self, user_id):
+def userStepsGen(user_id):
         """ Generador que permite obtener todos los nodos capturados del usuario indicado.
 
         Parameters
@@ -190,7 +190,7 @@ def getUserOfSimulSession(session_id):
     rows = sqlCD.read(sqlRead)
     return rows[0][0]
 
-def simulUserStepsGen(self, user_id):
+def simulUserStepsGen(user_id):
         """ Generador que permite obtener todos los nodos simulados del usuario indicado.
 
         Parameters

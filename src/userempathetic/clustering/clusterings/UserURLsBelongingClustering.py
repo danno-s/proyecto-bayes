@@ -1,9 +1,3 @@
-"""
-Clase SessionLRSBelongingClustering
-
-Crea clusters de uso de LRSs por usuario
-"""
-
 from src.userempathetic.clustering.clusterings.Clustering import UserClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -12,6 +6,12 @@ from src.userempathetic.clusterClass.Cluster import Cluster
 
 
 class UserURLsBelongingClustering(UserClustering):
+    """Clase UserURLsBelongingClustering implementa un UserClustering que realiza clustering utilizando
+    el feature UserURLsBelongingFeature.
+
+    See Also
+        UserURLsBelongingFeature
+    """
     tablename = 'userurlsbelongingclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "URLs IDs"
@@ -19,14 +19,25 @@ class UserURLsBelongingClustering(UserClustering):
     title = "Uso de URLs por usuario representativo de cada cluster"
 
     def __init__(self):
+        """Constructor
+
+        Returns
+        -------
+
+        """
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=8, metric='manhattan')
-        self.clustersD = dict()
-        self.n_clusters = 0
+        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=8, metric='manhattan') #TODO: Configurar parámetros desde archivo de config.
         self.X, self.ids = self.__getData()
         self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
 
     def clusterize(self):
+        """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
+        quedan almacenados en la instancia del Clustering que ejecute esta función.
+
+        Returns
+        -------
+
+        """
         # Compute DBSCAN
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
@@ -59,5 +70,3 @@ class UserURLsBelongingClustering(UserClustering):
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
 
-    def getClusters(self):
-        return self.clustersD

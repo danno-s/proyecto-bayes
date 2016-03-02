@@ -3,14 +3,14 @@ Elemento encargado de extraer features (características) de usuarios y sesiones
 """
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.utils.dataParsingUtils import getAllUserIDs
-from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
+from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs, getAllSimulSessionIDs
 
 
 class FeatureExtractor:
     """
     Clase encargada de extraer features de usuarios y sesiones.
     """
-    def __init__(self, userFeaturesL=None, sessionFeaturesL=None):
+    def __init__(self, userFeaturesL=None, sessionFeaturesL=None,simulation=False):
         """Constructor
 
             Parameters
@@ -19,7 +19,12 @@ class FeatureExtractor:
                 lista de clases UserFeature
             sessionFeaturesL : [class]
                 lista de clases SessionFeature
+            simulation : bool
+                Modo de ejecución del extractor. Si es True, utiliza las tablas con elementos simulados.
 
+            Notes
+                En el caso de simulación, se debe haber realiado correctamente la simulación de nodos, usuarios
+                y sesiones para que el FeatureExtractor funcione.
             Returns
             -------
 
@@ -27,7 +32,13 @@ class FeatureExtractor:
         self.userFeaturesL = userFeaturesL or []
         self.sessionFeaturesL = sessionFeaturesL or []
         self.users = getAllUserIDs()
-        self.sessionIDs = getAllSessionIDs()
+        if simulation:
+            self.simulation = simulation
+        if not simulation:
+            self.simulation = False
+            self.sessionIDs = getAllSessionIDs()
+        else:
+            self.sessionIDs = getAllSimulSessionIDs()
 
     def extractUserFeatures(self):
         """Recorre todas las features de usuarios y realiza la extracción de feature para cada una.
@@ -65,7 +76,10 @@ class FeatureExtractor:
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
             f = feature(user)
-            f.extract()
+            if not self.simulation:
+                f.extract()
+            else:
+                f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             print(f)
 
@@ -85,6 +99,9 @@ class FeatureExtractor:
         print("\n" + str(feature.__name__) + ":\n")
         for sessionID in self.sessionIDs:
             f = feature(sessionID)
-            f.extract()
+            if not self.simulation:
+                f.extract()
+            else:
+                f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             print(f)

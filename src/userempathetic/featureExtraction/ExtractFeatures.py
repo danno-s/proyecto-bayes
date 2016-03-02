@@ -13,7 +13,7 @@ from src.userempathetic.featureExtractor.FeatureExtractor import FeatureExtracto
 from src.userempathetic.utils.loadConfig import Config
 
 
-def extractFeatures():
+def extractFeatures(simulation=False):
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
     requieren de haber realizado clustering previamente.
 
@@ -33,12 +33,12 @@ def extractFeatures():
     if "SessionLRSBelonging" in session_features:
         sfL.append(SessionLRSBelongingFeature)
 
-    fE = FeatureExtractor(ufL, sfL)
+    fE = FeatureExtractor(ufL, sfL,simulation=simulation)
     fE.extractUserFeatures()
     fE.extractSessionFeatures()
 
 
-def extractPostClusteringFeatures():
+def extractPostClusteringFeatures(simulation=False):
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema
     que requieren haber realizado clustering previamente.
 
@@ -51,7 +51,7 @@ def extractPostClusteringFeatures():
     if "SessionUserClustersBelonging" in session_features:
         sfL.append(SessionUserClustersBelongingFeature)
 
-    fE = FeatureExtractor(sessionFeaturesL=sfL)
+    fE = FeatureExtractor(sessionFeaturesL=sfL,simulation=simulation)
     fE.extractSessionFeatures()
 
 

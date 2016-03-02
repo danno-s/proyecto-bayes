@@ -16,6 +16,9 @@ class Feature:
     def extract(self): pass
 
     @abstractmethod
+    def extractSimulated(self): pass
+
+    @abstractmethod
     def toSQLItem(self): pass
 
 
@@ -32,6 +35,9 @@ class UserFeature(Feature):
     def extract(self): pass
 
     @abstractmethod
+    def extractSimulated(self): pass
+
+    @abstractmethod
     def toSQLItem(self): pass
 
 
@@ -46,6 +52,9 @@ class SessionFeature(Feature):
 
     @abstractmethod
     def extract(self): pass
+
+    @abstractmethod
+    def extractSimulated(self): pass
 
     @abstractmethod
     def toSQLItem(self): pass

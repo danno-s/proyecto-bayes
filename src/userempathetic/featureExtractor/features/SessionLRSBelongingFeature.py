@@ -48,6 +48,25 @@ class SessionLRSBelongingFeature(SessionFeature):
                 if lrs in subseqs or isSubContained(lrs, subseqs):
                     self.vector[i] = 1
 
+    def extractSimulated(self):
+        """Implementación de extracción de feature para sesiones simuladas.
+
+        Returns
+        -------
+
+        """
+        # Lectura de sesion simulada desde 'coreData'
+        sqlCD = sqlWrapper(db='CD')
+        sqlRead = 'select sequence from simulsessions where id=' + str(self.session_id)
+        session = sqlCD.read(sqlRead)
+        assert len(session) > 0
+        for row in session:
+            seq = row[0].split(' ')
+            subseqs = set(subsequences(seq))
+            for i, lrs in enumerate(self.LRSs):
+                if lrs in subseqs or isSubContained(lrs, subseqs):
+                    self.vector[i] = 1
+
     def __str__(self):
         return "Session " + str(self.session_id) + ": " + str(
             self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])

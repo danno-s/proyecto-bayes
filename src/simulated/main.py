@@ -2,11 +2,10 @@ from src.userempathetic.dataParsing.ExtractURLs import extractURLs
 from src.userempathetic.dataParsing.ExtractUsers import extractUsers
 from src.userempathetic.dataParsing.ExtractContentElements import extractContentElements
 from src.userempathetic.dataParsing.dataParse import dataParse
-from src.simulated.dataParsing.parseSessions import parseSessions as simulParseSession
-from src.simulated.featureExtraction.calcLRSs import calcLRSs
+from src.userempathetic.featureExtraction.calcLRSs import calcLRSs
 from src.simulated.simulatedData.simulusers import *
 from src.userempathetic.dataParsing.parseSessions import parseSessions
-from src.simulated.featureExtraction.ExtractFeatures import extractFeatures, extractPostClusteringFeatures
+from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures, extractPostClusteringFeatures
 from src.userempathetic.clustering.ExtractClusters import createClusterExtractor, userclustering, sessionclustering
 
 
@@ -33,10 +32,10 @@ def simulate():
 
 def extractFeats():
     print("...Extracting LRSs...\n")
-    calcLRSs()
+    calcLRSs(simulation=True)
     print("...LRS extraction finished...\n")
     print("...Extracting Features...\n")
-    extractFeatures()
+    extractFeatures(simulation=True)
     print("...Features extraction finished...\n")
 
 
@@ -54,13 +53,13 @@ if __name__ == '__main__':
         parseData()
     if a <= 1:
         print("...Parsing Sessions...\n")
-        parseSessions()
+        parseSessions(simulation=False)
         print("...Sessions parsing finished...\n")
     if a <= 2:
         print("...Simulating Data...\n")
         simulate()
     if a <= 3:
-        simulParseSession()
+        parseSessions(simulation=True)
         print("...Simulation finished...\n")
     if a <= 4:
         extractFeats()
@@ -71,7 +70,7 @@ if __name__ == '__main__':
         print("\n\n User Clustering finished.\n\n")
     if a <= 6:
         print("...Extracting PostUserClustering Features...\n")
-        extractPostClusteringFeatures()
+        extractPostClusteringFeatures(simulation=True)
         print("...PostUserClustering Features extraction finished...\n")
     if a <= 7:
         print("\n\n...Performing session clustering...\n\n")

@@ -13,8 +13,10 @@ class ClusterExtractor:
 
         Parameters
         ----------
-        userClusteringsL
-        sessionClusteringsL
+        userClusteringsL : [class]
+            lista de clases UserClustering
+        sessionClusteringsL : [class]
+            lista de clases SessionClustering
 
         Returns
         -------
@@ -22,20 +24,43 @@ class ClusterExtractor:
         """
         self.userClusteringsL = userClusteringsL or []
         self.sessionClusteringsL = sessionClusteringsL or []
-        self.userClusterD = dict()
-        self.sessionClusterD = dict()
+        self.userClusterD = dict()  # Diccionario con todos los clusters de usuario. La llave es la clase de UserClustering.
+        self.sessionClusterD = dict() # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.
 
     def extractUserClusters(self):
+        """Recorre todos los clustering de usuarios y realiza el clustering para cada uno.
+
+        Returns
+        -------
+
+        """
         for userClustering in self.userClusteringsL:
             self.__clusterizeUsers(userClustering)
         self.printUserClusters()
 
     def extractSessionClusters(self):
+        """Recorre todos los clustering de sesiones y realiza el clustering para cada uno.
+
+        Returns
+        -------
+
+        """
         for sessionClustering in self.sessionClusteringsL:
             self.__clusterizeSessions(sessionClustering)
         self.printSessionClusters()
 
     def __clusterizeUsers(self, clustering):
+        """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
+
+        Parameters
+        ----------
+        clustering : UserClustering
+            clase implementación de UserClustering
+
+        Returns
+        -------
+
+        """
         sqlCL = sqlWrapper('CL')
         sqlCL.truncate(clustering.tablename)
         print("\n" + str(clustering.__name__) + ":\n")
@@ -48,6 +73,17 @@ class ClusterExtractor:
             sqlCL.write(c.sqlWrite, cluster.toSQLItem())
 
     def __clusterizeSessions(self, clustering):
+        """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
+
+        Parameters
+        ----------
+        clustering : SessionClustering
+            clase implementación de SessionClustering
+
+        Returns
+        -------
+
+        """
         sqlCL = sqlWrapper('CL')
         sqlCL.truncate(clustering.tablename)
         print("\n" + str(clustering.__name__) + ":\n")

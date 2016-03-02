@@ -1,9 +1,3 @@
-"""
-Clase SessionLRSBelongingClustering
-
-Crea clusters de uso de LRSs por sesión
-"""
-
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -12,6 +6,13 @@ from src.userempathetic.clusterClass.Cluster import Cluster
 
 
 class SessionLRSBelongingClustering(SessionClustering):
+    """Clase SessionLRSBelongingClustering implementa un SessionClustering que realiza clustering utilizando
+    el feature LRSBelongingFeature.
+
+    See Also
+        LRSBelongingFeature
+    """
+
     tablename = 'sessionlrsbelongingclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
     xlabel = "LRSs IDs"
@@ -19,14 +20,25 @@ class SessionLRSBelongingClustering(SessionClustering):
     title = "Uso de LRSs por sesión representativa de cada cluster"
 
     def __init__(self):
+        """Constructor
+
+        Returns
+        -------
+
+        """
         SessionClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=0.5, min_samples=5, metric='manhattan')
-        self.clustersD = dict()
-        self.n_clusters = 0
         self.X, self.ids = self.__getData()
         self.featuresDIM = len(self.X[0])  # Dimension of feature vector.
 
     def clusterize(self):
+        """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
+        quedan almacenados en la instancia del Clustering que ejecute esta función.
+
+        Returns
+        -------
+
+        """
         # Compute DBSCAN
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
@@ -59,5 +71,3 @@ class SessionLRSBelongingClustering(SessionClustering):
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
 
-    def getClusters(self):
-        return self.clustersD

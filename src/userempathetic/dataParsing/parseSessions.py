@@ -12,7 +12,7 @@ from src.userempathetic.sessionParser.SessionParser import SessionParser
 from src.userempathetic.utils.loadConfig import Config
 
 
-def parseSessions():
+def parseSessions(simulation=False):
     """ Extrae sesiones dependiendo de los sessionizers definidos en el archivo de configuración del sistema.
 
     Returns
@@ -31,7 +31,7 @@ def parseSessions():
     else:
         raise Exception  # TODO: crear configuration exception.
 
-    sp = SessionParser(sessionizer)
+    sp = SessionParser(sessionizer,simulation=simulation)
     sp.parseSessions()
     sp.printSessions()
 

@@ -1,6 +1,6 @@
 from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.clusteringUtils import getAllUserClusters
-from src.userempathetic.utils.dataParsingUtils import getUserOfSession
+from src.userempathetic.utils.dataParsingUtils import getUserOfSession, getUserOfSimulSession
 
 
 class SessionUserClustersBelongingFeature(SessionFeature):
@@ -11,7 +11,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
     tablename = 'sessionuserclustersbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
 
-    def __init__(self, session_id):
+    def __init__(self, session_id, simulation=False):
         """Constructor
 
         Parameters
@@ -22,11 +22,14 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         Returns
         -------
         """
-        SessionFeature.__init__(self)
+        SessionFeature.__init__(self, simulation)
         self.userClusters = getAllUserClusters("userurlsbelongingclusters")
         self.vector = [0] * len(self.userClusters)
         self.session_id = int(session_id)
-        self.user = getUserOfSession(self.session_id)
+        if not self.simulation:
+            self.user = getUserOfSession(self.session_id)
+        else:
+            self.user = getUserOfSimulSession(self.session_id)
 
     def extract(self):
         """Implementación de extracción de feature.

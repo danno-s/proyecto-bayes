@@ -11,7 +11,7 @@ class UserURLsBelongingFeature(UserFeature):
     tablename = 'userurlsbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector) VALUES (%s,%s)'
 
-    def __init__(self, user_id):
+    def __init__(self, user_id, simulation=False):
         """
 
         Parameters
@@ -23,7 +23,7 @@ class UserURLsBelongingFeature(UserFeature):
         -------
 
         """
-        UserFeature.__init__(self)
+        UserFeature.__init__(self, simulation)
         self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
         self.user = int(user_id)

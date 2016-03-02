@@ -11,7 +11,7 @@ class SessionLRSBelongingFeature(SessionFeature):
     tablename = 'sessionlrsbelongingfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector) VALUES (%s,%s)'
 
-    def __init__(self, session_id):
+    def __init__(self, session_id, simulation=False):
         """Constructor
 
         Parameters
@@ -23,7 +23,7 @@ class SessionLRSBelongingFeature(SessionFeature):
         -------
 
         """
-        SessionFeature.__init__(self)
+        SessionFeature.__init__(self,simulation)
         self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)

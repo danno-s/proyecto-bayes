@@ -75,13 +75,13 @@ class FeatureExtractor:
         sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
-            f = feature(user)
+            f = feature(user, simulation= self.simulation)
             if not self.simulation:
                 f.extract()
             else:
                 f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
-            if len(f.vector) >0:
+            if '[]' not in str(f):
                 print(f)
 
     def __extractSessionFeature(self, feature):
@@ -99,11 +99,11 @@ class FeatureExtractor:
         sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for sessionID in self.sessionIDs:
-            f = feature(sessionID)
+            f = feature(sessionID, simulation= self.simulation)
             if not self.simulation:
                 f.extract()
             else:
                 f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
-            if len(f.vector) >0:
+            if '[]' not in str(f):
                 print(f)

@@ -8,13 +8,13 @@ class UserLRSHistogramFeature(UserFeature):
     tablename = 'userlrshistogramfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,histogram,count) VALUES (%s,%s,%s)'
 
-    def __init__(self, user):
-        UserFeature.__init__(self)
+    def __init__(self, user_id, simulation=False):
+        UserFeature.__init__(self, simulation)
         self.LRSs = getAllLRSs()
         self.histogram = [0.0] * len(self.LRSs)
-        self.user = int(user)
+        self.user_id = int(user_id)
         self.count = 0
-        pass
+
 
     def extract(self):
         """Implementación de extracción de feature
@@ -25,7 +25,7 @@ class UserLRSHistogramFeature(UserFeature):
         """
         # Lectura de sesiones del usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where user_id=' + str(self.user)
+        sqlRead = 'select sequence from sessions where user_id=' + str(self.user_id)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
         # Cálculo de histograma de uso de LRSs.
@@ -49,7 +49,7 @@ class UserLRSHistogramFeature(UserFeature):
         """
         # Lectura de sesiones simuladas del usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from simulsessions where user_id=' + str(self.user)
+        sqlRead = 'select sequence from simulsessions where user_id=' + str(self.user_id)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
         # Cálculo de histograma de uso de LRSs.
@@ -65,7 +65,7 @@ class UserLRSHistogramFeature(UserFeature):
             self.histogram = [val / self.count for val in self.histogram]
 
     def __str__(self):
-        return str(self.user) + ": " + str(self.histogram)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
+        return str(self.user_id) + ": " + str(self.histogram)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str("%.4f" % x) for x in self.histogram]), str(self.count)
+        return str(self.user_id), ' '.join([str("%.4f" % x) for x in self.histogram]), str(self.count)

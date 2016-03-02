@@ -12,6 +12,16 @@ class Clustering:
         self.n_clusters = 0     # Número de clusters obtenidos.
         pass
 
+    def getClusters(self):
+        """Retorna diccionario con los clusters extraidos.
+
+        Returns
+        -------
+        dict
+            diccionario con los clusters extraidos.
+        """
+        return self.clustersD
+
 class SessionClustering(Clustering):
     """
     Clase abstracta Clustering, representa una forma de realizar clustering de sesiones.

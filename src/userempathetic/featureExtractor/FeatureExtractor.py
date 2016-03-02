@@ -81,7 +81,8 @@ class FeatureExtractor:
             else:
                 f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
-            print(f)
+            if len(f.vector) >0:
+                print(f)
 
     def __extractSessionFeature(self, feature):
         """ Extrae el feature de cada sesión y lo agrega a la tabla correspondiente en la DB 'features'
@@ -104,4 +105,5 @@ class FeatureExtractor:
             else:
                 f.extractSimulated()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
-            print(f)
+            if len(f.vector) >0:
+                print(f)

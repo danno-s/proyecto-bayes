@@ -129,6 +129,6 @@ class sqlWrapper:
             self.conns['CD'] = connections['coreData']
             self.conns['GT'] = connections['groundTruth']
             self.conns['FT'] = connections['features']
-            self.conns['CL'] = connections['clusters']
+            # self.conns['CL'] = connections['clusters']
         except:
             raise

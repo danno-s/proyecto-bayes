@@ -147,3 +147,25 @@ def hash(str):
         El valor del hash
     """
     return hashlib.md5(str.encode()).hexdigest()
+
+
+def getUserOfSimulSession(session_id):
+    """
+    Obtiene el ID del usuario que realizó la sesión de ID session_id
+
+    Parameters
+    ----------
+    session_id : int
+        El ID de la sesión.
+    Returns
+    -------
+    int
+        int con el ID del usuario.
+    """
+    try:
+        sqlCD = sqlWrapper(db='CD')
+    except:
+        raise
+    sqlRead = "select user_id from simulsessions where id = " + str(session_id)
+    rows = sqlCD.read(sqlRead)
+    return rows[0][0]

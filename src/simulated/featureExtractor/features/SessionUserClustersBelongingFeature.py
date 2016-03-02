@@ -1,6 +1,6 @@
 from src.simulated.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.clusteringUtils import getAllUserClusters
-from src.simulated.utils.dataParsingUtils import getUserOfSession
+from src.userempathetic.utils.dataParsingUtils import getUserOfSimulSession
 
 
 class SessionUserClustersBelongingFeature(SessionFeature):
@@ -12,7 +12,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         self.userClusters = getAllUserClusters("userurlsbelongingclusters")
         self.vector = [0] * len(self.userClusters)
         self.session_id = int(session_id)
-        self.user = getUserOfSession(self.session_id)
+        self.user = getUserOfSimulSession(self.session_id)
 
     def extract(self):
         for cluster_id, members in self.userClusters.items():

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import json
-from src.simulated.utils.loadConfig import Config
+from src.userempathetic.utils.loadConfig import Config
 
 
 class MicroStateVectorExtractor:

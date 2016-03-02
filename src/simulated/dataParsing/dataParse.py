@@ -6,7 +6,7 @@ Extrae datos desde pageview y los guarda en nodes en un formato adecuado
 
 import json
 
-from src.simulated.utils.dataParsingUtils import *
+from src.userempathetic.utils.dataParsingUtils import *
 
 
 def __query(n):

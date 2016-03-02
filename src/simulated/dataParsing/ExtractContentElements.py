@@ -4,7 +4,7 @@
 Extrae vectores que definen micro-estados únicos de los eventos en la base de datos.
 """
 
-from src.simulated.utils.dataParsingUtils import *
+from src.userempathetic.utils.dataParsingUtils import *
 from src.simulated.dataParsing.MicroStateVectorExtractor import *
 
 

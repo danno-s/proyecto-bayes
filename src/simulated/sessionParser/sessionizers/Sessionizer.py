@@ -1,5 +1,5 @@
-from src.simulated.utils.loadConfig import Config
-from src.simulated.utils.dataParsingUtils import *
+from src.userempathetic.utils.loadConfig import Config
+from src.userempathetic.utils.dataParsingUtils import *
 from src.userempathetic.sessionClass.Session import Session
 from src.simulated.sessionParser.sessionizers.SessionBuffer import SessionBuffer
 from datetime import datetime

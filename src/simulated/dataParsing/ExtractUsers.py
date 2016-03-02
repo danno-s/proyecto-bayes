@@ -6,7 +6,7 @@ Extrae los usuarios diferentes en la base de datos
 
 import json
 # from phpserialize import *
-from src.simulated.utils.sqlUtils import sqlWrapper
+from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def extractUsers():

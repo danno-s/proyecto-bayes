@@ -4,9 +4,9 @@
 Calcula las LRS (Longuest repeating sequence) en las sesiones
 """
 
-from src.simulated.utils.featureExtractionUtils import subsequences, isSubContained
-from src.simulated.utils.loadConfig import Config
-from src.simulated.utils.sqlUtils import sqlWrapper
+from src.userempathetic.utils.featureExtractionUtils import subsequences, isSubContained
+from src.userempathetic.utils.loadConfig import Config
+from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 def calcLRSs():

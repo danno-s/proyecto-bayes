@@ -9,7 +9,7 @@ from src.simulated.sessionParser.sessionizers.EdgesSessionizer import EdgesSessi
 from src.simulated.sessionParser.sessionizers.MacroCompleteSessionizer import MacroCompleteSessionizer
 from src.simulated.sessionParser.sessionizers.MacroEdgesSessionizer import MacroEdgesSessionizer
 from src.simulated.sessionParser.SessionParser import SessionParser
-from src.simulated.utils.loadConfig import Config
+from src.userempathetic.utils.loadConfig import Config
 
 
 def parseSessions():

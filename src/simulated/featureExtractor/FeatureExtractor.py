@@ -1,6 +1,6 @@
-from src.simulated.utils.sqlUtils import sqlWrapper
-from src.simulated.utils.dataParsingUtils import getAllUserIDs
-from src.simulated.utils.featureExtractionUtils import getAllSessionIDs
+from src.userempathetic.utils.sqlUtils import sqlWrapper
+from src.userempathetic.utils.dataParsingUtils import getAllUserIDs
+from src.userempathetic.utils.featureExtractionUtils import getAllSimulSessionIDs
 
 
 class FeatureExtractor:
@@ -19,7 +19,7 @@ class FeatureExtractor:
         self.userFeaturesL = userFeaturesL or []
         self.sessionFeaturesL = sessionFeaturesL or []
         self.users = getAllUserIDs()
-        self.sessionIDs = getAllSessionIDs()
+        self.sessionIDs = getAllSimulSessionIDs()
 
     def extractUserFeatures(self):
         for userFeature in self.userFeaturesL:

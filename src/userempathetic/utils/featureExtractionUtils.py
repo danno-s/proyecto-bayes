@@ -121,3 +121,16 @@ def getAllSessionIDs():
     rows = sqlCD.read(sqlRead)
     assert len(rows) > 0
     return [item[0] for item in rows]
+
+def getAllSimulSessionIDs():
+    """Obtiene una lista con las IDs de sesiones simuladas.
+    Returns
+    -------
+    [int]
+
+    """
+    sqlCD = sqlWrapper('CD')
+    sqlRead = 'select id from simulsessions'
+    rows = sqlCD.read(sqlRead)
+    assert len(rows) > 0
+    return [item[0] for item in rows]

@@ -1,5 +1,5 @@
 from src.simulated.sessionParser.sessionizers.Sessionizer import Sessionizer
-from src.simulated.utils.dataParsingUtils import *
+from src.userempathetic.utils.dataParsingUtils import *
 
 
 class SessionParser:

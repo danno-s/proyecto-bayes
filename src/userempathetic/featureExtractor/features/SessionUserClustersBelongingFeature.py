@@ -21,7 +21,6 @@ class SessionUserClustersBelongingFeature(SessionFeature):
 
         Returns
         -------
-
         """
         SessionFeature.__init__(self)
         self.userClusters = getAllUserClusters("userurlsbelongingclusters")

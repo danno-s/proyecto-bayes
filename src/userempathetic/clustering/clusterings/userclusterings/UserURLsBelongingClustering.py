@@ -26,7 +26,7 @@ class UserURLsBelongingClustering(UserClustering):
 
         """
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=10,
+        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=10,
                                           metric='euclidean')  # TODO: Configurar parámetros desde archivo de config.
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.

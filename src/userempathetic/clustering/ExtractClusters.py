@@ -17,13 +17,16 @@ def createClusterExtractor():
         un extractor de clusters
     """
     # TODO: PASAR A CONFIGURACION O REVISAR FEATURES EXTRAIDAS PARA DECIDIR QUE CLUSTERINGS UTILIZAR
-    from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
-    from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
     from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
     from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import \
         SessionUserClustersBelongingClustering
-    return ClusterExtractor(userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering],
-                            sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering])
+    from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
+
+    return ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
+                          userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
 
 
 def userclustering(clusterExtractor):

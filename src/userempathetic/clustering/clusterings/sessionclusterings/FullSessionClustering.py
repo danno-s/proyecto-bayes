@@ -25,7 +25,7 @@ class FullSessionClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=2.5, min_samples=15, metric='euclidean')
+        self.clusteringAlgorithm = DBSCAN(eps=0.6, min_samples=10, metric='euclidean')
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
@@ -64,8 +64,11 @@ class FullSessionClustering(SessionClustering):
         X_url, _ = SessionUserClustersBelongingClustering.getData()
         X = list()
         for i,user_id in enumerate(ids):
-            vector = X_lrs[i]
-            vector.extend(X_url[i])
+            vector = []
+            if len(X_lrs) > 0 :
+                vector.extend(X_lrs[i])
+            if len(X_url) > 0 :
+                vector.extend(X_url[i])
             X.append(vector)
 
         return X, ids

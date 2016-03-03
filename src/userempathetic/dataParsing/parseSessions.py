@@ -24,7 +24,7 @@ def parseSessions(simulation=False):
     -------
 
     """
-    sessionizer_mode = Config().getValue("sessionizer_mode")
+    sessionizer_mode = Config.getValue("sessionizer_mode")
     if sessionizer_mode == "MacroComplete":
         sessionizer = MacroCompleteSessionizer()
     elif sessionizer_mode == "Complete":

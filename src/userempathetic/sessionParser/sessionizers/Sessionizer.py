@@ -19,7 +19,7 @@ class Sessionizer:
         -------
 
         """
-        self.tlimit = Config().getValue(attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
+        self.tlimit = Config.getValue(attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
 
     def sessionize(self, sParser):
         """Método encargado de obtener sesiones a partir de los nodos cargados en el SessionParser.
@@ -102,7 +102,7 @@ class Sessionizer:
 
         return sessions
 
-    def toSession(sessionData, profile, initTime, endTime, user_id):
+    def toSession(self, sessionData, profile, initTime, endTime, user_id):
         """ Retorna un objeto Session con los datos ingresados.
 
         Parameters

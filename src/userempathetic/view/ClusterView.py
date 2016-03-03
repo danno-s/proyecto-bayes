@@ -10,8 +10,8 @@ class ClusterView:
         i = 0
         for clustering in clusterExtractor.userClusteringsL:
             if clustering in clusterExtractor.performedClusteringsL:
-                clusters = clusterExtractor.userClusterD[clustering].getClusters()
-                n = len(clusters)
+                clusterD = clusterExtractor.userClusterD[clustering].getClusters()
+                n = len(clusterD.keys())
                 if n > 1:
                     f1, ax = plt.subplots(n, sharex=True, sharey=True, num=i)
                     i += 1
@@ -19,8 +19,8 @@ class ClusterView:
                     # all but bottom plot.
                     f1.subplots_adjust(hspace=0)
                     plt.setp([a.get_xticklabels() for a in f1.axes[:-1]], visible=False)
-                    features_dim = clusters[0].features_dim
-                    for k, v in clusters.items():
+                    features_dim = clusterD[0].features_dim
+                    for k, v in clusterD.items():
                         low = v.getMin()
                         c = v.getCentroid()
                         up = v.getMax()
@@ -53,8 +53,8 @@ class ClusterView:
 
         for clustering in clusterExtractor.sessionClusteringsL:
             if clustering in clusterExtractor.performedClusteringsL:
-                clusters = clusterExtractor.sessionClusterD[clustering].getClusters()
-                n = len(clusters)
+                clusterD = clusterExtractor.sessionClusterD[clustering].getClusters()
+                n = len(clusterD.keys())
                 if n > 1:
                     f2, ax = plt.subplots(n, sharex=True, sharey=True, num=i)
                     i += 1
@@ -62,8 +62,8 @@ class ClusterView:
                     # all but bottom plot.
                     f2.subplots_adjust(hspace=0)
                     plt.setp([a.get_xticklabels() for a in f2.axes[:-1]], visible=False)
-                    features_dim = clusters[0].features_dim
-                    for k, v in clusters.items():
+                    features_dim = clusterD[0].features_dim
+                    for k, v in clusterD.items():
                         low = v.getMin()
                         c = v.getCentroid()
                         up = v.getMax()

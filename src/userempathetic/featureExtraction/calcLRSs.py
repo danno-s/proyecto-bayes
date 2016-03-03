@@ -96,7 +96,7 @@ def calcLRSs(simulation=False):
 
     # Aplicar criterio de repeticiones sobre umbral T
 
-    T = Config().getValue(attr='LRS_threshold', mode='INT')
+    T = Config.getValue(attr='LRS_threshold', mode='INT')
     assert T > 0
 
     RepSeqs = list()  # [[urlseq]]

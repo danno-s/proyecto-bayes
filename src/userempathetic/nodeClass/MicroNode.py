@@ -108,9 +108,6 @@ class MicroNode:
 
         return L
 
-    def accept(self, visitor):
-        visitor.metMicro(self)
-
     def __switch(self, case, micro):
         switcher = {
             "textArea": micro.textArea,

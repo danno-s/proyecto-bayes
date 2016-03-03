@@ -57,9 +57,6 @@ class Node(object):
         Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
                     clickdate=self.clickdate, microNode=self.microNode.toDict())
         return json.dumps(Dict)
-
-    def accept(self, visitor):
-        visitor.metNode(self)
-
+    
     def __str__(self):
         return str(self.profile) + ":(" + str(self.urls_id) + "," + str(self.microNode) + ")"

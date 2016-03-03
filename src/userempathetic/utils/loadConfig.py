@@ -19,6 +19,7 @@ class Config:
     def __init__(self):
         pass
 
+    @classmethod
     def getValue(self, attr, mode=None):
         """Permite obtener el valor de un atributo indicado. Además se puede especificar si se desea un 'int' o no.
 
@@ -44,6 +45,7 @@ class Config:
                 return value
         return self.__parameters[attr]
 
+    @classmethod
     def getArray(self, attr):
         """Permite obtener los valores de un atributo de tipo array indicado.
 

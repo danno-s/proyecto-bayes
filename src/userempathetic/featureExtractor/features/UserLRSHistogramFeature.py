@@ -15,7 +15,6 @@ class UserLRSHistogramFeature(UserFeature):
         self.user_id = int(user_id)
         self.count = 0
 
-
     def extract(self):
         """Implementación de extracción de feature
 

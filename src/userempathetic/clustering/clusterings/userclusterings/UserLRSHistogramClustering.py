@@ -1,3 +1,9 @@
+"""
+Clase SessionLRSBelongingClustering
+
+Crea clusters de uso de LRSs por sesión
+"""
+
 from src.userempathetic.clustering.clusterings.Clustering import UserClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
@@ -5,18 +11,18 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
 
 
-class UserURLsBelongingClustering(UserClustering):
-    """Clase UserURLsBelongingClustering implementa un UserClustering que realiza clustering utilizando
-    el feature UserURLsBelongingFeature.
+class UserLRSHistogramClustering(UserClustering):
+    """Clase UserLRSHistogramClustering implementa un UserClustering que realiza clustering utilizando
+    el feature UserLRSHistogramFeature.
 
     See Also
-        UserURLsBelongingFeature
+        UserLRSHistogramFeature
     """
-    tablename = 'userurlsbelongingclusters'
+    tablename = 'userlrshistogramclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
-    xlabel = "URLs IDs"
-    ylabel = "Utilización de URLs"
-    title = "Uso de URLs por usuario representativo de cada cluster"
+    xlabel = "LRSs IDs"
+    ylabel = "Frecuencia relativa del LRS"
+    title = "Histograma de LRSs de usuario representativo de cada cluster"
 
     def __init__(self):
         """Constructor
@@ -26,8 +32,8 @@ class UserURLsBelongingClustering(UserClustering):
 
         """
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=15, metric='manhattan') #TODO: Configurar parámetros desde archivo de config.
-        self.X, self.ids = self.__getData()
+        self.clusteringAlgorithm = DBSCAN(eps=0.7, min_samples=15, metric='euclidean')
+        self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
@@ -47,9 +53,9 @@ class UserURLsBelongingClustering(UserClustering):
         print("# outliers = %d" % n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            xy = [(x, id) for x, id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
+            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
-                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=UserURLsBelongingClustering)
+                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=UserLRSHistogramClustering)
             else:
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
@@ -58,19 +64,18 @@ class UserURLsBelongingClustering(UserClustering):
         self.n_clusters = len(unique_labels)
         if -1 in self.clusteringAlgorithm.labels_:
             self.n_clusters -= 1
-
-    def __getData(self):
+    @classmethod
+    def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,vector from userurlsbelongingfeatures'
+        sqlRead = 'select user_id,histogram from userlrshistogramfeatures'
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()
         ids = list()
         for row in rows:
             ids.append(int(row[0]))
-            X.append([int(x) for x in row[1].split(' ')])
+            X.append([float(x) for x in row[1].split(' ')])
         return X, ids
-
 
     def __getDimension(self):
         """Entrega la dimensión del vector de características utilizado en el clustering.
@@ -78,8 +83,8 @@ class UserURLsBelongingClustering(UserClustering):
         Returns
         -------
         int
-            Numero de dimensiones de los vectores de características.
+            Numero de dimensiones de los vectores de características. 0 si no se pudieron cargar los vectores.
         """
-        if self.X == None:
+        if self.X is None:
             return 0
         return len(self.X[0])

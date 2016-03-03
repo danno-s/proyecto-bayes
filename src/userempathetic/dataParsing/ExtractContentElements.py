@@ -38,8 +38,8 @@ def extractContentElements():
             print("Error en fila: " + str(i))
             print(json.dumps(contentElementUnique, indent=2))
             raise
-        for type in elementTypes:
-            eL = eL + (data[type],)
+        for el_type in elementTypes:
+            eL = eL + (data[el_type],)
         eL = eL + (raw,)
         elementsL.append(eL)
     uniqueElementsS = list(sorted(set(elementsL), key=lambda s: int(s[0])))

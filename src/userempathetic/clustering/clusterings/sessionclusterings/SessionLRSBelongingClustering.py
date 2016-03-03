@@ -28,7 +28,7 @@ class SessionLRSBelongingClustering(SessionClustering):
         """
         SessionClustering.__init__(self)
         self.clusteringAlgorithm = DBSCAN(eps=2.5, min_samples=15, metric='euclidean')
-        self.X, self.ids = self.__getData()
+        self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
@@ -48,7 +48,7 @@ class SessionLRSBelongingClustering(SessionClustering):
         print("# outliers = %d" % n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            xy = [(x, id) for x, id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
+            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
                 self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=SessionLRSBelongingClustering)
             else:
@@ -59,8 +59,8 @@ class SessionLRSBelongingClustering(SessionClustering):
         self.n_clusters = len(unique_labels)
         if -1 in self.clusteringAlgorithm.labels_:
             self.n_clusters -= 1
-
-    def __getData(self):
+    @classmethod
+    def getData(self):
         sqlFT = sqlWrapper(db='FT')
         sqlRead = 'select session_id,vector from sessionlrsbelongingfeatures'
         rows = sqlFT.read(sqlRead)
@@ -72,7 +72,6 @@ class SessionLRSBelongingClustering(SessionClustering):
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
 
-
     def __getDimension(self):
         """Entrega la dimensión del vector de características utilizado en el clustering.
 
@@ -81,6 +80,6 @@ class SessionLRSBelongingClustering(SessionClustering):
         int
             Numero de dimensiones de los vectores de características.
         """
-        if self.X == None:
+        if self.X is None:
             return 0
         return len(self.X[0])

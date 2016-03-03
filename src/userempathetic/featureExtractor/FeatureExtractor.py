@@ -10,7 +10,8 @@ class FeatureExtractor:
     """
     Clase encargada de extraer features de usuarios y sesiones.
     """
-    def __init__(self, userFeaturesL=None, sessionFeaturesL=None,simulation=False):
+
+    def __init__(self, userFeaturesL=None, sessionFeaturesL=None, simulation=False):
         """Constructor
 
             Parameters

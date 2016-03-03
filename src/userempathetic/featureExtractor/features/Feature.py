@@ -29,13 +29,16 @@ class Feature:
         pass
 
     @abstractmethod
-    def extract(self): pass
+    def extract(self):
+        pass
 
     @abstractmethod
-    def extractSimulated(self): pass
+    def extractSimulated(self):
+        pass
 
     @abstractmethod
-    def toSQLItem(self): pass
+    def toSQLItem(self):
+        pass
 
 
 class UserFeature(Feature):
@@ -45,7 +48,7 @@ class UserFeature(Feature):
     __metaclass__ = ABCMeta
 
     def __init__(self, simulation=False):
-        Feature.__init__(self,simulation)
+        Feature.__init__(self, simulation)
 
     @abstractmethod
     def extract(self): pass
@@ -64,7 +67,7 @@ class SessionFeature(Feature):
     __metaclass__ = ABCMeta
 
     def __init__(self, simulation=False):
-        Feature.__init__(self,simulation)
+        Feature.__init__(self, simulation)
 
     @abstractmethod
     def extract(self): pass

@@ -10,7 +10,7 @@ import json
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-def simulusers(n = 200):
+def simulusers(n=200):
     """
     Genera usuarios simulados con un id, username y perfil
 
@@ -25,23 +25,23 @@ def simulusers(n = 200):
         Lista de usuarios con id y perfil
 
     """
-    usern = ["U8213221", "U6355477", "jefe_local"] # usernames
+    usern = ["U8213221", "U6355477", "jefe_local"]  # usernames
     user = [None] * n
     for i in range(n):
         user[i] = random.choice(usern)
 
-    id = random.sample(range(2000), n) # ids generados al azar
-    perfil = [0] * int(0.70 * n) + [1] * int(0.23 * n) + [2] * int(0.07 * n) # perfiles de usuario
+    user_id = random.sample(range(2000), n)  # ids generados al azar
+    perfil = [0] * int(0.70 * n) + [1] * int(0.23 * n) + [2] * int(0.07 * n)  # perfiles de usuario
     random.shuffle(perfil)
 
     sqlPD = sqlWrapper(db='PD')
     sqlPD.truncate("users")  # Limpia la tabla
     sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"  # Guardar usuarios
 
-    for i in range(len(id)):
-        sqlPD.write(sqlWrite, (id[i], user[i], perfil[i]))
+    for i in range(len(user_id)):
+        sqlPD.write(sqlWrite, (user_id[i], user[i], perfil[i]))
 
-    return list(zip(id, perfil))
+    return list(zip(user_id, perfil))
 
 
 def __vect(n):
@@ -68,13 +68,13 @@ def __vect(n):
     return tuple(v)
 
 
-def __probtable(list):
+def __probtable(prob_list):
     """
     Crea un diccionario de largos de listas con sus vectores de probabilidades
 
     Parameters
     ----------
-    list : List
+    prob_list : List
         La lista que contiene los largos de las listas
 
     Returns
@@ -83,14 +83,14 @@ def __probtable(list):
         Diccionario con los largos y los vectores
 
     """
-    lp = [0] * len(list)
-    for i in range(len(list)):
-        p = __vect(list[i])
+    lp = [0] * len(prob_list)
+    for i in range(len(prob_list)):
+        p = __vect(prob_list[i])
         if not p:
             p = [0]
         lp[i] = p
 
-    return dict(zip(list, lp))
+    return dict(zip(prob_list, lp))
 
 
 def noise(lista, p):
@@ -113,8 +113,8 @@ def noise(lista, p):
     if len(lista) <= 2:
         return l
 
-    ins = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0] # numero de inserciones
-    dele = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0] # numero de eliminaciones
+    ins = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0]  # numero de inserciones
+    dele = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0]  # numero de eliminaciones
 
     for i in range(ins.index(1)):
         l.insert(random.randint(0, len(l)), random.choice(l))
@@ -154,42 +154,43 @@ def getsession():
     return L
 
 
-def generate(file):
+def generate(configFile):
     """
     Genera los datos simulados y los guarda en la tabla simulatednodes
 
     Parameters
     ----------
-    file : JSON
+    configFile : JSON
         Archivo de configuracion en formato JSON
     """
-    users = simulusers(file["users"])
+    users = simulusers(configFile["users"])
     session = getsession()
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
     sqlCD.truncate("simulatednodes")
-    sqlWrite = "INSERT INTO simulatednodes (user_id, clickDate, urls_id,profile,micro_id,label) VALUES (%s,%s,%s,%s,%s,%s)"
+    sqlWrite = "INSERT INTO simulatednodes (user_id, clickDate, urls_id,profile,micro_id,label) VALUES " \
+               "(%s,%s,%s,%s,%s,%s)"
 
-    for i in range(file["sessions"]):
+    for i in range(configFile["sessions"]):
         for u in users:
-            l = session[u[1]] # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
-            ses = random.choice(l) # Se elige una sesion
-            idx = l.index(ses) # Se guarda su índice para poder etiquetar
-            ses = noise(ses, prob) # Se añade ruido
-            if u[1]==1: # Se corrige la etiqueta
-                idx = len(session[0]) + idx
+            l = session[u[1]]  # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
+            ses = random.choice(l)  # Se elige una sesion
+            idx = l.index(ses)  # Se guarda su índice para poder etiquetar
+            ses = noise(ses, prob)  # Se añade ruido
+            if u[1] == 1:  # Se corrige la etiqueta
+                idx += len(session[0])
             elif u[1] == 2:
-                idx = len(session[0]) + len(session[1]) + idx
-            d = random.randint(1450000000, 1462534931) # Timestamp de inicio
+                idx += len(session[0]) + len(session[1])
+            d = random.randint(1450000000, 1462534931)  # Timestamp de inicio
             for s in ses:
                 if type(s) is str:
                     url = [int(x) for x in s.split(",")]
-                    L = [u[0], d, url[0], u[1], url[1],idx]
+                    L = [u[0], d, url[0], u[1], url[1], idx]
                 else:
-                    L = [u[0], d, s, u[1], None,idx]
-                sqlCD.write(sqlWrite, L) # Se guarda en la base de datos
-                d += random.randint(1, file["time"]-1)
+                    L = [u[0], d, s, u[1], None, idx]
+                sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
+                d += random.randint(1, configFile["time"] - 1)
 
 
 if __name__ == '__main__':

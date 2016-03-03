@@ -1,23 +1,21 @@
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
-from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.clusterClass.Cluster import Cluster
+from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
+from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
 
-
-class SessionUserClustersBelongingClustering(SessionClustering):
-    """Clase SessionUserClustersBelongingClustering implementa un SessionClustering que realiza clustering utilizando
-    el feature UserClustersBelongingFeature.
-
-    See Also
-        UserClustersBelongingFeature
+class FullSessionClustering(SessionClustering):
+    """
+    Clase FullSessionClustering implementa un SessionClustering que realiza clustering utilizando
+    todos los features de sesiones, concatenados en un mismo vector.
     """
 
-    tablename = 'sessionuserclustersbelongingclusters'
+    tablename = 'fullsessionclusters'
     sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
-    xlabel = "User Cluster IDs"
-    ylabel = "Pertenencia del usuario-cluster"
-    title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
+    xlabel = "Dimensiones"
+    ylabel = "Valor"
+    title = "Valores en cada dimensión de sesión representativa de cada cluster"
 
     def __init__(self):
         """Constructor
@@ -27,14 +25,18 @@ class SessionUserClustersBelongingClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=15, metric='manhattan')
-        self.X, self.ids = self.__getData()
+        self.clusteringAlgorithm = DBSCAN(eps=2.5, min_samples=15, metric='euclidean')
+        self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
-        if self.X == None:
-            print("No se detectaron UserClustersBelongingFeatures")
-            return
+        """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
+        quedan almacenados en la instancia del Clustering que ejecute esta función.
+
+        Returns
+        -------
+
+        """
         # Compute DBSCAN
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
@@ -44,9 +46,9 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         print("# outliers = %d" % n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            xy = [(x, id) for x, id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
+            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
-                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=SessionUserClustersBelongingClustering)
+                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=FullSessionClustering)
             else:
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
@@ -56,21 +58,18 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         if -1 in self.clusteringAlgorithm.labels_:
             self.n_clusters -= 1
 
-    def __getData(self):
-        sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select session_id,vector from sessionuserclustersbelongingfeatures'
-        rows = sqlFT.read(sqlRead)
-        assert len(rows) > 0
+    @classmethod
+    def getData(self):
+        X_lrs, ids = SessionLRSBelongingClustering.getData()
+        X_url, _ = SessionUserClustersBelongingClustering.getData()
         X = list()
-        ids = list()
-        for row in rows:
-            vector = row[1].split(' ')
-            for x in vector:
-                if x == '':
-                    return None,None
-            ids.append(int(row[0]))
-            X.append([int(x) for x in vector])
+        for i,user_id in enumerate(ids):
+            vector = X_lrs[i]
+            vector.extend(X_url[i])
+            X.append(vector)
+
         return X, ids
+
 
     def __getDimension(self):
         """Entrega la dimensión del vector de características utilizado en el clustering.
@@ -80,6 +79,6 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         int
             Numero de dimensiones de los vectores de características.
         """
-        if self.X == None:
+        if self.X is None:
             return 0
         return len(self.X[0])

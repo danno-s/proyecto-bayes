@@ -9,6 +9,7 @@ from src.userempathetic.featureExtraction.ExtractFeatures import extractFeatures
 from src.userempathetic.clustering.ExtractClusters import createClusterExtractor, userclustering, sessionclustering
 import json
 
+
 def parseData():
     print("...Extracting URLs...\n")
     extractURLs()

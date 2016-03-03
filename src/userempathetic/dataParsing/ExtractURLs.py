@@ -1,7 +1,4 @@
 #!/usr/bin/python
-
-
-
 from src.userempathetic.utils.dataParsingUtils import hash
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 

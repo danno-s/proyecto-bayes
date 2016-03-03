@@ -28,11 +28,11 @@ class MicroStateVectorExtractor:
         self.elementTypes = sorted(Config().getArray(attr='elementTypes'))
         self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
         self.funcD = dict()
-        for type in self.elementTypes:
+        for el_type in self.elementTypes:
             try:
-                self.funcD[type] = __allFuncs[type]
+                self.funcD[el_type] = __allFuncs[el_type]
             except KeyError:
-                print("Type '" + type + "' is not a valid element type for the extractor.")
+                print("Type '" + el_type + "' is not a valid element type for the extractor.")
                 print("Please check that the types array in Config.json contains only these:\n" + str(
                     self.getAvailableTypes()))
 
@@ -152,7 +152,7 @@ class MicroStateVectorExtractor:
                 vector[int(i)] = '1'
         L.append('-'.join(vector))
 
-    def generateStateVectorFrom(self, contentElements, type, L):
+    def generateStateVectorFrom(self, contentElements, el_type, L):
         """Función recursiva que recorre contentElements y va creando el vectore de estado en L para el tipo de
          elemento indicado en type.
 
@@ -160,7 +160,7 @@ class MicroStateVectorExtractor:
         ----------
         contentElements : dict
             json de elementos de contenido extraido de la captura.
-        type : str
+        el_type : str
             tipo de elemento a extraer.
         L : list
             vector de estado que contendrá los estados de todos los elementos del tipo indicado.
@@ -173,16 +173,16 @@ class MicroStateVectorExtractor:
             return
         valueD = contentElements['value']
         try:
-            elementL = valueD[type]
+            elementL = valueD[el_type]
         except:
             print(valueD)
             raise
         if elementL != '':
             for el in elementL:
-                self.funcD[type](el, L)
+                self.funcD[el_type](el, L)
         children = contentElements['children']
         for child in children:
-            self.generateStateVectorFrom(child, type, L)
+            self.generateStateVectorFrom(child, el_type, L)
 
     def getStateVectors(self, contentElements):
         """Función que recorre todos los tipos de elementos cargados en el MicroStateVectorExtractor y los retorna en
@@ -200,11 +200,11 @@ class MicroStateVectorExtractor:
 
         """
         data = dict()
-        for type in self.elementTypes:
+        for el_type in self.elementTypes:
             L = list()
             try:
-                self.generateStateVectorFrom(contentElements, type, L)
-                data[type] = ' '.join(map(str, L))
+                self.generateStateVectorFrom(contentElements, el_type, L)
+                data[el_type] = ' '.join(map(str, L))
             except:
                 print(json.dumps(contentElements, indent=2))
                 raise

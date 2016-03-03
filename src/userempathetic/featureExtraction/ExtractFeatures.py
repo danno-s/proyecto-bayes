@@ -17,6 +17,11 @@ def extractFeatures(simulation=False):
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
     requieren de haber realizado clustering previamente.
 
+    Parameters
+    ----------
+    simulation : bool
+        Modo de ejecución.
+
     Returns
     -------
 
@@ -33,7 +38,7 @@ def extractFeatures(simulation=False):
     if "SessionLRSBelonging" in session_features:
         sfL.append(SessionLRSBelongingFeature)
 
-    fE = FeatureExtractor(ufL, sfL,simulation=simulation)
+    fE = FeatureExtractor(ufL, sfL, simulation=simulation)
     fE.extractUserFeatures()
     fE.extractSessionFeatures()
 
@@ -41,6 +46,11 @@ def extractFeatures(simulation=False):
 def extractPostClusteringFeatures(simulation=False):
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema
     que requieren haber realizado clustering previamente.
+
+    Parameters
+    ----------
+    simulation : bool
+        Modo de ejecución.
 
     Returns
     -------
@@ -51,7 +61,7 @@ def extractPostClusteringFeatures(simulation=False):
     if "SessionUserClustersBelonging" in session_features:
         sfL.append(SessionUserClustersBelongingFeature)
 
-    fE = FeatureExtractor(sessionFeaturesL=sfL,simulation=simulation)
+    fE = FeatureExtractor(sessionFeaturesL=sfL, simulation=simulation)
     fE.extractSessionFeatures()
 
 

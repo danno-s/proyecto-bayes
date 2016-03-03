@@ -23,7 +23,7 @@ class SessionLRSBelongingFeature(SessionFeature):
         -------
 
         """
-        SessionFeature.__init__(self,simulation)
+        SessionFeature.__init__(self, simulation)
         self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)

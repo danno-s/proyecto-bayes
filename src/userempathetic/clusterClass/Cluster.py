@@ -1,5 +1,4 @@
 
-
 class Cluster:
     """
     Clase que representa un cluster, con sus elementos contenidos y etiqueta respectiva.
@@ -19,7 +18,7 @@ class Cluster:
         -------
 
         """
-        #TODO: VERIFICAR parámetro ELEMENTS
+        # TODO: VERIFICAR parámetro ELEMENTS
         self.label = label
         self.elements = [x[0] for x in elements]    # vectores de características
         self.ids = [x[1] for x in elements]         # ids de elementos

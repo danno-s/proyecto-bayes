@@ -5,7 +5,7 @@ Extrae clusters de datos
 """
 
 from matplotlib import pyplot as plt
-from src.userempathetic.utils.sqlUtils import sqlWrapper
+
 
 class ClusterExtractor:
     def __init__(self, userClusteringsL=None, sessionClusteringsL=None):
@@ -26,7 +26,7 @@ class ClusterExtractor:
         self.sessionClusteringsL = sessionClusteringsL or []
         self.performedClusteringsL = list()
         self.userClusterD = dict()  # Diccionario con todos los clusters de usuario. La llave es la clase de UserClustering.
-        self.sessionClusterD = dict() # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.
+        self.sessionClusterD = dict()  # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.
 
     def extractUserClusters(self):
         """Recorre todos los clustering de usuarios y realiza el clustering para cada uno.
@@ -75,11 +75,8 @@ class ClusterExtractor:
             print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
             for cluster in clusters.values():
                 sqlCL.write(c.sqlWrite, cluster.toSQLItem())
-        except Exception: #TODO: Crear excepcion para esto.
-            print('No se obtuvieron clusters con '+str(clustering.__name__))
-
-
-
+        except Exception:  # TODO: Crear excepcion para esto.
+            print('No se obtuvieron clusters con ' + str(clustering.__name__))
 
     def __clusterizeSessions(self, clustering):
         """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
@@ -104,9 +101,13 @@ class ClusterExtractor:
         for cluster in clusters.values():
             sqlCL.write(c.sqlWrite, cluster.toSQLItem())
 
-
-    def printUserCluster(self,clustering):
+    def printUserCluster(self, clustering):
         """Muestra en consola los clusters encontrados para el clustering de usuarios.
+
+        Parameters
+        ----------
+        clustering : UserClustering
+            el tipo de clustering de usuario para imprimir.
 
         Returns
         -------
@@ -119,8 +120,13 @@ class ClusterExtractor:
                 first = False
             print(v)
 
-    def printSessionCluster(self,clustering):
+    def printSessionCluster(self, clustering):
         """Muestra en consola los clusters encontrados para el clustering de sesiones.
+
+        Parameters
+        ----------
+        clustering : SessionClustering
+            el tipo de clustering de sesión para imprimir.
 
         Returns
         -------
@@ -158,14 +164,15 @@ class ClusterExtractor:
                         up = v.getMax()
                         idx = range(features_dim)
                         ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]], capsize=3,
+                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                       capsize=3,
                                        markersize=8)
 
                         ax[k].text(1.01, 0.5, '#' + str(k),
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                        ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
+                        ax[k].text(1.05, 0.5, "  (" + str(v.size) + ")",
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='green', fontsize=10, rotation='horizontal')
@@ -194,13 +201,14 @@ class ClusterExtractor:
                         up = v.getMax()
                         idx = range(features_dim)
                         ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]], capsize=3,
+                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                       capsize=3,
                                        markersize=8)
                         ax[k].text(1.01, 0.5, '#' + str(k),
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                        ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
+                        ax[k].text(1.05, 0.5, "  (" + str(v.size) + ")",
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='green', fontsize=10, rotation='horizontal')
@@ -238,14 +246,15 @@ class ClusterExtractor:
                         up = v.getMax()
                         idx = range(features_dim)
                         ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]], capsize=3,
+                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                       capsize=3,
                                        markersize=8)
 
                         ax[k].text(1.01, 0.5, '#' + str(k),
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                        ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
+                        ax[k].text(1.05, 0.5, "  (" + str(v.size) + ")",
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='green', fontsize=10, rotation='horizontal')
@@ -283,13 +292,14 @@ class ClusterExtractor:
                         up = v.getMax()
                         idx = range(features_dim)
                         ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]], capsize=3,
+                                       yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                       capsize=3,
                                        markersize=8)
                         ax[k].text(1.01, 0.5, '#' + str(k),
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='red', fontsize=10, fontweight='bold', rotation='horizontal')
-                        ax[k].text(1.05, 0.5, "  ("+ str(v.size) + ")",
+                        ax[k].text(1.05, 0.5, "  (" + str(v.size) + ")",
                                    verticalalignment='center', horizontalalignment='left',
                                    transform=ax[k].transAxes,
                                    color='green', fontsize=10, rotation='horizontal')
@@ -304,18 +314,20 @@ class ClusterExtractor:
 
 
 if __name__ == '__main__':
-    from src.userempathetic.clustering.clusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
-    from src.userempathetic.clustering.clusterings.SessionUserClustersBelongingClustering import \
+    from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
+    from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import \
         SessionUserClustersBelongingClustering
-    from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
-    from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
     from src.userempathetic.utils.clusteringUtils import *
 
-    cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering],
-                          userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering])
+    cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
+                          userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
     cE.extractUserClusters()
     cE.extractSessionClusters()
     cE.visualizeClusters()
 
-    print("\n\nTEST Combining clusters\n\n")
-    combineUserClusterings(cE)
+#    print("\n\nTEST Combining clusters\n\n")
+#    combineUserClusterings(cE)

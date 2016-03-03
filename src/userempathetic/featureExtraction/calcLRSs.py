@@ -12,6 +12,11 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 def calcLRSs(simulation=False):
     """Calcula los LRSs en base a las sesiones extraídas.
 
+    Parameters
+    ----------
+    simulation : bool
+        Modo de ejecución.
+
     Returns
     -------
 
@@ -77,12 +82,12 @@ def calcLRSs(simulation=False):
 
         userSeqs = dict()  # (urlseq, [users])
 
-        for urlseq, id in zip(fullseqsL, sessionSubseqs.keys()):
+        for urlseq, u_id in zip(fullseqsL, sessionSubseqs.keys()):
             if urlseq not in Seqs:
                 Seqs[urlseq] = 0
-                userSeqs[urlseq] = [userD[id]]
-            elif userD[id] not in userSeqs[urlseq]:
-                userSeqs[urlseq].append(userD[id])
+                userSeqs[urlseq] = [userD[u_id]]
+            elif userD[u_id] not in userSeqs[urlseq]:
+                userSeqs[urlseq].append(userD[u_id])
 
         for urlseq in Seqs.keys():
             Seqs[urlseq] = len(userSeqs[urlseq])

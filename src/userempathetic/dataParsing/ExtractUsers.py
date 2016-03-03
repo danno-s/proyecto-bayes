@@ -1,7 +1,4 @@
 #!/usr/bin/python
-
-
-
 import json
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 

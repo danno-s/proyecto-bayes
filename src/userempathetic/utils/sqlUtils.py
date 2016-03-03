@@ -11,7 +11,7 @@ class sqlWrapper:
     """
     Clase genera wrappers para la conexión a bases de datos SQL
     """
-    conns = dict() # Diccionario donde se encuentran los datos de conexión a las bases de datos
+    conns = dict()  # Diccionario donde se encuentran los datos de conexión a las bases de datos
 
     def __init__(self, db):
         """Constructor de la clase

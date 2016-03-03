@@ -5,6 +5,7 @@ class MicroNode:
     Contienen información sobre distintos elementos de la pagina: textareas,
     selects, multiselects, radius, y otros,
     """
+
     def __init__(self, sqlStr, key):
         self.key = key
         self.id = sqlStr[0][0]
@@ -25,7 +26,6 @@ class MicroNode:
         if sqlStr[0][6] != '':
             self.checkbox = [[int(y) for y in x.split("-")] for x in sqlStr[0][6].split(" ")]
         pass
-
 
     # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
     #     """

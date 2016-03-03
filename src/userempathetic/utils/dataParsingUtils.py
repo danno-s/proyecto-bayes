@@ -4,6 +4,7 @@ import hashlib
 
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
+
 def getMacroID(urls):
     """
     Obtiene el id en la base de datos de un árbol de urls
@@ -131,8 +132,9 @@ def getAllURLsIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
+
 def userStepsGen(user_id):
-        """ Generador que permite obtener todos los nodos capturados del usuario indicado.
+    """ Generador que permite obtener todos los nodos capturados del usuario indicado.
 
         Parameters
         ----------
@@ -147,18 +149,19 @@ def userStepsGen(user_id):
         -------
 
         """
-        sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id))
-        for row in rows:
-            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
+    sqlCD = sqlWrapper('CD')
+    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id))
+    for row in rows:
+        yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
 
-def hash(str):
+
+def hash(_str):
     """
     Retorna el valor hash de un str, usando MD5
 
     Parameters
     ----------
-    str : str
+    _str : str
         El str que se quiere convertir
 
     Returns
@@ -166,7 +169,7 @@ def hash(str):
     str
         El valor del hash
     """
-    return hashlib.md5(str.encode()).hexdigest()
+    return hashlib.md5(_str.encode()).hexdigest()
 
 
 def getUserOfSimulSession(session_id):
@@ -190,8 +193,9 @@ def getUserOfSimulSession(session_id):
     rows = sqlCD.read(sqlRead)
     return rows[0][0]
 
+
 def simulUserStepsGen(user_id):
-        """ Generador que permite obtener todos los nodos simulados del usuario indicado.
+    """ Generador que permite obtener todos los nodos simulados del usuario indicado.
 
         Parameters
         ----------
@@ -206,8 +210,8 @@ def simulUserStepsGen(user_id):
         -------
 
         """
-        sqlCD = sqlWrapper('CD')
-        rows = sqlCD.read(
-            "SELECT clickDate,user_id,urls_id,profile,micro_id from simulatednodes WHERE user_id=" + str(user_id))
-        for row in rows:
-            yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
+    sqlCD = sqlWrapper('CD')
+    rows = sqlCD.read(
+        "SELECT clickDate,user_id,urls_id,profile,micro_id from simulatednodes WHERE user_id=" + str(user_id))
+    for row in rows:
+        yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)

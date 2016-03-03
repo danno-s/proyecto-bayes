@@ -5,6 +5,7 @@ class NodeComparator:
     """
     Clase que permite comparar dos nodos según distintas métricas definidas.
     """
+
     def __init__(self, node1, node2, metric=None):
         """Constructor
 
@@ -41,7 +42,9 @@ class NodeComparator:
         """
         return metric.compare(self)
 
+
 if __name__ == '__main__':
-    a= NodeComparator((1,3),(1,1))
+    a = NodeComparator((1, 3), (1, 1))
     from src.userempathetic.metrics.microMetrics.MicroMetrics import MicroDistance
+
     print(a.compareNodes(MicroDistance()))

@@ -6,13 +6,13 @@ import json
 
 
 class Node(object):
-    def __init__(self, str=None, id=None, user_id=None, profile=None, urls_id=None, microNode=None):
+    def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, urls_id=None, microNode=None):
         """
 
         Parameters
         ----------
-        str
-        id
+        sqlStr
+        node_id
         user_id
         profile
         urls_id
@@ -22,15 +22,15 @@ class Node(object):
         -------
 
         """
-        if str:
-            self.id = str[0]
-            self.user_id = str[1]
-            self.clickdate = str[2]
-            self.urls_id = str[3]
-            self.profile = str[4]
-            self.microNode = str[5]
-        if id:
-            self.id = id
+        if sqlStr:
+            self.id = sqlStr[0]
+            self.user_id = sqlStr[1]
+            self.clickdate = sqlStr[2]
+            self.urls_id = sqlStr[3]
+            self.profile = sqlStr[4]
+            self.microNode = sqlStr[5]
+        if node_id:
+            self.id = node_id
         if user_id:
             self.user_id = user_id
         if urls_id:
@@ -41,8 +41,8 @@ class Node(object):
             self.microNode = microNode
         self.next = None
 
-    def defMicroNode(self, id):
-        self.microNode = id
+    def defMicroNode(self, micro_id):
+        self.microNode = micro_id
 
     def addNext(self, node):
         self.next = node

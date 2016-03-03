@@ -9,11 +9,12 @@ import jsmin
 with open(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))) + '/config.json', 'r') as f:
     configurationJSON = jsmin.jsmin(f.read())
 
+
 class Config:
     """
     Clase que permite extraer un valor o array dle archivo de configuración cargado.
     """
-    __parameters = json.loads(configurationJSON) # objeto json cargado.
+    __parameters = json.loads(configurationJSON)  # objeto json cargado.
 
     def __init__(self):
         pass
@@ -30,10 +31,11 @@ class Config:
             nombre del atributo
         mode : str
             modo de lectura del atributo. Puede ser 'INT' o no estar especificado. En el último caso, retornará un str.
+
         Returns
+        -------
         str | int
             Valor correspondiente al atributo
-        -------
         """
         if mode is not None:
             if mode == 'INT':
@@ -53,9 +55,10 @@ class Config:
         attr : str
             nombre del atributo
         Returns
+        -------
         [str]
             Lista de valores correspondientes al atributo
-        -------
+
         """
         jsonArray = self.__parameters[attr]
         assert len(jsonArray) > 0

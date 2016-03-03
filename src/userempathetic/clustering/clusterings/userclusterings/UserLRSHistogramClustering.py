@@ -49,8 +49,8 @@ class UserLRSHistogramClustering(UserClustering):
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
         unique_labels = set(self.clusteringAlgorithm.labels_)
-        n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
-        print("# outliers = %d" % n_outliers)
+        self.n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
+        print("# outliers = %d" % self.n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]

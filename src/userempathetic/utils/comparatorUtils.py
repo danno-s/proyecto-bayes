@@ -4,8 +4,9 @@ from src.userempathetic.dataParsing.MicroStateVectorExtractor import MicroStateV
 from src.userempathetic.nodeClass.MicroNode import MicroNode
 from src.userempathetic.sessionClass.Session import Session
 
-sessionFeaturesL = Config().getArray("session_features") # lista de features de Sessions extraídos.
-elementTypes = MicroStateVectorExtractor().getElementTypes() # lista de tipos de contentElements extraídos.
+sessionFeaturesL = Config().getArray("session_features")  # lista de features de Sessions extraídos.
+elementTypes = MicroStateVectorExtractor().getElementTypes()  # lista de tipos de contentElements extraídos.
+
 
 def getSession(session_id):
     """Retorna un objeto Session correspondiente a la sesión de ID indicada.
@@ -61,7 +62,6 @@ def getRawSessionData(session_id, sessionTable='sessions'):
     return row[0]
 
 
-
 def getFeatureOfSession(session_id, feature):
     """Permite obtener el feature vector de una determinada sesión por su ID, para una caracterísitca específica.
 
@@ -84,15 +84,16 @@ def getFeatureOfSession(session_id, feature):
     return [int(x) for x in row[0][0].split(' ')]
 
 
-def getMSS(s1,s2):
+def getMSS(s1, s2):
     """ Permite obtener los elementos comunes de cada sesión en forma de la máxima secuencia compartida.
 
     Parameters
     ----------
     s1 : Session
-        una sesión
+        una sesión.
     s2 ; Session
-        una sesión
+        una sesión.
+
     Returns
     -------
     [(int,int)]
@@ -111,14 +112,14 @@ def getMSS(s1,s2):
 
     v1 = list()
     v2 = list()
-    c = list() # Cuenta los nodos saltados para identificar una equivalencia de macroestado.
+    c = list()  # Cuenta los nodos saltados para identificar una equivalencia de macroestado.
 
     ind1 = 0
     ind2 = 0
     count = 0
     for i in minor:
         for j in mayor[ind2:]:
-            #print(str(i)+"|"+str(j))
+            # print(str(i)+"|"+str(j))
             if i[0] == j[0]:
                 v1.append(i)
                 v2.append(j)
@@ -127,14 +128,15 @@ def getMSS(s1,s2):
                 count = 0
                 break
             else:
-                count +=1
+                count += 1
             ind2 += 1
         if len(v1) == 0:
             ind1 += 1
             ind2 = 0
             count = ind1
 
-    return v1,v2, c
+    return v1, v2, c
+
 
 def getMicroNode(micro_id):
     """Permite obtener un objeto MicroNode que representa el microestado de un nodo.
@@ -150,10 +152,10 @@ def getMicroNode(micro_id):
 
     """
     sqlPD = sqlWrapper('PD')
-    sqlRead = "SELECT * FROM contentElements WHERE id = "+str(micro_id)
+    sqlRead = "SELECT * FROM contentElements WHERE id = " + str(micro_id)
     row = sqlPD.read(sqlRead)
-    return MicroNode(row,key="") #TODO: FIND OUT WTF IS key...
+    return MicroNode(row, key="")  # TODO: FIND OUT WTF IS key...
+
 
 if __name__ == '__main__':
-
     print(getMicroNode(12).toDict())

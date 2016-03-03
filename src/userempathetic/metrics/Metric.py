@@ -3,6 +3,7 @@ Jerarquía de clases abstractas que definen formas de comparar sesiones o nodos.
 """
 from abc import ABCMeta, abstractmethod
 
+
 class Metric:
     """
     Clase abstracta Metric, representa métrica para comparar sesiones, nodos o micronodos
@@ -18,6 +19,7 @@ class SessionMetric(Metric):
     """
     Implementación de Metric específica para sesiones.
     """
+
     def __init__(self):
         Metric.__init__(self)
 
@@ -34,7 +36,7 @@ class SessionMetric(Metric):
         float
             distancia entre sesiones dependiendo de la métrica específica.
         """
-        return self.distance(comparator.s1,comparator.s2)
+        return self.distance(comparator.s1, comparator.s2)
 
     @abstractmethod
     def distance(self, s1, s2): pass
@@ -44,6 +46,7 @@ class NodeMetric(Metric):
     """
     Implementación de Metric específica para nodos.
     """
+
     def __init__(self):
         Metric.__init__(self)
 
@@ -60,7 +63,7 @@ class NodeMetric(Metric):
         float
             distancia entre nodos dependiendo de la métrica específica.
         """
-        return self.distance(comparator.n1,comparator.n2)
+        return self.distance(comparator.n1, comparator.n2)
 
     @abstractmethod
     def distance(self, n1, n2): pass

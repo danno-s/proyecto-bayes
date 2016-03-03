@@ -19,7 +19,7 @@ class Sessionizer:
         -------
 
         """
-        self.tlimit = Config().getValue(attr='session_tlimit', mode='INT') # Tiempo limite entre pasos de una sesión.
+        self.tlimit = Config().getValue(attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
 
     def sessionize(self, sParser):
         """Método encargado de obtener sesiones a partir de los nodos cargados en el SessionParser.
@@ -47,7 +47,7 @@ class Sessionizer:
             if len(user_sessions) > 0:
                 for s in user_sessions:
                     sessions.append(s)
-        assert len(sessions) > 0 # TODO: Agregar Excepcion NoSessionsFoundException
+        assert len(sessions) > 0  # TODO: Agregar Excepcion NoSessionsFoundException
         return sessions
 
     def extractSessionsOf(self, user_id, stepsGen):
@@ -73,7 +73,7 @@ class Sessionizer:
         profile = prevStep[2]
         micro_id = prevStep[3]
 
-        sb = SessionBuffer() # Buffer de sesión.
+        sb = SessionBuffer()  # Buffer de sesión.
         sb.append(self.toIDPair(macro_id, micro_id))
         for step in stepsGen:
             macro_id = step[1]
@@ -102,7 +102,7 @@ class Sessionizer:
 
         return sessions
 
-    def toSession(self, sessionData, profile, initTime, endTime, user_id):
+    def toSession(sessionData, profile, initTime, endTime, user_id):
         """ Retorna un objeto Session con los datos ingresados.
 
         Parameters

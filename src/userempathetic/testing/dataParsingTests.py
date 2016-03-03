@@ -16,7 +16,7 @@ class MyTestCase(unittest.TestCase):
             rows = self.sql.read('SELECT * FROM urls')
             self.assertTrue(len(rows) != 0)
             for row in rows:
-                id = row[0]
+                urls_id = row[0]
                 urljson = row[2]
                 try:
                     urls = json.loads(urljson)
@@ -32,10 +32,10 @@ class MyTestCase(unittest.TestCase):
             rows = self.sql.read('SELECT * FROM users')
             self.assertTrue(len(rows) != 0)
             for row in rows:
-                id = row[0]
+                user_id = row[0]
                 name = row[1]
                 perfil = row[2]
-                self.assertTrue(isinstance(id, int))
+                self.assertTrue(isinstance(user_id, int))
                 self.assertTrue(name != '' and perfil != '')
         except:
             self.assertTrue(False)
@@ -46,11 +46,11 @@ class MyTestCase(unittest.TestCase):
             rows = self.sql.read('SELECT * FROM sessions')
             self.assertTrue(len(rows) != 0)
             for row in rows:
-                id = row[0]
+                s_id = row[0]
                 user = row[1]
                 tinit = row[2]
                 tend = row[3]
-                self.assertTrue(isinstance(id, int) and isinstance(user, int))
+                self.assertTrue(isinstance(s_id, int) and isinstance(user, int))
                 self.assertTrue(tinit, datetime.datetime)
                 self.assertTrue(tend, datetime.datetime)
         except:

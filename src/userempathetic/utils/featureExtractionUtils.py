@@ -3,7 +3,6 @@
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-
 def consecutiveIdxs(idxs, repeat):
     """Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'idxs'
 
@@ -121,6 +120,7 @@ def getAllSessionIDs():
     rows = sqlCD.read(sqlRead)
     assert len(rows) > 0
     return [item[0] for item in rows]
+
 
 def getAllSimulSessionIDs():
     """Obtiene una lista con las IDs de sesiones simuladas.

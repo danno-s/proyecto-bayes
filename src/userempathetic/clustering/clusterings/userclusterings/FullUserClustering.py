@@ -53,7 +53,7 @@ class FullUserClustering(UserClustering):
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
-                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=FullUserClustering)
+                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=self.__name__)
             else:
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
@@ -62,6 +62,7 @@ class FullUserClustering(UserClustering):
         self.n_clusters = len(unique_labels)
         if -1 in self.clusteringAlgorithm.labels_:
             self.n_clusters -= 1
+
     @classmethod
     def getData(self):
         X_lrs, ids = UserLRSHistogramClustering.getData()

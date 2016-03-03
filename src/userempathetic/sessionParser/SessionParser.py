@@ -1,6 +1,6 @@
 """
-Elemento encargado de separar los nodos capturados en sesiones. La forma en que se definen las sesiones queda determinada
-por el Sessionizer utilizado.
+Elemento encargado de separar los nodos capturados en sesiones. La forma en que se definen las sesiones queda
+determinada por el Sessionizer utilizado.
 """
 
 from src.userempathetic.sessionParser.sessionizers.Sessionizer import Sessionizer
@@ -12,6 +12,7 @@ class SessionParser:
     Clase encargada de cargar nodos y utilizar un Sessionizer para obtener sesiones.
     También guarda las sesiones en la tabla correspondiente.
     """
+
     def __init__(self, sessionizer, simulation=False):
         """Constructor del SessionParser. Requiere indicarle el Sessionizer a utilizar.
 
@@ -29,7 +30,7 @@ class SessionParser:
             self.simulation = simulation
         if not simulation:
             self.simulation = False
-            self.__loadNodes() # carga self.nodesD con los generadores de nodos capturados asociados a cada usuario.
+            self.__loadNodes()  # carga self.nodesD con los generadores de nodos capturados asociados a cada usuario.
             self.tablename = 'sessions'
         else:
             self.__loadSimulNodes()
@@ -48,7 +49,8 @@ class SessionParser:
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
         sqlCD.truncate(self.tablename)
-        sqlWrite = "INSERT INTO "+ self.tablename + " (profile, sequence, user_id, inittime, endtime) VALUES (%s,%s,%s,%s,%s)"
+        sqlWrite = "INSERT INTO " + self.tablename + " (profile, sequence, user_id, inittime, endtime) VALUES " \
+                                                     "(%s,%s,%s,%s,%s)"
         for session in self.sessions:
             sqlCD.write(sqlWrite, session.toSQLItem())
 
@@ -91,5 +93,3 @@ class SessionParser:
         self.nodesD = dict()
         for user_id in userL:
             self.nodesD[user_id] = simulUserStepsGen(user_id)
-
-

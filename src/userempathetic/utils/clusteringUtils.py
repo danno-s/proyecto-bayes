@@ -20,7 +20,9 @@ def intersectionIDs(clusterIDs1, clusterIDs2):
 
 
 def combineUserClusterings(cE):
-    """Método de prueba para combinar clusters de usuarios obtenidos con distintas características en un único cluster de usuario.
+    """Método de prueba para combinar clusters de usuarios obtenidos con distintas características en un único
+    cluster de usuario.
+
     Parameters
     ----------
     cE : ClusterExtractor
@@ -30,8 +32,8 @@ def combineUserClusterings(cE):
     -------
 
     """
-    from src.userempathetic.clustering.clusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
-    from src.userempathetic.clustering.clusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+    from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 
     userClustersL1 = [x.ids for x in cE.userClusterD[UserLRSHistogramClustering].values()]
     userClustersL2 = [x.ids for x in cE.userClusterD[UserURLsBelongingClustering].values()]
@@ -85,5 +87,3 @@ def getAllUserClusters(clusterType):
         userClustersD[int(row[0])] = [int(x) for x in row[1].split(' ')]
 
     return userClustersD
-
-

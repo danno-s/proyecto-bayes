@@ -32,6 +32,7 @@ def simulusers(n=200):
 
     user_id = random.sample(range(2000), n)  # ids generados al azar
     perfil = [0] * int(0.70 * n) + [1] * int(0.23 * n) + [2] * int(0.07 * n)  # perfiles de usuario
+    #TODO: Falta dejar configurables las probabilidades!
     random.shuffle(perfil)
 
     sqlPD = sqlWrapper(db='PD')
@@ -136,7 +137,7 @@ def getsession():
         Lista con las sesiones segun el perfil de usuario
     """
     sqlPD = sqlWrapper(db='CD')
-    sqlRead = 'SELECT sequence from sessions'
+    sqlRead = 'SELECT sequence from sessions'   #TODO: CREO que deberias leer acá el perfil y relacionarlo con el que generabas randomicamente...
     rows = sqlPD.read(sqlRead)
     lr = len(rows)
 
@@ -150,7 +151,7 @@ def getsession():
         L[0] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[:int(lr * 0.7)]]]
         L[1] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * 0.7):int(lr * 0.94)]]]
         L[2] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * 0.94):]]]
-
+    #TODO: Esos factores 0.7 0.94 que son? si son parametros deben quedar configurables!
     return L
 
 
@@ -191,6 +192,8 @@ def generate(configFile):
                     L = [u[0], d, s, u[1], None, idx]
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
                 d += random.randint(1, configFile["time"] - 1)
+                #TODO: El configFile["time"] es un time entre pasos como el TLIMIT de parseSessions?
+                #TODO: si es así podrias leerlo desde el config.json directamente Config.getValue('session_tlimit','INT')
 
 
 if __name__ == '__main__':

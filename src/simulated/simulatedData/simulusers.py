@@ -181,7 +181,7 @@ def generate(cfile):
         for u in users:
             l = session[u[1]]  # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
             ses = random.choice(l)  # Se elige una sesion
-            idx = l.index(ses)  # Se guarda su índice para poder etiquetar
+            idx = l.index(ses) + 1  # Se guarda su índice para poder etiquetar
             ses = noise(ses, prob)  # Se añade ruido
             if u[1] == 1:  # Se corrige la etiqueta
                 idx += len(session[0])

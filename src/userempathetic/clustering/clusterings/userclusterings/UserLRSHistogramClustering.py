@@ -18,8 +18,8 @@ class UserLRSHistogramClustering(UserClustering):
     See Also
         UserLRSHistogramFeature
     """
-    tablename = 'userlrshistogramclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'userclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"
@@ -32,7 +32,7 @@ class UserLRSHistogramClustering(UserClustering):
 
         """
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.7, min_samples=15, metric='euclidean')
+        self.clusteringAlgorithm = DBSCAN(eps=0.7, min_samples=1, metric='euclidean')
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
@@ -67,7 +67,7 @@ class UserLRSHistogramClustering(UserClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,histogram from userlrshistogramfeatures'
+        sqlRead = 'select user_id,vector from userfeatures where feature_name = '+"'UserLRSHistogram'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

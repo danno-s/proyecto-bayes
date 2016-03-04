@@ -11,7 +11,7 @@ from src.userempathetic.featureExtractor.features.UserLRSHistogramFeature import
 from src.userempathetic.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
 from src.userempathetic.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.userempathetic.utils.loadConfig import Config
-
+from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 def extractFeatures(simulation=False):
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
@@ -26,6 +26,9 @@ def extractFeatures(simulation=False):
     -------
 
     """
+    sqlFT = sqlWrapper('FT')
+    sqlFT.truncate('userfeatures')
+    sqlFT.truncate('sessionfeatures')
     ufL = list()
     user_features = Config().getArray("user_features")
     if "UserURLsBelonging" in user_features:

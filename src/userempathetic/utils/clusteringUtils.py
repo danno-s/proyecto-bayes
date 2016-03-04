@@ -63,12 +63,12 @@ def clusteringIntersections(clustersL1, clustersL2):
             print(inter)
 
 
-def getAllUserClusters(clusterType):
+def getAllUserClusters(clustering_name):
     """Obtiene una lista con las id de las urls desde la base de datos
 
     Parameters
     ----------
-    clusterType : str
+    clustering_name : str
         Nombre de la tabla correspondiente al tipo de User Clusters que se desea obtener.
     Returns
     -------
@@ -79,7 +79,7 @@ def getAllUserClusters(clusterType):
         sqlCL = sqlWrapper(db='CL')
     except:
         raise
-    sqlRead = "select cluster_id,members from " + clusterType
+    sqlRead = "select cluster_id,members from userclusters where clustering_name = '" + clustering_name + "'"
     rows = sqlCL.read(sqlRead)
     userClustersD = dict()
 

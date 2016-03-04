@@ -15,8 +15,8 @@ class FullUserClustering(UserClustering):
     See Also
         UserURLsBelongingFeature
     """
-    tablename = 'fulluserclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'userclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "Dimensiones"
     ylabel = "Valor"
     title = "Valores en cada dimensión de usuario representativo de cada cluster"

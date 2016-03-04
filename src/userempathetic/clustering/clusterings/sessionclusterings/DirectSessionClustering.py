@@ -12,8 +12,8 @@ class DirectSessionClustering(SessionClustering):
     todos los features de sesiones, concatenados en un mismo vector.
     """
 
-    tablename = 'directsessionclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'sessionclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "IDs de Sesiones"
     ylabel = "Distancia"
     title = "Distancia a otras sesiones, para sesión representativa de cada cluster"
@@ -26,7 +26,7 @@ class DirectSessionClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=4, metric='precomputed') # X is distance matrix.
+        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=1, metric='precomputed') # X is distance matrix.
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 

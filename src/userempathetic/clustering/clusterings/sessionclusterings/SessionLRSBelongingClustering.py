@@ -13,8 +13,8 @@ class SessionLRSBelongingClustering(SessionClustering):
         LRSBelongingFeature
     """
 
-    tablename = 'sessionlrsbelongingclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'sessionclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Utilización del LRS"
     title = "Uso de LRSs por sesión representativa de cada cluster"
@@ -27,7 +27,7 @@ class SessionLRSBelongingClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=15, metric='euclidean')
+        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=1, metric='euclidean')
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
@@ -62,7 +62,7 @@ class SessionLRSBelongingClustering(SessionClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select session_id,vector from sessionlrsbelongingfeatures'
+        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionLRSBelonging'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

@@ -22,7 +22,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         -------
         """
         SessionFeature.__init__(self, simulation)
-        self.userClusters = getAllUserClusters("userurlsbelongingclusters")
+        self.userClusters = getAllUserClusters("UserURLsBelonging")
         self.vector = [0] * len(self.userClusters)
         self.session_id = int(session_id)
         if not self.simulation:

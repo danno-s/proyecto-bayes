@@ -12,8 +12,8 @@ class UserURLsBelongingClustering(UserClustering):
     See Also
         UserURLsBelongingFeature
     """
-    tablename = 'userurlsbelongingclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'userclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "URLs IDs"
     ylabel = "Utilización de URLs"
     title = "Uso de URLs por usuario representativo de cada cluster"
@@ -26,7 +26,7 @@ class UserURLsBelongingClustering(UserClustering):
 
         """
         UserClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=10,
+        self.clusteringAlgorithm = DBSCAN(eps=1.0, min_samples=1,
                                           metric='euclidean')  # TODO: Configurar parámetros desde archivo de config.
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
@@ -62,7 +62,7 @@ class UserURLsBelongingClustering(UserClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,vector from userurlsbelongingfeatures'
+        sqlRead = 'select user_id,vector from userfeatures where feature_name = '+"'UserURLsBelonging'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

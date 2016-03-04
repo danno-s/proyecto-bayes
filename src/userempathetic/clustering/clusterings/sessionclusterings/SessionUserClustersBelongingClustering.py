@@ -13,8 +13,8 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         UserClustersBelongingFeature
     """
 
-    tablename = 'sessionuserclustersbelongingclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'sessionclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "User Cluster IDs"
     ylabel = "Pertenencia del usuario-cluster"
     title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
@@ -27,7 +27,7 @@ class SessionUserClustersBelongingClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=15, metric='manhattan')
+        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=1, metric='manhattan')
         self.X, self.ids = self.getData()
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
@@ -58,12 +58,14 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select session_id,vector from sessionuserclustersbelongingfeatures'
+        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionUserClustersBelonging'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()
         ids = list()
         for row in rows:
+            if row[1] is None:
+                return None, ids
             vector = row[1].split(' ')
             for x in vector:
                 if x == '':

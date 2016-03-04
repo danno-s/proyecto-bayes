@@ -166,13 +166,16 @@ if __name__ == '__main__':
     from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import \
         SessionUserClustersBelongingClustering
     from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
+    from src.userempathetic.clustering.clusterings.sessionclusterings.DirectSessionClustering import DirectSessionClustering
     from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
     from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
     from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
     from src.userempathetic.utils.clusteringUtils import *
 
-    cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
-                          userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
+    #cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
+    #                      userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
+    cE = ClusterExtractor(sessionClusteringsL=[DirectSessionClustering])
+
     cE.extractUserClusters()
     cE.extractSessionClusters()
     cE.visualizeClusters()

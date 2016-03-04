@@ -11,8 +11,8 @@ class FullSessionClustering(SessionClustering):
     todos los features de sesiones, concatenados en un mismo vector.
     """
 
-    tablename = 'fullsessionclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid) VALUES (%s,%s,%s)'
+    tablename = 'sessionclusters'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "Dimensiones"
     ylabel = "Valor"
     title = "Valores en cada dimensión de sesión representativa de cada cluster"
@@ -42,8 +42,8 @@ class FullSessionClustering(SessionClustering):
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
         unique_labels = set(self.clusteringAlgorithm.labels_)
-        n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
-        print("# outliers = %d" % n_outliers)
+        self.n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
+        print("# outliers = %d" % self.n_outliers)
         for k in unique_labels:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
@@ -65,9 +65,9 @@ class FullSessionClustering(SessionClustering):
         X = list()
         for i,user_id in enumerate(ids):
             vector = []
-            if len(X_lrs) > 0 :
+            if X_lrs is not None :
                 vector.extend(X_lrs[i])
-            if len(X_url) > 0 :
+            if X_url is not None :
                 vector.extend(X_url[i])
             X.append(vector)
 

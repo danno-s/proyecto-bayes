@@ -67,3 +67,30 @@ class NodeMetric(Metric):
 
     @abstractmethod
     def distance(self, n1, n2): pass
+
+
+class UserMetric(Metric):
+    """
+    Implementación de Metric específica para usuarios.
+    """
+
+    def __init__(self):
+        Metric.__init__(self)
+
+    def compare(self, comparator):
+        """Compara elementos almacenados en el comparator.
+
+        Parameters
+        ----------
+        comparator : UserComparator
+            un comparador de usuarios.
+
+        Returns
+        -------
+        float
+            distancia entre usuarios dependiendo de la métrica específica.
+        """
+        return self.distance(comparator.u1, comparator.u2)
+
+    @abstractmethod
+    def distance(self, u1, u2): pass

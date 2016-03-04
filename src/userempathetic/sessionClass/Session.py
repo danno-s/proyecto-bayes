@@ -111,7 +111,7 @@ class Session:
         str
             string con la información de la sesión.
         """
-        return str(self.profile) + ":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
+        return str(self.user_id) + " ["+str(self.profile)+"] "+":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
             self.initTime) + " >> " + str(self.endTime)
 
     def __sequenceToStr(self, sequence):

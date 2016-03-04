@@ -8,8 +8,8 @@ class UserURLsBelongingFeature(UserFeature):
     Implementación de feature correspondiente al vector de pertenencia a URLs (URLs Belonging vector) para un usuario.
     Esto indica los árboles de URLs usados por el usuario, en todas sus sesiones conocidas.
     """
-    tablename = 'userurlsbelongingfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector) VALUES (%s,%s)'
+    tablename = 'userfeatures'
+    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
 
     def __init__(self, user_id, simulation=False):
         """
@@ -70,4 +70,4 @@ class UserURLsBelongingFeature(UserFeature):
         return str(self.user) + ": " + str(self.vector)
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str(x) for x in self.vector])
+        return str(self.user), ' '.join([str(x) for x in self.vector]), UserURLsBelongingFeature.__name__[:-7]

@@ -4,7 +4,8 @@ from src.userempathetic.dataParsing.MicroStateVectorExtractor import MicroStateV
 from src.userempathetic.nodeClass.MicroNode import MicroNode
 from src.userempathetic.sessionClass.Session import Session
 
-sessionFeaturesL = Config().getArray("session_features")  # lista de features de Sessions extraídos.
+userFeaturesL = Config().getArray("user_features")  # lista de features de User extraídos.
+sessionFeaturesL = Config().getArray("session_features")  # lista de features de Session extraídos.
 elementTypes = MicroStateVectorExtractor().getElementTypes()  # lista de tipos de contentElements extraídos.
 
 
@@ -104,11 +105,11 @@ def getMSS(s1, s2):
         Indica cantidad de nodos de sesiones saltados para encontrar correspondencia entre los elementos del MSS.
     """
     if len(s1.sequence) >= len(s2.sequence):
-        minor = s2.sequence
-        mayor = s1.sequence
+        shortest = s2.sequence
+        largest = s1.sequence
     else:
-        minor = s1.sequence
-        mayor = s2.sequence
+        shortest = s1.sequence
+        largest = s2.sequence
 
     v1 = list()
     v2 = list()
@@ -117,8 +118,8 @@ def getMSS(s1, s2):
     ind1 = 0
     ind2 = 0
     count = 0
-    for i in minor:
-        for j in mayor[ind2:]:
+    for i in shortest:
+        for j in largest[ind2:]:
             # print(str(i)+"|"+str(j))
             if i[0] == j[0]:
                 v1.append(i)
@@ -157,5 +158,32 @@ def getMicroNode(micro_id):
     return MicroNode(row, key="")  # TODO: FIND OUT WTF IS key...
 
 
+def getFeatureOfUser(user_id, feature):
+    """Permite obtener el feature vector de un determinado usuario por su ID, para una caracterísitca específica.
+
+    Parameters
+    ----------
+    user_id : int
+        id de usuario
+    feature:
+        alguna clase que extienda a UserFeature y haya sido utilizada por el FeatureExtractor.
+    Returns
+    -------
+        [int]
+            vector característica del usuario.
+
+    """
+    assert feature in userFeaturesL
+    sqlFT = sqlWrapper('FT')
+    sqlRead = "SELECT vector FROM " + feature.lower() + "features WHERE user_id =" + str(user_id)
+    row = sqlFT.read(sqlRead)
+    assert len(row) > 0
+    return [float(x) for x in row[0][0].split(' ')]
+
+
+
+
+
 if __name__ == '__main__':
-    print(getMicroNode(12).toDict())
+    #print(getMicroNode(12).toDict())
+    print(getFeatureOfUser(824,'UserLRSHistogram'))

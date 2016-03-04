@@ -1,10 +1,12 @@
+from src.userempathetic.sessionComparator.SessionComparator import SessionComparator
+from src.userempathetic.metrics.sessionMetrics.NodeMetrics import SequenceMSSDistance
+from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
 from src.userempathetic.featureExtractor.features.Feature import SessionFeature
-from src.userempathetic.utils.featureExtractionUtils import getAllLRSs
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-class SessionLRSBelongingFeature(SessionFeature):
+class SessionDistanceFeature(SessionFeature):
     """
     Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
     """
@@ -24,8 +26,8 @@ class SessionLRSBelongingFeature(SessionFeature):
 
         """
         SessionFeature.__init__(self, simulation)
-        self.LRSs = getAllLRSs()
-        self.vector = [0] * len(self.LRSs)
+        self.s_ids = getAllSessionIDs()
+        self.vector = [0] * len(self.s_ids)
         self.session_id = int(session_id)
 
     def extract(self):
@@ -35,18 +37,10 @@ class SessionLRSBelongingFeature(SessionFeature):
         -------
 
         """
-        # Lectura de sesion desde 'coreData'
-        sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where id=' + str(self.session_id)
-        session = sqlCD.read(sqlRead)
-        assert len(session) > 0
-        # Cálculo de subsecuencias y correspondencia con uso de LRSs.
-        for row in session:
-            seq = row[0].split(' ')
-            subseqs = set(subsequences(seq))
-            for i, lrs in enumerate(self.LRSs):
-                if lrs in subseqs or isSubContained(lrs, subseqs):
-                    self.vector[i] = 1
+        import itertools
+        for i in self.s_ids:
+            sC = SessionComparator(self.session_id,i)
+            self.vector[i-1]= sC.compareSessions(SequenceMSSDistance())
 
     def extractSimulated(self):
         """Implementación de extracción de feature para sesiones simuladas.
@@ -56,6 +50,8 @@ class SessionLRSBelongingFeature(SessionFeature):
 
         """
         # Lectura de sesion simulada desde 'coreData'
+
+
         sqlCD = sqlWrapper(db='CD')
         sqlRead = 'select sequence from simulsessions where id=' + str(self.session_id)
         session = sqlCD.read(sqlRead)
@@ -72,4 +68,9 @@ class SessionLRSBelongingFeature(SessionFeature):
             self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
 
     def toSQLItem(self):
-        return str(self.session_id), ' '.join([str(x) for x in self.vector]), SessionLRSBelongingFeature.__name__[:-7]
+        return str(self.session_id), ' '.join([str(x) for x in self.vector]), SessionDistanceFeature.__name__[:-7]
+
+if __name__ == '__main__':
+    sdf = SessionDistanceFeature(3)
+    sdf.extract()
+    print(sdf)

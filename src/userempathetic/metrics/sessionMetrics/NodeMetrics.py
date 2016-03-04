@@ -41,7 +41,6 @@ class MacroSequenceMSSDistance(SessionMetric):
         print(v1)
         print(v2)
         print(c)
-        # return abs(len(s1.sequence) -len(s2.sequence)) + sum(c) - len(c)
         return sum(c) + len(s2.sequence) + len(s1.sequence) - 2 * len(c)
 
 
@@ -53,6 +52,8 @@ class SequenceMSSDistance(SessionMetric):
 
     def __init__(self):
         SessionMetric.__init__(self)
+        self.alpha = 1.0
+        self.beta = 1.0
 
     def distance(self, s1, s2):
         """Distancia de las sesiones s1 y s2 definida como la cantidad de nodos que no tienen en común, MÁS la cantidad
@@ -77,9 +78,14 @@ class SequenceMSSDistance(SessionMetric):
         print(v1)
         print(v2)
         print(c)
-        nodeDist = 0
+        if s1.profile != s2.profile:
+            macroDist = 10.0
+        macroDist = sum(c) + len(s2.sequence) + len(s1.sequence) - 2 * len(c)
+        nodeDist = 0.0
         for n1, n2 in zip(v1, v2):
             nC = NodeComparator(n1, n2)
             microDistance = nC.compareNodes(MicroDistance())
             nodeDist += microDistance
-        return sum(c) + len(s2.sequence) + len(s1.sequence) - 2 * len(c) + nodeDist
+        print("MACRO DIST= "+ str(macroDist))
+        print("micro DIST= "+ str(nodeDist))
+        return  self.alpha*macroDist + self.beta*nodeDist

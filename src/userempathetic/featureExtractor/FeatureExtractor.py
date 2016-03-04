@@ -73,7 +73,6 @@ class FeatureExtractor:
 
         """
         sqlFT = sqlWrapper('FT')
-        sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
             f = feature(user, simulation=self.simulation)
@@ -97,7 +96,6 @@ class FeatureExtractor:
 
         """
         sqlFT = sqlWrapper('FT')
-        sqlFT.truncate(feature.tablename)
         print("\n" + str(feature.__name__) + ":\n")
         for sessionID in self.sessionIDs:
             f = feature(sessionID, simulation=self.simulation)

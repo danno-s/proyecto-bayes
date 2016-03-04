@@ -52,8 +52,8 @@ if __name__ == '__main__':
     from src.userempathetic.metrics.sessionMetrics.TimeMetrics import DurationDistance
     from src.userempathetic.metrics.sessionMetrics.TimeMetrics import HourOfDayDistance
 
-    from src.userempathetic.metrics.sessionMetrics.FeatureMetrics import SessionLRSBelongingDistance
-    from src.userempathetic.metrics.sessionMetrics.FeatureMetrics import SessionUserClustersBelongingDistance
+    from src.userempathetic.metrics.sessionMetrics.SessionFeatureMetrics import SessionLRSBelongingDistance
+    from src.userempathetic.metrics.sessionMetrics.SessionFeatureMetrics import SessionUserClustersBelongingDistance
 
     durationDistance = sC.compareSessions(DurationDistance())
     print("DurationDistance = " + str(durationDistance) + " seconds.")

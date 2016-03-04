@@ -38,19 +38,19 @@ class MicroDistance(NodeMetric):
         # ch_d = self.__checkboxDistance(n1.checkbox,n2.checkbox)
         tA_d = self.__textAreaDistance(n1.textArea, n2.textArea)
         rB_d = self.__radioButtonDistance(n1.radioButton, n2.radioButton)
-        print("INPUTTEXT DISTANCE=" + str(iT_d))
-        print("SELECTS DISTANCE=" + str(sel_d))
-        print("TEXTAREAS DISTANCE=" + str(tA_d))
-        print("RADIOBUTTONS DISTANCE=" + str(tA_d))
-        # print("CHECKBOXS DISTANCE="+str(ch_d))
+        #print("INPUTTEXT DISTANCE=" + str(iT_d))
+        #print("SELECTS DISTANCE=" + str(sel_d))
+        #print("TEXTAREAS DISTANCE=" + str(tA_d))
+        #print("RADIOBUTTONS DISTANCE=" + str(tA_d))
+                        # print("CHECKBOXS DISTANCE="+str(ch_d))
         return float(sel_d + iT_d + tA_d + rB_d)
 
     def __inputTextDistance(self, t1, t2):
-        print("inputTexts:" + "\t" + str(t1) + "\t" + str(t2))
+        #print("inputTexts:" + "\t" + str(t1) + "\t" + str(t2))
         return sum([abs(x - y) for x, y in zip(t1, t2)])
 
     def __selectsDistance(self, sel1, sel2):
-        print("selects:" + "\t" + str(sel1) + "\t" + str(sel2))
+        #print("selects:" + "\t" + str(sel1) + "\t" + str(sel2))
         res = 0
         if any(isinstance(i, list) for i in sel1) and any(isinstance(i, list) for i in sel2):
             for selGroup1, selGroup2 in zip(sel1, sel2):
@@ -71,9 +71,9 @@ class MicroDistance(NodeMetric):
     """
 
     def __textAreaDistance(self, t1, t2):
-        print("textAreas:" + "\t" + str(t1) + "\t" + str(t2))
+        #print("textAreas:" + "\t" + str(t1) + "\t" + str(t2))
         return sum([abs(x - y) for x, y in zip(t1, t2)])
 
     def __radioButtonDistance(self, r1, r2):
-        print("radioButtons:" + "\t" + str(r1) + "\t" + str(r2))
+        #print("radioButtons:" + "\t" + str(r1) + "\t" + str(r2))
         return sum([abs(x - y) for x, y in zip(r1, r2)])

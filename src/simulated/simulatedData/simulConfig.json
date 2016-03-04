@@ -1,5 +1,14 @@
 {
   "users": 200,
   "sessions": 2,
-  "time": 60
+  "userfrac":{
+    "n1": 70,
+    "n2": 23,
+    "n3": 7
+  },
+  "sessionfrac":{
+    "n1": 70,
+    "n2": 24,
+    "n3": 6
+  }
 }

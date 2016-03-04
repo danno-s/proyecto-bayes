@@ -7,10 +7,11 @@
 import random
 import numpy as np
 import json
+from src.userempathetic.utils.loadConfig import Config
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-def simulusers(n=200):
+def simulusers(n1=70,n2=23,n3=7,n=200):
     """
     Genera usuarios simulados con un id, username y perfil
 
@@ -31,8 +32,7 @@ def simulusers(n=200):
         user[i] = random.choice(usern)
 
     user_id = random.sample(range(2000), n)  # ids generados al azar
-    perfil = [0] * int(0.70 * n) + [1] * int(0.23 * n) + [2] * int(0.07 * n)  # perfiles de usuario
-    #TODO: Falta dejar configurables las probabilidades!
+    perfil = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + [2] * int(n3 * n / 100)  # perfiles de usuario
     random.shuffle(perfil)
 
     sqlPD = sqlWrapper(db='PD')
@@ -127,7 +127,7 @@ def noise(lista, p):
     return l
 
 
-def getsession():
+def getsession(n1=70, n2=24):
     """
     Selecciona las sesiones desde la tabla sessions
 
@@ -143,19 +143,21 @@ def getsession():
 
     L = [None] * 3
 
+    print(n1)
+    print(n2)
+
     if "," in rows[0][0]:
-        L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr * 0.7)]]]
-        L[1] = [y.split(' ') for y in [x[0] for x in rows[int(lr * 0.7):int(lr * 0.94)]]]
-        L[2] = [y.split(' ') for y in [x[0] for x in rows[int(lr * 0.94):]]]
+        L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr * n1 / 100)]]]
+        L[1] = [y.split(' ') for y in [x[0] for x in rows[int(lr * n1 / 100):int(lr * (n1 + n2) / 100)]]]
+        L[2] = [y.split(' ') for y in [x[0] for x in rows[int(lr * (n1 + n2) / 100):]]]
     else:
-        L[0] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[:int(lr * 0.7)]]]
-        L[1] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * 0.7):int(lr * 0.94)]]]
-        L[2] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * 0.94):]]]
-    #TODO: Esos factores 0.7 0.94 que son? si son parametros deben quedar configurables!
+        L[0] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[:int(lr * n1 / 100)]]]
+        L[1] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * n1 / 100):int(lr * (n1 + n2) / 100)]]]
+        L[2] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * (n1 + n2) / 100):]]]
     return L
 
 
-def generate(configFile):
+def generate(cfile):
     """
     Genera los datos simulados y los guarda en la tabla simulatednodes
 
@@ -164,8 +166,10 @@ def generate(configFile):
     configFile : JSON
         Archivo de configuracion en formato JSON
     """
-    users = simulusers(configFile["users"])
-    session = getsession()
+    ufrac = cfile["userfrac"]
+    sfrac = cfile["sessionfrac"]
+    users = simulusers(ufrac["n1"],ufrac["n2"],ufrac["n3"],cfile["users"])
+    session = getsession(sfrac["n1"],sfrac["n2"])
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
@@ -173,11 +177,11 @@ def generate(configFile):
     sqlWrite = "INSERT INTO simulatednodes (user_id, clickDate, urls_id,profile,micro_id,label) VALUES " \
                "(%s,%s,%s,%s,%s,%s)"
 
-    for i in range(configFile["sessions"]):
+    for i in range(cfile["sessions"]):
         for u in users:
             l = session[u[1]]  # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
             ses = random.choice(l)  # Se elige una sesion
-            idx = l.index(ses)  # Se guarda su índice para poder etiquetar
+            idx = l.index(ses) + 1  # Se guarda su índice para poder etiquetar
             ses = noise(ses, prob)  # Se añade ruido
             if u[1] == 1:  # Se corrige la etiqueta
                 idx += len(session[0])
@@ -191,9 +195,7 @@ def generate(configFile):
                 else:
                     L = [u[0], d, s, u[1], None, idx]
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
-                d += random.randint(1, configFile["time"] - 1)
-                #TODO: El configFile["time"] es un time entre pasos como el TLIMIT de parseSessions?
-                #TODO: si es así podrias leerlo desde el config.json directamente Config.getValue('session_tlimit','INT')
+                d += random.randint(1, Config.getValue('session_tlimit','INT') - 1)
 
 
 if __name__ == '__main__':

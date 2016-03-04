@@ -72,4 +72,4 @@ class SessionLRSBelongingFeature(SessionFeature):
             self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.histogram])
 
     def toSQLItem(self):
-        return str(self.session_id), ' '.join([str(x) for x in self.vector]), SessionLRSBelongingFeature.__name__[:-7]
+        return str(self.session_id), ' '.join([str(x) for x in self.vector]), self.__class__.__name__[:-7]

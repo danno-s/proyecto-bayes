@@ -61,4 +61,6 @@ class SessionUserClustersBelongingFeature(SessionFeature):
             v = None
         else:
             v = ' '.join([str(x) for x in self.vector])
-        return str(self.session_id), v, SessionUserClustersBelongingFeature.__name__[:-7]
+        return str(self.session_id), v, self.__class__.__name__[:-7]
+
+

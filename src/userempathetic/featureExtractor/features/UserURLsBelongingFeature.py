@@ -70,4 +70,4 @@ class UserURLsBelongingFeature(UserFeature):
         return str(self.user) + ": " + str(self.vector)
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str(x) for x in self.vector]), UserURLsBelongingFeature.__name__[:-7]
+        return str(self.user), ' '.join([str(x) for x in self.vector]), self.__class__.__name__[:-7]

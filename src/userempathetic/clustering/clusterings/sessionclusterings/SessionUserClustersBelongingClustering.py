@@ -27,34 +27,10 @@ class SessionUserClustersBelongingClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self)
-        self.clusteringAlgorithm = DBSCAN(eps=0.8, min_samples=1, metric='manhattan')
-        self.X, self.ids = self.getData()
-        self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
-    def clusterize(self):
-        if self.X is None:
-            print("No se detectaron UserClustersBelongingFeatures")
-            return
-        # Compute DBSCAN
-        self.clusteringAlgorithm.fit(self.X)
-        core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
-        core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
-        unique_labels = set(self.clusteringAlgorithm.labels_)
-        n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
-        print("# outliers = %d" % n_outliers)
-        for k in unique_labels:
-            class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
-            if k != -1:
-                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=SessionUserClustersBelongingClustering)
-            else:
-                # if xy:
-                #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
-                pass
-        # Number of clusters in labels, ignoring noise if present.
-        self.n_clusters = len(unique_labels)
-        if -1 in self.clusteringAlgorithm.labels_:
-            self.n_clusters -= 1
+    def initClusteringAlgorithm(self):
+        return DBSCAN(eps=0.8, min_samples=5, metric='manhattan')
+
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')

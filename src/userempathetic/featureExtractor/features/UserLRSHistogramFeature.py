@@ -67,4 +67,4 @@ class UserLRSHistogramFeature(UserFeature):
         return str(self.user_id) + ": " + str(self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.vector])
 
     def toSQLItem(self):
-        return str(self.user_id), ' '.join([str("%.4f" % x) for x in self.vector]), UserLRSHistogramFeature.__name__[:-7]
+        return str(self.user_id), ' '.join([str("%.4f" % x) for x in self.vector]), self.__class__.__name__[:-7]

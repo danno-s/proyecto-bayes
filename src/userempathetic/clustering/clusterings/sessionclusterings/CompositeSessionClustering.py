@@ -5,7 +5,7 @@ from src.userempathetic.clusterClass.Cluster import Cluster
 from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
 from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
 
-class FullSessionClustering(SessionClustering):
+class CompositeSessionClustering(SessionClustering):
     """
     Clase FullSessionClustering implementa un SessionClustering que realiza clustering utilizando
     todos los features de sesiones, concatenados en un mismo vector.
@@ -28,6 +28,7 @@ class FullSessionClustering(SessionClustering):
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=0.6, min_samples=10, metric='euclidean')
+
 
     @classmethod
     def getData(self):

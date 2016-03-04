@@ -125,7 +125,7 @@ class ClusterExtractor:
         clusterD = self.userClusterD[clustering].getClusters()
         for v in clusterD.values():
             if first:
-                print(v.clusteringType.__name__ + " Clusters")
+                print(v.clusteringType + " Clusters")
                 first = False
             print(v)
 
@@ -147,7 +147,7 @@ class ClusterExtractor:
         clusterD = self.sessionClusterD[clustering].getClusters()
         for v in clusterD.values():
             if first:
-                print(v.clusteringType.__name__ + " Clusters")
+                print(v.clusteringType + " Clusters")
                 first = False
             print(v)
 

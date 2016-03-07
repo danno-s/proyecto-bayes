@@ -17,9 +17,9 @@ from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramC
 from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
 
 userClusteringsD = {
-    "UserLRSHistogram" : UserLRSHistogramClustering,
-    "UserURLsBelonging" : UserURLsBelongingClustering,
-    "FullUser" : FullUserClustering
+    "UserLRSHistogram": UserLRSHistogramClustering,
+    "UserURLsBelonging": UserURLsBelongingClustering,
+    "FullUser": FullUserClustering
     }
 
 sessionClusteringsD = {
@@ -90,4 +90,4 @@ if __name__ == '__main__':
     cE = createClusterExtractor()
     userclustering(cE)
     sessionclustering(cE)
-   # cE.visualizeClusters()
+    cE.visualizeClusters()

@@ -5,7 +5,7 @@ from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
-
+#TODO: COMPLETAR IMPLEMENTACIÓN DE ESTA CLASE
 class SessionDistanceFeature(SessionFeature):
     """
     Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
@@ -37,7 +37,6 @@ class SessionDistanceFeature(SessionFeature):
         -------
 
         """
-        import itertools
         for i in self.s_ids:
             sC = SessionComparator(self.session_id,i)
             self.vector[i-1]= sC.compareSessions(SequenceMSSDistance())
@@ -49,19 +48,9 @@ class SessionDistanceFeature(SessionFeature):
         -------
 
         """
-        # Lectura de sesion simulada desde 'coreData'
-
-
-        sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from simulsessions where id=' + str(self.session_id)
-        session = sqlCD.read(sqlRead)
-        assert len(session) > 0
-        for row in session:
-            seq = row[0].split(' ')
-            subseqs = set(subsequences(seq))
-            for i, lrs in enumerate(self.LRSs):
-                if lrs in subseqs or isSubContained(lrs, subseqs):
-                    self.vector[i] = 1
+        for i in self.s_ids:
+            sC = SessionComparator(self.session_id,i,simulation=True)
+            self.vector[i-1]= sC.compareSessions(SequenceMSSDistance())
 
     def __str__(self):
         return "Session " + str(self.session_id) + ": " + str(

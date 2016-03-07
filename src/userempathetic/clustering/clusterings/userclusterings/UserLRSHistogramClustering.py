@@ -18,8 +18,6 @@ class UserLRSHistogramClustering(UserClustering):
     See Also
         UserLRSHistogramFeature
     """
-    tablename = 'userclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"
@@ -49,15 +47,4 @@ class UserLRSHistogramClustering(UserClustering):
             X.append([float(x) for x in row[1].split(' ')])
         return X, ids
 
-    def __getDimension(self):
-        """Entrega la dimensión del vector de características utilizado en el clustering.
-
-        Returns
-        -------
-        int
-            Numero de dimensiones de los vectores de características. 0 si no se pudieron cargar los vectores.
-        """
-        if self.X is None:
-            return 0
-        return len(self.X[0])
 

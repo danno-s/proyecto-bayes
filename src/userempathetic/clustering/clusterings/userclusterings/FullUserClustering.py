@@ -15,8 +15,6 @@ class FullUserClustering(UserClustering):
     See Also
         UserURLsBelongingFeature
     """
-    tablename = 'userclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "Dimensiones"
     ylabel = "Valor"
     title = "Valores en cada dimensión de usuario representativo de cada cluster"
@@ -48,17 +46,6 @@ class FullUserClustering(UserClustering):
 
         return X, ids
 
-    def __getDimension(self):
-        """Entrega la dimensión del vector de características utilizado en el clustering.
-
-        Returns
-        -------
-        int
-            Numero de dimensiones de los vectores de características.
-        """
-        if self.X is None:
-            return 0
-        return len(self.X[0])
 
 if __name__ == '__main__':
     fuc = FullUserClustering()

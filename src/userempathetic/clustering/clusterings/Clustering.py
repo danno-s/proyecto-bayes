@@ -5,6 +5,7 @@ from abc import ABCMeta, abstractmethod
 import numpy as np
 from src.userempathetic.clusterClass.Cluster import Cluster
 
+
 class Clustering:
     """
     Clase abstracta que representa una forma de realizar clustering de usuarios o sesiones.
@@ -16,7 +17,11 @@ class Clustering:
         self.n_outliers = None
         self.n_clusters = 0  # Número de clusters obtenidos.
         self.clusteringAlgorithm = self.initClusteringAlgorithm()
-        self.X, self.ids = self.getData()
+        try:
+            self.X, self.ids = self.getData()
+        except:
+            print("No se pudieron obtener datos para realizar "+ str(self.__class__.__name__))
+            self.X, self.ids = None, None
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.
 
     def clusterize(self):
@@ -29,7 +34,7 @@ class Clustering:
         """
         # Compute DBSCAN
         if self.X is None:
-                raise Exception #TODO: Crear excepcion para esto.
+            raise Exception #TODO: Crear excepcion para esto.
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
@@ -70,14 +75,28 @@ class Clustering:
     @abstractmethod
     def getData(self): pass
 
-    @abstractmethod
-    def __getDimension(self): pass
+    def __getDimension(self):
+        """Entrega la dimensión del vector de características utilizado en el clustering.
+
+        Returns
+        -------
+        int
+            Numero de dimensiones de los vectores de características. 0 si no se pudieron cargar los vectores.
+        """
+        if self.X is None:
+            return 0
+        return len(self.X[0])
+
+    def getSQLWrite(self):
+        return 'INSERT INTO ' + self.tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
+
 
 class SessionClustering(Clustering):
     """
     Clase abstracta Clustering, representa una forma de realizar clustering de sesiones.
     """
     __metaclass__ = ABCMeta
+    tablename = 'sessionclusters'
 
     def __init__(self):
         Clustering.__init__(self)
@@ -91,11 +110,13 @@ class SessionClustering(Clustering):
     @abstractmethod
     def __getDimension(self): pass
 
+
 class UserClustering(Clustering):
     """
     Clase abstracta Clustering, representa una forma de realizar clustering de usuarios.
     """
     __metaclass__ = ABCMeta
+    tablename = 'userclusters'
 
     def __init__(self):
         Clustering.__init__(self)

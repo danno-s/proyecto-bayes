@@ -12,9 +12,6 @@ class SessionLRSBelongingClustering(SessionClustering):
     See Also
         LRSBelongingFeature
     """
-
-    tablename = 'sessionclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "LRSs IDs"
     ylabel = "Utilización del LRS"
     title = "Uso de LRSs por sesión representativa de cada cluster"
@@ -43,15 +40,3 @@ class SessionLRSBelongingClustering(SessionClustering):
             ids.append(int(row[0]))
             X.append([int(x) for x in row[1].split(' ')])
         return X, ids
-
-    def __getDimension(self):
-        """Entrega la dimensión del vector de características utilizado en el clustering.
-
-        Returns
-        -------
-        int
-            Numero de dimensiones de los vectores de características.
-        """
-        if self.X is None:
-            return 0
-        return len(self.X[0])

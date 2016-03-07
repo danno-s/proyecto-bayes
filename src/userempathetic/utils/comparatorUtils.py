@@ -186,9 +186,37 @@ def getFeatureOfUser(user_id, feature):
     else:
         return [float(x) for x in row[0][0].split(' ')]
 
+def getSimulSession(session_id):
+    """Retorna un objeto Session correspondiente a la sesión simulada de ID indicada.
 
+    Parameters
+    ----------
+    session_id : int
+        ID de sesión deseada.
 
+    Returns
+    -------
+    Session
+        objeto Session con los datos de sesión cargados.
+    """
+    raw_session = getRawSessionData(session_id,sessionTable='simulsessions')
+    sequence = raw_session[0].split(' ')
+    if ',' not in raw_session[0]:
+        session_type = 'macro'
+        for i, macroid in enumerate(sequence):
+            sequence[i] = (macroid, None)
+    else:
+        session_type = 'full'
+        for i, pair in enumerate(sequence):
+            pair = pair.split(',')
+            sequence[i] = (pair[0], pair[1])
+    profile = int(raw_session[1])
+    user_id = int(raw_session[4])
+    inittime = raw_session[2]
+    endtime = raw_session[3]
 
+    return Session(sequence, profile=profile, initTime=inittime, endTime=endtime, user_id=user_id,
+                   session_id=session_id)
 
 
 if __name__ == '__main__':

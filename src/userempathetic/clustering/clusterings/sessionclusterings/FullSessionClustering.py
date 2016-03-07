@@ -10,9 +10,6 @@ class FullSessionClustering(SessionClustering):
     Clase FullSessionClustering implementa un SessionClustering que realiza clustering utilizando
     todos los features de sesiones, concatenados en un mismo vector.
     """
-
-    tablename = 'sessionclusters'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
     xlabel = "Dimensiones"
     ylabel = "Valor"
     title = "Valores en cada dimensión de sesión representativa de cada cluster"
@@ -43,16 +40,3 @@ class FullSessionClustering(SessionClustering):
             X.append(vector)
 
         return X, ids
-
-
-    def __getDimension(self):
-        """Entrega la dimensión del vector de características utilizado en el clustering.
-
-        Returns
-        -------
-        int
-            Numero de dimensiones de los vectores de características.
-        """
-        if self.X is None:
-            return 0
-        return len(self.X[0])

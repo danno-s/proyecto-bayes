@@ -28,6 +28,8 @@ class Clustering:
 
         """
         # Compute DBSCAN
+        if self.X is None:
+                raise Exception #TODO: Crear excepcion para esto.
         self.clusteringAlgorithm.fit(self.X)
         core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True

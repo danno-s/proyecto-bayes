@@ -41,11 +41,11 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         ids = list()
         for row in rows:
             if row[1] is None:
-                return None, ids
+                raise Exception #TODO: Crear excepción para esto
             vector = row[1].split(' ')
             for x in vector:
                 if x == '':
-                    return None, None
+                    raise Exception #TODO: Crear excepción para esto
             ids.append(int(row[0]))
             X.append([int(x) for x in vector])
         return X, ids

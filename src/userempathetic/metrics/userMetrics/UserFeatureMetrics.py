@@ -29,6 +29,8 @@ class UserLRSHistogramDistance(UserMetric):
         """
         v1 = self.getLRSHistogramVector(u1)
         v2 = self.getLRSHistogramVector(u2)
+        if v1 or v2 is None:
+            raise Exception #TODO: Crear excepción para esto.
         print(v1)
         print(v2)
         return float(sum([abs(x - y) for x, y in zip(v1, v2)]))

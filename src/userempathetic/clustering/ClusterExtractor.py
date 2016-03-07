@@ -38,7 +38,6 @@ class ClusterExtractor:
         """
         for userClustering in self.userClusteringsL:
             self.__clusterizeUsers(userClustering)
-            self.performedClusteringsL.append(userClustering)
             self.printUserCluster(userClustering)
 
     def extractSessionClusters(self):
@@ -50,7 +49,6 @@ class ClusterExtractor:
         """
         for sessionClustering in self.sessionClusteringsL:
             self.__clusterizeSessions(sessionClustering)
-            self.performedClusteringsL.append(sessionClustering)
             self.printSessionCluster(sessionClustering)
 
     def __clusterizeUsers(self, clustering):
@@ -76,9 +74,10 @@ class ClusterExtractor:
             for cluster in clusters.values():
                 sqlCL.write(c.sqlWrite, cluster.toSQLItem())
             self.userClusterD[clustering] = c
+            self.performedClusteringsL.append(clustering)
         except Exception:  # TODO: Crear excepcion para esto.
             print('No se obtuvieron clusters con ' + str(clustering.__name__))
-            raise
+            #raise
 
     def __clusterizeSessions(self, clustering):
         """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
@@ -103,9 +102,10 @@ class ClusterExtractor:
             for cluster in clusters.values():
                 sqlCL.write(c.sqlWrite, cluster.toSQLItem())
             self.sessionClusterD[clustering] = c
+            self.performedClusteringsL.append(clustering)
         except Exception:
             print('No se obtuvieron clusters con ' +str(clustering.__name__))
-            raise
+
 
     def printUserCluster(self, clustering):
         """Muestra en consola los clusters encontrados para el clustering de usuarios.

@@ -36,7 +36,10 @@ class SessionMetric(Metric):
         float
             distancia entre sesiones dependiendo de la métrica específica.
         """
-        return self.distance(comparator.s1, comparator.s2)
+        try:
+            return self.distance(comparator.s1, comparator.s2)
+        except Exception:
+            return None
 
     @abstractmethod
     def distance(self, s1, s2): pass

@@ -37,14 +37,19 @@ class UserComparator:
         # assert isinstance(metric,UserMetric)
         print(self.u1)
         print(self.u2)
-        return metric.compare(self)
+        try:
+            return metric.compare(self)
+        except Exception:
+            return None
 
 
 if __name__ == '__main__':
 
-    sC = UserComparator(824, 869)
+    #sC = UserComparator(824, 869)
+    sC = UserComparator(1, 823)
     from src.userempathetic.metrics.userMetrics.UserFeatureMetrics import UserLRSHistogramDistance
     from src.userempathetic.metrics.userMetrics.UserFeatureMetrics import UserURLsBelongingDistance
 
     print("UserLRSHistogramDistance = "+ str(sC.compareUsers(UserLRSHistogramDistance())))
     print("UserURLsBelongingDistance = "+ str(sC.compareUsers(UserURLsBelongingDistance())))
+

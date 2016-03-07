@@ -80,9 +80,13 @@ def getFeatureOfSession(session_id, feature):
     """
     assert feature in sessionFeaturesL
     sqlFT = sqlWrapper('FT')
-    sqlRead = "SELECT vector FROM " + feature.lower() + "features WHERE session_id =" + str(session_id)
+    sqlRead = "SELECT vector FROM sessionfeatures WHERE session_id =" + str(session_id) +" AND feature_name = '"+feature+"'"
     row = sqlFT.read(sqlRead)
-    return [int(x) for x in row[0][0].split(' ')]
+    if row[0][0] is None:
+        return None
+    else:
+        return [int(x) for x in row[0][0].split(' ')]
+
 
 
 def getMSS(s1, s2):
@@ -175,10 +179,13 @@ def getFeatureOfUser(user_id, feature):
     """
     assert feature in userFeaturesL
     sqlFT = sqlWrapper('FT')
-    sqlRead = "SELECT vector FROM " + feature.lower() + "features WHERE user_id =" + str(user_id)
+    sqlRead = "SELECT vector FROM userfeatures WHERE user_id = " + str(user_id) +" AND feature_name = '"+feature+"'"
     row = sqlFT.read(sqlRead)
-    assert len(row) > 0
-    return [float(x) for x in row[0][0].split(' ')]
+    if len(row) == 0 or row[0][0] is None:
+        return None
+    else:
+        return [float(x) for x in row[0][0].split(' ')]
+
 
 
 
@@ -186,4 +193,4 @@ def getFeatureOfUser(user_id, feature):
 
 if __name__ == '__main__':
     #print(getMicroNode(12).toDict())
-    print(getFeatureOfUser(824,'UserLRSHistogram'))
+    print(getFeatureOfUser(1,'UserLRSHistogram'))

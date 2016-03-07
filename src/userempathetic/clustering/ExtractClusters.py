@@ -20,12 +20,14 @@ def createClusterExtractor():
     from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
     from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import \
         SessionUserClustersBelongingClustering
+    from src.userempathetic.clustering.clusterings.sessionclusterings.CompositeSessionClustering import CompositeSessionClustering
+    from src.userempathetic.clustering.clusterings.sessionclusterings.DirectSessionClustering import DirectSessionClustering
     from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
     from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
     from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
     from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
 
-    return ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
+    return ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering, CompositeSessionClustering, DirectSessionClustering],
                           userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
 
 

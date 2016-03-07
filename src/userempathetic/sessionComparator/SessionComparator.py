@@ -38,7 +38,10 @@ class SessionComparator:
         # assert isinstance(metric,SessionMetric)
         print(self.s1)
         print(self.s2)
-        return metric.compare(self)
+        try:
+            return metric.compare(self)
+        except Exception:
+            return None
 
 
 if __name__ == '__main__':
@@ -48,7 +51,7 @@ if __name__ == '__main__':
     # sC = SessionComparator(35,45)
 
     sC = SessionComparator(1, 3)
-    '''
+
     from src.userempathetic.metrics.sessionMetrics.TimeMetrics import DurationDistance
     from src.userempathetic.metrics.sessionMetrics.TimeMetrics import HourOfDayDistance
 
@@ -63,7 +66,7 @@ if __name__ == '__main__':
     print("LRSBelongingDistance = " + str(lrsbelongingDistance))
     userclustersbelongingDistance = sC.compareSessions(SessionUserClustersBelongingDistance())
     print("UserClustersBelongingDistance = " + str(userclustersbelongingDistance))
-    '''
+
 
     from src.userempathetic.metrics.sessionMetrics.NodeMetrics import MacroSequenceMSSDistance
 

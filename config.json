@@ -41,6 +41,72 @@
                     "SessionUserClustersBelonging"
                   ]
 
+  "user_clustering": Types of user clustering methods and their parameters (eps,min_samples,metric).
+
+  {
+    "UserURLsBelonging":
+    {
+      "eps": 0.8,
+      "min_samples": 5,
+      "metric":"euclidean"
+    },
+    "UserLRSHistogram":
+    {
+      "eps": 0.8,
+      "min_samples": 5,
+      "metric":"euclidean"
+    },
+    "FullUser":
+    {
+      "eps": 0.7,
+      "min_samples": 5,
+      "metric":"euclidean"
+    }
+  }
+
+
+  "session_clustering": Types of session clustering methods and their parameters (eps,min_samples,metric).
+                      The CompositeSession clustering method requires a list of features or metrics to
+                       be composed onto a single descriptor that is used for clustering.
+
+   {
+      "SessionLRSBelonging":
+      {
+        "eps": 0.3,
+        "min_samples": 5,
+        "metric":"euclidean"
+      },
+      "SessionUserClustersBelonging":
+      {
+        "eps":0.7,
+        "min_samples": 5,
+        "metric":"euclidean"
+      },
+      "CompositeSession":
+      {
+        "eps":0.7,
+        "min_samples": 5,
+        "metric":"euclidean",
+        "features":
+        [
+          "SessionLRSBelonging",
+          "SessionUserClustersBelonging"
+        ]
+      },
+      "DirectSession":
+      {
+        "eps":2.0,
+        "min_samples": 10,
+        "metric":"precomputed"
+      },
+      "FullSession":
+      {
+        "eps":0.8,
+        "min_samples":5,
+        "metric":"euclidean"
+      }
+    }
+
 */
 {
   "session_tlimit": "10",
@@ -112,6 +178,12 @@
         "eps":2.0,
         "min_samples": 10,
         "metric":"precomputed"
+      },
+      "FullSession":
+      {
+        "eps":0.8,
+        "min_samples":5,
+        "metric":"euclidean"
       }
     }
 

@@ -43,8 +43,8 @@
 
 */
 {
-  "session_tlimit":"30",
-  "LRS_threshold":"20",
+  "session_tlimit":"10",
+  "LRS_threshold":"5",
   "elementTypes":[
     "TextAreas",
     "RadioButton",
@@ -52,13 +52,21 @@
     "InputText",
     "Checkbox"
   ],
-  "simulate": "false",
-  "sessionizer_mode":"Complete",
+  "sessionizer_mode":"Edges",
   "user_features":[
     "UserURLsBelonging",
     "UserLRSHistogram"
   ],
   "session_features":[
+    "SessionLRSBelonging",
+    "SessionUserClustersBelonging",
+    "SessionDistance"
+  ],
+  "user_clusterings":[
+    "UserURLsBelonging",
+    "UserLRSHistogram"
+  ],
+  "session_clusterings":[
     "SessionLRSBelonging",
     "SessionUserClustersBelonging"
   ]

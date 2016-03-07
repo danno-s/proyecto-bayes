@@ -106,3 +106,4 @@ class FeatureExtractor:
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             if '[]' not in str(f):
                 print(f)
+

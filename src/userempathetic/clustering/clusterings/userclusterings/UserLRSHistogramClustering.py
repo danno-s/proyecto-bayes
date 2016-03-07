@@ -32,7 +32,7 @@ class UserLRSHistogramClustering(UserClustering):
         UserClustering.__init__(self)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=0.7, min_samples=5, metric='euclidean')
+        return DBSCAN(eps=0.9, min_samples=5, metric='euclidean')
 
     @classmethod
     def getData(self):

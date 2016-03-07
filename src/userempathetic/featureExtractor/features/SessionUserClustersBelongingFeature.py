@@ -40,6 +40,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         for cluster_id, members in self.userClusters.items():
             if self.user in members:
                 self.vector[cluster_id] = 1
+                break
 
     def extractSimulated(self):
         """Realiza exactamente lo mismo que extract.
@@ -54,7 +55,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         self.extract()
 
     def __str__(self):
-        return str(self.user) + ": " + str(self.vector)
+        return str(self.session_id) + ": ["+str(self.user)+"]" + str(self.vector)
 
     def toSQLItem(self):
         if len(self.vector) == 0:

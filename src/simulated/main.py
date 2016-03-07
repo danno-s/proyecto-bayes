@@ -65,6 +65,9 @@ if __name__ == '__main__':
         parseSessions(simulation=True)
         print("...Simulation finished...\n")
     if a <= 4:
+        sqlFT = sqlWrapper('FT')
+        sqlFT.truncate('userfeatures')
+        sqlFT.truncate('sessionfeatures')
         extractFeats()
     cE = createClusterExtractor()
     if a <= 5:

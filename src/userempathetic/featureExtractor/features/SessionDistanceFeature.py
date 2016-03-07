@@ -1,6 +1,6 @@
 from src.userempathetic.sessionComparator.SessionComparator import SessionComparator
 from src.userempathetic.metrics.sessionMetrics.NodeMetrics import SequenceMSSDistance
-from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
+from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs, getAllSimulSessionIDs
 from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
@@ -26,7 +26,10 @@ class SessionDistanceFeature(SessionFeature):
 
         """
         SessionFeature.__init__(self, simulation)
-        self.s_ids = getAllSessionIDs()
+        if simulation == True:
+            self.s_ids = getAllSimulSessionIDs()
+        else:
+            self.s_ids = getAllSessionIDs()
         self.vector = [0] * len(self.s_ids)
         self.session_id = int(session_id)
 

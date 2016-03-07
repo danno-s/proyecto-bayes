@@ -36,6 +36,8 @@ class ClusterExtractor:
         -------
 
         """
+        sqlCL = sqlWrapper('CL')
+        sqlCL.truncate('userclusters')
         for userClustering in self.userClusteringsL:
             self.__clusterizeUsers(userClustering)
             self.printUserCluster(userClustering)
@@ -47,6 +49,8 @@ class ClusterExtractor:
         -------
 
         """
+        sqlCL = sqlWrapper('CL')
+        sqlCL.truncate('sessionclusters')
         for sessionClustering in self.sessionClusteringsL:
             self.__clusterizeSessions(sessionClustering)
             self.printSessionCluster(sessionClustering)
@@ -64,7 +68,6 @@ class ClusterExtractor:
 
         """
         sqlCL = sqlWrapper('CL')
-        sqlCL.truncate('userclusters')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
             c = clustering()
@@ -75,8 +78,9 @@ class ClusterExtractor:
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
             self.userClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
-        except Exception:  # TODO: Crear excepcion para esto.
+        except Exception as e:  # TODO: Crear excepcion para esto.
             print('No se obtuvieron clusters con ' + str(clustering.__name__))
+            print(e)
 
 
     def __clusterizeSessions(self, clustering):
@@ -92,7 +96,6 @@ class ClusterExtractor:
 
         """
         sqlCL = sqlWrapper('CL')
-        sqlCL.truncate('sessionclusters')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
             c = clustering()

@@ -27,11 +27,27 @@ class DirectSessionClustering(SessionClustering):
         SessionClustering.__init__(self)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=3.0, min_samples=5, metric='precomputed') # X is distance matrix.
+        return DBSCAN(eps=2.0, min_samples=6, metric='precomputed') # X is distance matrix.
 
     @classmethod
     def getData(self):
-        #TODO: Cambiar para que lea de tabla 'sessionfeatures'.
+
+
+        sqlFT = sqlWrapper(db='FT')
+        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionDistance'"
+        rows = sqlFT.read(sqlRead)
+        assert len(rows) > 0
+        vectors = list()
+        ids = list()
+        for row in rows:
+            ids.append(int(row[0]))
+            vectors.append([float(x) for x in row[1].split(' ')])
+        N = len(ids)
+        X = np.zeros([N, N], dtype=np.float64)
+        for i,vec in enumerate(vectors):
+            for k,v in enumerate(vec):
+                X[i,k] = v
+        return X, ids
         '''
         ids = getAllSessionIDs()
         N = len(ids)
@@ -44,17 +60,6 @@ class DirectSessionClustering(SessionClustering):
             X[sp[1]-1,sp[0]-1] = X[sp[0]-1,sp[1]-1]
         return X,ids
         '''
-        sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionDistance'"
-        rows = sqlFT.read(sqlRead)
-        assert len(rows) > 0
-        X = list()
-        ids = list()
-        for row in rows:
-            ids.append(int(row[0]))
-            X.append([float(x) for x in row[1].split(' ')])
-        return X, ids
-
 
 if __name__ == '__main__':
     dsc = DirectSessionClustering()

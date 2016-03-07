@@ -82,7 +82,6 @@ def sessionclustering(clusterExtractor):
     -------
 
     """
-
     clusterExtractor.extractSessionClusters()
 
 

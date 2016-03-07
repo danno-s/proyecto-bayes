@@ -82,8 +82,6 @@ def getAllUserClusters(clustering_name):
     sqlRead = "select cluster_id,members from userclusters where clustering_name = '" + clustering_name + "'"
     rows = sqlCL.read(sqlRead)
     userClustersD = dict()
-
     for row in rows:
         userClustersD[int(row[0])] = [int(x) for x in row[1].split(' ')]
-
     return userClustersD

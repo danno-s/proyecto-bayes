@@ -42,9 +42,6 @@ def extractFeatures(simulation=False):
     -------
 
     """
-    sqlFT = sqlWrapper('FT')
-    sqlFT.truncate('userfeatures')
-    sqlFT.truncate('sessionfeatures')
     ufL = list()
     user_features = Config.getArray("user_features")
     for uf in user_features:
@@ -55,8 +52,8 @@ def extractFeatures(simulation=False):
     session_features = Config.getArray("session_features")
     for sf in session_features:
         if sf in sessionFeaturesD.keys():
+            print(sf)
             sfL.append(sessionFeaturesD[sf])
-
     fE = FeatureExtractor(ufL, sfL, simulation=simulation)
     fE.extractUserFeatures()
     fE.extractSessionFeatures()

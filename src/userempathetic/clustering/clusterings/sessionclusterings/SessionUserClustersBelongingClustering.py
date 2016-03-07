@@ -16,17 +16,17 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     ylabel = "Pertenencia del usuario-cluster"
     title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
 
-    def __init__(self):
+    def __init__(self,confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        SessionClustering.__init__(self)
+        SessionClustering.__init__(self,confD=confD)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=0.8, min_samples=5, metric='manhattan')
+        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
     @classmethod
     def getData(self):

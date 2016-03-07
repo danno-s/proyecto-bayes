@@ -12,8 +12,9 @@ class Clustering:
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self):
+    def __init__(self,confD=None):
         self.clustersD = dict()  # Diccionario según etiqueta de los clusters obtenidos y sus elementos.
+        self.confD = confD or None
         self.n_outliers = None
         self.n_clusters = 0  # Número de clusters obtenidos.
         self.clusteringAlgorithm = self.initClusteringAlgorithm()
@@ -98,8 +99,8 @@ class SessionClustering(Clustering):
     __metaclass__ = ABCMeta
     tablename = 'sessionclusters'
 
-    def __init__(self):
-        Clustering.__init__(self)
+    def __init__(self,confD=None):
+        Clustering.__init__(self,confD=confD)
 
     @abstractmethod
     def initClusteringAlgorithm(self): pass
@@ -118,8 +119,8 @@ class UserClustering(Clustering):
     __metaclass__ = ABCMeta
     tablename = 'userclusters'
 
-    def __init__(self):
-        Clustering.__init__(self)
+    def __init__(self,confD=None):
+        Clustering.__init__(self,confD)
 
     @abstractmethod
     def initClusteringAlgorithm(self): pass

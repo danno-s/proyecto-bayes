@@ -39,20 +39,22 @@ def createClusterExtractor():
     ClusterExtractor
         un extractor de clusters
     """
+
     ucL = list()
     scL = list()
-    user_clustering = Config.getArray('user_clusterings')
-    session_clustering = Config.getArray('session_clusterings')
-    for uc in user_clustering:
-        if uc in userClusteringsD.keys():
-            ucL.append(userClusteringsD[uc])
-    for sc in session_clustering:
-        if sc in sessionClusteringsD.keys():
-            scL.append(sessionClusteringsD[sc])
+    scConfD = dict()
+    ucConfD = dict()
+    user_clusteringD = Config.getDict("user_clustering")
+    session_clusteringD = Config.getDict("session_clustering")
+    for k,v in session_clusteringD.items():
+        if k in sessionClusteringsD.keys():
+            scConfD[sessionClusteringsD[k]]=v
 
+    for k,v in user_clusteringD.items():
+        if k in userClusteringsD.keys():
+            ucConfD[userClusteringsD[k]]=v
 
-    return ClusterExtractor(sessionClusteringsL=scL,
-                          userClusteringsL=ucL)
+    return ClusterExtractor(userClusteringsConfD = ucConfD,sessionClusteringsConfD = scConfD)
 
 
 def userclustering(clusterExtractor):

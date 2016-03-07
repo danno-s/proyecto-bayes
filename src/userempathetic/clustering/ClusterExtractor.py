@@ -9,22 +9,24 @@ from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
 class ClusterExtractor:
-    def __init__(self, userClusteringsL=None, sessionClusteringsL=None):
+    def __init__(self,sessionClusteringsConfD=None, userClusteringsConfD=None):
         """Constructor
 
         Parameters
         ----------
-        userClusteringsL : [class]
-            lista de clases UserClustering
-        sessionClusteringsL : [class]
-            lista de clases SessionClustering
+        userClusteringsConfD :{class:dict}
+            Diccionario con clases UserClustering como llaves, y cuyos valores son diccionarios con valores
+            de configuración del clustering.
+        sessionClusteringsConfD : {class:dict}
+            Diccionario con clases SessionClustering como llaves, y cuyos valores son diccionarios con valores
+            de configuración del clustering.
 
         Returns
         -------
 
         """
-        self.userClusteringsL = userClusteringsL or []
-        self.sessionClusteringsL = sessionClusteringsL or []
+        self.sessionClusteringsConfD = sessionClusteringsConfD or {}
+        self.userClusteringsConfD = userClusteringsConfD or {}
         self.performedClusteringsL = list()
         self.userClusterD = dict()  # Diccionario con todos los clusters de usuario. La llave es la clase de UserClustering.
         self.sessionClusterD = dict()  # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.
@@ -38,7 +40,7 @@ class ClusterExtractor:
         """
         sqlCL = sqlWrapper('CL')
         sqlCL.truncate('userclusters')
-        for userClustering in self.userClusteringsL:
+        for userClustering in self.userClusteringsConfD.keys():
             self.__clusterizeUsers(userClustering)
             self.printUserCluster(userClustering)
 
@@ -51,7 +53,7 @@ class ClusterExtractor:
         """
         sqlCL = sqlWrapper('CL')
         sqlCL.truncate('sessionclusters')
-        for sessionClustering in self.sessionClusteringsL:
+        for sessionClustering in self.sessionClusteringsConfD.keys():
             self.__clusterizeSessions(sessionClustering)
             self.printSessionCluster(sessionClustering)
 
@@ -70,7 +72,7 @@ class ClusterExtractor:
         sqlCL = sqlWrapper('CL')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
-            c = clustering()
+            c = clustering(confD=self.userClusteringsConfD[clustering])
             c.clusterize()
             clusters = c.getClusters()
             print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
@@ -98,7 +100,7 @@ class ClusterExtractor:
         sqlCL = sqlWrapper('CL')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
-            c = clustering()
+            c = clustering(confD=self.sessionClusteringsConfD[clustering])
             c.clusterize()
             clusters = c.getClusters()
             print('Estimated number of Session clusters: %d' % c.n_clusters, '\n')
@@ -163,25 +165,3 @@ class ClusterExtractor:
         """
         cV = ClusterView()
         cV.view(self)
-
-if __name__ == '__main__':
-    from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
-    from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import \
-        SessionUserClustersBelongingClustering
-    from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
-    from src.userempathetic.clustering.clusterings.sessionclusterings.DirectSessionClustering import DirectSessionClustering
-    from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
-    from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
-    from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
-    from src.userempathetic.utils.clusteringUtils import *
-
-    #cE = ClusterExtractor(sessionClusteringsL=[SessionLRSBelongingClustering, SessionUserClustersBelongingClustering,FullSessionClustering],
-    #                      userClusteringsL=[UserLRSHistogramClustering, UserURLsBelongingClustering, FullUserClustering])
-    cE = ClusterExtractor(sessionClusteringsL=[DirectSessionClustering])
-
-    cE.extractUserClusters()
-    cE.extractSessionClusters()
-    cE.visualizeClusters()
-
-#    print("\n\nTEST Combining clusters\n\n")
-#    combineUserClusterings(cE)

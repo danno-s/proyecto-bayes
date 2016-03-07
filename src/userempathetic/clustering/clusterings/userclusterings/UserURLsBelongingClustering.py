@@ -16,17 +16,17 @@ class UserURLsBelongingClustering(UserClustering):
     ylabel = "Utilización de URLs"
     title = "Uso de URLs por usuario representativo de cada cluster"
 
-    def __init__(self):
+    def __init__(self,confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self)
+        UserClustering.__init__(self,confD=confD)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=1.0, min_samples=5, metric='euclidean')  # TODO: Configurar parámetros desde archivo de config.
+        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])  # TODO: Configurar parámetros desde archivo de config.
 
     @classmethod
     def getData(self):

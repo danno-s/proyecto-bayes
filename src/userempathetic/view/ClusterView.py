@@ -8,7 +8,7 @@ class ClusterView:
 
     def view(self,clusterExtractor):
         i = 0
-        for clustering in clusterExtractor.userClusteringsL:
+        for clustering in clusterExtractor.userClusteringsConfD.keys():
             if clustering in clusterExtractor.performedClusteringsL:
                 clusterD = clusterExtractor.userClusterD[clustering].getClusters()
                 n = len(clusterD.keys())
@@ -51,7 +51,7 @@ class ClusterView:
                     ax[0].set_title(clustering.title)
                     f1.suptitle(clustering.__name__)
 
-        for clustering in clusterExtractor.sessionClusteringsL:
+        for clustering in clusterExtractor.sessionClusteringsConfD.keys():
             if clustering in clusterExtractor.performedClusteringsL:
                 clusterD = clusterExtractor.sessionClusterD[clustering].getClusters()
                 n = len(clusterD.keys())

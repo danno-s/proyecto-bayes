@@ -5,7 +5,6 @@ from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
-#TODO: COMPLETAR IMPLEMENTACIÓN DE ESTA CLASE
 class SessionDistanceFeature(SessionFeature):
     """
     Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.

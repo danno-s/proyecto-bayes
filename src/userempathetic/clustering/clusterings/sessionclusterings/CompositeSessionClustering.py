@@ -1,6 +1,7 @@
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN
+from src.userempathetic.utils.loadConfig import Config
 from src.userempathetic.clusterClass.Cluster import Cluster
 from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
 from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
@@ -14,17 +15,18 @@ class CompositeSessionClustering(SessionClustering):
     ylabel = "Valor"
     title = "Valores en cada dimensión de sesión representativa de cada cluster"
 
-    def __init__(self):
+    def __init__(self,confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        SessionClustering.__init__(self)
+        SessionClustering.__init__(self,confD=confD)
+        Config.getArray("composite_session_clusterings")
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=0.6, min_samples=10, metric='euclidean')
+        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
 
     @classmethod

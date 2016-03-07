@@ -65,3 +65,25 @@ class Config:
         jsonArray = self.__parameters[attr]
         assert len(jsonArray) > 0
         return jsonArray
+
+    @classmethod
+    def getDict(self,attr):
+        """Permite obtener los valores de un atributo de tipo dict indicado.
+
+        Notes
+            Requiere que el atributo pedido corresponda a un diccionario.
+
+        Parameters
+        ----------
+        attr : str
+            nombre del atributo
+        Returns
+        -------
+        {str:*}
+            Diccionario correspondientes al atributo. Las llaves siempre serán str. Pero los valores contenidos
+            pueden ser array, valores o incluso otros diccionarios.
+
+        """
+        jsonDict = self.__parameters[attr]
+        assert len(jsonDict) > 0
+        return jsonDict

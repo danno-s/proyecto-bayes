@@ -31,7 +31,6 @@ class FullUserClustering(UserClustering):
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
-    @classmethod
     def getData(self):
         X_lrs, ids = UserLRSHistogramClustering.getData()
         X_url, _ = UserURLsBelongingClustering.getData()

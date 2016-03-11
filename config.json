@@ -162,6 +162,12 @@
         "min_samples": 5,
         "metric":"euclidean"
       },
+      "DirectSession":
+      {
+        "eps":2.0,
+        "min_samples": 10,
+        "metric":"precomputed"
+      },
       "CompositeSession":
       {
         "eps":0.7,
@@ -170,20 +176,9 @@
         "features":
         [
           "SessionLRSBelonging",
-          "SessionUserClustersBelonging"
+          "SessionUserClustersBelonging",
+          "DirectSession"
         ]
-      },
-      "DirectSession":
-      {
-        "eps":2.0,
-        "min_samples": 10,
-        "metric":"precomputed"
-      },
-      "FullSession":
-      {
-        "eps":0.8,
-        "min_samples":5,
-        "metric":"euclidean"
       }
     }
 

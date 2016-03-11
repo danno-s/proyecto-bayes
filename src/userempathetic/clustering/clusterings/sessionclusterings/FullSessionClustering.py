@@ -26,7 +26,6 @@ class FullSessionClustering(SessionClustering):
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
-    @classmethod
     def getData(self):
         X_lrs, ids = SessionLRSBelongingClustering.getData()
         X_url, _ = SessionUserClustersBelongingClustering.getData()

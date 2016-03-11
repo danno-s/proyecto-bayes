@@ -99,6 +99,7 @@ class ClusterExtractor:
         """
         sqlCL = sqlWrapper('CL')
         print("\n" + str(clustering.__name__) + ":\n")
+
         try:
             c = clustering(confD=self.sessionClusteringsConfD[clustering])
             c.clusterize()
@@ -109,6 +110,8 @@ class ClusterExtractor:
             self.sessionClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception:
+            import traceback
+            traceback.print_exc()
             print('No se obtuvieron clusters con ' +str(clustering.__name__))
 
 

@@ -32,7 +32,6 @@ class DirectSessionClustering(SessionClustering):
     @classmethod
     def getData(self):
 
-
         sqlFT = sqlWrapper(db='FT')
         sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionDistance'"
         rows = sqlFT.read(sqlRead)

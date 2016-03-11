@@ -20,7 +20,9 @@ class Clustering:
         self.clusteringAlgorithm = self.initClusteringAlgorithm()
         try:
             self.X, self.ids = self.getData()
-        except:
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
             print("No se pudieron obtener datos para realizar "+ str(self.__class__.__name__))
             self.X, self.ids = None, None
         self.featuresDIM = self.__getDimension()  # Dimension of feature vector.

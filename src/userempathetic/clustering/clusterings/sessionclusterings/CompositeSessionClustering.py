@@ -23,23 +23,26 @@ class CompositeSessionClustering(SessionClustering):
 
         """
         SessionClustering.__init__(self,confD=confD)
-        Config.getArray("composite_session_clusterings")
+
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
 
-    @classmethod
     def getData(self):
-        X_lrs, ids = SessionLRSBelongingClustering.getData()
-        X_url, _ = SessionUserClustersBelongingClustering.getData()
+        self.composedFeatures = self.confD['features']
+        from src.userempathetic.clustering.ExtractClusters import sessionClusteringsD
         X = list()
-        for i,user_id in enumerate(ids):
-            vector = []
-            if X_lrs is not None :
-                vector.extend(X_lrs[i])
-            if X_url is not None :
-                vector.extend(X_url[i])
-            X.append(vector)
-
+        ids = list()
+        firstFlag = True
+        for cf in self.composedFeatures:
+            if cf in sessionClusteringsD.keys():
+                if firstFlag:
+                    X, ids = sessionClusteringsD[cf].getData()
+                    firstFlag = False
+                else:
+                    X_aux, ids_aux = sessionClusteringsD[cf].getData()
+                    if X_aux is not None :
+                        for i,k in enumerate(ids):
+                            X[i].extend(X_aux[i])
         return X, ids

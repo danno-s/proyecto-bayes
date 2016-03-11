@@ -1,4 +1,3 @@
-from src.userempathetic.utils.comparatorUtils import getMicroNode
 
 
 class NodeComparator:
@@ -22,8 +21,8 @@ class NodeComparator:
         -------
 
         """
-        self.n1 = getMicroNode(node1[1])
-        self.n2 = getMicroNode(node2[1])
+        self.n1 = node1
+        self.n2 = node2
         if metric:
             self.metric = metric
 
@@ -44,7 +43,9 @@ class NodeComparator:
 
 
 if __name__ == '__main__':
-    a = NodeComparator((1, 3), (1, 1))
-    from src.userempathetic.metrics.microMetrics.MicroMetrics import MicroDistance
+    a = NodeComparator((5, 3), (3, 5))
+    from src.userempathetic.metrics.nodeMetrics.NodeMetrics import MicroDistance
+    from src.userempathetic.metrics.nodeMetrics.NodeMetrics import MacroDistance
+    print(a.compareNodes(MacroDistance()))
 
-    print(a.compareNodes(MicroDistance()))
+ #   print(a.compareNodes(MicroDistance()))

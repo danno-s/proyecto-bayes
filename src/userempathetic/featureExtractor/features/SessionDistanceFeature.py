@@ -1,5 +1,5 @@
 from src.userempathetic.sessionComparator.SessionComparator import SessionComparator
-from src.userempathetic.metrics.sessionMetrics.NodeMetrics import SequenceMSSDistance
+from src.userempathetic.metrics.sessionMetrics.DirectMetrics import SequenceMSSDistance
 from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs, getAllSimulSessionIDs
 from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences

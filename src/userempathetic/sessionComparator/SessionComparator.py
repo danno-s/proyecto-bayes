@@ -76,12 +76,12 @@ if __name__ == '__main__':
     print("UserClustersBelongingDistance = " + str(userclustersbelongingDistance))
 
 
-    from src.userempathetic.metrics.sessionMetrics.NodeMetrics import MacroSequenceMSSDistance
+    from src.userempathetic.metrics.sessionMetrics.DirectMetrics import MacroSequenceMSSDistance
 
     macroseqMSSDistance = sC.compareSessions(MacroSequenceMSSDistance())
     print("MacroSequenceMSSDistance = " + str(macroseqMSSDistance) + ".")
 
-    from src.userempathetic.metrics.sessionMetrics.NodeMetrics import SequenceMSSDistance
+    from src.userempathetic.metrics.sessionMetrics.DirectMetrics import SequenceMSSDistance
 
     seqMSSDistance = sC.compareSessions(SequenceMSSDistance())
     print("SequenceMSSDistance = " + str(seqMSSDistance) + ".")

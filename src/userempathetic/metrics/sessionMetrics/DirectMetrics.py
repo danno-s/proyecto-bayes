@@ -5,7 +5,7 @@ de las sesiones.
 from src.userempathetic.metrics.Metric import SessionMetric
 from src.userempathetic.utils.comparatorUtils import getMSS
 from src.userempathetic.sessionComparator.NodeComparator import NodeComparator
-from src.userempathetic.metrics.microMetrics.MicroMetrics import MicroDistance
+from src.userempathetic.metrics.nodeMetrics.NodeMetrics import MicroDistance
 
 
 # MSS = Maximum Shared Sequence
@@ -89,3 +89,4 @@ class SequenceMSSDistance(SessionMetric):
         #print("MACRO DIST= "+ str(macroDist))
         #print("micro DIST= "+ str(nodeDist))
         return  self.alpha*macroDist + self.beta*nodeDist
+

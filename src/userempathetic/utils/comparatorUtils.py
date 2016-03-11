@@ -8,6 +8,25 @@ userFeaturesL = Config().getArray("user_features")  # lista de features de User 
 sessionFeaturesL = Config().getArray("session_features")  # lista de features de Session extraídos.
 elementTypes = MicroStateVectorExtractor().getElementTypes()  # lista de tipos de contentElements extraídos.
 
+def getURLsTree(urls_id):
+    """ Retorna un string en formato json correspondiente al árbol de URLs de la ID indicada.
+
+    Parameters
+    ----------
+    urls_id : int
+        ID de árbol de URLs deseado
+    Returns
+    -------
+    str
+        string de json con árbol de urls.
+    """
+    try:
+        sqlPD = sqlWrapper(db='PD')
+    except:
+        raise
+    sqlRead = "select urls from urls where id_n = " + str(urls_id)
+    rows = sqlPD.read(sqlRead)
+    return rows[0][0]
 
 def getSession(session_id):
     """Retorna un objeto Session correspondiente a la sesión de ID indicada.

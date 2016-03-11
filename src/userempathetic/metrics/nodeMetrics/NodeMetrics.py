@@ -2,6 +2,83 @@
 Definición de distintas Distance (implementacicones de NodeMetric) que comparan dos nodos.
 """
 from src.userempathetic.metrics.Metric import NodeMetric
+from src.userempathetic.utils.comparatorUtils import getMicroNode, getURLsTree
+import json
+
+
+class MacroDistance(NodeMetric):
+    """
+    Clase que implementa la métrica como una heurística calculada en base a los árboles de URLs del macro estado
+    de los nodos.
+    """
+    def __init__(self):
+        NodeMetric.__init__(self)
+
+    def distance(self, n1, n2):
+        """ Distancia calculada como
+
+        Parameters
+        ----------
+        n1 : Node
+            un nodo
+        n2 : Node
+            un nodo
+
+        Returns
+        -------
+        float
+            distancia calculada.
+        """
+        u1 = json.loads(getURLsTree(n1[0]))
+        u2 = json.loads(getURLsTree(n2[0]))
+        print(u1['value'])
+        uset1 = set()
+        uset2 = set()
+        res = 0.
+        self.getURLs(u1,uset1)
+        self.getURLs(u2,uset2)
+        print(sorted(uset1))
+        print(sorted(uset2))
+        for i in sorted(uset1):
+            if i not in sorted(uset2):
+                res +=1.
+        return res
+
+    def getURLs(self, d, urlset):
+        if d['value'] is not '':
+            urlset.add(d['value'].split('?')[0].split('#')[0]) # Filtra parametros de URL
+            # TODO: USAR urllib.parse OBTENER LOS PARÁMETROS y COMPARAR TANTO LA URL BASE COMO LOS PARÁMETROS != que hay.
+            #urlset.add(d['value'])
+        if d['children'] is not '':
+            for child in d['children']:
+                self.getURLs(child,urlset)
+
+
+    #URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
+
+    # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
+
+    # for i,urltree in enumerate(URLs):
+    #   print("ARBOL DE URL N°"+str(i+1)+": " + json.dumps(urltree, indent=4))
+
+    # Función para encontrar URLs únicas dentro de un mismo árbol:
+
+    # def getURLs(d, urlset):
+    #    for k,v in d.items():
+    #        urlset.add(k)
+    #        if len(v) is not 0:
+    #            for urlT in v:
+    #                if isinstance(urlT, dict):
+    #                    getURLs(urlT, urlset)
+    #                else:
+    #                    urlset.add(urlT.keys())
+    #
+    # allurls = set()
+    # for urltr in URLs:
+    #    getURLs(urltr,allurls)
+    #
+    # print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
+
 
 
 class MicroDistance(NodeMetric):
@@ -33,11 +110,15 @@ class MicroDistance(NodeMetric):
         float
             distancia calculada.
         """
-        iT_d = self.__inputTextDistance(n1.inputText, n2.inputText)
-        sel_d = self.__selectsDistance(n1.selects, n2.selects)
+
+        mn1 = getMicroNode(n1[1])
+        mn2 = getMicroNode(n2[1])
+
+        iT_d = self.__inputTextDistance(mn1.inputText, mn2.inputText)
+        sel_d = self.__selectsDistance(mn1.selects, mn2.selects)
         # ch_d = self.__checkboxDistance(n1.checkbox,n2.checkbox)
-        tA_d = self.__textAreaDistance(n1.textArea, n2.textArea)
-        rB_d = self.__radioButtonDistance(n1.radioButton, n2.radioButton)
+        tA_d = self.__textAreaDistance(mn1.textArea, mn2.textArea)
+        rB_d = self.__radioButtonDistance(mn1.radioButton, mn2.radioButton)
         #print("INPUTTEXT DISTANCE=" + str(iT_d))
         #print("SELECTS DISTANCE=" + str(sel_d))
         #print("TEXTAREAS DISTANCE=" + str(tA_d))

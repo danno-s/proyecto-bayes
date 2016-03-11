@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 from src.userempathetic.clusterClass.Cluster import Cluster
 from src.userempathetic.sessionComparator.SessionComparator import SessionComparator
-from src.userempathetic.metrics.sessionMetrics.NodeMetrics import SequenceMSSDistance
+from src.userempathetic.metrics.sessionMetrics.DirectMetrics import SequenceMSSDistance
 from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 

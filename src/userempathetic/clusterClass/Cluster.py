@@ -1,4 +1,5 @@
 
+
 class Cluster:
     """
     Clase que representa un cluster, con sus elementos contenidos y etiqueta respectiva.
@@ -18,10 +19,9 @@ class Cluster:
         -------
 
         """
-        # TODO: VERIFICAR parámetro ELEMENTS
         self.label = label
         self.elements = [x[0] for x in elements]    # vectores de características
-        self.ids = [x[1] for x in elements]         # ids de elementos
+        self.ids = [x[1] for x in elements]         # ids de miembros del cluster
         self.size = len(self.elements)
         assert self.size > 0
         self.features_dim = len(self.elements[0])
@@ -70,10 +70,79 @@ class Cluster:
         return [min([value[x] for value in self.elements]) for x in range(self.features_dim)]
 
     def __str__(self):
+
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
-                                                                        "\n Elements IDs:\n\t" + str(self.ids) + \
-               "\n Elements Features:\n\t" + str(self.elements)
+                                                                        "\n Members IDs:\n\t" + str(self.ids) + \
+                "\n Representative Member(s):\n\t" + str(self.getRepresentativeMember())
+               #"\n Elements Features:\n\t" + str(self.elements) + \
+
 
     def toSQLItem(self):
         return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()]), \
                self.clusteringType
+
+    def getRepresentativeMember(self):
+        if 'User' in self.clusteringType and 'Session' not in self.clusteringType:
+            return self.getRepresentativeUser()
+        elif 'Session' in self.clusteringType and 'User' not in self.clusteringType:
+            return self.getRepresentativeSession()
+        else:
+            print("Failed")
+
+    def getRepresentativeUser(self):
+        from src.userempathetic.utils.dataParsingUtils import getProfileOf
+        centroid_vector = self.getCentroid()
+        closestU = []
+        closestV = set()
+        min_dist = 100.
+        from scipy.spatial.distance import cityblock
+        for x,u_id in zip(self.elements,self.ids):
+            d = cityblock(x,centroid_vector)
+            if d == min_dist:
+                closestU.append(u_id)
+                closestV.add(str(x))
+            elif d < min_dist:
+                closestU.clear()
+                closestV.clear()
+                closestU.append(u_id)
+                closestV.add(str(x))
+                min_dist = d
+
+        s = "Centroid: " +str(centroid_vector) + "\n\t"
+        s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
+        s += "Closest User(s) with profiles: "
+        for u in closestU:
+            s+= str(u) + " ["+ str(getProfileOf(u)) + "], \t"
+        s += "\n\tClosest Vector(s): \n\t"
+        for v in closestV:
+            s += str(v) + "\n\t"
+        return s
+
+    def getRepresentativeSession(self):
+        from src.userempathetic.utils.dataParsingUtils import getProfileOf, getUserOfSimulSession
+        centroid_vector = self.getCentroid()
+        closestS = []
+        closestV = set()
+        min_dist = 100.
+        from scipy.spatial.distance import cityblock
+        for x,s_id in zip(self.elements,self.ids):
+            d = cityblock(x,centroid_vector)
+            if d == min_dist:
+                closestS.append(s_id)
+                closestV.add(str(x))
+            elif d < min_dist:
+                closestS.clear()
+                closestV.clear()
+                closestS.append(s_id)
+                closestV.add(str(x))
+                min_dist = d
+
+        s = "Centroid: " +str(centroid_vector) + "\n\t"
+        s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
+        s += "Closest Session(s) with profiles: "
+        for s_id in closestS:
+            s+= str(s_id) + " ["+ str(getProfileOf(getUserOfSimulSession(s_id))) + "], \t"
+        s += "\n\tClosest Vector(s): \n\t"
+        for v in closestV:
+            s += str(v) + "\n\t"
+        return s

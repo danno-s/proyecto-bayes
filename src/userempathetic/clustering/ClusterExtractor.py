@@ -81,6 +81,8 @@ class ClusterExtractor:
             self.userClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception as e:  # TODO: Crear excepcion para esto.
+            import traceback
+            traceback.print_exc()
             print('No se obtuvieron clusters con ' + str(clustering.__name__))
             print(e)
 

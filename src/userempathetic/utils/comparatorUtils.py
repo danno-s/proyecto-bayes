@@ -52,7 +52,7 @@ def getSession(session_id):
         for i, pair in enumerate(sequence):
             pair = pair.split(',')
             sequence[i] = (pair[0], pair[1])
-    profile = int(raw_session[1])
+    profile = raw_session[1]
     user_id = int(raw_session[4])
     inittime = raw_session[2]
     endtime = raw_session[3]
@@ -229,7 +229,7 @@ def getSimulSession(session_id):
         for i, pair in enumerate(sequence):
             pair = pair.split(',')
             sequence[i] = (pair[0], pair[1])
-    profile = int(raw_session[1])
+    profile = raw_session[1]
     user_id = int(raw_session[4])
     inittime = raw_session[2]
     endtime = raw_session[3]

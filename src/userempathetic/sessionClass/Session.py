@@ -16,7 +16,7 @@ class Session:
         ----------
         sequence : [tuple]
             lista de tuplas (macro_id, micro_id), o (macro_id, None).
-        profile : int
+        profile : str
             perfil de usuario que realizó la sesión.
         initTime : datetime | str
             tiempo de inicio de sesión

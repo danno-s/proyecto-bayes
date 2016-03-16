@@ -93,3 +93,4 @@ class SessionParser:
         self.nodesD = dict()
         for user_id in userL:
             self.nodesD[user_id] = simulUserStepsGen(user_id)
+

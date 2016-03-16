@@ -36,9 +36,9 @@ class SessionUserClustersBelongingClustering(SessionClustering):
         assert len(rows) > 0
         X = list()
         ids = list()
-        for row in rows:
+        for i,row in enumerate(rows):
             if row[1] is None:
-                raise Exception #TODO: Crear excepción para esto
+                raise Exception
             vector = row[1].split(' ')
             for x in vector:
                 if x == '':

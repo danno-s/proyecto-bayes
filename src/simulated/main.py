@@ -64,8 +64,8 @@ if __name__ == '__main__':
     if a <= 3:
         parseSessions(simulation=True)
         print("...Simulation finished...\n")
+    sqlFT = sqlWrapper('FT')
     if a <= 4:
-        sqlFT = sqlWrapper('FT')
         sqlFT.truncate('userfeatures')
         sqlFT.truncate('sessionfeatures')
         extractFeats()
@@ -76,6 +76,7 @@ if __name__ == '__main__':
         print("\n\n User Clustering finished.\n\n")
     if a <= 6:
         print("...Extracting PostUserClustering Features...\n")
+        sqlFT.truncate('sessionfeatures',"feature_name = 'SessionUserClustersBelonging'")
         extractPostClusteringFeatures(simulation=True)
         print("...PostUserClustering Features extraction finished...\n")
     if a <= 7:

@@ -82,9 +82,9 @@ class Cluster:
                self.clusteringType
 
     def getRepresentativeMember(self):
-        if 'User' in self.clusteringType and 'Session' not in self.clusteringType:
+        if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
             return self.getRepresentativeUser()
-        elif 'Session' in self.clusteringType and 'User' not in self.clusteringType:
+        elif 'Session' in self.clusteringType:
             return self.getRepresentativeSession()
         else:
             print("Failed")
@@ -119,7 +119,7 @@ class Cluster:
         return s
 
     def getRepresentativeSession(self):
-        from src.userempathetic.utils.dataParsingUtils import getProfileOf, getUserOfSimulSession
+        from src.userempathetic.utils.comparatorUtils import getSimulSession
         centroid_vector = self.getCentroid()
         closestS = []
         closestV = set()
@@ -139,9 +139,9 @@ class Cluster:
 
         s = "Centroid: " +str(centroid_vector) + "\n\t"
         s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
-        s += "Closest Session(s) with profiles: "
+        s += "Closest Session(s) with profiles: \n\t"
         for s_id in closestS:
-            s+= str(s_id) + " ["+ str(getProfileOf(getUserOfSimulSession(s_id))) + "], \t"
+            s+= str(getSimulSession(s_id)) + "\n\t"
         s += "\n\tClosest Vector(s): \n\t"
         for v in closestV:
             s += str(v) + "\n\t"

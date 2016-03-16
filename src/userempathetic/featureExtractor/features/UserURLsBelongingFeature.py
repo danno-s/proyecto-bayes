@@ -59,7 +59,6 @@ class UserURLsBelongingFeature(UserFeature):
         sqlRead = 'select urls_id, user_id from simulatednodes where user_id=' + str(self.user)
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
-
         for row in userUrls:
             l = row[0]
             for i in range(len(self.URLs)):

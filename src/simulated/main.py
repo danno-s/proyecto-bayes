@@ -35,7 +35,7 @@ def simulate():
 
 def extractFeats():
     print("...Extracting LRSs...\n")
-    calcLRSs(simulation=True)
+    calcLRSs()
     print("...LRS extraction finished...\n")
     print("...Extracting Features...\n")
     extractFeatures(simulation=True)

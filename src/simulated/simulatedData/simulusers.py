@@ -26,23 +26,25 @@ def simulusers(n1=70,n2=23,n3=7,n=200):
         Lista de usuarios con id y perfil
 
     """
-    usern = ["U8213221", "U6355477", "jefe_local"]  # usernames
+    usern = ["U8213221", "U6355477", "jefe_local"] #TODO: Leer los usernames de la tabla users
+
     user = [None] * n
     for i in range(n):
         user[i] = random.choice(usern)
 
     user_id = random.sample(range(2000), n)  # ids generados al azar
-    perfil = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + [2] * int(n3 * n / 100)  # perfiles de usuario
-    random.shuffle(perfil)
+    profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + [2] * int(n3 * n / 100)  # perfiles de usuario
+    random.shuffle(profile)
 
     sqlPD = sqlWrapper(db='PD')
-    sqlPD.truncate("users")  # Limpia la tabla
-    sqlWrite = "INSERT INTO users (id_usuario,username,perfil) VALUES (%s, %s, %s)"  # Guardar usuarios
+    sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
+    sqlPD.truncateSimulated("users",sqlWrite)
+    sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"  # Guardar usuarios
 
     for i in range(len(user_id)):
-        sqlPD.write(sqlWrite, (user_id[i], user[i], perfil[i]))
+        sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i],True, None)) #TODO: Insertar label de cluster (a priori).
 
-    return list(zip(user_id, perfil))
+    return list(zip(user_id, profile))
 
 
 def __vect(n):
@@ -137,7 +139,7 @@ def getsession(n1=70, n2=24):
         Lista con las sesiones segun el perfil de usuario
     """
     sqlPD = sqlWrapper(db='CD')
-    sqlRead = 'SELECT sequence from sessions'   #TODO: CREO que deberias leer acá el perfil y relacionarlo con el que generabas randomicamente...
+    sqlRead = 'SELECT sequence from sessions WHERE simulated = 0'   #TODO: CREO que deberias leer acá el perfil y relacionarlo con el que generabas randomicamente...
     rows = sqlPD.read(sqlRead)
     lr = len(rows)
 
@@ -173,9 +175,11 @@ def generate(cfile):
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
-    sqlCD.truncate("simulatednodes")
-    sqlWrite = "INSERT INTO simulatednodes (user_id, clickDate, urls_id,profile,micro_id,label) VALUES " \
-               "(%s,%s,%s,%s,%s,%s)"
+    sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id) VALUES (%s, %s, %s, %s, %s)"
+    sqlCD.truncateSimulated("nodes",sqlWrite)
+
+    sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
+               "(%s,%s,%s,%s,%s,%s,%s)"
 
     for i in range(cfile["sessions"]):
         for u in users:
@@ -191,9 +195,9 @@ def generate(cfile):
             for s in ses:
                 if type(s) is str:
                     url = [int(x) for x in s.split(",")]
-                    L = [u[0], d, url[0], u[1], url[1], idx]
+                    L = [u[0], d, url[0], u[1], url[1], True, idx]
                 else:
-                    L = [u[0], d, s, u[1], None, idx]
+                    L = [u[0], d, s, u[1], None, True, idx]
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
                 d += random.randint(1, Config.getValue('session_tlimit','INT') - 1)
 

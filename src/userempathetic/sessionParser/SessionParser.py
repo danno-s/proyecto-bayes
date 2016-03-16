@@ -31,10 +31,8 @@ class SessionParser:
         if not simulation:
             self.simulation = False
             self.__loadNodes()  # carga self.nodesD con los generadores de nodos capturados asociados a cada usuario.
-            self.tablename = 'sessions'
         else:
             self.__loadSimulNodes()
-            self.tablename = 'simulsessions'
         self.sessionizer = sessionizer
         self.sessions = list()
 
@@ -48,11 +46,23 @@ class SessionParser:
         """
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
-        sqlCD.truncate(self.tablename)
-        sqlWrite = "INSERT INTO " + self.tablename + " (profile, sequence, user_id, inittime, endtime) VALUES " \
+        if self.simulation: # Borrar sólo los datos simulados anteriores.
+
+            sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
                                                      "(%s,%s,%s,%s,%s)"
-        for session in self.sessions:
-            sqlCD.write(sqlWrite, session.toSQLItem())
+            sqlCD.truncateSimulated('sessions',sqlWrite)
+
+            sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
+            "(%s,%s,%s,%s,%s,%s,%s)"
+            for session in self.sessions:
+                sqlCD.write(sqlWrite, session.toSQLItem() + (True,None))#TODO: Agregar label de clustering.                                                     "(%s,%s,%s,%s,%s,%s,%s)"
+        else:               # Borrar toda la tabla.
+            sqlCD.truncate('sessions')
+            sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
+                                                     "(%s,%s,%s,%s,%s)"
+            for session in self.sessions:
+                sqlCD.write(sqlWrite, session.toSQLItem())
+
 
     def printSessions(self):
         """Imprime en consola las sesiones contenidas en el SessionParser.
@@ -87,7 +97,7 @@ class SessionParser:
 
         """
         # Obtener todos los usuarios.
-        userL = getAllUserIDs()
+        userL = getAllSimulUserIDs()
         assert len(userL) > 0
         # Extraer datos de nodos para cada usuario
         self.nodesD = dict()

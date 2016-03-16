@@ -46,7 +46,7 @@ class sqlWrapper:
         """
         self.db = db
 
-    def truncate(self, table, condition = None):
+    def truncate(self, table):
         """Trunca la tabla indicada
 
         Parameters
@@ -59,12 +59,15 @@ class sqlWrapper:
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
-        if condition:
-            cursor.execute('DELETE FROM ' + table +" WHERE " + condition)
-        else:
-            cursor.execute('TRUNCATE ' + table)
+        cursor.execute('TRUNCATE ' + table)
         cnx.commit()
         cnx.close()
+
+    def truncateSimulated(self,table, sqlWrite):
+        old_rows = self.read("SELECT * FROM " + table + "WHERE simulated = 0")
+        self.truncate(table)
+        for row in old_rows:
+            self.write(sqlWrite,row)
 
     def read(self, sqlRead):
         """Efectúa la consulta sqlRead

@@ -9,13 +9,11 @@ from src.userempathetic.utils.loadConfig import Config
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
-def calcLRSs(simulation=False):
+def calcLRSs():
     """Calcula los LRSs en base a las sesiones extraídas.
 
     Parameters
     ----------
-    simulation : bool
-        Modo de ejecución.
 
     Returns
     -------
@@ -23,10 +21,7 @@ def calcLRSs(simulation=False):
     """
     # Lectura de sessions
     sqlCD = sqlWrapper(db='CD')  # Asigna las bases de datos que se accederán
-    if not simulation:
-        sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
-    else:
-        sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from simulsessions'
+    sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
 
     rows = sqlCD.read(sqlRead)
 

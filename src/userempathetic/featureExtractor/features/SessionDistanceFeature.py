@@ -1,6 +1,6 @@
 from src.userempathetic.sessionComparator.SessionComparator import SessionComparator
 from src.userempathetic.metrics.sessionMetrics.DirectMetrics import SequenceMSSDistance
-from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs, getAllSimulSessionIDs
+from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
 from src.userempathetic.featureExtractor.features.Feature import SessionFeature
 from src.userempathetic.utils.featureExtractionUtils import isSubContained, subsequences
 from src.userempathetic.utils.sqlUtils import sqlWrapper
@@ -12,7 +12,7 @@ class SessionDistanceFeature(SessionFeature):
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
 
-    def __init__(self, session_id, simulation=False):
+    def __init__(self, session_id):
         """Constructor
 
         Parameters
@@ -24,11 +24,8 @@ class SessionDistanceFeature(SessionFeature):
         -------
 
         """
-        SessionFeature.__init__(self, simulation)
-        if simulation == True:
-            self.s_ids = getAllSimulSessionIDs()
-        else:
-            self.s_ids = getAllSessionIDs()
+        SessionFeature.__init__(self)
+        self.s_ids = getAllSessionIDs()
         self.vector = [0] * len(self.s_ids)
         self.session_id = int(session_id)
 

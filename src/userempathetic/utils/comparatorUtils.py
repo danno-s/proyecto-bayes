@@ -24,7 +24,7 @@ def getURLsTree(urls_id):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select urls from urls where id_n = " + str(urls_id)
+    sqlRead = "select urls from urls where id = " + str(urls_id)
     rows = sqlPD.read(sqlRead)
     return rows[0][0]
 
@@ -61,7 +61,7 @@ def getSession(session_id):
                    session_id=session_id)
 
 
-def getRawSessionData(session_id, sessionTable='sessions'):
+def getRawSessionData(session_id, simulated=False):
     """Retorna datos "crudos" de la sesión indicada desde la tabla indicada (por defecto, 'sessions').
 
     Parameters
@@ -218,7 +218,7 @@ def getSimulSession(session_id):
     Session
         objeto Session con los datos de sesión cargados.
     """
-    raw_session = getRawSessionData(session_id,sessionTable='simulsessions')
+    raw_session = getRawSessionData(session_id,simulated=True)
     sequence = raw_session[0].split(' ')
     if ',' not in raw_session[0]:
         session_type = 'macro'

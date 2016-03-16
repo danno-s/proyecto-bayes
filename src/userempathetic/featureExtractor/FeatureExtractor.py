@@ -3,7 +3,7 @@ Elemento encargado de extraer features (características) de usuarios y sesiones
 """
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 from src.userempathetic.utils.dataParsingUtils import getAllUserIDs
-from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs, getAllSimulSessionIDs
+from src.userempathetic.utils.featureExtractionUtils import getAllSessionIDs
 
 
 class FeatureExtractor:
@@ -37,9 +37,7 @@ class FeatureExtractor:
             self.simulation = simulation
         if not simulation:
             self.simulation = False
-            self.sessionIDs = getAllSessionIDs()
-        else:
-            self.sessionIDs = getAllSimulSessionIDs()
+        self.sessionIDs = getAllSessionIDs()
 
     def extractUserFeatures(self):
         """Recorre todas las features de usuarios y realiza la extracción de feature para cada una.

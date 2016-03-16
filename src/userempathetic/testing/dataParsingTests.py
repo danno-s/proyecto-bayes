@@ -34,9 +34,9 @@ class MyTestCase(unittest.TestCase):
             for row in rows:
                 user_id = row[0]
                 name = row[1]
-                perfil = row[2]
+                profile = row[2]
                 self.assertTrue(isinstance(user_id, int))
-                self.assertTrue(name != '' and perfil != '')
+                self.assertTrue(name != '' and profile != '')
         except:
             self.assertTrue(False)
 

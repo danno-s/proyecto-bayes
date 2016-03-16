@@ -1,5 +1,4 @@
 #!/usr/bin/python
-from src.userempathetic.utils.dataParsingUtils import hash
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 
@@ -59,13 +58,13 @@ def extractURLs():
     for url in L:
         sqlPD.write(sqlWrite + '"' + url + '");')
 
-    sqlWrite = "INSERT INTO urls (id, urls) VALUES (%s,%s)"  # Guardar Árboles completos de URLs.
+    sqlWrite = "INSERT INTO urls (urls) VALUES ("  # Guardar Árboles completos de URLs.
 
     for urlstree in URLs:
         # urljsonstr = json.dumps(urlstree).replace(' ', '')
         urljsonstr = urlstree[0].replace(' ', '')
         # print(urljsonstr)
-        sqlPD.write(sqlWrite, (hash(urljsonstr), urljsonstr))
+        sqlPD.write(sqlWrite + "'" + urljsonstr + "');")
 
 
 if __name__ == '__main__':

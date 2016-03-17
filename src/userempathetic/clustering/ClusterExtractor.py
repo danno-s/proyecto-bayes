@@ -6,10 +6,10 @@ Extrae clusters de datos
 
 from src.userempathetic.view.ClusterView import ClusterView
 from src.userempathetic.utils.sqlUtils import sqlWrapper
-
+from src.userempathetic.utils.loadConfig import Config
 
 class ClusterExtractor:
-    def __init__(self,sessionClusteringsConfD=None, userClusteringsConfD=None):
+    def __init__(self):
         """Constructor
 
         Parameters
@@ -25,8 +25,9 @@ class ClusterExtractor:
         -------
 
         """
-        self.sessionClusteringsConfD = sessionClusteringsConfD or {}
-        self.userClusteringsConfD = userClusteringsConfD or {}
+
+        self.sessionClusteringsConfD = Config.getSessionClusteringsConfigD()
+        self.userClusteringsConfD = Config.getUserClusteringsConfigD()
         self.performedClusteringsL = list()
         self.userClusterD = dict()  # Diccionario con todos los clusters de usuario. La llave es la clase de UserClustering.
         self.sessionClusterD = dict()  # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.

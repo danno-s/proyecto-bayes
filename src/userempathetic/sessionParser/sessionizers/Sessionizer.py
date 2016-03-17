@@ -36,7 +36,7 @@ class Sessionizer:
             Lista de sesiones extraídas.
         """
         # Obtener todos los usuarios.
-        userL = getAllUserIDs()
+        userL = sParser.userL
         assert len(userL) > 0
         nodesD = sParser.nodesD  # nodesD[user_id]= stepGen: (clickDate,urls_id, profile,microNode)
         assert len(nodesD) > 0

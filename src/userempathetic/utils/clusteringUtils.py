@@ -1,7 +1,7 @@
 import itertools
 
 from src.userempathetic.utils.sqlUtils import sqlWrapper
-
+from src.userempathetic.clusterClass.Cluster import Cluster
 
 def intersectionIDs(clusterIDs1, clusterIDs2):
     """
@@ -85,3 +85,86 @@ def getAllUserClusters(clustering_name):
     for row in rows:
         userClustersD[int(row[0])] = [int(x) for x in row[1].split(' ')]
     return userClustersD
+
+
+def getPerformedUserClusterings():
+    from src.userempathetic.utils.loadConfig import Config
+    sqlCL = sqlWrapper('CL')
+    performedClusteringsL =list()
+
+    sqlRead = 'SELECT DISTINCT clustering_name FROM userclusters WHERE cluster_id IS NOT NULL'
+    rows = sqlCL.read(sqlRead)
+    for row in rows:
+        performedClusteringsL.append(Config.userClusteringsD[row[0]])
+
+    return performedClusteringsL
+
+def getPerformedSessionClusterings():
+    from src.userempathetic.utils.loadConfig import Config
+    sqlCL = sqlWrapper('CL')
+    performedClusteringsL =list()
+
+    sqlRead = 'SELECT DISTINCT clustering_name FROM sessionclusters WHERE cluster_id IS NOT NULL'
+    rows = sqlCL.read(sqlRead)
+    for row in rows:
+        performedClusteringsL.append(Config.sessionClusteringsD[row[0]])
+
+    return performedClusteringsL
+
+def getVectorsOfUserCluster(cl_id):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT vectors FROM userclusters WHERE id = "+str(cl_id))
+    return rows[0][0]
+
+def getVectorsOfSessionCluster(cl_id):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT vectors FROM userclusters WHERE id = "+str(cl_id))
+    return rows[0][0]
+
+def getUserClusterLabels(clustering):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"'")
+    L = list()
+    for row in rows:
+        L.append(row[0])
+    return L
+
+def getSessionClusterLabels(clustering):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"'")
+    L = list()
+    for row in rows:
+        L.append(row[0])
+    return L
+
+def getUserClusters(clustering):
+    sqlCL = sqlWrapper('CL')
+    labels = getUserClusterLabels(clustering)
+    userClusterD = dict()
+    for k in labels:
+        rows = sqlCL.read("SELECT members,vectors FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = "+str(k))
+        for row in rows:
+            ids = [int(x) for x in row[0].split(' ')]
+            vectors =[[float(y) for y in x.split(' ')] for x in row[1].split(';')]
+            userClusterD[k] = Cluster(ids= ids, vectors= vectors, label=k, clusteringType = clustering.__name__[:-10])
+    return userClusterD
+
+def getSessionClusters(clustering):
+    sqlCL = sqlWrapper('CL')
+    labels = getSessionClusterLabels(clustering)
+    sessionClusterD = dict()
+    for k in labels:
+        rows = sqlCL.read("SELECT members,vectors FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = "+str(k))
+        for row in rows:
+            ids = [int(x) for x in row[0].split(' ')]
+            vectors =[[float(y) for y in x.split(' ')] for x in row[1].split(';')]
+            sessionClusterD[k] = Cluster(ids= ids, vectors= vectors, label=k, clusteringType = clustering.__name__[:-10])
+    return sessionClusterD
+
+if __name__ == '__main__':
+    #from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+    #a = getUserClusters(UserLRSHistogramClustering)
+    #for k,v in a.items():
+    #    print(str(k)+": "+str(v))
+
+    from src.userempathetic.utils.dataParsingUtils import getProfileOf

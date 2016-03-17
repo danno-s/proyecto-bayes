@@ -1,12 +1,7 @@
 from src.userempathetic.utils.sqlUtils import sqlWrapper
-from src.userempathetic.utils.loadConfig import Config
 from src.userempathetic.dataParsing.MicroStateVectorExtractor import MicroStateVectorExtractor
 from src.userempathetic.nodeClass.MicroNode import MicroNode
 from src.userempathetic.sessionClass.Session import Session
-
-userFeaturesL = Config().getArray("user_features")  # lista de features de User extraídos.
-sessionFeaturesL = Config().getArray("session_features")  # lista de features de Session extraídos.
-elementTypes = MicroStateVectorExtractor().getElementTypes()  # lista de tipos de contentElements extraídos.
 
 def getURLsTree(urls_id):
     """ Retorna un string en formato json correspondiente al árbol de URLs de la ID indicada.
@@ -61,15 +56,13 @@ def getSession(session_id):
                    session_id=session_id)
 
 
-def getRawSessionData(session_id, simulated=False):
+def getRawSessionData(session_id):
     """Retorna datos "crudos" de la sesión indicada desde la tabla indicada (por defecto, 'sessions').
 
     Parameters
     ----------
     session_id : int
         ID de sesión.
-    sessionTable : str
-        nombre de la tabla de sesión a utilizar: 'sessions'(default) o 'simulsessions'
 
     Returns
     -------
@@ -78,7 +71,7 @@ def getRawSessionData(session_id, simulated=False):
     """
     sqlCD = sqlWrapper('CD')
     row = sqlCD.read(
-        "SELECT sequence,profile,inittime,endtime,user_id FROM " + sessionTable + " WHERE id = " + str(session_id))
+        "SELECT sequence,profile,inittime,endtime,user_id FROM sessions WHERE id = " + str(session_id))
     return row[0]
 
 
@@ -97,7 +90,8 @@ def getFeatureOfSession(session_id, feature):
             vector característica de la sesión.
 
     """
-    assert feature in sessionFeaturesL
+    from src.userempathetic.utils.loadConfig import Config
+    assert feature in Config().getArray("session_features")
     sqlFT = sqlWrapper('FT')
     sqlRead = "SELECT vector FROM sessionfeatures WHERE session_id =" + str(session_id) +" AND feature_name = '"+feature+"'"
     row = sqlFT.read(sqlRead)
@@ -196,7 +190,8 @@ def getFeatureOfUser(user_id, feature):
             vector característica del usuario.
 
     """
-    assert feature in userFeaturesL
+    from src.userempathetic.utils.loadConfig import Config
+    assert feature in Config().getArray("user_features")
     sqlFT = sqlWrapper('FT')
     sqlRead = "SELECT vector FROM userfeatures WHERE user_id = " + str(user_id) +" AND feature_name = '"+feature+"'"
     row = sqlFT.read(sqlRead)
@@ -205,37 +200,6 @@ def getFeatureOfUser(user_id, feature):
     else:
         return [float(x) for x in row[0][0].split(' ')]
 
-def getSimulSession(session_id):
-    """Retorna un objeto Session correspondiente a la sesión simulada de ID indicada.
-
-    Parameters
-    ----------
-    session_id : int
-        ID de sesión deseada.
-
-    Returns
-    -------
-    Session
-        objeto Session con los datos de sesión cargados.
-    """
-    raw_session = getRawSessionData(session_id,simulated=True)
-    sequence = raw_session[0].split(' ')
-    if ',' not in raw_session[0]:
-        session_type = 'macro'
-        for i, macroid in enumerate(sequence):
-            sequence[i] = (macroid, None)
-    else:
-        session_type = 'full'
-        for i, pair in enumerate(sequence):
-            pair = pair.split(',')
-            sequence[i] = (pair[0], pair[1])
-    profile = raw_session[1]
-    user_id = int(raw_session[4])
-    inittime = raw_session[2]
-    endtime = raw_session[3]
-
-    return Session(sequence, profile=profile, initTime=inittime, endTime=endtime, user_id=user_id,
-                   session_id=session_id)
 
 
 if __name__ == '__main__':

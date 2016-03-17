@@ -11,7 +11,7 @@ class FeatureExtractor:
     Clase encargada de extraer features de usuarios y sesiones.
     """
 
-    def __init__(self, userFeaturesL=None, sessionFeaturesL=None, simulation=False):
+    def __init__(self, userFeaturesL=None, sessionFeaturesL=None):
         """Constructor
 
             Parameters
@@ -20,12 +20,7 @@ class FeatureExtractor:
                 lista de clases UserFeature
             sessionFeaturesL : [class]
                 lista de clases SessionFeature
-            simulation : bool
-                Modo de ejecución del extractor. Si es True, utiliza las tablas con elementos simulados.
 
-            Notes
-                En el caso de simulación, se debe haber realiado correctamente la simulación de nodos, usuarios
-                y sesiones para que el FeatureExtractor funcione.
             Returns
             -------
 
@@ -33,10 +28,6 @@ class FeatureExtractor:
         self.userFeaturesL = userFeaturesL or []
         self.sessionFeaturesL = sessionFeaturesL or []
         self.users = getAllUserIDs()
-        if simulation:
-            self.simulation = simulation
-        if not simulation:
-            self.simulation = False
         self.sessionIDs = getAllSessionIDs()
 
     def extractUserFeatures(self):
@@ -73,11 +64,8 @@ class FeatureExtractor:
         sqlFT = sqlWrapper('FT')
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
-            f = feature(user, simulation=self.simulation)
-            if not self.simulation:
-                f.extract()
-            else:
-                f.extractSimulated()
+            f = feature(user)
+            f.extract()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             if '[]' not in str(f):
                 print(f)
@@ -96,11 +84,8 @@ class FeatureExtractor:
         sqlFT = sqlWrapper('FT')
         print("\n" + str(feature.__name__) + ":\n")
         for sessionID in self.sessionIDs:
-            f = feature(sessionID, simulation=self.simulation)
-            if not self.simulation:
-                f.extract()
-            else:
-                f.extractSimulated()
+            f = feature(sessionID)
+            f.extract()
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             if '[]' not in str(f):
                 print(f)

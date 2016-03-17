@@ -11,7 +11,7 @@ class UserURLsBelongingFeature(UserFeature):
     tablename = 'userfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
 
-    def __init__(self, user_id, simulation=False):
+    def __init__(self, user_id):
         """
 
         Parameters
@@ -23,7 +23,7 @@ class UserURLsBelongingFeature(UserFeature):
         -------
 
         """
-        UserFeature.__init__(self, simulation)
+        UserFeature.__init__(self)
         self.URLs = getAllURLsIDs()
         self.vector = [0] * len(self.URLs)
         self.user = int(user_id)
@@ -41,24 +41,6 @@ class UserURLsBelongingFeature(UserFeature):
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
         # Cálculo de vector de uso de URLs.
-        for row in userUrls:
-            l = row[0]
-            for i in range(len(self.URLs)):
-                if self.URLs[i] == l:
-                    self.vector[i] = 1
-
-    def extractSimulated(self):
-        """Implementación de extracción de feature para usuarios simulados.
-
-        Returns
-        -------
-
-        """
-        # Lectura de nodos simulados de usuario desde 'coreData'
-        sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select urls_id, user_id from simulatednodes where user_id=' + str(self.user)
-        userUrls = sqlCD.read(sqlRead)
-        assert len(userUrls) > 0
         for row in userUrls:
             l = row[0]
             for i in range(len(self.URLs)):

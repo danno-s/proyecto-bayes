@@ -46,25 +46,29 @@ class sqlWrapper:
         """
         self.db = db
 
-    def truncate(self, table):
+    def truncate(self, table, where_condition=None):
         """Trunca la tabla indicada
 
         Parameters
         ----------
         table : str
             El nombre de la tabla a truncar
-        condition : str
-            Si existe, se realiza un 'DELETE FROM table WHERE condition'
+        where_condition : str
+            Si existe, se realiza un 'DELETE FROM table WHERE where_condition'
         """
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
-                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+                                          host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
-        cursor.execute('TRUNCATE ' + table)
+        if where_condition:
+            cursor.execute('DELETE FROM ' + table + " WHERE " + where_condition)
+        else:
+            cursor.execute('TRUNCATE ' + table)
+
         cnx.commit()
         cnx.close()
 
-    def truncateSimulated(self,table, sqlWrite):
-        old_rows = self.read("SELECT * FROM " + table + "WHERE simulated = 0")
+    def truncateSimulated(self,table, readParams, sqlWrite):
+        old_rows = self.read("SELECT "+readParams+" FROM " + table + " WHERE simulated = 0")
         self.truncate(table)
         for row in old_rows:
             self.write(sqlWrite,row)

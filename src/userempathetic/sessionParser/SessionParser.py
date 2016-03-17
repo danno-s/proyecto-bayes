@@ -47,10 +47,10 @@ class SessionParser:
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
         if self.simulation: # Borrar sólo los datos simulados anteriores.
-
+            readParams = "profile, sequence, user_id, inittime, endtime"
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
                                                      "(%s,%s,%s,%s,%s)"
-            sqlCD.truncateSimulated('sessions',sqlWrite)
+            sqlCD.truncateSimulated('sessions',readParams, sqlWrite)
 
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
             "(%s,%s,%s,%s,%s,%s,%s)"
@@ -82,11 +82,11 @@ class SessionParser:
 
         """
         # Obtener todos los usuarios.
-        userL = getAllUserIDs()
-        assert len(userL) > 0
+        self.userL = getAllUserIDs()
+        assert len(self.userL) > 0
         # Extraer datos de nodos para cada usuario
         self.nodesD = dict()
-        for user_id in userL:
+        for user_id in self.userL:
             self.nodesD[user_id] = userStepsGen(user_id)
 
     def __loadSimulNodes(self):
@@ -97,10 +97,10 @@ class SessionParser:
 
         """
         # Obtener todos los usuarios.
-        userL = getAllSimulUserIDs()
-        assert len(userL) > 0
+        self.userL = getAllSimulUserIDs()
+        assert len(self.userL) > 0
         # Extraer datos de nodos para cada usuario
         self.nodesD = dict()
-        for user_id in userL:
+        for user_id in self.userL:
             self.nodesD[user_id] = simulUserStepsGen(user_id)
 

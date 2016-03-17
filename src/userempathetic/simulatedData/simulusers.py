@@ -6,7 +6,6 @@
 
 import random
 import numpy as np
-import json
 from src.userempathetic.utils.loadConfig import Config
 from src.userempathetic.utils.sqlUtils import sqlWrapper
 
@@ -37,8 +36,9 @@ def simulusers(n1=70,n2=23,n3=7,n=200):
     random.shuffle(profile)
 
     sqlPD = sqlWrapper(db='PD')
+    readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
-    sqlPD.truncateSimulated("users",sqlWrite)
+    sqlPD.truncateSimulated("users",readParams, sqlWrite)
     sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"  # Guardar usuarios
 
     for i in range(len(user_id)):
@@ -145,8 +145,8 @@ def getsession(n1=70, n2=24):
 
     L = [None] * 3
 
-    print(n1)
-    print(n2)
+    #print(n1)
+    #print(n2)
 
     if "," in rows[0][0]:
         L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr * n1 / 100)]]]
@@ -175,8 +175,9 @@ def generate(cfile):
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
+    readParams = "user_id, clickDate, urls_id, profile, micro_id"
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id) VALUES (%s, %s, %s, %s, %s)"
-    sqlCD.truncateSimulated("nodes",sqlWrite)
+    sqlCD.truncateSimulated("nodes",readParams, sqlWrite)
 
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
@@ -202,7 +203,4 @@ def generate(cfile):
                 d += random.randint(1, Config.getValue('session_tlimit','INT') - 1)
 
 
-if __name__ == '__main__':
-    with open("simulConfig.json", "r") as f:
-        file = f.read()
-    generate(json.loads(file))
+

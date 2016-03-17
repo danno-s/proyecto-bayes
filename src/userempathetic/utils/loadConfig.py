@@ -5,6 +5,15 @@ Módulo para cargar configuración desde un archivo "config.json" en el path del
 import json
 import os
 import jsmin
+from src.userempathetic.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+from src.userempathetic.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
+from src.userempathetic.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
+
+from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
+from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
+from src.userempathetic.clustering.clusterings.sessionclusterings.DirectSessionClustering import DirectSessionClustering
+from src.userempathetic.clustering.clusterings.sessionclusterings.FullSessionClustering import FullSessionClustering
+from src.userempathetic.clustering.clusterings.sessionclusterings.CompositeSessionClustering import CompositeSessionClustering
 
 with open(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))) + '/config.json', 'r') as f:
     configurationJSON = jsmin.jsmin(f.read())
@@ -15,6 +24,19 @@ class Config:
     Clase que permite extraer un valor o array dle archivo de configuración cargado.
     """
     __parameters = json.loads(configurationJSON)  # objeto json cargado.
+    userClusteringsD = {
+        "UserLRSHistogram": UserLRSHistogramClustering,
+        "UserURLsBelonging": UserURLsBelongingClustering,
+        "FullUser": FullUserClustering
+    }
+
+    sessionClusteringsD = {
+        "SessionLRSBelonging": SessionLRSBelongingClustering,
+        "SessionUserClustersBelonging": SessionUserClustersBelongingClustering,
+        "FullSession": FullSessionClustering,
+        "DirectSession": DirectSessionClustering,
+        "CompositeSession": CompositeSessionClustering
+    }
 
     def __init__(self):
         pass
@@ -87,3 +109,25 @@ class Config:
         jsonDict = self.__parameters[attr]
         assert len(jsonDict) > 0
         return jsonDict
+
+    @classmethod
+    def getUserClusteringsConfigD(self):
+
+        ucConfD = dict()
+        user_clusteringD = Config.getDict("user_clustering")
+        for k,v in user_clusteringD.items():
+            if k in self.userClusteringsD.keys():
+                ucConfD[self.userClusteringsD[k]]=v
+
+        return ucConfD
+
+    @classmethod
+    def getSessionClusteringsConfigD(self):
+
+        scConfD = dict()
+        session_clusteringD = Config.getDict("session_clustering")
+        for k,v in session_clusteringD.items():
+            if k in self.sessionClusteringsD.keys():
+                scConfD[self.sessionClusteringsD[k]]=v
+
+        return scConfD

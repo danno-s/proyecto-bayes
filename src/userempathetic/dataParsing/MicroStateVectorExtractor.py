@@ -3,7 +3,6 @@
 Extractor de los micro estados del sitio para los datos capturados.
 """
 import json
-from src.userempathetic.utils.loadConfig import Config
 
 
 class MicroStateVectorExtractor:
@@ -25,6 +24,7 @@ class MicroStateVectorExtractor:
             'Selects': self.__getSelects,
             'Checkbox': self.__getCheckboxes
         }
+        from src.userempathetic.utils.loadConfig import Config
         self.elementTypes = sorted(Config().getArray(attr='elementTypes'))
         self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
         self.funcD = dict()

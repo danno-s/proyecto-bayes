@@ -4,14 +4,15 @@ class Cluster:
     """
     Clase que representa un cluster, con sus elementos contenidos y etiqueta respectiva.
     """
-    def __init__(self, elements, label, clusteringType=None):
+    def __init__(self, vectors, ids, label, clusteringType=None):
         """Constructor
 
         Parameters
         ----------
-        elements : ([float],[int])
-            tupla representando los elementos inliers del cluster de la forma ([vector],[id]).
-            Las ids pueden ser de usuario o sesión, dependiendo del clustering utilizado.
+        vectors : [float]
+            lista representando los vectores de características de los elementos inliers del cluster..
+        ids: [int]
+            lista de ids de usuario o sesión, dependiendo del clustering utilizado, en el mismo orden que vectors.
         label : str
             etiqueta con número del cluster respecto del clustering realizado.
         clusteringType : str
@@ -20,12 +21,12 @@ class Cluster:
 
         """
         self.label = label
-        self.elements = [x[0] for x in elements]    # vectores de características
-        self.ids = [x[1] for x in elements]         # ids de miembros del cluster
-        self.size = len(self.elements)
+        self.vectors = vectors    # vectores de características
+        self.ids = ids         # ids de miembros del cluster
+        self.size = len(self.vectors)
         assert self.size > 0
-        self.features_dim = len(self.elements[0])
-        self.clusteringType = clusteringType[:-10] or "unnamed"
+        self.features_dim = len(self.vectors[0])
+        self.clusteringType = clusteringType or "unnamed"
 
     def getCentroid(self):
         """Retorna el vector característico del centroide del cluster
@@ -39,7 +40,7 @@ class Cluster:
         [float] | [int]
             vector característico del centroide del cluster
         """
-        return [sum([value[x] / self.size for value in self.elements]) for x in range(self.features_dim)]
+        return [sum([value[x] / self.size for value in self.vectors]) for x in range(self.features_dim)]
 
     def getMax(self):
         """Retorna el vector característico del máximo del cluster
@@ -53,7 +54,7 @@ class Cluster:
         [float] | [int]
             vector característico del máximo del cluster
         """
-        return [max([value[x] for value in self.elements]) for x in range(self.features_dim)]
+        return [max([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
     def getMin(self):
         """Retorna el vector característico del mínimo del cluster
@@ -67,7 +68,7 @@ class Cluster:
         [float] | [int]
             vector característico del mínimo del cluster
         """
-        return [min([value[x] for value in self.elements]) for x in range(self.features_dim)]
+        return [min([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
     def __str__(self):
 
@@ -79,7 +80,7 @@ class Cluster:
 
     def toSQLItem(self):
         return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()]), \
-               self.clusteringType
+               self.clusteringType, ';'.join([' '.join(map(str,x)) for x in self.vectors])
 
     def getRepresentativeMember(self):
         if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
@@ -96,7 +97,7 @@ class Cluster:
         closestV = set()
         min_dist = 100.
         from scipy.spatial.distance import cityblock
-        for x,u_id in zip(self.elements,self.ids):
+        for x,u_id in zip(self.vectors, self.ids):
             d = cityblock(x,centroid_vector)
             if d == min_dist:
                 closestU.append(u_id)
@@ -119,13 +120,13 @@ class Cluster:
         return s
 
     def getRepresentativeSession(self):
-        from src.userempathetic.utils.comparatorUtils import getSimulSession
+        from src.userempathetic.utils.comparatorUtils import getSession
         centroid_vector = self.getCentroid()
         closestS = []
         closestV = set()
         min_dist = 100.
         from scipy.spatial.distance import cityblock
-        for x,s_id in zip(self.elements,self.ids):
+        for x,s_id in zip(self.vectors, self.ids):
             d = cityblock(x,centroid_vector)
             if d == min_dist:
                 closestS.append(s_id)
@@ -141,7 +142,7 @@ class Cluster:
         s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
         s += "Closest Session(s) with profiles: \n\t"
         for s_id in closestS:
-            s+= str(getSimulSession(s_id)) + "\n\t"
+            s+= str(getSession(s_id)) + "\n\t"
         s += "\n\tClosest Vector(s): \n\t"
         for v in closestV:
             s += str(v) + "\n\t"

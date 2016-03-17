@@ -10,7 +10,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
     """
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
-    def __init__(self, session_id, simulation=False):
+    def __init__(self, session_id):
         """Constructor
 
         Parameters
@@ -21,7 +21,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         Returns
         -------
         """
-        SessionFeature.__init__(self, simulation)
+        SessionFeature.__init__(self)
         self.userClusters = getAllUserClusters("UserURLsBelonging")
         self.vector = [0] * len(self.userClusters)
         self.session_id = int(session_id)
@@ -38,18 +38,6 @@ class SessionUserClustersBelongingFeature(SessionFeature):
             if self.user in members:
                 self.vector[cluster_id] = 1
                 break
-
-    def extractSimulated(self):
-        """Realiza exactamente lo mismo que extract.
-
-        See Also
-            extract
-
-        Returns
-        -------
-
-        """
-        self.extract()
 
     def __str__(self):
         return str(self.session_id) + ": ["+str(self.user)+"]" + str(self.vector)

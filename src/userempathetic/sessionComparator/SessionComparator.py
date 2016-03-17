@@ -1,4 +1,4 @@
-from src.userempathetic.utils.comparatorUtils import getSession, getSimulSession
+from src.userempathetic.utils.comparatorUtils import getSession
 
 
 class SessionComparator:
@@ -6,7 +6,7 @@ class SessionComparator:
     Clase que permite comparar dos sesiones según distintas métricas definidas.
     """
 
-    def __init__(self, sID1, sID2,simulation=False):
+    def __init__(self, sID1, sID2):
         """Constructor
 
         Parameters
@@ -19,16 +19,8 @@ class SessionComparator:
         Returns
         -------
         """
-        if simulation:
-            self.simulation = simulation
-        else:
-            self.simulation = False
-            self.s1 = getSession(sID1)
-            self.s2 = getSession(sID2)
-
-        if self.simulation:
-                self.s1 = getSimulSession(sID1)
-                self.s2 = getSimulSession(sID2)
+        self.s1 = getSession(sID1)
+        self.s2 = getSession(sID2)
 
     def compareSessions(self, metric):
         """Retorna valor de comparación entre los dos sesiones cargadas en el SessionComparator.

@@ -14,7 +14,6 @@ from src.userempathetic.featureExtractor.features.UserURLsBelongingFeature impor
 
 from src.userempathetic.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.userempathetic.utils.loadConfig import Config
-from src.userempathetic.utils.sqlUtils import sqlWrapper
 
 userFeaturesD = {
     "UserURLsBelonging": UserURLsBelongingFeature,
@@ -29,7 +28,7 @@ sessionPostClusteringFeaturesD = {
     }
 
 
-def extractFeatures(simulation=False):
+def extractFeatures():
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
     requieren de haber realizado clustering previamente.
 
@@ -54,12 +53,12 @@ def extractFeatures(simulation=False):
         if sf in sessionFeaturesD.keys():
             print(sf)
             sfL.append(sessionFeaturesD[sf])
-    fE = FeatureExtractor(ufL, sfL, simulation=simulation)
+    fE = FeatureExtractor(ufL, sfL)
     fE.extractUserFeatures()
     fE.extractSessionFeatures()
 
 
-def extractPostClusteringFeatures(simulation=False):
+def extractPostClusteringFeatures():
     """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema
     que requieren haber realizado clustering previamente.
 
@@ -78,7 +77,7 @@ def extractPostClusteringFeatures(simulation=False):
         if sf in sessionPostClusteringFeaturesD.keys():
             sfL.append(sessionPostClusteringFeaturesD[sf])
 
-    fE = FeatureExtractor(sessionFeaturesL=sfL, simulation=simulation)
+    fE = FeatureExtractor(sessionFeaturesL=sfL)
     fE.extractSessionFeatures()
 
 

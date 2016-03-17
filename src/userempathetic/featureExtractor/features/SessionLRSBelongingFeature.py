@@ -11,7 +11,7 @@ class SessionLRSBelongingFeature(SessionFeature):
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
 
-    def __init__(self, session_id, simulation=False):
+    def __init__(self, session_id):
         """Constructor
 
         Parameters
@@ -23,7 +23,7 @@ class SessionLRSBelongingFeature(SessionFeature):
         -------
 
         """
-        SessionFeature.__init__(self, simulation)
+        SessionFeature.__init__(self)
         self.LRSs = getAllLRSs()
         self.vector = [0] * len(self.LRSs)
         self.session_id = int(session_id)
@@ -41,25 +41,6 @@ class SessionLRSBelongingFeature(SessionFeature):
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
         # Cálculo de subsecuencias y correspondencia con uso de LRSs.
-        for row in session:
-            seq = row[0].split(' ')
-            subseqs = set(subsequences(seq))
-            for i, lrs in enumerate(self.LRSs):
-                if lrs in subseqs or isSubContained(lrs, subseqs):
-                    self.vector[i] = 1
-
-    def extractSimulated(self):
-        """Implementación de extracción de feature para sesiones simuladas.
-
-        Returns
-        -------
-
-        """
-        # Lectura de sesion simulada desde 'coreData'
-        sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from simulsessions where id=' + str(self.session_id)
-        session = sqlCD.read(sqlRead)
-        assert len(session) > 0
         for row in session:
             seq = row[0].split(' ')
             subseqs = set(subsequences(seq))

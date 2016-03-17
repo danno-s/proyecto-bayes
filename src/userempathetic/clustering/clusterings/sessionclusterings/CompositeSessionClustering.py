@@ -1,10 +1,5 @@
 from src.userempathetic.clustering.clusterings.Clustering import SessionClustering
-import numpy as np
 from sklearn.cluster import DBSCAN
-from src.userempathetic.utils.loadConfig import Config
-from src.userempathetic.clusterClass.Cluster import Cluster
-from src.userempathetic.clustering.clusterings.sessionclusterings.SessionUserClustersBelongingClustering import SessionUserClustersBelongingClustering
-from src.userempathetic.clustering.clusterings.sessionclusterings.SessionLRSBelongingClustering import SessionLRSBelongingClustering
 
 class CompositeSessionClustering(SessionClustering):
     """
@@ -31,7 +26,8 @@ class CompositeSessionClustering(SessionClustering):
 
     def getData(self):
         self.composedFeatures = self.confD['features']
-        from src.userempathetic.clustering.ExtractClusters import sessionClusteringsD
+        from src.userempathetic.utils.loadConfig import Config
+        sessionClusteringsD = Config.sessionClusteringsD
         X = list()
         ids = list()
         firstFlag = True

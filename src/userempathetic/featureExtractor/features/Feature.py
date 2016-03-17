@@ -10,30 +10,11 @@ class Feature:
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, simulation=False):
-        """Constructor
-
-        Parameters
-        ----------
-        simulation : bool
-            Si es True, el modo de cálculo de los features será basado en los datos simulados si es que existen.
-
-        Returns
-        -------
-
-        """
-        if not simulation:
-            self.simulation = False
-        else:
-            self.simulation = True
+    def __init__(self):
         pass
 
     @abstractmethod
     def extract(self):
-        pass
-
-    @abstractmethod
-    def extractSimulated(self):
         pass
 
     @abstractmethod
@@ -47,14 +28,11 @@ class UserFeature(Feature):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, simulation=False):
-        Feature.__init__(self, simulation)
+    def __init__(self):
+        Feature.__init__(self)
 
     @abstractmethod
     def extract(self): pass
-
-    @abstractmethod
-    def extractSimulated(self): pass
 
     @abstractmethod
     def toSQLItem(self): pass
@@ -66,14 +44,11 @@ class SessionFeature(Feature):
     """
     __metaclass__ = ABCMeta
 
-    def __init__(self, simulation=False):
-        Feature.__init__(self, simulation)
+    def __init__(self):
+        Feature.__init__(self)
 
     @abstractmethod
     def extract(self): pass
-
-    @abstractmethod
-    def extractSimulated(self): pass
 
     @abstractmethod
     def toSQLItem(self): pass

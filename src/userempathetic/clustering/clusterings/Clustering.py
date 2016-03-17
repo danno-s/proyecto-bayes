@@ -48,7 +48,7 @@ class Clustering:
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
             xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
-                self.clustersD[k] = Cluster(elements=xy, label=k, clusteringType=self.__class__.__name__)
+                self.clustersD[k] = Cluster(vectors=[j[0] for j in xy],ids=[j[1] for j in xy],  label=k, clusteringType=self.__class__.__name__[:-10])
             else:
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
@@ -91,7 +91,7 @@ class Clustering:
         return len(self.X[0])
 
     def getSQLWrite(self):
-        return 'INSERT INTO ' + self.tablename + ' (cluster_id,members,centroid,clustering_name) VALUES (%s,%s,%s,%s)'
+        return 'INSERT INTO ' + self.tablename + ' (cluster_id,members,centroid,clustering_name,vectors) VALUES (%s,%s,%s,%s,%s)'
 
 
 class SessionClustering(Clustering):

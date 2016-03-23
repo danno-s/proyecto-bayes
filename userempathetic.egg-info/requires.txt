@@ -1,0 +1,7 @@
+mysql-connector-python
+pyyaml
+numpy
+scikit-learn
+matplotlib
+scipy
+python-dateutil

@@ -31,7 +31,7 @@ def simulusers(n1=70,n2=23,n3=7,n=200):
     for i in range(n):
         user[i] = random.choice(usern)
 
-    user_id = random.sample(range(2000), n)  # ids generados al azar
+    user_id = random.sample(range(4000), n)  # ids generados al azar
     profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + [2] * int(n3 * n / 100)  # perfiles de usuario
     random.shuffle(profile)
 
@@ -40,7 +40,7 @@ def simulusers(n1=70,n2=23,n3=7,n=200):
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
     sqlPD.truncateSimulated("users",readParams, sqlWrite)
     sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"  # Guardar usuarios
-
+    print(user_id)
     for i in range(len(user_id)):
         sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i],True, None)) #TODO: Insertar label de cluster (a priori).
 
@@ -159,18 +159,17 @@ def getsession(n1=70, n2=24):
     return L
 
 
-def generate(cfile):
+def generate():
     """
     Genera los datos simulados y los guarda en la tabla simulatednodes
 
     Parameters
     ----------
-    configFile : JSON
-        Archivo de configuracion en formato JSON
     """
-    ufrac = cfile["userfrac"]
-    sfrac = cfile["sessionfrac"]
-    users = simulusers(ufrac["n1"],ufrac["n2"],ufrac["n3"],cfile["users"])
+    simulationConfig= Config.getDict("simulation")
+    ufrac = simulationConfig["userfrac"]
+    sfrac = simulationConfig["sessionfrac"]
+    users = simulusers(ufrac["n1"],ufrac["n2"],ufrac["n3"],simulationConfig["users"])
     session = getsession(sfrac["n1"],sfrac["n2"])
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
@@ -182,7 +181,7 @@ def generate(cfile):
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 
-    for i in range(cfile["sessions"]):
+    for i in range(simulationConfig["sessions"]):
         for u in users:
             l = session[u[1]]  # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
             ses = random.choice(l)  # Se elige una sesion

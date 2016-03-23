@@ -109,7 +109,7 @@
 
 */
 {
-  "session_tlimit": "10",
+  "session_tlimit": "20",
   "LRS_threshold": "20",
   "elementTypes": [
     "TextAreas",
@@ -124,9 +124,7 @@
     "UserLRSHistogram"
   ],
   "session_features": [
-    "SessionLRSBelonging",
-    "SessionUserClustersBelonging",
-    "SessionDistance"
+    "SessionLRSBelonging"
   ],
   "user_clustering": {
     "UserURLsBelonging":
@@ -140,46 +138,28 @@
       "eps": 0.8,
       "min_samples": 5,
       "metric":"euclidean"
-    },
-    "FullUser":
-    {
-      "eps": 0.7,
-      "min_samples": 5,
-      "metric":"euclidean"
     }
   },
-  "session_clustering":
-    {
+  "session_clustering":{
       "SessionLRSBelonging":
       {
         "eps": 0.3,
         "min_samples": 5,
         "metric":"euclidean"
-      },
-      "SessionUserClustersBelonging":
-      {
-        "eps":0.7,
-        "min_samples": 5,
-        "metric":"euclidean"
-      },
-      "DirectSession":
-      {
-        "eps":2.0,
-        "min_samples": 10,
-        "metric":"precomputed"
-      },
-      "CompositeSession":
-      {
-        "eps":0.7,
-        "min_samples": 5,
-        "metric":"euclidean",
-        "features":
-        [
-          "SessionLRSBelonging",
-          "SessionUserClustersBelonging",
-          "DirectSession"
-        ]
       }
+  },
+  "simulation": {
+    "users": 100,
+    "sessions": 2,
+    "userfrac":{
+      "n1": 70,
+      "n2": 23,
+      "n3": 7
+    },
+    "sessionfrac":{
+      "n1": 70,
+      "n2": 24,
+      "n3": 6
     }
-
+  }
 }

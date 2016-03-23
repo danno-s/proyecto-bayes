@@ -16,6 +16,7 @@ class Clustering:
         self.clustersD = dict()  # Diccionario según etiqueta de los clusters obtenidos y sus elementos.
         self.confD = confD or None
         self.n_outliers = None
+        self.outliers = None
         self.n_clusters = 0  # Número de clusters obtenidos.
         self.clusteringAlgorithm = self.initClusteringAlgorithm()
         try:
@@ -38,26 +39,28 @@ class Clustering:
         # Compute DBSCAN
         if self.X is None:
             raise Exception #TODO: Crear excepcion para esto.
-        self.clusteringAlgorithm.fit(self.X)
-        core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool)
-        core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
+        self.clusteringAlgorithm.fit(self.X)    # realizar clustering.
+        core_samples_mask = np.zeros_like(self.clusteringAlgorithm.labels_, dtype=bool) # inicializar mascara de core samples.
+        core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True # mascara es True para indices de core samples
         unique_labels = set(self.clusteringAlgorithm.labels_)
         self.n_outliers = sum([1 for x in self.clusteringAlgorithm.labels_ if x == -1])
-        print("# outliers = %d" % self.n_outliers)
         for k in unique_labels:
-            class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
+            class_member_mask = (self.clusteringAlgorithm.labels_ == k) # mascara de miembros de clase k.
+            xy = [(x, cl_id) for x, cl_id, i, j in zip(self.X, self.ids, class_member_mask, core_samples_mask) if i & j] # Sólo core sample de esa clase.
             if k != -1:
                 self.clustersD[k] = Cluster(vectors=[j[0] for j in xy],ids=[j[1] for j in xy],  label=k, clusteringType=self.__class__.__name__[:-10])
             else:
                 # if xy:
                 #   self.clustersD[k]=Cluster(elements=xy,label=k,clusteringType=SessionLRSBelongingClustering)
                 pass
+        outliers_mask = (self.clusteringAlgorithm.labels_ == -1)
+        x_outliers = [(x,cl_id) for x, cl_id, i in zip(self.X, self.ids, outliers_mask) if i]
+        self.outliers = Cluster(vectors=[j[0] for j in x_outliers],ids=[j[1] for j in x_outliers],  label=-1, clusteringType=self.__class__.__name__[:-10])
+        print(self.outliers)
         # Number of clusters in labels, ignoring noise if present.
         self.n_clusters = len(unique_labels)
         if -1 in self.clusteringAlgorithm.labels_:
             self.n_clusters -= 1
-
 
     def getClusters(self):
         """Retorna diccionario con los clusters extraidos.
@@ -68,6 +71,17 @@ class Clustering:
             diccionario con los clusters extraidos.
         """
         return self.clustersD
+
+    def getOutliers(self):
+        """ Retorna un Cluster que corresponde a un grupo con todos los outliers.
+
+        Returns
+        -------
+        Cluster:
+            Grupo con todos los outliers. No es un cluster real.
+
+        """
+        return self.outliers
 
     def getNumberOfClusters(self):
         return self.n_clusters

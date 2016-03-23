@@ -71,7 +71,9 @@ class Cluster:
         return [min([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
     def __str__(self):
-
+        if self.label == -1:
+            return "Outliers: " + "\t#" + str(self.size) + " outliers" \
+                                        "\n IDs:\n\t" + str(self.ids)
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
                                                                         "\n Members IDs:\n\t" + str(self.ids) + \
                 "\n Representative Member(s):\n\t" + str(self.getRepresentativeMember())

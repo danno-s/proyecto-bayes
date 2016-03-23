@@ -79,6 +79,8 @@ class ClusterExtractor:
             print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
             for cluster in clusters.values():
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
+            outliers = c.getOutliers()
+            sqlCL.write(c.getSQLWrite,cluster.toSQLItem()) #TODO: implementar toSQLItem para outliers.
             self.userClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception as e:  # TODO: Crear excepcion para esto.

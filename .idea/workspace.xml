@@ -1,0 +1,1496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bc65f898-1b84-4023-80c7-215460d7f3b0" name="Default" comment=".">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/simulated/.gitignore" afterPath="$PROJECT_DIR$/src/.gitignore" />
+    </list>
+    <list id="b9cedf2a-7331-4bfe-9364-2e7f7388c673" name="connections" comment="" />
+    <ignored path="userempathetic.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="userempathetic" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="sqlUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/sqlUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="134" column="57" selection-start-line="134" selection-start-column="57" selection-end-line="134" selection-end-column="57" />
+              <folding>
+                <element signature="e#101#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="connections.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/connections.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-23.75">
+              <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loadConfig.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/loadConfig.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="42" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/executionSteps/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#58#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DirectSessionClustering.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/DirectSessionClustering.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
+              <folding>
+                <element signature="e#0#67#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtractFeatures.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/featureExtraction/ExtractFeatures.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SessionDistanceFeature.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/featureExtractor/features/SessionDistanceFeature.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.21634616">
+              <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SessionParser.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sessionParser/SessionParser.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="99" column="37" selection-start-line="99" selection-start-column="21" selection-end-line="99" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dataParsingUtils.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils/dataParsingUtils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simulation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/executionSteps/simulation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Setup Script" />
+        <option value="Python Unit Test" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="ONTO" value="refs/remotes/origin/master" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="SebaGO" />
+        <option value="SebaGO &lt;sebago.nc@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="UPDATE_TYPE" value="MERGE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/sessionParsing.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/lrsExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/featureExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/postClusteringFeatureExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/userClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/sessionClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/urlExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/simulation.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/execution/userExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/contentElementsExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/nodesCreation.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/lrsExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/sessionParsing.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/firstFeatureExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/secondFeatureExtraction.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/dataParsing/MicroStateVectorExtractor.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/utils/comparatorUtils.py" />
+        <option value="$PROJECT_DIR$/src/simulated/prueba.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/view/ClusterView.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/utils/loadConfig.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/ExtractClusters.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/userClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/sessionClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/clusterVisualization.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/dataParsing/parseSessions.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/utils/sqlUtils.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/sessionParser/SessionParser.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/sessionParser/sessionizers/Sessionizer.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/utils/dataParsingUtils.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/featureExtractor/FeatureExtractor.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/main.py" />
+        <option value="$PROJECT_DIR$/src/simulated/simulatedData/simulusers.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/simulatedData/simulusers.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/executionSteps/simulation.py" />
+        <option value="$PROJECT_DIR$/src/simulated/main.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/utils/clusteringUtils.py" />
+        <option value="$PROJECT_DIR$/src/utils/clusteringUtils.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clusterClass/Cluster.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/ClusterExtractor.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/Clustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings/CompositeSessionClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings/DirectSessionClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings/FullSessionClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings/SessionLRSBelongingClustering.py" />
+        <option value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings/SessionUserClustersBelongingClustering.py" />
+        <option value="$PROJECT_DIR$/src/utils/loadConfig.py" />
+        <option value="$PROJECT_DIR$/src/utils/sqlUtils.py" />
+        <option value="$PROJECT_DIR$/src/connections.json" />
+        <option value="$PROJECT_DIR$/src/executionSteps/simulation.py" />
+        <option value="$PROJECT_DIR$/src/executionSteps/main.py" />
+        <option value="$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/DirectSessionClustering.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="65" />
+    <option name="y" value="24" />
+    <option name="width" value="1301" />
+    <option name="height" value="744" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers ProjectPane="false" />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Default">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Problems" />
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="userempathetic">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="userempathetic">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="userempathetic">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="userempathetic">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Changed Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="connections">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="featureExtractor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="featureExtractor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="features" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userempathetic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="featureExtraction" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings" />
+    <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/src/userempathetic/sessionClass" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/src/userempathetic/featureExtraction/calcLRSs.py" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/sebastian/PycharmProjects/userempathetic/src/userempathetic/utils/clusteringUtils.py&#10;simulate&#9;null&#9;null&#10;histogram&#9;null&#9;null&#10;import&#9;ACTION&#9;ImportTests" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="75" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="92" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="98" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="970" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="73" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="93" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="98" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="971" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="userempathetic" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="userempathetic" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/userclusterings" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/sessionclusterings" />
+      <recent name="$PROJECT_DIR$/src/simulated/clustering/clusterings" />
+      <recent name="$PROJECT_DIR$/src/simulated" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/userempathetic" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/executionSteps" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/execution" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/clustering/clusterings/userclusterings" />
+      <recent name="$PROJECT_DIR$/src/userempathetic/sessionComparator" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main (1)">
+    <configuration default="false" name="sessionParsing" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/userempathetic/executionSteps" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/userempathetic/executionSteps/sessionParsing.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="parseSessions" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/userempathetic/dataParsing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/userempathetic/dataParsing/parseSessions.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="simulation" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/userempathetic/executionSteps" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/userempathetic/executionSteps/simulation.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/userempathetic/executionSteps" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/userempathetic/executionSteps/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/executionSteps" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/executionSteps/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Docutils task">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Sphinx task">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="/usr/bin/python3.4" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="/usr/bin/python3.4" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests in testings (1)" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/testings" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/src/testings" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value=".*Tests.py" />
+      <option name="USE_PATTERN" value="true" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittests in testing" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/testing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/src/testing" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value=".*Tests.py" />
+      <option name="USE_PATTERN" value="true" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Nosetests in testing" type="tests" factoryName="Nosetests" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="/usr/bin/python3.4" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/testing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="userempathetic" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/src/testing" />
+      <option name="TEST_TYPE" value="TEST_FOLDER" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <list size="8">
+      <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in testings (1)" />
+      <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in testing" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests in testing" />
+      <item index="3" class="java.lang.String" itemvalue="Python.sessionParsing" />
+      <item index="4" class="java.lang.String" itemvalue="Python.parseSessions" />
+      <item index="5" class="java.lang.String" itemvalue="Python.simulation" />
+      <item index="6" class="java.lang.String" itemvalue="Python.main" />
+      <item index="7" class="java.lang.String" itemvalue="Python.main (1)" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.main (1)" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.simulation" />
+        <item index="3" class="java.lang.String" itemvalue="Python.parseSessions" />
+        <item index="4" class="java.lang.String" itemvalue="Python.sessionParsing" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bc65f898-1b84-4023-80c7-215460d7f3b0" name="Default" comment="" />
+      <changelist id="b9cedf2a-7331-4bfe-9364-2e7f7388c673" name="connections" comment="" />
+      <created>1451334553119</created>
+      <option name="number" value="Default" />
+      <updated>1451334553119</updated>
+    </task>
+    <task id="LOCAL-00081" summary=";">
+      <created>1454353478092</created>
+      <option name="number" value="00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1454353478093</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Agregado modo de simulación para SessionParser y parseSessions">
+      <created>1454354188785</created>
+      <option name="number" value="00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1454354188785</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Removido modo simulación de commit anterior.">
+      <created>1454357047617</created>
+      <option name="number" value="00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1454357047618</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Removido modo simulación de commit anterior.">
+      <created>1454360241009</created>
+      <option name="number" value="00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1454360241009</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Removida simulación de userempathetic&#10;movido connections.json a carpeta simulated y a carpeta userempathetic desde utils de cada una.">
+      <created>1454425197519</created>
+      <option name="number" value="00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1454425197520</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Agregado sort a los LRSs para que se guarden siempre en el mismo orden.">
+      <created>1454425312770</created>
+      <option name="number" value="00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1454425312770</updated>
+    </task>
+    <task id="LOCAL-00087" summary="creadas estructuras de clustering">
+      <created>1454443748153</created>
+      <option name="number" value="00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1454443748154</updated>
+    </task>
+    <task id="LOCAL-00088" summary="creadas clase Cluster e implementadas funciones para clusterizar y visualizar con el ClusterExtractor.">
+      <created>1454527222075</created>
+      <option name="number" value="00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1454527222093</updated>
+    </task>
+    <task id="LOCAL-00089" summary="creado clustering para UserLRSHistograms&#10;creado clusteringUtils con metodo para combinar clusters de usuarios y ver la intersección.">
+      <created>1456422939183</created>
+      <option name="number" value="00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1456422939223</updated>
+    </task>
+    <task id="LOCAL-00090" summary="agregada DB clusters ('CL') a sqlUtils, donde se guardan los distintos clusters generados.">
+      <created>1456425576078</created>
+      <option name="number" value="00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1456425576078</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Agregado UserLRSHistogramClustering al extractClusters utilizado en el main.">
+      <created>1456426478500</created>
+      <option name="number" value="00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1456426478501</updated>
+    </task>
+    <task id="LOCAL-00092" summary="Agregado nuevo feature SesssionUserClusters con su clustering respectivo. Falta modificar los main (o script de extracción) para que el feature se extraiga una vez realizado el clustering de usuarios.">
+      <created>1456498164176</created>
+      <option name="number" value="00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1456498164177</updated>
+    </task>
+    <task id="LOCAL-00093" summary="Corregido error al pasar a texto para inserción en SQL del SessionUserClustersBelongingFeature">
+      <created>1456500794866</created>
+      <option name="number" value="00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1456500794866</updated>
+    </task>
+    <task id="LOCAL-00094" summary="Agregada estructura de clases para comparador de Sessions. Modificado el concepto de Metric definido y la jerarquía de clases para ser utilizada por los comparadores.">
+      <created>1456508699075</created>
+      <option name="number" value="00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1456508699075</updated>
+    </task>
+    <task id="LOCAL-00095" summary="Refactoring masivo con inspector de codigo de PyCharm.&#10;Se removieron archivos duplicados del modulo &quot;simulated&quot;, los cuales ahora son referenciados del modulo &quot;userempathetic&quot;.&#10;Modificado main para extracción de features de sesiones que requieren realizar el clustering de usuario primero.&#10;Agregado numero de elementos de cada cluster a la visualización.">
+      <created>1456522485172</created>
+      <option name="number" value="00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1456522485172</updated>
+    </task>
+    <task id="LOCAL-00096" summary="Implementación de algunos NodeMetrics y MicroMetrics que permiten comparar las sesiones en base a las diferencias de los nodos de los pasos &quot;comunes&quot;.&#10;Implementado NodeComparator.">
+      <created>1456778810046</created>
+      <option name="number" value="00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1456778810052</updated>
+    </task>
+    <task id="LOCAL-00097" summary="Documentación masiva de módulo userEmpathetic&#10;Agregué un comentario al simuluser. Ver Issue también.">
+      <created>1456866048368</created>
+      <option name="number" value="00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1456866048385</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Removidos utils y testing de simulated. Referenciando al modulo userempathetic.&#10;Las funciones específicas para tablas simuladas se movieron a los utils de userempathetic, cambiando el nombre.">
+      <created>1456924611324</created>
+      <option name="number" value="00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1456924611332</updated>
+    </task>
+    <task id="LOCAL-00099" summary="Removidos varios scripts de simulated/dataParsing. Se referenciaron sus usos al módulo userempathetic.&#10; &#10; Documentado MicroStateVectorExtractor y otros scripts.">
+      <created>1456928607157</created>
+      <option name="number" value="00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1456928607157</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Refactorización maestra de FeatureExtractor y SessionParser de manera de que reciben un argumento &quot;simulation&quot; que define el modo de ejecución.&#10;&#10;Ahora lo único necesario del módulo &quot;simulated&quot; es la simulación misma y el main.">
+      <created>1456934170726</created>
+      <option name="number" value="00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1456934170726</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Corregido error en Clustering">
+      <created>1456938872912</created>
+      <option name="number" value="00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1456938872912</updated>
+    </task>
+    <task id="LOCAL-00102" summary=".">
+      <created>1456939017593</created>
+      <option name="number" value="00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1456939017593</updated>
+    </task>
+    <task id="LOCAL-00103" summary=".">
+      <created>1456939183562</created>
+      <option name="number" value="00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1456939183562</updated>
+    </task>
+    <task id="LOCAL-00104" summary="Corregido caso borde en que no encuentra clusters.">
+      <created>1456940878727</created>
+      <option name="number" value="00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1456940878727</updated>
+    </task>
+    <task id="LOCAL-00105" summary="Completar documentación.">
+      <created>1456943568150</created>
+      <option name="number" value="00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1456943568151</updated>
+    </task>
+    <task id="LOCAL-00106" summary="Corregida extracción de features en modo simulated.">
+      <created>1456947306214</created>
+      <option name="number" value="00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1456947306214</updated>
+    </task>
+    <task id="LOCAL-00107" summary="Agregado #outliers a clusterings">
+      <created>1456954235283</created>
+      <option name="number" value="00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1456954235283</updated>
+    </task>
+    <task id="LOCAL-00108" summary="Separados los Clusterings en modulos dependiendo si son para usuarios o sesiones. Agregados FullSessionClustering y FullUserClustering que consideran un vector que concatena todas las features de cada uno de ellos.">
+      <created>1457029397419</created>
+      <option name="number" value="00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1457029397430</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Creado ClusterView que se encarga de la visualización de los clusters.">
+      <created>1457033468458</created>
+      <option name="number" value="00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1457033468458</updated>
+    </task>
+    <task id="LOCAL-00110" summary="Agregado archivo setup.py (con los install_required).&#10;Corregidos unos errores de clusterings.&#10;">
+      <created>1457039125865</created>
+      <option name="number" value="00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1457039125865</updated>
+    </task>
+    <task id="LOCAL-00111" summary="Algunos nuevos comentarios a simulusers.">
+      <created>1457040325898</created>
+      <option name="number" value="00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1457040325898</updated>
+    </task>
+    <task id="LOCAL-00112" summary="Agregado comparacion entre usuarios.&#10;Agregado SessionDistanceFeature&#10;Modificado FeatureExtractor para utilizar una tabla para usuarios y una para sesiones.">
+      <created>1457120954055</created>
+      <option name="number" value="00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1457120954062</updated>
+    </task>
+    <task id="LOCAL-00113" summary="Modificado features y clusterings para usar tablas genericas de para usuarios y sesiones. Tambien se modificaron FeatureExtractor y ClusterExtractor con el mismo objetivo.">
+      <created>1457123501185</created>
+      <option name="number" value="00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1457123501185</updated>
+    </task>
+    <task id="LOCAL-00114" summary="Refactorizado jerarquia de Clusterings.">
+      <created>1457127445684</created>
+      <option name="number" value="00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1457127445685</updated>
+    </task>
+    <task id="LOCAL-00115" summary="Arreglado bug que detenia la ejecución si no existían clusters.">
+      <created>1457358521902</created>
+      <option name="number" value="00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1457358521927</updated>
+    </task>
+    <task id="LOCAL-00116" summary="Clusterings configurables desde config.json.">
+      <created>1457360249689</created>
+      <option name="number" value="00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1457360249690</updated>
+    </task>
+    <task id="LOCAL-00117" summary="Cambiado DirectSessionClustering para que lea de tabla de features.">
+      <created>1457365065691</created>
+      <option name="number" value="00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1457365065691</updated>
+    </task>
+    <task id="LOCAL-00118" summary="Corregido bug de SessionUserClustersBelongingFeature que dejaba duplicados (o triplicados) los features.">
+      <created>1457377024677</created>
+      <option name="number" value="00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1457377024677</updated>
+    </task>
+    <task id="LOCAL-00119" summary="Parámetros de clustering ahora son configurables desde config.json">
+      <created>1457381895455</created>
+      <option name="number" value="00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1457381895455</updated>
+    </task>
+    <task id="LOCAL-00120" summary="Comentados nuevos parametros de config.json">
+      <created>1457384171046</created>
+      <option name="number" value="00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1457384171046</updated>
+    </task>
+    <task id="LOCAL-00121" summary="Configurado CompositeSessionClustering para aceptar varios clusterings y concatenar los vectores de características que utilizan, para realizar un clustering &quot;compuesto&quot;.">
+      <created>1457703893692</created>
+      <option name="number" value="00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1457703893692</updated>
+    </task>
+    <task id="LOCAL-00122" summary="Creado NodeMetrics que compara macroestado según diferencias entre las URLs contenidas en el árbol de URLs.&#10;&#10;">
+      <created>1457710972430</created>
+      <option name="number" value="00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1457710972430</updated>
+    </task>
+    <task id="LOCAL-00123" summary="Se dejó de tratar profile como un &quot;int&quot; en comparatorUtils y la clase Session.">
+      <created>1458066615968</created>
+      <option name="number" value="00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1458066615987</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Agregado string representando miembro central del cluster en clase Cluster.">
+      <created>1458076835237</created>
+      <option name="number" value="00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1458076835237</updated>
+    </task>
+    <task id="LOCAL-00125" summary="Agregado print de usuarios y sesiones representativas de cada cluster, de manera que se muestra específicamente el perfil, la secuencia, etc. y es más intuitivo ver a quienes agrupa el cluster.">
+      <created>1458153478920</created>
+      <option name="number" value="00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1458153478945</updated>
+    </task>
+    <task id="LOCAL-00126" summary="Corregido bug de SessionUserClustersBelongingFeature que dejaba duplicados (o triplicados) los features.">
+      <created>1458153741800</created>
+      <option name="number" value="00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1458153741800</updated>
+    </task>
+    <task id="LOCAL-00127" summary="se utiliza solo tabla sessions, nodes y users, con columna especial para saber si son datos simulados o no.&#10;Falta refactorización aún.">
+      <created>1458162144618</created>
+      <option name="number" value="00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1458162144618</updated>
+    </task>
+    <task id="LOCAL-00128" summary="refactoring maestro. Ahora se puede ejecutar paso a paso y no requiere de un módulo separado de &quot;simulation&quot; ni tablas especiales para datos de simulación">
+      <created>1458250500517</created>
+      <option name="number" value="00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1458250500528</updated>
+    </task>
+    <task id="LOCAL-00129" summary="eliminado módulo simulated y reintegrados todos los componentes directamente a src.">
+      <created>1458758637869</created>
+      <option name="number" value="00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1458758637877</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 26m 47s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 28m 09s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 29m 17s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 38m 16s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 38m 47s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 39m 21s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 41m 56s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 43m 18s.xml">
+      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_mainTests - 2016.02.01 at 11h 44m 47s.xml">
+      <configuration name="Nosetests in mainTests" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_testing_(1) - 2016.01.19 at 15h 35m 39s.xml">
+      <configuration name="Nosetests in testing (1)" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4403101" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25273865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31220657" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="532" y="90" width="366" height="668" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4883721" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.48217055" sideWeight="0.7563413" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4527132" sideWeight="0.24365872" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.63100773" sideWeight="0.81936973" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980783" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3984496" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46257484" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43263474" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4535928" sideWeight="0.24365872" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.81936973" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25273865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28132206" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="532" y="90" width="366" height="668" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3997006" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980783" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4535928" sideWeight="0.7563413" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection>
+        <UserGroup>
+          <option name="users">
+            <list>
+              <option value="simulationIndependency" />
+            </list>
+          </option>
+        </UserGroup>
+      </collection>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Corregido caso borde en que no encuentra clusters." />
+    <MESSAGE value="Completar documentación." />
+    <MESSAGE value="Corregida extracción de features en modo simulated." />
+    <MESSAGE value="Agregado #outliers a clusterings" />
+    <MESSAGE value="Separados los Clusterings en modulos dependiendo si son para usuarios o sesiones. Agregados FullSessionClustering y FullUserClustering que consideran un vector que concatena todas las features de cada uno de ellos." />
+    <MESSAGE value="Creado ClusterView que se encarga de la visualización de los clusters." />
+    <MESSAGE value="Agregado archivo setup.py (con los install_required).&#10;Corregidos unos errores de clusterings.&#10;" />
+    <MESSAGE value="Algunos nuevos comentarios a simulusers." />
+    <MESSAGE value="Agregado comparacion entre usuarios.&#10;Agregado SessionDistanceFeature&#10;Modificado FeatureExtractor para utilizar una tabla para usuarios y una para sesiones." />
+    <MESSAGE value="Modificado features y clusterings para usar tablas genericas de para usuarios y sesiones. Tambien se modificaron FeatureExtractor y ClusterExtractor con el mismo objetivo." />
+    <MESSAGE value="Refactorizado jerarquia de Clusterings." />
+    <MESSAGE value="Arreglado bug que detenia la ejecución si no existían clusters." />
+    <MESSAGE value="Clusterings configurables desde config.json." />
+    <MESSAGE value="Cambiado DirectSessionClustering para que lea de tabla de features." />
+    <MESSAGE value="Parámetros de clustering ahora son configurables desde config.json" />
+    <MESSAGE value="Comentados nuevos parametros de config.json" />
+    <MESSAGE value="Configurado CompositeSessionClustering para aceptar varios clusterings y concatenar los vectores de características que utilizan, para realizar un clustering &quot;compuesto&quot;." />
+    <MESSAGE value="Creado NodeMetrics que compara macroestado según diferencias entre las URLs contenidas en el árbol de URLs.&#10;&#10;" />
+    <MESSAGE value="Se dejó de tratar profile como un &quot;int&quot; en comparatorUtils y la clase Session." />
+    <MESSAGE value="Agregado string representando miembro central del cluster en clase Cluster." />
+    <MESSAGE value="Agregado print de usuarios y sesiones representativas de cada cluster, de manera que se muestra específicamente el perfil, la secuencia, etc. y es más intuitivo ver a quienes agrupa el cluster." />
+    <MESSAGE value="Corregido bug de SessionUserClustersBelongingFeature que dejaba duplicados (o triplicados) los features." />
+    <MESSAGE value="se utiliza solo tabla sessions, nodes y users, con columna especial para saber si son datos simulados o no.&#10;Falta refactorización aún." />
+    <MESSAGE value="refactoring maestro. Ahora se puede ejecutar paso a paso y no requiere de un módulo separado de &quot;simulation&quot; ni tablas especiales para datos de simulación" />
+    <MESSAGE value="eliminado módulo simulated y reintegrados todos los componentes directamente a src." />
+    <option name="LAST_COMMIT_MESSAGE" value="eliminado módulo simulated y reintegrados todos los componentes directamente a src." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="106" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.85">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/featureExtraction/calcLRSs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/ClusterExtractor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/CompositeSessionClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/FullSessionClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/SessionLRSBelongingClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/SessionUserClustersBelongingClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="5" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clusterClass/Cluster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="122" column="13" selection-start-line="122" selection-start-column="13" selection-end-line="122" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clusterClass/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/Clustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/userclusterings/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/userclusterings/FullUserClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1458755826427" expanded="false" signature="0:478" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/userclusterings/UserLRSHistogramClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1458755826531" expanded="false" signature="86:291" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/userclusterings/UserURLsBelongingClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1458755826379" expanded="false" signature="0:205" placeholder="import ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataParsing/dataParse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/loadConfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="42" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/sqlUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="134" column="57" selection-start-line="134" selection-start-column="57" selection-end-line="134" selection-end-column="57" />
+          <folding>
+            <element signature="e#101#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connections.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-23.75">
+          <caret line="38" column="15" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sessionParser/SessionParser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="37" selection-start-line="99" selection-start-column="21" selection-end-line="99" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/dataParsingUtils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="111" column="4" selection-start-line="111" selection-start-column="4" selection-end-line="111" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/executionSteps/simulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="26" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/executionSteps/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/clustering/clusterings/sessionclusterings/DirectSessionClustering.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="54" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/featureExtraction/ExtractFeatures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/featureExtractor/features/SessionDistanceFeature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21634616">
+          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

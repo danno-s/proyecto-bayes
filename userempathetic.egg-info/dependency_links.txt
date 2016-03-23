@@ -1,1 +1,0 @@
-http://scikit-learn.org/stable/developers/advanced_installation.html#advanced-installation

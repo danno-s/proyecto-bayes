@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc65f898-1b84-4023-80c7-215460d7f3b0" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dictionaries/sebastian.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/userempathetic.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <list id="b9cedf2a-7331-4bfe-9364-2e7f7388c673" name="connections" comment="" />
+    <list id="af741bae-d6f2-4e06-a037-ad3ffe6c1ec5" name=".idea" comment="no debiera estar en git" />
     <ignored path="userempathetic.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,7 +92,7 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.037220843">
+            <state vertical-scroll-proportion="0.042735044">
               <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
               <folding />
             </state>
@@ -136,9 +129,6 @@
         <option value="Python Script" />
       </list>
     </option>
-  </component>
-  <component name="Git.Rebase.Settings">
-    <option name="ONTO" value="refs/remotes/origin/master" />
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -371,14 +361,6 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="971" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-  </component>
-  <component name="PyConsoleOptionsProvider">
-    <option name="myPythonConsoleState">
-      <console-settings module-name="userempathetic" is-module-sdk="true">
-        <option name="myUseModuleSdk" value="true" />
-        <option name="myModuleName" value="userempathetic" />
-      </console-settings>
-    </option>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -727,22 +709,14 @@
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="bc65f898-1b84-4023-80c7-215460d7f3b0" name="Default" comment="" />
       <changelist id="b9cedf2a-7331-4bfe-9364-2e7f7388c673" name="connections" comment="" />
+      <changelist id="af741bae-d6f2-4e06-a037-ad3ffe6c1ec5" name=".idea" comment="no debiera estar en git" />
       <created>1451334553119</created>
       <option name="number" value="Default" />
       <updated>1451334553119</updated>
-    </task>
-    <task id="LOCAL-00082" summary="Agregado modo de simulación para SessionParser y parseSessions">
-      <created>1454354188785</created>
-      <option name="number" value="00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1454354188785</updated>
     </task>
     <task id="LOCAL-00083" summary="Removido modo simulación de commit anterior.">
       <created>1454357047617</created>
@@ -1032,49 +1006,14 @@
       <option name="project" value="LOCAL" />
       <updated>1458759908269</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="borrada la carpeta .idea">
+      <created>1458760120989</created>
+      <option name="number" value="00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1458760120989</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 26m 47s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 28m 09s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 29m 17s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 38m 16s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 38m 47s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 39m 21s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 41m 56s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_featureExtractionTests - 2016.02.01 at 11h 43m 18s.xml">
-      <configuration name="Nosetests in featureExtractionTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_mainTests - 2016.02.01 at 11h 44m 47s.xml">
-      <configuration name="Nosetests in mainTests" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Nosetests_in_testing_(1) - 2016.01.19 at 15h 35m 39s.xml">
-      <configuration name="Nosetests in testing (1)" configurationId="tests" />
-    </history-entry>
-  </component>
-  <component name="TodoView" selected-index="4">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -1084,12 +1023,12 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934132" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25273865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31220657" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="532" y="90" width="366" height="668" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31220657" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="532" y="90" width="366" height="668" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4527132" sideWeight="0.24365872" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.63100773" sideWeight="0.81936973" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40930232" sideWeight="0.81936973" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4403101" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1125,27 +1064,10 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
   </component>
-  <component name="Vcs.Log.UiProperties">
-    <option name="RECENTLY_FILTERED_USER_GROUPS">
-      <collection />
-    </option>
-    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-      <collection>
-        <UserGroup>
-          <option name="users">
-            <list>
-              <option value="simulationIndependency" />
-            </list>
-          </option>
-        </UserGroup>
-      </collection>
-    </option>
-  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Completar documentación." />
     <MESSAGE value="Corregida extracción de features en modo simulated." />
     <MESSAGE value="Agregado #outliers a clusterings" />
     <MESSAGE value="Separados los Clusterings en modulos dependiendo si son para usuarios o sesiones. Agregados FullSessionClustering y FullUserClustering que consideran un vector que concatena todas las features de cada uno de ellos." />
@@ -1170,7 +1092,8 @@
     <MESSAGE value="refactoring maestro. Ahora se puede ejecutar paso a paso y no requiere de un módulo separado de &quot;simulation&quot; ni tablas especiales para datos de simulación" />
     <MESSAGE value="eliminado módulo simulated y reintegrados todos los componentes directamente a src." />
     <MESSAGE value="borrada la carpeta .egg-info" />
-    <option name="LAST_COMMIT_MESSAGE" value="borrada la carpeta .egg-info" />
+    <MESSAGE value="borrada la carpeta .idea" />
+    <option name="LAST_COMMIT_MESSAGE" value="borrada la carpeta .idea" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1489,7 +1412,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.037220843">
+        <state vertical-scroll-proportion="0.042735044">
           <caret line="1" column="7" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="7" />
           <folding />
         </state>

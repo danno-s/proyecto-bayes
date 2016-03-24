@@ -13,7 +13,7 @@ class EdgesSessionizer(Sessionizer):
     def __init__(self):
         Sessionizer.__init__(self)
 
-    def bufferAccepts(self, sb, prevStep, step):  # TODO: (args, vals)
+    def bufferAccepts(self, sb, prevStep, step):
         """Acepta el paso actual cuando es el principio de una secuencia o cuando es un borde de una subsecuencia de
         macro_ids iguales consecutivas.
 

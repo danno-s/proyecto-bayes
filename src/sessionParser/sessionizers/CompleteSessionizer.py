@@ -8,7 +8,7 @@ class CompleteSessionizer(Sessionizer):
     def __init__(self):
         Sessionizer.__init__(self)
 
-    def bufferAccepts(self, sb, prevStep, step):  # TODO: (args, vals)
+    def bufferAccepts(self, sb, prevStep, step):
         """Siempre acepta el paso actual.
         Parameters
         ----------

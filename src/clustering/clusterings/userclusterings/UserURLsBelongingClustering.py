@@ -26,7 +26,7 @@ class UserURLsBelongingClustering(UserClustering):
         UserClustering.__init__(self,confD=confD)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])  # TODO: Configurar parámetros desde archivo de config.
+        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
 
     @classmethod
     def getData(self):

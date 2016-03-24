@@ -80,7 +80,7 @@ class ClusterExtractor:
             for cluster in clusters.values():
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
             outliers = c.getOutliers()
-            sqlCL.write(c.getSQLWrite,cluster.toSQLItem()) #TODO: implementar toSQLItem para outliers.
+            sqlCL.write(c.getSQLWrite(),outliers.toSQLItem())
             self.userClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception as e:  # TODO: Crear excepcion para esto.
@@ -112,6 +112,8 @@ class ClusterExtractor:
             print('Estimated number of Session clusters: %d' % c.n_clusters, '\n')
             for cluster in clusters.values():
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
+            outliers = c.getOutliers()
+            sqlCL.write(c.getSQLWrite(),outliers.toSQLItem())
             self.sessionClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception:

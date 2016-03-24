@@ -71,9 +71,6 @@ class Cluster:
         return [min([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
     def __str__(self):
-        if self.label == -1:
-            return "Outliers: " + "\t#" + str(self.size) + " outliers" \
-                                        "\n IDs:\n\t" + str(self.ids)
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
                                                                         "\n Members IDs:\n\t" + str(self.ids) + \
                 "\n Representative Member(s):\n\t" + str(self.getRepresentativeMember())
@@ -86,13 +83,13 @@ class Cluster:
 
     def getRepresentativeMember(self):
         if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
-            return self.getRepresentativeUser()
+            return self.__getRepresentativeUser()
         elif 'Session' in self.clusteringType:
-            return self.getRepresentativeSession()
+            return self.__getRepresentativeSession()
         else:
             print("Failed")
 
-    def getRepresentativeUser(self):
+    def __getRepresentativeUser(self):
         from src.utils.dataParsingUtils import getProfileOf
         centroid_vector = self.getCentroid()
         closestU = []
@@ -121,7 +118,7 @@ class Cluster:
             s += str(v) + "\n\t"
         return s
 
-    def getRepresentativeSession(self):
+    def __getRepresentativeSession(self):
         from src.utils.comparatorUtils import getSession
         centroid_vector = self.getCentroid()
         closestS = []

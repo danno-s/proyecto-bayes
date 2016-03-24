@@ -2,10 +2,6 @@ from matplotlib import pyplot as plt
 from src.utils.clusteringUtils import *
 
 
-
-
-
-
 class ClusterView:
 
     def __init__(self):
@@ -48,10 +44,11 @@ class ClusterView:
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')
 
-                #n_outliers = clusterExtractor.userClusterD[clustering].n_outliers
-                #plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
-                #         horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
-                #         rotation='horizontal',fontweight='bold')
+                outliers = getUserOutliersIDs(clustering)
+                n_outliers = len(outliers)
+                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
+                        horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
+                        rotation='horizontal',fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
                 plt.yticks([0, 1])
                 plt.margins(0.2)
@@ -89,10 +86,11 @@ class ClusterView:
                                transform=ax[k].transAxes,
                                color='green', fontsize=10, rotation='horizontal')
 
-                #n_outliers = clusterExtractor.sessionClusterD[clustering].n_outliers
-                #plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
-                #         horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
-                #         rotation='horizontal',fontweight='bold')
+                outliers = getSessionOutliersIDs(clustering)
+                n_outliers = len(outliers)
+                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
+                         horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
+                         rotation='horizontal',fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
                 plt.yticks([0, 1])
                 plt.margins(0.2)

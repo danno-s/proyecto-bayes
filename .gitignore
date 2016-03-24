@@ -1,2 +1,3 @@
-/config.json
-/.idea/workfile.xml
+/.idea/
+/**/*.pyc
+/src/connections.json

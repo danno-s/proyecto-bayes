@@ -123,7 +123,7 @@ def getVectorsOfSessionCluster(cl_id):
 
 def getUserClusterLabels(clustering):
     sqlCL = sqlWrapper('CL')
-    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"'")
+    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id != -1")
     L = list()
     for row in rows:
         L.append(row[0])
@@ -131,10 +131,29 @@ def getUserClusterLabels(clustering):
 
 def getSessionClusterLabels(clustering):
     sqlCL = sqlWrapper('CL')
-    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"'")
+    rows = sqlCL.read("SELECT DISTINCT cluster_id FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id != -1")
     L = list()
     for row in rows:
         L.append(row[0])
+    return L
+
+def getSessionOutliersIDs(clustering):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT members FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = -1")
+    L=list()
+    for row in rows:
+        for x in row[0].split(' '):
+            L.append(int(x))
+    return L
+
+
+def getUserOutliersIDs(clustering):
+    sqlCL = sqlWrapper('CL')
+    rows = sqlCL.read("SELECT members FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = -1")
+    L=list()
+    for row in rows:
+        for x in row[0].split(' '):
+            L.append(int(x))
     return L
 
 def getUserClusters(clustering):

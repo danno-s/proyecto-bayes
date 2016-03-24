@@ -4,6 +4,7 @@ Jerarquía de clases abstractas que definen formas de realizar Clustering.
 from abc import ABCMeta, abstractmethod
 import numpy as np
 from src.clusterClass.Cluster import Cluster
+from src.clusterClass.OutliersGroup import OutliersGroup
 
 
 class Clustering:
@@ -55,7 +56,7 @@ class Clustering:
                 pass
         outliers_mask = (self.clusteringAlgorithm.labels_ == -1)
         x_outliers = [(x,cl_id) for x, cl_id, i in zip(self.X, self.ids, outliers_mask) if i]
-        self.outliers = Cluster(vectors=[j[0] for j in x_outliers],ids=[j[1] for j in x_outliers],  label=-1, clusteringType=self.__class__.__name__[:-10])
+        self.outliers = OutliersGroup(vectors=[j[0] for j in x_outliers],ids=[j[1] for j in x_outliers], clusteringType=self.__class__.__name__[:-10])
         print(self.outliers)
         # Number of clusters in labels, ignoring noise if present.
         self.n_clusters = len(unique_labels)

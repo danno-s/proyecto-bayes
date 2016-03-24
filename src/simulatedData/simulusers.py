@@ -128,8 +128,33 @@ def noise(lista, p):
 
     return l
 
+def __probses(length, n1=70, n2 = 24):
+    l0 = [None] * length
+    l1 = [None] * length
+    l2 = [None] * length
 
-def getsession(n1=70, n2=24):
+    for i in range(length):
+        if i < (length * n1 / 100):
+            l0[i] = random.randint(0,10)
+            l1[i] = random.randint(0,5)
+            l2[i] = random.randint(0,2)
+        elif i < (length * (n1 + n2) / 100):
+            l0[i] = random.randint(0,5)
+            l1[i] = random.randint(0,10)
+            l2[i] = random.randint(0,5)
+        else:
+            l0[i] = random.randint(0,2)
+            l1[i] = random.randint(0,2)
+            l2[i] = random.randint(0,10)
+
+    l0 = [x/sum(l0) for x in l0]
+    l1 = [x/sum(l1) for x in l1]
+    l2 = [x/sum(l2) for x in l2]
+
+    return [l0, l1, l2]
+
+
+def getsession():
     """
     Selecciona las sesiones desde la tabla sessions
 
@@ -143,19 +168,13 @@ def getsession(n1=70, n2=24):
     rows = sqlPD.read(sqlRead)
     lr = len(rows)
 
-    L = [None] * 3
-
     #print(n1)
     #print(n2)
 
     if "," in rows[0][0]:
-        L[0] = [y.split(' ') for y in [x[0] for x in rows[:int(lr * n1 / 100)]]]
-        L[1] = [y.split(' ') for y in [x[0] for x in rows[int(lr * n1 / 100):int(lr * (n1 + n2) / 100)]]]
-        L[2] = [y.split(' ') for y in [x[0] for x in rows[int(lr * (n1 + n2) / 100):]]]
+        L = [y.split(' ') for y in [x[0] for x in rows]]
     else:
-        L[0] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[:int(lr * n1 / 100)]]]
-        L[1] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * n1 / 100):int(lr * (n1 + n2) / 100)]]]
-        L[2] = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows[int(lr * (n1 + n2) / 100):]]]
+        L = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows]]
     return L
 
 
@@ -170,7 +189,8 @@ def generate():
     ufrac = simulationConfig["userfrac"]
     sfrac = simulationConfig["sessionfrac"]
     users = simulusers(ufrac["n1"],ufrac["n2"],ufrac["n3"],simulationConfig["users"])
-    session = getsession(sfrac["n1"],sfrac["n2"])
+    session = getsession()
+    sprob = __probses(len(session),sfrac["n1"],sfrac["n2"])
     prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
@@ -183,14 +203,15 @@ def generate():
 
     for i in range(simulationConfig["sessions"]):
         for u in users:
-            l = session[u[1]]  # Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
-            ses = random.choice(l)  # Se elige una sesion
-            idx = l.index(ses) + 1  # Se guarda su índice para poder etiquetar
+            p = sprob[u[1]]# Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
+            idx = np.random.multinomial(1,p,size=1).tolist()[0].index(1) # Se guarda su índice para poder etiquetar
+            ses = session[idx]  # Se elige una sesion
+            # idx = l.index(ses) + 1
             ses = noise(ses, prob)  # Se añade ruido
-            if u[1] == 1:  # Se corrige la etiqueta
-                idx += len(session[0])
-            elif u[1] == 2:
-                idx += len(session[0]) + len(session[1])
+            # if u[1] == 1:  # Se corrige la etiqueta
+            #     idx += len(session[0])
+            # elif u[1] == 2:
+            #     idx += len(session[0]) + len(session[1])
             d = random.randint(1450000000, 1462534931)  # Timestamp de inicio
             for s in ses:
                 if type(s) is str:

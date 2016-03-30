@@ -165,13 +165,3 @@ class ClusterExtractor:
                 print(v.clusteringType + " Clusters")
                 first = False
             print(v)
-
-    def visualizeClusters(self):
-        """Permite visualizar elementos representativos de los clusters encontrados, tanto para usuarios como de sesiones.
-
-        Returns
-        -------
-
-        """
-        cV = ClusterView()
-        cV.view(self)

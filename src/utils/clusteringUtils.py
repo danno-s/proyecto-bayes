@@ -88,6 +88,14 @@ def getAllUserClusters(clustering_name):
 
 
 def getPerformedUserClusterings():
+    """Obtiene una lista con los clusterings de usuarios que fueron realizados correctamente.
+
+    Returns
+    -------
+    list
+        lista de clusterings de usuario realizados.
+
+    """
     from src.utils.loadConfig import Config
     sqlCL = sqlWrapper('CL')
     performedClusteringsL =list()
@@ -100,6 +108,14 @@ def getPerformedUserClusterings():
     return performedClusteringsL
 
 def getPerformedSessionClusterings():
+    """Obtiene una lista con los clusterings de sesiones que fueron realizados correctamente.
+
+    Returns
+    -------
+    list
+        lista de clusterings de sesiones realizados.
+
+    """
     from src.utils.loadConfig import Config
     sqlCL = sqlWrapper('CL')
     performedClusteringsL =list()
@@ -112,16 +128,50 @@ def getPerformedSessionClusterings():
     return performedClusteringsL
 
 def getVectorsOfUserCluster(cl_id):
+    """ Retorna lista de vectores para cluster de usuario de ID cl_id
+
+    Parameters
+    ----------
+    cl_id: id del cluster
+
+    Returns
+    -------
+    list
+        lista de vectores de cluster de usuario de ID cl_id.
+    """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read("SELECT vectors FROM userclusters WHERE id = "+str(cl_id))
     return rows[0][0]
 
 def getVectorsOfSessionCluster(cl_id):
+    """ Retorna lista de vectores para cluster de sesión de ID cl_id
+
+    Parameters
+    ----------
+    cl_id: id del cluster
+
+    Returns
+    -------
+    list
+        lista de vectores de cluster de sesión de ID cl_id.
+    """
     sqlCL = sqlWrapper('CL')
-    rows = sqlCL.read("SELECT vectors FROM userclusters WHERE id = "+str(cl_id))
+    rows = sqlCL.read("SELECT vectors FROM sessionclusters WHERE id = "+str(cl_id))
     return rows[0][0]
 
 def getUserClusterLabels(clustering):
+    """ Retorna una lista con las etiquetas de todos los clusters obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: UserClustering
+        clustering de Usuario
+
+    Returns
+    -------
+    list
+        lista de int con etiquetas de clusters obtenidos en el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read("SELECT DISTINCT cluster_id FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id != -1")
     L = list()
@@ -130,6 +180,18 @@ def getUserClusterLabels(clustering):
     return L
 
 def getSessionClusterLabels(clustering):
+    """ Retorna una lista con las etiquetas de todos los clusters obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: SessionClustering
+        clustering de sesión
+
+    Returns
+    -------
+    list
+        lista de int con etiquetas de clusters obtenidos en el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read("SELECT DISTINCT cluster_id FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id != -1")
     L = list()
@@ -138,6 +200,18 @@ def getSessionClusterLabels(clustering):
     return L
 
 def getSessionOutliersIDs(clustering):
+    """ Retorna una lista con las IDs de todos los outliers obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: SessionClustering
+        clustering de sesión
+
+    Returns
+    -------
+    list
+        lista de int con IDs de outliers obtenidos en el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read("SELECT members FROM sessionclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = -1")
     L=list()
@@ -148,6 +222,18 @@ def getSessionOutliersIDs(clustering):
 
 
 def getUserOutliersIDs(clustering):
+    """ Retorna una lista con las IDs de todos los outliers obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: UserClustering
+        clustering de usuario
+
+    Returns
+    -------
+    list
+        lista de int con IDs de outliers obtenidos en el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read("SELECT members FROM userclusters WHERE clustering_name = '"+ str(clustering.__name__[:-10])+"' AND cluster_id = -1")
     L=list()
@@ -157,6 +243,18 @@ def getUserOutliersIDs(clustering):
     return L
 
 def getUserClusters(clustering):
+    """ Retorna un diccionario con los clusters obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: UserClustering
+        clustering de usuario
+
+    Returns
+    -------
+    dict
+        diccionario de clusters obtenidos para el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     labels = getUserClusterLabels(clustering)
     userClusterD = dict()
@@ -169,6 +267,18 @@ def getUserClusters(clustering):
     return userClusterD
 
 def getSessionClusters(clustering):
+    """ Retorna un diccionario con los clusters obtenidos para el clustering indicado.
+
+    Parameters
+    ----------
+    clustering: SessionClustering
+        clustering de sesión
+
+    Returns
+    -------
+    dict
+        diccionario de clusters obtenidos para el clustering indicado.
+    """
     sqlCL = sqlWrapper('CL')
     labels = getSessionClusterLabels(clustering)
     sessionClusterD = dict()

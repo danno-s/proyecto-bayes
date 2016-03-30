@@ -112,6 +112,13 @@ class Config:
 
     @classmethod
     def getUserClusteringsConfigD(self):
+        """ Retorna dict con configuración para clusterings de usuario
+
+        Returns
+        -------
+        dict
+            con configuración de clusterings de usuario
+        """
 
         ucConfD = dict()
         user_clusteringD = Config.getDict("user_clustering")
@@ -123,7 +130,13 @@ class Config:
 
     @classmethod
     def getSessionClusteringsConfigD(self):
+        """ Retorna dict con configuración para clusterings de sesión
 
+        Returns
+        -------
+        dict
+            con configuración de clusterings de sesión
+        """
         scConfD = dict()
         session_clusteringD = Config.getDict("session_clustering")
         for k,v in session_clusteringD.items():

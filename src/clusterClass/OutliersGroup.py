@@ -12,6 +12,12 @@ class OutliersGroup(Cluster):
         Cluster.__init__(self, vectors, ids, -1, clusteringType)
 
     def toSQLItem(self):
+        """ Retorna versión reducida del SQL string, asignando None a la columna del centroide.
+
+        Returns
+        -------
+        (str,str,None,str,str)
+        """
         return self.label, ' '.join([str(x) for x in self.ids]), None, self.clusteringType,';'.join([' '.join(map(str,x)) for x in self.vectors])
 
     def getCentroid(self):

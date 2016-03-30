@@ -2,7 +2,7 @@
 
 class UserComparator:
     """
-    Clase que permite comparar dos sesiones según distintas métricas definidas.
+    Clase que permite comparar dos usuarios según distintas métricas definidas.
     """
 
     def __init__(self, uID1, uID2):
@@ -10,10 +10,10 @@ class UserComparator:
 
         Parameters
         ----------
-        sID1 : int
-            id de sesión a comparar
-        sID2 : int
-            id de sesión a comparar
+        uID1 : int
+            id de usuario a comparar
+        uID2 : int
+            id de usuario a comparar
 
         Returns
         -------
@@ -46,10 +46,10 @@ class UserComparator:
 if __name__ == '__main__':
 
     #sC = UserComparator(824, 869)
-    sC = UserComparator(1, 823)
+    uC = UserComparator(1, 824)
     from src.metrics.userMetrics.UserFeatureMetrics import UserLRSHistogramDistance
     from src.metrics.userMetrics.UserFeatureMetrics import UserURLsBelongingDistance
 
-    print("UserLRSHistogramDistance = "+ str(sC.compareUsers(UserLRSHistogramDistance())))
-    print("UserURLsBelongingDistance = "+ str(sC.compareUsers(UserURLsBelongingDistance())))
+    print("UserLRSHistogramDistance = "+ str(uC.compareUsers(UserLRSHistogramDistance())))
+    print("UserURLsBelongingDistance = "+ str(uC.compareUsers(UserURLsBelongingDistance())))
 

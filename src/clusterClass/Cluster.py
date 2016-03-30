@@ -78,10 +78,24 @@ class Cluster:
 
 
     def toSQLItem(self):
+        """Retorna tupla de strings con representación de los items que se almacenan en la base de datos SQL para el Cluster.
+
+        Returns
+        -------
+        (str,str,str,str,str)
+            Tupla de str definida por (label,ids,centroide,clusteringType,vectores)
+        """
         return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()]), \
                self.clusteringType, ';'.join([' '.join(map(str,x)) for x in self.vectors])
 
     def getRepresentativeMember(self):
+        """ Retorna str que muestra información del miembro(s) representativo(s) del cluster
+
+        Returns
+        -------
+        str:
+            Información del miembro representativo del cluster.
+        """
         if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
             return self.__getRepresentativeUser()
         elif 'Session' in self.clusteringType:

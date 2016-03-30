@@ -3,8 +3,12 @@ from src.utils.clusteringUtils import *
 
 
 class ClusterView:
+    """ Clase encargada de mostrar una visualización de los distintos clusters obtenidos en el sistema.
+    Obtiene los datos desde bases de datos y muestra un core sample promedio, máximo y mínimo según cada variable.
+    """
 
     def __init__(self):
+
         self.userClusteringD = dict()
         self.sessionClusteringD = dict()
         for uc in getPerformedUserClusterings():
@@ -13,6 +17,13 @@ class ClusterView:
             self.sessionClusteringD[uc] = getSessionClusters(pc)
 
     def view(self):
+        """ Utiliza módulo pyplot de matplotlib para graficar el valor por variable del centroide, máximo y mínimo de
+        cada cluster, Para cada tipo de clustering realizado tanto para usuarios como sesiones.
+
+        Returns
+        -------
+
+        """
         i = 0
         for clustering in self.userClusteringD.keys():
             clusterD = self.userClusteringD[clustering]

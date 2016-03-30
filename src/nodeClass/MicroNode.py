@@ -117,3 +117,5 @@ class MicroNode:
             "checkbox": micro.checkbox
         }
         return switcher.get(case, "nothing")
+
+#TODO@ConstanzaEscobar: documentar bien esta clase.

@@ -28,27 +28,6 @@ def extractURLs():
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
-    # for i,urltree in enumerate(URLs):
-    #   print("ARBOL DE URL N°"+str(i+1)+": " + json.dumps(urltree, indent=4))
-
-    # Función para encontrar URLs únicas dentro de un mismo árbol:
-
-    # def getURLs(d, urlset):
-    #    for k,v in d.items():
-    #        urlset.add(k)
-    #        if len(v) is not 0:
-    #            for urlT in v:
-    #                if isinstance(urlT, dict):
-    #                    getURLs(urlT, urlset)
-    #                else:
-    #                    urlset.add(urlT.keys())
-    #
-    # allurls = set()
-    # for urltr in URLs:
-    #    getURLs(urltr,allurls)
-    #
-    # print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
-
     # Limpia las tablas
     sqlPD.truncate("url")
     sqlPD.truncate("urls")

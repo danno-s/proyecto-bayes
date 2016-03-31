@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import hashlib
 
 from src.utils.sqlUtils import sqlWrapper

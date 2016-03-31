@@ -1,3 +1,7 @@
+"""
+Paso 5
+Script para ejecución del proceso de extracción de Sesiones.
+"""
 from src.dataParsing.parseSessions import parseSessions
 
 def sessionParsing():

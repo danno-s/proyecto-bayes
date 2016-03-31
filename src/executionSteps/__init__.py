@@ -1,8 +1,8 @@
 """
-Este módulo ordena los distintos scripts que componen los pasos del sistema, de manera de permitir
-una ejecución de un único paso o de realizar una ejecución secuencial a partir de un cierto paso.
+Este modulo ordena los distintos scripts que componen los pasos del sistema, de manera de permitir
+una ejecucion de un unico paso o de realizar una ejecucion secuencial a partir de un cierto paso.
 
-El orden de los pasos de ejecución es el siguiente:
+El orden de los pasos de ejecucion es el siguiente:
 
     1. urlExtraction
     2. userExtraction

@@ -1,4 +1,3 @@
-#!/usr/bin/python
 from src.utils.sqlUtils import sqlWrapper
 
 

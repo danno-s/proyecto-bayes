@@ -1,4 +1,9 @@
+"""
+Paso 12
+Script para ejecución de la visualización de clusters extraídos.
+"""
 from src.view.ClusterView import ClusterView
+
 
 def clusterVisualization():
     cv = ClusterView()

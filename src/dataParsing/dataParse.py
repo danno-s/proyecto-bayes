@@ -38,7 +38,7 @@ def dataParse():
 
         i += 1
 
-    print(i - 1)
+    print("Total nodes: " + str(i))
 
 
 if __name__ == '__main__':

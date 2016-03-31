@@ -1,3 +1,6 @@
+"""
+Ejecuta todos los pasos del sistema a partir del paso indicado en consola.
+"""
 from src.executionSteps.urlExtraction import urlExtraction
 from src.executionSteps.userExtraction import userExtraction
 from src.executionSteps.contentElementsExtraction import contentElementsExtraction

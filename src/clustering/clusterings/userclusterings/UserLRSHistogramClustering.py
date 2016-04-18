@@ -22,14 +22,14 @@ class UserLRSHistogramClustering(UserClustering):
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"
 
-    def __init__(self,confD=None):
+    def __init__(self, confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self,confD=confD)
+        UserClustering.__init__(self, confD=confD)
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
@@ -37,7 +37,8 @@ class UserLRSHistogramClustering(UserClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,vector from userfeatures where feature_name = '+"'UserLRSHistogram'"
+        sqlRead = 'select user_id,vector from userfeatures where feature_name = ' + \
+            "'UserLRSHistogram'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()
@@ -46,5 +47,3 @@ class UserLRSHistogramClustering(UserClustering):
             ids.append(int(row[0]))
             X.append([float(x) for x in row[1].split(' ')])
         return X, ids
-
-

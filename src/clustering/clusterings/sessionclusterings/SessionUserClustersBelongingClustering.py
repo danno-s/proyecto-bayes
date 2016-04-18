@@ -16,14 +16,14 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     ylabel = "Pertenencia del usuario-cluster"
     title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
 
-    def __init__(self,confD=None):
+    def __init__(self, confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        SessionClustering.__init__(self,confD=confD)
+        SessionClustering.__init__(self, confD=confD)
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
@@ -31,18 +31,19 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = '+"'SessionUserClustersBelonging'"
+        sqlRead = 'select session_id,vector from sessionfeatures where feature_name = ' + \
+            "'SessionUserClustersBelonging'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()
         ids = list()
-        for i,row in enumerate(rows):
+        for i, row in enumerate(rows):
             if row[1] is None:
                 raise Exception
             vector = row[1].split(' ')
             for x in vector:
                 if x == '':
-                    raise Exception #TODO: Crear excepción para esto
+                    raise Exception  # TODO: Crear excepción para esto
             ids.append(int(row[0]))
             X.append([int(x) for x in vector])
         return X, ids

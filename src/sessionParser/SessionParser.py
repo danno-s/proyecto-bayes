@@ -30,7 +30,9 @@ class SessionParser:
             self.simulation = simulation
         if not simulation:
             self.simulation = False
-            self.__loadNodes()  # carga self.nodesD con los generadores de nodos capturados asociados a cada usuario.
+            # carga self.nodesD con los generadores de nodos capturados
+            # asociados a cada usuario.
+            self.__loadNodes()
         else:
             self.__loadSimulNodes()
         self.sessionizer = sessionizer
@@ -46,23 +48,24 @@ class SessionParser:
         """
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
-        if self.simulation: # Borrar sólo los datos simulados anteriores.
+        if self.simulation:  # Borrar sólo los datos simulados anteriores.
             readParams = "profile, sequence, user_id, inittime, endtime"
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
-                                                     "(%s,%s,%s,%s,%s)"
-            sqlCD.truncateSimulated('sessions',readParams, sqlWrite)
+                "(%s,%s,%s,%s,%s)"
+            sqlCD.truncateSimulated('sessions', readParams, sqlWrite)
 
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
-            "(%s,%s,%s,%s,%s,%s,%s)"
+                "(%s,%s,%s,%s,%s,%s,%s)"
             for session in self.sessions:
-                sqlCD.write(sqlWrite, session.toSQLItem() + (True,None))#TODO: Agregar label de clustering.                                                     "(%s,%s,%s,%s,%s,%s,%s)"
+                # TODO: Agregar label de clustering.
+                # "(%s,%s,%s,%s,%s,%s,%s)"
+                sqlCD.write(sqlWrite, session.toSQLItem() + (True, None))
         else:               # Borrar toda la tabla.
             sqlCD.truncate('sessions')
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
-                                                     "(%s,%s,%s,%s,%s)"
+                "(%s,%s,%s,%s,%s)"
             for session in self.sessions:
                 sqlCD.write(sqlWrite, session.toSQLItem())
-
 
     def printSessions(self):
         """Imprime en consola las sesiones contenidas en el SessionParser.
@@ -103,4 +106,3 @@ class SessionParser:
         self.nodesD = dict()
         for user_id in self.userL:
             self.nodesD[user_id] = simulUserStepsGen(user_id)
-

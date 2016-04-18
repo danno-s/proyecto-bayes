@@ -10,6 +10,7 @@ class EdgesSessionizer(Sessionizer):
 
     Además, en la sesión guarda los micro estados de estos pasos.
     """
+
     def __init__(self):
         Sessionizer.__init__(self)
 

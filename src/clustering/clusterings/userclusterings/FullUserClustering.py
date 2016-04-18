@@ -19,14 +19,14 @@ class FullUserClustering(UserClustering):
     ylabel = "Valor"
     title = "Valores en cada dimensión de usuario representativo de cada cluster"
 
-    def __init__(self,confD=None):
+    def __init__(self, confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self,confD=confD)
+        UserClustering.__init__(self, confD=confD)
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
@@ -35,11 +35,11 @@ class FullUserClustering(UserClustering):
         X_lrs, ids = UserLRSHistogramClustering.getData()
         X_url, _ = UserURLsBelongingClustering.getData()
         X = list()
-        for i,user_id in enumerate(ids):
+        for i, user_id in enumerate(ids):
             vector = []
-            if len(X_lrs) > 0 :
+            if len(X_lrs) > 0:
                 vector.extend(X_lrs[i])
-            if len(X_url) > 0 :
+            if len(X_url) > 0:
                 vector.extend(X_url[i])
             X.append(vector)
 

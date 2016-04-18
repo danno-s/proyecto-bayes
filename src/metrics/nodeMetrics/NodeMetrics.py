@@ -11,6 +11,7 @@ class MacroDistance(NodeMetric):
     Clase que implementa la métrica como una heurística calculada en base a los árboles de URLs del macro estado
     de los nodos.
     """
+
     def __init__(self):
         NodeMetric.__init__(self)
 
@@ -35,26 +36,27 @@ class MacroDistance(NodeMetric):
         uset1 = set()
         uset2 = set()
         res = 0.
-        self.getURLs(u1,uset1)
-        self.getURLs(u2,uset2)
+        self.getURLs(u1, uset1)
+        self.getURLs(u2, uset2)
         print(sorted(uset1))
         print(sorted(uset2))
         for i in sorted(uset1):
             if i not in sorted(uset2):
-                res +=1.
+                res += 1.
         return res
 
     def getURLs(self, d, urlset):
         if d['value'] is not '':
-            urlset.add(d['value'].split('?')[0].split('#')[0]) # Filtra parametros de URL
+            urlset.add(d['value'].split('?')[0].split(
+                '#')[0])  # Filtra parametros de URL
             # TODO: USAR urllib.parse OBTENER LOS PARÁMETROS y COMPARAR TANTO LA URL BASE COMO LOS PARÁMETROS != que hay.
-            #urlset.add(d['value'])
+            # urlset.add(d['value'])
         if d['children'] is not '':
             for child in d['children']:
-                self.getURLs(child,urlset)
+                self.getURLs(child, urlset)
 
-
-    #URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
+    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de
+    # URLs del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
@@ -78,7 +80,6 @@ class MacroDistance(NodeMetric):
     #    getURLs(urltr,allurls)
     #
     # print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
-
 
 
 class MicroDistance(NodeMetric):
@@ -123,7 +124,7 @@ class MicroDistance(NodeMetric):
         #print("SELECTS DISTANCE=" + str(sel_d))
         #print("TEXTAREAS DISTANCE=" + str(tA_d))
         #print("RADIOBUTTONS DISTANCE=" + str(tA_d))
-                        # print("CHECKBOXS DISTANCE="+str(ch_d))
+        # print("CHECKBOXS DISTANCE="+str(ch_d))
         return float(sel_d + iT_d + tA_d + rB_d)
 
     def __inputTextDistance(self, t1, t2):

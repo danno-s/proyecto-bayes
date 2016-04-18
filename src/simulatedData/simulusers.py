@@ -10,7 +10,7 @@ from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
 
 
-def simulusers(n1=70,n2=23,n3=7,n=200):
+def simulusers(n1=70, n2=23, n3=7, n=200):
     """
     Genera usuarios simulados con un id, username y perfil
 
@@ -25,24 +25,28 @@ def simulusers(n1=70,n2=23,n3=7,n=200):
         Lista de usuarios con id y perfil
 
     """
-    usern = ["U8213221", "U6355477", "jefe_local"] #TODO: Leer los usernames de la tabla users
+    usern = ["U8213221", "U6355477",
+             "jefe_local"]  # TODO: Leer los usernames de la tabla users
 
     user = [None] * n
     for i in range(n):
         user[i] = random.choice(usern)
 
     user_id = random.sample(range(4000), n)  # ids generados al azar
-    profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + [2] * int(n3 * n / 100)  # perfiles de usuario
+    profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + \
+        [2] * int(n3 * n / 100)  # perfiles de usuario
     random.shuffle(profile)
 
     sqlPD = sqlWrapper(db='PD')
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
-    sqlPD.truncateSimulated("users",readParams, sqlWrite)
-    sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"  # Guardar usuarios
+    sqlPD.truncateSimulated("users", readParams, sqlWrite)
+    # Guardar usuarios
+    sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"
     print(user_id)
     for i in range(len(user_id)):
-        sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i],True, None)) #TODO: Insertar label de cluster (a priori).
+        # TODO: Insertar label de cluster (a priori).
+        sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i], True, None))
 
     return list(zip(user_id, profile))
 
@@ -116,8 +120,10 @@ def noise(lista, p):
     if len(lista) <= 2:
         return l
 
-    ins = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0]  # numero de inserciones
-    dele = np.random.multinomial(1, p[len(lista)], size=1).tolist()[0]  # numero de eliminaciones
+    ins = np.random.multinomial(1, p[len(lista)], size=1).tolist()[
+        0]  # numero de inserciones
+    dele = np.random.multinomial(1, p[len(lista)], size=1).tolist()[
+        0]  # numero de eliminaciones
 
     for i in range(ins.index(1)):
         l.insert(random.randint(0, len(l)), random.choice(l))
@@ -128,28 +134,29 @@ def noise(lista, p):
 
     return l
 
-def __probses(length, n1=70, n2 = 24):
+
+def __probses(length, n1=70, n2=24):
     l0 = [None] * length
     l1 = [None] * length
     l2 = [None] * length
 
     for i in range(length):
         if i < (length * n1 / 100):
-            l0[i] = random.randint(0,10)
-            l1[i] = random.randint(0,5)
-            l2[i] = random.randint(0,2)
+            l0[i] = random.randint(0, 10)
+            l1[i] = random.randint(0, 5)
+            l2[i] = random.randint(0, 2)
         elif i < (length * (n1 + n2) / 100):
-            l0[i] = random.randint(0,5)
-            l1[i] = random.randint(0,10)
-            l2[i] = random.randint(0,5)
+            l0[i] = random.randint(0, 5)
+            l1[i] = random.randint(0, 10)
+            l2[i] = random.randint(0, 5)
         else:
-            l0[i] = random.randint(0,2)
-            l1[i] = random.randint(0,2)
-            l2[i] = random.randint(0,10)
+            l0[i] = random.randint(0, 2)
+            l1[i] = random.randint(0, 2)
+            l2[i] = random.randint(0, 10)
 
-    l0 = [x/sum(l0) for x in l0]
-    l1 = [x/sum(l1) for x in l1]
-    l2 = [x/sum(l2) for x in l2]
+    l0 = [x / sum(l0) for x in l0]
+    l1 = [x / sum(l1) for x in l1]
+    l2 = [x / sum(l2) for x in l2]
 
     return [l0, l1, l2]
 
@@ -164,12 +171,14 @@ def getsession():
         Lista con las sesiones segun el perfil de usuario
     """
     sqlPD = sqlWrapper(db='CD')
-    sqlRead = 'SELECT sequence from sessions WHERE simulated = 0'   #TODO: CREO que deberias leer acá el perfil y relacionarlo con el que generabas randomicamente...
+    # TODO: CREO que deberias leer acá el perfil y relacionarlo con el que
+    # generabas randomicamente...
+    sqlRead = 'SELECT sequence from sessions WHERE simulated = 0'
     rows = sqlPD.read(sqlRead)
     lr = len(rows)
 
-    #print(n1)
-    #print(n2)
+    # print(n1)
+    # print(n2)
 
     if "," in rows[0][0]:
         L = [y.split(' ') for y in [x[0] for x in rows]]
@@ -185,26 +194,31 @@ def generate():
     Parameters
     ----------
     """
-    simulationConfig= Config.getDict("simulation")
+    simulationConfig = Config.getDict("simulation")
     ufrac = simulationConfig["userfrac"]
     sfrac = simulationConfig["sessionfrac"]
-    users = simulusers(ufrac["n1"],ufrac["n2"],ufrac["n3"],simulationConfig["users"])
+    users = simulusers(ufrac["n1"], ufrac["n2"], ufrac[
+                       "n3"], simulationConfig["users"])
     session = getsession()
-    sprob = __probses(len(session),sfrac["n1"],sfrac["n2"])
-    prob = __probtable(list({len(x) for y in session for x in y if len(x) >= 3}))
+    sprob = __probses(len(session), sfrac["n1"], sfrac["n2"])
+    prob = __probtable(
+        list({len(x) for y in session for x in y if len(x) >= 3}))
 
     sqlCD = sqlWrapper(db='CD')
     readParams = "user_id, clickDate, urls_id, profile, micro_id"
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id) VALUES (%s, %s, %s, %s, %s)"
-    sqlCD.truncateSimulated("nodes",readParams, sqlWrite)
+    sqlCD.truncateSimulated("nodes", readParams, sqlWrite)
 
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 
     for i in range(simulationConfig["sessions"]):
         for u in users:
-            p = sprob[u[1]]# Se elige el grupo de sesiones de donde se seleccionara la session segun el perfil
-            idx = np.random.multinomial(1,p,size=1).tolist()[0].index(1) # Se guarda su índice para poder etiquetar
+            # Se elige el grupo de sesiones de donde se seleccionara la session
+            # segun el perfil
+            p = sprob[u[1]]
+            idx = np.random.multinomial(1, p, size=1).tolist()[0].index(
+                1)  # Se guarda su índice para poder etiquetar
             ses = session[idx]  # Se elige una sesion
             # idx = l.index(ses) + 1
             ses = noise(ses, prob)  # Se añade ruido
@@ -220,7 +234,5 @@ def generate():
                 else:
                     L = [u[0], d, s, u[1], None, True, idx]
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
-                d += random.randint(1, Config.getValue('session_tlimit','INT') - 1)
-
-
-
+                d += random.randint(1,
+                                    Config.getValue('session_tlimit', 'INT') - 1)

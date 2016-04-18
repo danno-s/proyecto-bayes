@@ -17,7 +17,7 @@ setup(
     author='Sebastian Galvez, Constanza Escobar',
     author_email='sebastian.galvez@ing.uchile.cl',
     description='Prototipo de clustering de sesiones y usuarios.',
-    install_requires = [
+    install_requires=[
         'mysql-connector-python',
         'pyyaml',
         'numpy',

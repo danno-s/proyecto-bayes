@@ -3,12 +3,14 @@ from src.metrics.sessionMetrics.DirectMetrics import SequenceMSSDistance
 from src.utils.featureExtractionUtils import getAllSessionIDs
 from src.featureExtractor.features.Feature import SessionFeature
 
+
 class SessionDistanceFeature(SessionFeature):
     """
     Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
     """
     tablename = 'sessionfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + \
+        ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
 
     def __init__(self, session_id):
         """Constructor
@@ -35,8 +37,8 @@ class SessionDistanceFeature(SessionFeature):
 
         """
         for i in self.s_ids:
-            sC = SessionComparator(self.session_id,i)
-            self.vector[i-1]= sC.compareSessions(SequenceMSSDistance())
+            sC = SessionComparator(self.session_id, i)
+            self.vector[i - 1] = sC.compareSessions(SequenceMSSDistance())
 
     def __str__(self):
         return "Session " + str(self.session_id) + ": " + str(

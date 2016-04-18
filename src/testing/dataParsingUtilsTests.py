@@ -3,6 +3,7 @@ from src.utils.dataParsingUtils import *
 
 
 class MyTestCase(unittest.TestCase):
+
     def test_getAllUserIDs(self):
         users = getAllUserIDs()
         self.assertTrue(len(users) > 0)

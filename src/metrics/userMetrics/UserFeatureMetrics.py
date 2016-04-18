@@ -9,6 +9,7 @@ class UserLRSHistogramDistance(UserMetric):
     """
     Clase que implementa la métrica como una distancia entre los vectores histograma de LRS (LRS Histogram).
     """
+
     def __init__(self):
         UserMetric.__init__(self)
 
@@ -30,7 +31,7 @@ class UserLRSHistogramDistance(UserMetric):
         v1 = self.getLRSHistogramVector(u1)
         v2 = self.getLRSHistogramVector(u2)
         if v1 or v2 is None:
-            raise Exception #TODO: Crear excepción para esto.
+            raise Exception  # TODO: Crear excepción para esto.
         print(v1)
         print(v2)
         return float(sum([abs(x - y) for x, y in zip(v1, v2)]))
@@ -50,10 +51,12 @@ class UserLRSHistogramDistance(UserMetric):
         """
         return getFeatureOfUser(user_id, 'UserLRSHistogram')
 
+
 class UserURLsBelongingDistance(UserMetric):
     """
     Clase que implementa la métrica como una distancia entre los vectores de pertenencia a URLs (URLs Belonging vector).
     """
+
     def __init__(self):
         UserMetric.__init__(self)
 

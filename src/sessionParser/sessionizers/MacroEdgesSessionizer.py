@@ -10,6 +10,7 @@ class MacroEdgesSessionizer(Sessionizer):
 
     Guarda únicamente el macro estado de cada paso en la sesión.
     """
+
     def __init__(self):
         Sessionizer.__init__(self)
 

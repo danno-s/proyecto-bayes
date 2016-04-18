@@ -9,6 +9,7 @@ class SessionLRSBelongingDistance(SessionMetric):
     """
     Clase que implementa la métrica como una distancia entre los vectores de pertenencia a LRS (LRS Belonging vector).
     """
+
     def __init__(self):
         SessionMetric.__init__(self)
 
@@ -54,6 +55,7 @@ class SessionUserClustersBelongingDistance(SessionMetric):
     Clase que implementa la métrica como una distancia entre los vectores de pertenencia a Clusters de Usuarios
      (UserClusters Belonging vector).
     """
+
     def __init__(self):
         SessionMetric.__init__(self)
 
@@ -75,7 +77,7 @@ class SessionUserClustersBelongingDistance(SessionMetric):
         v1 = self.getUserClustersBelongingVector(s1.session_id)
         v2 = self.getUserClustersBelongingVector(s2.session_id)
         if v1 or v2 is None:
-            raise Exception #TODO: Crear excepción para esto.
+            raise Exception  # TODO: Crear excepción para esto.
         print(v1)
         print(v2)
         return sum([abs(x - y) for x, y in zip(v1, v2)])

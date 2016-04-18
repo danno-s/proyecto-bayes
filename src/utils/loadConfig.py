@@ -89,7 +89,7 @@ class Config:
         return jsonArray
 
     @classmethod
-    def getDict(self,attr):
+    def getDict(self, attr):
         """Permite obtener los valores de un atributo de tipo dict indicado.
 
         Notes
@@ -122,9 +122,9 @@ class Config:
 
         ucConfD = dict()
         user_clusteringD = Config.getDict("user_clustering")
-        for k,v in user_clusteringD.items():
+        for k, v in user_clusteringD.items():
             if k in self.userClusteringsD.keys():
-                ucConfD[self.userClusteringsD[k]]=v
+                ucConfD[self.userClusteringsD[k]] = v
 
         return ucConfD
 
@@ -139,8 +139,8 @@ class Config:
         """
         scConfD = dict()
         session_clusteringD = Config.getDict("session_clustering")
-        for k,v in session_clusteringD.items():
+        for k, v in session_clusteringD.items():
             if k in self.sessionClusteringsD.keys():
-                scConfD[self.sessionClusteringsD[k]]=v
+                scConfD[self.sessionClusteringsD[k]] = v
 
         return scConfD

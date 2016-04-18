@@ -5,6 +5,7 @@ class CompleteSessionizer(Sessionizer):
     """
     Sessionizer que considera todos los pasos capturados para formar una sesión.
     """
+
     def __init__(self):
         Sessionizer.__init__(self)
 

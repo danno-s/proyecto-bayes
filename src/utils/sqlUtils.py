@@ -34,7 +34,7 @@ class sqlWrapper:
             # try:
             self.__loadConnections()
             # except:
-            #    raise ConnectionError #TODO: Definir excepciones de este estilo
+            # raise ConnectionError #TODO: Definir excepciones de este estilo
 
     def setDB(self, db):
         """Define la base de datos a la que se conectara
@@ -57,21 +57,23 @@ class sqlWrapper:
             Si existe, se realiza un 'DELETE FROM table WHERE where_condition'
         """
         cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
-                                          host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         if where_condition:
-            cursor.execute('DELETE FROM ' + table + " WHERE " + where_condition)
+            cursor.execute('DELETE FROM ' + table +
+                           " WHERE " + where_condition)
         else:
             cursor.execute('TRUNCATE ' + table)
 
         cnx.commit()
         cnx.close()
 
-    def truncateSimulated(self,table, readParams, sqlWrite):
-        old_rows = self.read("SELECT "+readParams+" FROM " + table + " WHERE simulated = 0")
+    def truncateSimulated(self, table, readParams, sqlWrite):
+        old_rows = self.read("SELECT " + readParams +
+                             " FROM " + table + " WHERE simulated = 0")
         self.truncate(table)
         for row in old_rows:
-            self.write(sqlWrite,row)
+            self.write(sqlWrite, row)
 
     def read(self, sqlRead):
         """Efectúa la consulta sqlRead

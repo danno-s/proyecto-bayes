@@ -11,6 +11,7 @@ class DurationDistance(SessionMetric):
     """
     Clase que implementa la métrica como una diferencia entre las duraciones de las sesiones.
     """
+
     def __init__(self):
         SessionMetric.__init__(self)
 
@@ -60,6 +61,7 @@ class HourOfDayDistance(SessionMetric):
 
         La idea de esto es evaluar si existe una tendencia en el momento del día en que se realizan las sesiones.
     """
+
     def __init__(self):
         SessionMetric.__init__(self)
 
@@ -95,4 +97,3 @@ class HourOfDayDistance(SessionMetric):
         relative_hour = session.initTime.hour + session.initTime.minute / 60.
         print(relative_hour)
         return relative_hour / 24.0
-

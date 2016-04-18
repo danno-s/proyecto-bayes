@@ -27,7 +27,8 @@ def getLastDataTime():
         un timestamp con el tiempo de la última captura.
     """
     sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederán
-    rows = sqlGT.read("SELECT clickDate FROM pageview ORDER BY id DESC LIMIT 1")
+    rows = sqlGT.read(
+        "SELECT clickDate FROM pageview ORDER BY id DESC LIMIT 1")
     if len(rows) > 0:
         tdata = rows[0][0]
     else:
@@ -87,7 +88,8 @@ def labelData(tinit, tend, rec_id, label=''):
 
     """
     try:
-        sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederán
+        sqlGT = sqlWrapper(db='GT')
     except:
         raise
     sqlUpdate = "UPDATE pageview SET process_id=" + str(label) + ",rec_id=" + str(
@@ -111,7 +113,8 @@ def labelGroundTruthProcess():
     if pID not in [int(x) for x in processes.keys()]:
         print("Etiqueta no corresponde a un proceso válido...")
         return
-    confirmation = input("Está seguro que desea registrar el proceso '" + processes[pID] + "'? (Y/N)")
+    confirmation = input(
+        "Está seguro que desea registrar el proceso '" + processes[pID] + "'? (Y/N)")
     if confirmation.upper() != 'Y':
         return
 
@@ -122,7 +125,8 @@ def labelGroundTruthProcess():
         YML = yaml.safe_load(f)
     dbname = YML['db.options']['dbname']
 
-    # Modifica archivo local db.yml que modifica la base de datos donde se guarda la captura
+    # Modifica archivo local db.yml que modifica la base de datos donde se
+    # guarda la captura
     with open('/home/sebastian/www/guidecapture/config/db.yml', 'w') as f:
         YML['db.options']['dbname'] = 'seba_procesos'
         yaml.dump(YML, f, indent=8, default_flow_style=False)
@@ -144,7 +148,8 @@ def labelGroundTruthProcess():
     print("Process captured.")
 
     # Label the finished process:
-    print("Labeling data from tstamps " + str(tinit) + " to " + str(tend) + " with process ID ..." + str(pID))
+    print("Labeling data from tstamps " + str(tinit) + " to " +
+          str(tend) + " with process ID ..." + str(pID))
     labelData(tinit, tend, rec_id, label=pID)
     print("Labeling finished.")
 

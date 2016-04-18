@@ -9,7 +9,9 @@ class SessionUserClustersBelongingFeature(SessionFeature):
     (UserClusters Belonging vector) para una sesión.
     """
     tablename = 'sessionfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + \
+        ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
+
     def __init__(self, session_id):
         """Constructor
 
@@ -40,7 +42,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
                 break
 
     def __str__(self):
-        return str(self.session_id) + ": ["+str(self.user)+"]" + str(self.vector)
+        return str(self.session_id) + ": [" + str(self.user) + "]" + str(self.vector)
 
     def toSQLItem(self):
         if len(self.vector) == 0:
@@ -48,5 +50,3 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         else:
             v = ' '.join([str(x) for x in self.vector])
         return str(self.session_id), v, self.__class__.__name__[:-7]
-
-

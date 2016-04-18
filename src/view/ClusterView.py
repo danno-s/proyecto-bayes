@@ -34,7 +34,8 @@ class ClusterView:
                 # Fine-tune figure; make subplots close to each other and hide x ticks for
                 # all but bottom plot.
                 f1.subplots_adjust(hspace=0)
-                plt.setp([a.get_xticklabels() for a in f1.axes[:-1]], visible=False)
+                plt.setp([a.get_xticklabels()
+                          for a in f1.axes[:-1]], visible=False)
                 features_dim = clusterD[0].features_dim
                 for k, v in clusterD.items():
                     low = v.getMin()
@@ -42,7 +43,8 @@ class ClusterView:
                     up = v.getMax()
                     idx = range(features_dim)
                     ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                   yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                   yerr=[
+                                       [x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
                                    capsize=3,
                                    markersize=8)
 
@@ -57,9 +59,9 @@ class ClusterView:
 
                 outliers = getUserOutliersIDs(clustering)
                 n_outliers = len(outliers)
-                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
-                        horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
-                        rotation='horizontal',fontweight='bold')
+                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers), verticalalignment='center',
+                         horizontalalignment='left', transform=ax[k].transAxes, color='red', fontsize=10,
+                         rotation='horizontal', fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
                 plt.yticks([0, 1])
                 plt.margins(0.2)
@@ -77,7 +79,8 @@ class ClusterView:
                 # Fine-tune figure; make subplots close to each other and hide x ticks for
                 # all but bottom plot.
                 f2.subplots_adjust(hspace=0)
-                plt.setp([a.get_xticklabels() for a in f2.axes[:-1]], visible=False)
+                plt.setp([a.get_xticklabels()
+                          for a in f2.axes[:-1]], visible=False)
                 features_dim = clusterD[0].features_dim
                 for k, v in clusterD.items():
                     low = v.getMin()
@@ -85,7 +88,8 @@ class ClusterView:
                     up = v.getMax()
                     idx = range(features_dim)
                     ax[k].errorbar(idx, c, fmt='b.', ecolor='r',
-                                   yerr=[[x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
+                                   yerr=[
+                                       [x - y for x, y in zip(c, low)], [x - y for x, y in zip(up, c)]],
                                    capsize=3,
                                    markersize=8)
                     ax[k].text(1.01, 0.5, '#' + str(k),
@@ -99,9 +103,9 @@ class ClusterView:
 
                 outliers = getSessionOutliersIDs(clustering)
                 n_outliers = len(outliers)
-                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers),verticalalignment='center',
-                         horizontalalignment='left',transform=ax[k].transAxes, color='red', fontsize=10,
-                         rotation='horizontal',fontweight='bold')
+                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers), verticalalignment='center',
+                         horizontalalignment='left', transform=ax[k].transAxes, color='red', fontsize=10,
+                         rotation='horizontal', fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
                 plt.yticks([0, 1])
                 plt.margins(0.2)

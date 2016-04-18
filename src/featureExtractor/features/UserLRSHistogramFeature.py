@@ -6,7 +6,8 @@ from src.utils.sqlUtils import sqlWrapper
 
 class UserLRSHistogramFeature(UserFeature):
     tablename = 'userfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + \
+        ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
 
     def __init__(self, user_id):
         UserFeature.__init__(self)
@@ -24,7 +25,8 @@ class UserLRSHistogramFeature(UserFeature):
         """
         # Lectura de sesiones del usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where user_id=' + str(self.user_id)
+        sqlRead = 'select sequence from sessions where user_id=' + \
+            str(self.user_id)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
         # Cálculo de histograma de uso de LRSs.
@@ -40,7 +42,8 @@ class UserLRSHistogramFeature(UserFeature):
             self.vector = [val / self.count for val in self.vector]
 
     def __str__(self):
-        return str(self.user_id) + ": " + str(self.vector)  # ' '.join([str("%.4f"%(x)) for x in self.vector])
+        # ' '.join([str("%.4f"%(x)) for x in self.vector])
+        return str(self.user_id) + ": " + str(self.vector)
 
     def toSQLItem(self):
         return str(self.user_id), ' '.join([str("%.4f" % x) for x in self.vector]), self.__class__.__name__[:-7]

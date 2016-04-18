@@ -47,7 +47,7 @@ if __name__ == '__main__':
         sessionParsing()
     if a <= 5:
         print("Simulating new Users, Nodes and Sessions...")
-        simulation(generation = True)
+        simulation(generation=True)
     if a <= 6:
         print("LRSs Extraction...")
         lrsExtraction()
@@ -66,5 +66,3 @@ if __name__ == '__main__':
     if a <= 11:
         print("Clustering Visualization...")
         clusterVisualization()
-
-

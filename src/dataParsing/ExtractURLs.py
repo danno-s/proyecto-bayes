@@ -10,7 +10,8 @@ def extractURLs():
 
     """
     try:
-        sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederán
+        sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
@@ -23,7 +24,8 @@ def extractURLs():
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     URLs = [x for x in rows]
-    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de URLs del sitio en las capturas"
+    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de
+    # URLs del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
@@ -36,7 +38,8 @@ def extractURLs():
     for url in L:
         sqlPD.write(sqlWrite + '"' + url + '");')
 
-    sqlWrite = "INSERT INTO urls (urls) VALUES ("  # Guardar Árboles completos de URLs.
+    # Guardar Árboles completos de URLs.
+    sqlWrite = "INSERT INTO urls (urls) VALUES ("
 
     for urlstree in URLs:
         # urljsonstr = json.dumps(urlstree).replace(' ', '')

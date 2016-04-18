@@ -9,6 +9,7 @@ class Session:
     """
     Clase Session, representa una sesión en el sistema
     """
+
     def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None):
         """ Constructor de una Session.
 
@@ -80,12 +81,14 @@ class Session:
         firstStep = steps[0]
         macro_id = firstStep[0]
         micro_id = firstStep[1]
-        firstNode = Node(user_id=self.user_id, profile=self.profile, urls_id=macro_id, microNode=micro_id)
+        firstNode = Node(user_id=self.user_id, profile=self.profile,
+                         urls_id=macro_id, microNode=micro_id)
         currentNode = firstNode
         for step in steps[1:]:
             macro_id = step[0]
             micro_id = step[1]
-            newNode = Node(user_id=self.user_id, profile=self.profile, urls_id=macro_id, microNode=micro_id)
+            newNode = Node(user_id=self.user_id, profile=self.profile,
+                           urls_id=macro_id, microNode=micro_id)
             currentNode.addNext(newNode)
             currentNode = currentNode.next
         return firstNode
@@ -111,7 +114,7 @@ class Session:
         str
             string con la información de la sesión.
         """
-        return str(self.user_id) + " ["+str(self.profile)+"] "+":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
+        return str(self.user_id) + " [" + str(self.profile) + "] " + ":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
             self.initTime) + " >> " + str(self.endTime)
 
     def __sequenceToStr(self, sequence):

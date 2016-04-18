@@ -3,6 +3,7 @@ from src.utils.clusteringUtils import *
 
 
 class MyTestCase(unittest.TestCase):
+
     def test_getAllUserClusters(self):
         userClustersD = getAllUserClusters("userlrshistogramclusters")
         self.assertTrue(len(userClustersD) > 0)

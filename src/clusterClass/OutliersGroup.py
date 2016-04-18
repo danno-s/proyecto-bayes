@@ -18,7 +18,7 @@ class OutliersGroup(Cluster):
         -------
         (str,str,None,str,str)
         """
-        return self.label, ' '.join([str(x) for x in self.ids]), None, self.clusteringType,';'.join([' '.join(map(str,x)) for x in self.vectors])
+        return self.label, ' '.join([str(x) for x in self.ids]), None, self.clusteringType, ';'.join([' '.join(map(str, x)) for x in self.vectors])
 
     def getCentroid(self):
         return None
@@ -33,5 +33,4 @@ class OutliersGroup(Cluster):
         return None
 
     def __str__(self):
-        return "Group of Outliers:" + "\t#" + str(self.size) + " outliers \n Outliers IDs:\n\t" + str(self.ids)+"\n"
-
+        return "Group of Outliers:" + "\t#" + str(self.size) + " outliers \n Outliers IDs:\n\t" + str(self.ids) + "\n"

@@ -9,7 +9,8 @@ class UserURLsBelongingFeature(UserFeature):
     Esto indica los árboles de URLs usados por el usuario, en todas sus sesiones conocidas.
     """
     tablename = 'userfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + \
+        ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
 
     def __init__(self, user_id):
         """
@@ -37,7 +38,8 @@ class UserURLsBelongingFeature(UserFeature):
         """
         # Lectura de nodos de usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select urls_id, user_id from nodes where user_id=' + str(self.user)
+        sqlRead = 'select urls_id, user_id from nodes where user_id=' + \
+            str(self.user)
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
         # Cálculo de vector de uso de URLs.

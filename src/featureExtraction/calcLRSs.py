@@ -27,7 +27,8 @@ def calcLRSs():
 
     allsubseqsL = list()  # urls subsequences of all sessions.
     fullseqsL = list()  # sequences of all sessions.
-    sessionSubseqs = dict()  # (idsession, set of subsequences of current session).
+    # (idsession, set of subsequences of current session).
+    sessionSubseqs = dict()
     userD = dict()  # (idsession,user)
     for row in rows:
         userD[int(row[0])] = row[3]
@@ -63,7 +64,8 @@ def calcLRSs():
         #   [Sin discriminar secuencias repetidas por un mismo usuario]
         #   [Considera subsequencias]
 
-        print("Buscando LRSs para un total de " + str(len(allsubseqsL)) + " subsecuencias.")
+        print("Buscando LRSs para un total de " +
+              str(len(allsubseqsL)) + " subsecuencias.")
         for seq in allsubseqsL:
             for k, v in sessionSubseqs.items():
                 if seq not in Seqs:

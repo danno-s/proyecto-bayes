@@ -50,7 +50,8 @@ class MyTestCase(unittest.TestCase):
                 user = row[1]
                 tinit = row[2]
                 tend = row[3]
-                self.assertTrue(isinstance(s_id, int) and isinstance(user, int))
+                self.assertTrue(isinstance(s_id, int)
+                                and isinstance(user, int))
                 self.assertTrue(tinit, datetime.datetime)
                 self.assertTrue(tend, datetime.datetime)
         except:

@@ -36,8 +36,8 @@ class SessionComparator:
             Valor de comparación entre las dos sesiones.
         """
         # assert isinstance(metric,SessionMetric)
-        #print(self.s1)
-        #print(self.s2)
+        # print(self.s1)
+        # print(self.s2)
         try:
             return metric.compare(self)
         except Exception:
@@ -61,12 +61,14 @@ if __name__ == '__main__':
     durationDistance = sC.compareSessions(DurationDistance())
     print("DurationDistance = " + str(durationDistance) + " seconds.")
     hourOfDayDistance = sC.compareSessions(HourOfDayDistance())
-    print("HourOfDaysDistance = " + str(hourOfDayDistance) + " [hours of the day]")
+    print("HourOfDaysDistance = " +
+          str(hourOfDayDistance) + " [hours of the day]")
     lrsbelongingDistance = sC.compareSessions(SessionLRSBelongingDistance())
     print("LRSBelongingDistance = " + str(lrsbelongingDistance))
-    userclustersbelongingDistance = sC.compareSessions(SessionUserClustersBelongingDistance())
-    print("UserClustersBelongingDistance = " + str(userclustersbelongingDistance))
-
+    userclustersbelongingDistance = sC.compareSessions(
+        SessionUserClustersBelongingDistance())
+    print("UserClustersBelongingDistance = " +
+          str(userclustersbelongingDistance))
 
     from src.metrics.sessionMetrics.DirectMetrics import MacroSequenceMSSDistance
 

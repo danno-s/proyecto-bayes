@@ -11,4 +11,3 @@ def clusterVisualization():
 
 if __name__ == '__main__':
     clusterVisualization()
-

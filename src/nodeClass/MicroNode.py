@@ -24,7 +24,8 @@ class MicroNode:
         if sqlStr[0][5] != '':
             self.selects = [int(x) for x in sqlStr[0][5].split(" ")]
         if sqlStr[0][6] != '':
-            self.checkbox = [[int(y) for y in x.split("-")] for x in sqlStr[0][6].split(" ")]
+            self.checkbox = [[int(y) for y in x.split("-")]
+                             for x in sqlStr[0][6].split(" ")]
         pass
 
     # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
@@ -118,4 +119,4 @@ class MicroNode:
         }
         return switcher.get(case, "nothing")
 
-#TODO@ConstanzaEscobar: documentar bien esta clase.
+# TODO@ConstanzaEscobar: documentar bien esta clase.

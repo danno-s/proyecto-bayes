@@ -9,7 +9,8 @@ class SessionLRSBelongingFeature(SessionFeature):
     Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
     """
     tablename = 'sessionfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + tablename + \
+        ' (session_id,vector,feature_name) VALUES (%s,%s,%s)'
 
     def __init__(self, session_id):
         """Constructor
@@ -37,7 +38,8 @@ class SessionLRSBelongingFeature(SessionFeature):
         """
         # Lectura de sesion desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select sequence from sessions where id=' + str(self.session_id)
+        sqlRead = 'select sequence from sessions where id=' + \
+            str(self.session_id)
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
         # Cálculo de subsecuencias y correspondencia con uso de LRSs.

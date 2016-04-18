@@ -3,6 +3,7 @@ from src.dataParsing.MicroStateVectorExtractor import MicroStateVectorExtractor
 from src.nodeClass.MicroNode import MicroNode
 from src.sessionClass.Session import Session
 
+
 def getURLsTree(urls_id):
     """ Retorna un string en formato json correspondiente al árbol de URLs de la ID indicada.
 
@@ -22,6 +23,7 @@ def getURLsTree(urls_id):
     sqlRead = "select urls from urls where id = " + str(urls_id)
     rows = sqlPD.read(sqlRead)
     return rows[0][0]
+
 
 def getSession(session_id):
     """Retorna un objeto Session correspondiente a la sesión de ID indicada.
@@ -93,13 +95,13 @@ def getFeatureOfSession(session_id, feature):
     from src.utils.loadConfig import Config
     assert feature in Config().getArray("session_features")
     sqlFT = sqlWrapper('FT')
-    sqlRead = "SELECT vector FROM sessionfeatures WHERE session_id =" + str(session_id) +" AND feature_name = '"+feature+"'"
+    sqlRead = "SELECT vector FROM sessionfeatures WHERE session_id =" + \
+        str(session_id) + " AND feature_name = '" + feature + "'"
     row = sqlFT.read(sqlRead)
     if row[0][0] is None:
         return None
     else:
         return [int(x) for x in row[0][0].split(' ')]
-
 
 
 def getMSS(s1, s2):
@@ -130,7 +132,9 @@ def getMSS(s1, s2):
 
     v1 = list()
     v2 = list()
-    c = list()  # Cuenta los nodos saltados para identificar una equivalencia de macroestado.
+    # Cuenta los nodos saltados para identificar una equivalencia de
+    # macroestado.
+    c = list()
 
     ind1 = 0
     ind2 = 0
@@ -193,7 +197,8 @@ def getFeatureOfUser(user_id, feature):
     from src.utils.loadConfig import Config
     assert feature in Config().getArray("user_features")
     sqlFT = sqlWrapper('FT')
-    sqlRead = "SELECT vector FROM userfeatures WHERE user_id = " + str(user_id) +" AND feature_name = '"+feature+"'"
+    sqlRead = "SELECT vector FROM userfeatures WHERE user_id = " + \
+        str(user_id) + " AND feature_name = '" + feature + "'"
     row = sqlFT.read(sqlRead)
     if len(row) == 0 or row[0][0] is None:
         return None
@@ -201,7 +206,6 @@ def getFeatureOfUser(user_id, feature):
         return [float(x) for x in row[0][0].split(' ')]
 
 
-
 if __name__ == '__main__':
-    #print(getMicroNode(12).toDict())
-    print(getFeatureOfUser(1,'UserLRSHistogram'))
+    # print(getMicroNode(12).toDict())
+    print(getFeatureOfUser(1, 'UserLRSHistogram'))

@@ -18,14 +18,14 @@ from src.utils.loadConfig import Config
 userFeaturesD = {
     "UserURLsBelonging": UserURLsBelongingFeature,
     "UserLRSHistogram": UserLRSHistogramFeature
-    }
+}
 sessionFeaturesD = {
     "SessionLRSBelonging": SessionLRSBelongingFeature,
     "SessionDistance": SessionDistanceFeature
-    }
+}
 sessionPostClusteringFeaturesD = {
     "SessionUserClustersBelonging": SessionUserClustersBelongingFeature
-    }
+}
 
 
 def extractFeatures():

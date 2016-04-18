@@ -11,7 +11,8 @@ def extractUsers():
 
     """
     try:
-        sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederán
+        sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
@@ -38,7 +39,8 @@ def extractUsers():
     #  print(L)
 
     sqlPD.truncate("users")  # Limpia la tabla
-    sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"  # Guardar usuarios
+    # Guardar usuarios
+    sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
     for item in L:
         sqlPD.write(sqlWrite, item)
 

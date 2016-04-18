@@ -50,6 +50,7 @@ if __name__ == '__main__':
     from src.metrics.userMetrics.UserFeatureMetrics import UserLRSHistogramDistance
     from src.metrics.userMetrics.UserFeatureMetrics import UserURLsBelongingDistance
 
-    print("UserLRSHistogramDistance = "+ str(uC.compareUsers(UserLRSHistogramDistance())))
-    print("UserURLsBelongingDistance = "+ str(uC.compareUsers(UserURLsBelongingDistance())))
-
+    print("UserLRSHistogramDistance = " +
+          str(uC.compareUsers(UserLRSHistogramDistance())))
+    print("UserURLsBelongingDistance = " +
+          str(uC.compareUsers(UserURLsBelongingDistance())))

@@ -4,6 +4,7 @@ class Cluster:
     """
     Clase que representa un cluster, con sus elementos contenidos y etiqueta respectiva.
     """
+
     def __init__(self, vectors, ids, label, clusteringType=None):
         """Constructor
 
@@ -73,9 +74,9 @@ class Cluster:
     def __str__(self):
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
                                                                         "\n Members IDs:\n\t" + str(self.ids) + \
-                "\n Representative Member(s):\n\t" + str(self.getRepresentativeMember())
-               #"\n Elements Features:\n\t" + str(self.elements) + \
-
+            "\n Representative Member(s):\n\t" + \
+            str(self.getRepresentativeMember())
+        #"\n Elements Features:\n\t" + str(self.elements) + \
 
     def toSQLItem(self):
         """Retorna tupla de strings con representación de los items que se almacenan en la base de datos SQL para el Cluster.
@@ -86,7 +87,8 @@ class Cluster:
             Tupla de str definida por (label,ids,centroide,clusteringType,vectores)
         """
         return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()]), \
-               self.clusteringType, ';'.join([' '.join(map(str,x)) for x in self.vectors])
+            self.clusteringType, ';'.join(
+                [' '.join(map(str, x)) for x in self.vectors])
 
     def getRepresentativeMember(self):
         """ Retorna str que muestra información del miembro(s) representativo(s) del cluster
@@ -110,8 +112,8 @@ class Cluster:
         closestV = set()
         min_dist = 100.
         from scipy.spatial.distance import cityblock
-        for x,u_id in zip(self.vectors, self.ids):
-            d = cityblock(x,centroid_vector)
+        for x, u_id in zip(self.vectors, self.ids):
+            d = cityblock(x, centroid_vector)
             if d == min_dist:
                 closestU.append(u_id)
                 closestV.add(str(x))
@@ -122,11 +124,11 @@ class Cluster:
                 closestV.add(str(x))
                 min_dist = d
 
-        s = "Centroid: " +str(centroid_vector) + "\n\t"
-        s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
+        s = "Centroid: " + str(centroid_vector) + "\n\t"
+        s += "Min Distance to centroid: " + str(min_dist) + "\n\t"
         s += "Closest User(s) with profiles: "
         for u in closestU:
-            s+= str(u) + " ["+ str(getProfileOf(u)) + "], \t"
+            s += str(u) + " [" + str(getProfileOf(u)) + "], \t"
         s += "\n\tClosest Vector(s): \n\t"
         for v in closestV:
             s += str(v) + "\n\t"
@@ -139,8 +141,8 @@ class Cluster:
         closestV = set()
         min_dist = 100.
         from scipy.spatial.distance import cityblock
-        for x,s_id in zip(self.vectors, self.ids):
-            d = cityblock(x,centroid_vector)
+        for x, s_id in zip(self.vectors, self.ids):
+            d = cityblock(x, centroid_vector)
             if d == min_dist:
                 closestS.append(s_id)
                 closestV.add(str(x))
@@ -151,11 +153,11 @@ class Cluster:
                 closestV.add(str(x))
                 min_dist = d
 
-        s = "Centroid: " +str(centroid_vector) + "\n\t"
-        s += "Min Distance to centroid: "+ str(min_dist) + "\n\t"
+        s = "Centroid: " + str(centroid_vector) + "\n\t"
+        s += "Min Distance to centroid: " + str(min_dist) + "\n\t"
         s += "Closest Session(s) with profiles: \n\t"
         for s_id in closestS:
-            s+= str(getSession(s_id)) + "\n\t"
+            s += str(getSession(s_id)) + "\n\t"
         s += "\n\tClosest Vector(s): \n\t"
         for v in closestV:
             s += str(v) + "\n\t"

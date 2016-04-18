@@ -6,6 +6,7 @@ import json
 
 
 class Node(object):
+
     def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, urls_id=None, microNode=None):
         """
 
@@ -57,7 +58,7 @@ class Node(object):
         Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
                     clickdate=self.clickdate, microNode=self.microNode.toDict())
         return json.dumps(Dict)
-    
+
     def __str__(self):
         return str(self.profile) + ":(" + str(self.urls_id) + "," + str(self.microNode) + ")"
-#TODO@ConstanzaEscobar: documentar bien esta clase.
+# TODO@ConstanzaEscobar: documentar bien esta clase.

@@ -75,9 +75,9 @@ class SequenceMSSDistance(SessionMetric):
             distancia calculada.
         """
         v1, v2, c = getMSS(s1, s2)
-        #print(v1)
-        #print(v2)
-        #print(c)
+        # print(v1)
+        # print(v2)
+        # print(c)
         if s1.profile != s2.profile:
             macroDist = 10.0
         macroDist = sum(c) + len(s2.sequence) + len(s1.sequence) - 2 * len(c)
@@ -88,5 +88,4 @@ class SequenceMSSDistance(SessionMetric):
             nodeDist += microDistance
         #print("MACRO DIST= "+ str(macroDist))
         #print("micro DIST= "+ str(nodeDist))
-        return  self.alpha*macroDist + self.beta*nodeDist
-
+        return self.alpha * macroDist + self.beta * nodeDist

@@ -5,6 +5,7 @@ class MacroCompleteSessionizer(Sessionizer):
     """
     Sessionizer que considera todos los pasos capturados para formar una sesión, pero guarda solo los macro estados.
     """
+
     def __init__(self):
         Sessionizer.__init__(self)
         pass

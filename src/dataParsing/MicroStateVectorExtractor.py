@@ -10,6 +10,7 @@ class MicroStateVectorExtractor:
     Clase encargada de extraer los vectores de micro estado del sitio y almacenarlos en un diccionario.
     Los elementos a extraer se definen en el archivo de configuración del sistema.
     """
+
     def __init__(self):
         """Constructor
 
@@ -26,13 +27,15 @@ class MicroStateVectorExtractor:
         }
         from src.utils.loadConfig import Config
         self.elementTypes = sorted(Config().getArray(attr='elementTypes'))
-        self.availableTypes = ' / '.join([x for x in sorted(__allFuncs.keys())])
+        self.availableTypes = ' / '.join(
+            [x for x in sorted(__allFuncs.keys())])
         self.funcD = dict()
         for el_type in self.elementTypes:
             try:
                 self.funcD[el_type] = __allFuncs[el_type]
             except KeyError:
-                print("Type '" + el_type + "' is not a valid element type for the extractor.")
+                print("Type '" + el_type +
+                      "' is not a valid element type for the extractor.")
                 print("Please check that the types array in Config.json contains only these:\n" + str(
                     self.getAvailableTypes()))
 

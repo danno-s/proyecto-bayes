@@ -19,7 +19,8 @@ class Sessionizer:
         -------
 
         """
-        self.tlimit = Config.getValue(attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
+        self.tlimit = Config.getValue(
+            attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
 
     def sessionize(self, sParser):
         """Método encargado de obtener sesiones a partir de los nodos cargados en el SessionParser.
@@ -38,16 +39,20 @@ class Sessionizer:
         # Obtener todos los usuarios.
         userL = sParser.userL
         assert len(userL) > 0
-        nodesD = sParser.nodesD  # nodesD[user_id]= stepGen: (clickDate,urls_id, profile,microNode)
+        # nodesD[user_id]= stepGen: (clickDate,urls_id, profile,microNode)
+        nodesD = sParser.nodesD
         assert len(nodesD) > 0
-        # Extraer sesiones para cada usuario, dado un tiempo limite entre pasos.
+        # Extraer sesiones para cada usuario, dado un tiempo limite entre
+        # pasos.
         sessions = list()
         for user_id in userL:
-            user_sessions = self.extractSessionsOf(user_id, nodesD[user_id])  # Array of Session() objects.
+            # Array of Session() objects.
+            user_sessions = self.extractSessionsOf(user_id, nodesD[user_id])
             if len(user_sessions) > 0:
                 for s in user_sessions:
                     sessions.append(s)
-        assert len(sessions) > 0  # TODO: Agregar Excepcion NoSessionsFoundException
+        # TODO: Agregar Excepcion NoSessionsFoundException
+        assert len(sessions) > 0
         return sessions
 
     def extractSessionsOf(self, user_id, stepsGen):
@@ -78,9 +83,11 @@ class Sessionizer:
         for step in stepsGen:
             macro_id = step[1]
             micro_id = step[3]
-            if step[0] - prevStep[0] <= self.tlimit:  # condición para mantenerse en sesión actual
+            # condición para mantenerse en sesión actual
+            if step[0] - prevStep[0] <= self.tlimit:
                 if self.bufferAccepts(sb, prevStep, step):
-                    sb.append(self.toIDPair(prevStep[1], prevStep[3]))  # Agregar datos a sesión actual
+                    # Agregar datos a sesión actual
+                    sb.append(self.toIDPair(prevStep[1], prevStep[3]))
             else:
                 endTime = prevStep[0]
                 sb.append(self.toIDPair(prevStep[1], prevStep[3]))
@@ -89,11 +96,13 @@ class Sessionizer:
                 sessions.append(
                     self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar sesión actual del usuario
 
-                sb.append(self.toIDPair(step[1], step[3]))  # inicializar nueva sesión
+                # inicializar nueva sesión
+                sb.append(self.toIDPair(step[1], step[3]))
                 initTime = step[0]
             prevStep = step  # actualizar step previo.
         else:
-            sb.append(self.toIDPair(macro_id, micro_id))  # inicializar nueva sesión
+            # inicializar nueva sesión
+            sb.append(self.toIDPair(macro_id, micro_id))
             endTime = prevStep[0]
             if sb.first() == sb.at(1):
                 sb.remove(0)

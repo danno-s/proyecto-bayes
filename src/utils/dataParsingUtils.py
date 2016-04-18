@@ -107,6 +107,7 @@ def getAllUserIDs():
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
+
 def getAllSimulUserIDs():
     """
     Obtiene una lista con las id de los usuarios SIMULADOS desde la base de datos
@@ -125,6 +126,7 @@ def getAllSimulUserIDs():
     sqlRead = "select user_id from users WHERE simulated = 1"
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
+
 
 def getAllURLsIDs():
     """
@@ -163,11 +165,11 @@ def userStepsGen(user_id):
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +\
-           " AND simulated = 0")
+    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+                      " AND simulated = 0")
     for row in rows:
-        yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
-
+        # (clickDate, urls_id, profile, micro_id)
+        yield (row[0], row[2], row[3], row[4])
 
 
 def simulUserStepsGen(user_id):
@@ -187,7 +189,8 @@ def simulUserStepsGen(user_id):
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id)+ \
-                    " AND simulated = 1")
+    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+                      " AND simulated = 1")
     for row in rows:
-        yield (row[0], row[2], row[3], row[4])  # (clickDate, urls_id, profile, micro_id)
+        # (clickDate, urls_id, profile, micro_id)
+        yield (row[0], row[2], row[3], row[4])

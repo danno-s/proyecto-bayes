@@ -4,6 +4,7 @@ Script para ejecución del proceso de clustering de sesiones.
 """
 from src.clustering.ClusterExtractor import ClusterExtractor
 
+
 def sessionClustering():
     cE = ClusterExtractor()
     cE.extractSessionClusters()

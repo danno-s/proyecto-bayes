@@ -2,6 +2,7 @@ class SessionBuffer:
     """
     Clase que define un buffer de sesiones.
     """
+
     def __init__(self):
         """Constructor que inicia list del buffer
 

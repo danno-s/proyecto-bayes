@@ -8,7 +8,9 @@ from src.view.ClusterView import ClusterView
 from src.utils.sqlUtils import sqlWrapper
 from src.utils.loadConfig import Config
 
+
 class ClusterExtractor:
+
     def __init__(self):
         """Constructor
 
@@ -29,8 +31,12 @@ class ClusterExtractor:
         self.sessionClusteringsConfD = Config.getSessionClusteringsConfigD()
         self.userClusteringsConfD = Config.getUserClusteringsConfigD()
         self.performedClusteringsL = list()
-        self.userClusterD = dict()  # Diccionario con todos los clusters de usuario. La llave es la clase de UserClustering.
-        self.sessionClusterD = dict()  # Diccionario con todos los clusters de sesión. La llave es la clase de SessionClustering.
+        # Diccionario con todos los clusters de usuario. La llave es la clase
+        # de UserClustering.
+        self.userClusterD = dict()
+        # Diccionario con todos los clusters de sesión. La llave es la clase de
+        # SessionClustering.
+        self.sessionClusterD = dict()
 
     def extractUserClusters(self):
         """Recorre todos los clustering de usuarios y realiza el clustering para cada uno.
@@ -80,7 +86,7 @@ class ClusterExtractor:
             for cluster in clusters.values():
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
             outliers = c.getOutliers()
-            sqlCL.write(c.getSQLWrite(),outliers.toSQLItem())
+            sqlCL.write(c.getSQLWrite(), outliers.toSQLItem())
             self.userClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception as e:  # TODO: Crear excepcion para esto.
@@ -88,7 +94,6 @@ class ClusterExtractor:
             traceback.print_exc()
             print('No se obtuvieron clusters con ' + str(clustering.__name__))
             print(e)
-
 
     def __clusterizeSessions(self, clustering):
         """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
@@ -109,18 +114,18 @@ class ClusterExtractor:
             c = clustering(confD=self.sessionClusteringsConfD[clustering])
             c.clusterize()
             clusters = c.getClusters()
-            print('Estimated number of Session clusters: %d' % c.n_clusters, '\n')
+            print('Estimated number of Session clusters: %d' %
+                  c.n_clusters, '\n')
             for cluster in clusters.values():
                 sqlCL.write(c.getSQLWrite(), cluster.toSQLItem())
             outliers = c.getOutliers()
-            sqlCL.write(c.getSQLWrite(),outliers.toSQLItem())
+            sqlCL.write(c.getSQLWrite(), outliers.toSQLItem())
             self.sessionClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
         except Exception:
             import traceback
             traceback.print_exc()
-            print('No se obtuvieron clusters con ' +str(clustering.__name__))
-
+            print('No se obtuvieron clusters con ' + str(clustering.__name__))
 
     def printUserCluster(self, clustering):
         """Muestra en consola los clusters encontrados para el clustering de usuarios.

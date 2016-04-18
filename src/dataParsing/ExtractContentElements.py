@@ -16,7 +16,8 @@ def extractContentElements():
 
     """
     try:
-        sqlGC = sqlWrapper(db='GC')  # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederán
+        sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
@@ -53,7 +54,8 @@ def extractContentElements():
 
     sqlPD.truncate("contentElements")
 
-    # Guarda sets únicos de elementos con sus macro_id en tabla contentElements.
+    # Guarda sets únicos de elementos con sus macro_id en tabla
+    # contentElements.
     sqlWrite = "INSERT INTO contentElements (macro_id"
     for el in elementTypes:
         sqlWrite += ',' + el

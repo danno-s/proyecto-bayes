@@ -4,6 +4,7 @@ Script para ejecución del proceso de extracción de usuarios.
 """
 from src.dataParsing.ExtractUsers import extractUsers
 
+
 def userExtraction():
     extractUsers()
 

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 """
 Extractor de los micro estados del sitio para los datos capturados.
 """

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Módulo para cargar configuración desde un archivo "config.json" en el path del proyecto.
 """

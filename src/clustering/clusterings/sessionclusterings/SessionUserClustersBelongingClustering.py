@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from src.clustering.clusterings.Clustering import SessionClustering
 import numpy as np
 from sklearn.cluster import DBSCAN

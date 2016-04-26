@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Clase Node, representa un Nodo (paso) de una sesión
 """

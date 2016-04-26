@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Definición de distintas Distance (implementacicones de SessionMetric) que utilizan los Features extraídos de sesiones.
 """

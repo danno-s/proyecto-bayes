@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Jerarquía de clases abstractas que definen formas de realizar Clustering.
 """

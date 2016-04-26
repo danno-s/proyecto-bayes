@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class MicroNode:
     """
     Clase MicroNode, representa los micro estados del modelo.

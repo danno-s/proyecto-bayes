@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Modelo de representación de una sesión.
 """

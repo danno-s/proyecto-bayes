@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import hashlib
 
 from src.utils.sqlUtils import sqlWrapper

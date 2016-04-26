@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from src.utils.sqlUtils import sqlWrapper
 from src.dataParsing.MicroStateVectorExtractor import MicroStateVectorExtractor
 from src.nodeClass.MicroNode import MicroNode

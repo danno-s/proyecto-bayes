@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 """
 Extrae vectores que definen micro-estados únicos de los eventos en la base de datos.

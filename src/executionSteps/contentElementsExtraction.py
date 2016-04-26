@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Paso 3
 Script para ejecución del proceso de extracción de content elements.

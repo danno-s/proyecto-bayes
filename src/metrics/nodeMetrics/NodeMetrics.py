@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Definición de distintas Distance (implementacicones de NodeMetric) que comparan dos nodos.
 """

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Módulo para lectura y escritura en bases de datos SQL, mediante la librería mysql.connector
 """

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Paso 4
 Script para ejecución del proceso de creación de nodos.

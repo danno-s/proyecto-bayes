@@ -59,7 +59,7 @@ class Sessionizer:
         """Método encargado de obtener sesiones del usuario indicado, a partir del generador de nodos indicado.
 
         Parameters
-        ----------
+        ---------
         user_id : int
             ID del usuario
         stepsGen : generator
@@ -72,6 +72,9 @@ class Sessionizer:
         try:
             prevStep = stepsGen.__next__()
         except StopIteration:
+            return sessions
+        except AttributeError:
+            print("AttributeError")
             return sessions
         initTime = prevStep[0]  # tiempo del primer dato.
         macro_id = prevStep[1]

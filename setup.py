@@ -13,7 +13,7 @@ setup(
               'src.sessionParser', 'src.sessionParser.sessionizers',
               'src.featureExtractor', 'src.featureExtractor.features',
               'src.featureExtraction', 'src.sessionComparator',
-              'src.groundTruthLabeling'],
+              'src.groundTruthLabeling', 'src.view', 'src.simulatedData'],
     url='',
     license='',
     author='Sebastian Galvez, Constanza Escobar',

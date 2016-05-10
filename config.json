@@ -149,7 +149,7 @@
       }
   },
   "simulation": {
-    "users": 100,
+    "users": 10000,
     "sessions": 2,
     "userfrac":{
       "n1": 70,

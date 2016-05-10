@@ -49,6 +49,7 @@ class FullUserClustering(UserClustering):
 
 
 if __name__ == '__main__':
+    # Error cuando corro este script. -P.Reszczynski
     fuc = FullUserClustering()
     print(fuc.featuresDIM)
     print(UserLRSHistogramClustering().featuresDIM)

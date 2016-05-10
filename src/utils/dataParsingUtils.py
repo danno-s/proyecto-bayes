@@ -124,9 +124,11 @@ def getAllSimulUserIDs():
     try:
         sqlPD = sqlWrapper(db='PD')
     except:
+        print("excepcion con sql")
         raise
     sqlRead = "select user_id from users WHERE simulated = 1"
     rows = sqlPD.read(sqlRead)
+    print("rows: "); print(rows)
     return [int(row[0]) for row in rows]
 
 

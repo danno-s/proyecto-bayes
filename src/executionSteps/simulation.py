@@ -15,4 +15,4 @@ def simulation(generation=False):
 
 
 if __name__ == '__main__':
-    simulation()
+    simulation(1)

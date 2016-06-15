@@ -5,12 +5,15 @@
 """
 
 import random
+import json
 import numpy as np
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
 
+conf = json.loads("simulConfig.json")
 
-def simulusers(n1=70, n2=23, n3=7, n=200):
+
+def simulusers(n1=70, n2=23, n3=7, n=200): #TODO: estos parametros deberian ser configurados tambien, sacar desde N_clusters
     """
     Genera usuarios simulados con un id, username y perfil
 
@@ -35,7 +38,7 @@ def simulusers(n1=70, n2=23, n3=7, n=200):
     user_id = random.sample(range(4000), n)  # ids generados al azar
     profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + \
         [2] * int(n3 * n / 100)  # perfiles de usuario
-    random.shuffle(profile)
+    random.shuffle(profile) #TODO: en lugar de asignarles un perfil, usar dirichlet para asignar sesiones
 
     sqlPD = sqlWrapper(db='PD')
     readParams = "user_id,username,profile"
@@ -214,6 +217,7 @@ def generate():
 
     for i in range(simulationConfig["sessions"]):
         for u in users:
+            # TODO: se debe usar los parametros en simulConfig para elegir una sesion
             # Se elige el grupo de sesiones de donde se seleccionara la session
             # segun el perfil
             p = sprob[u[1]]
@@ -221,6 +225,7 @@ def generate():
                 1)  # Se guarda su índice para poder etiquetar
             ses = session[idx]  # Se elige una sesion
             # idx = l.index(ses) + 1
+            # TODO: desde aqui en adelante es lo mismo
             ses = noise(ses, prob)  # Se añade ruido
             # if u[1] == 1:  # Se corrige la etiqueta
             #     idx += len(session[0])

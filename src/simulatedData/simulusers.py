@@ -13,7 +13,7 @@ from src.utils.sqlUtils import sqlWrapper
 conf = json.loads("simulConfig.json")
 
 
-def simulusers(n1=70, n2=23, n3=7, n=200): #TODO: estos parametros deberian ser configurados tambien, sacar desde N_clusters
+def simulusers(n1=70, n2=23, n3=7, n=200):  # TODO: estos parametros deberian ser configurados tambien, sacar desde N_clusters
     """
     Genera usuarios simulados con un id, username y perfil
 
@@ -28,9 +28,11 @@ def simulusers(n1=70, n2=23, n3=7, n=200): #TODO: estos parametros deberian ser 
         Lista de usuarios con id y perfil
 
     """
-    usern = ["U8213221", "U6355477",
-             "jefe_local"]  # TODO: Leer los usernames de la tabla users
+    sqlPD = sqlWrapper(db='PD')
 
+    usernQuery = "SELECT username FROM users WHERE simulated = 0"
+
+    usern = [i[0] for i in sqlPD.read(usernQuery)]
     user = [None] * n
     for i in range(n):
         user[i] = random.choice(usern)
@@ -38,9 +40,10 @@ def simulusers(n1=70, n2=23, n3=7, n=200): #TODO: estos parametros deberian ser 
     user_id = random.sample(range(4000), n)  # ids generados al azar
     profile = [0] * int(n1 * n / 100) + [1] * int(n2 * n / 100) + \
         [2] * int(n3 * n / 100)  # perfiles de usuario
-    random.shuffle(profile) #TODO: en lugar de asignarles un perfil, usar dirichlet para asignar sesiones
+    random.shuffle(profile)
+                   # TODO: en lugar de asignarles un perfil, usar dirichlet
+                   # para asignar sesiones
 
-    sqlPD = sqlWrapper(db='PD')
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
     sqlPD.truncateSimulated("users", readParams, sqlWrite)

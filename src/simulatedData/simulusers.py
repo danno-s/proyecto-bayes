@@ -7,11 +7,22 @@
 import random
 import json
 import numpy as np
+import re
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
 
-conf = json.loads("simulConfig.json")
+def cleanJSON(JSONFile):
+    commentREGEX = re.compile('/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/', re.DOTALL | re.MULTILINE)
+    with open(JSONFile) as J:
+        content = ''.join(J.readlines())
+        match = commentREGEX.search(content)
 
+        while match:
+            content = content[:match.start()] + content[match.end():]
+            match = commentREGEX.search(content)
+        return json.loads(content)
+
+conf = cleanJSON("simulConfig.json")
 
 def simulusers(n1=70, n2=23, n3=7, n=200):  # TODO: estos parametros deberian ser configurados tambien, sacar desde N_clusters
     """
@@ -244,3 +255,6 @@ def generate():
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
                 d += random.randint(1,
                                     Config.getValue('session_tlimit', 'INT') - 1)
+
+if __name__ == '__main__':
+    generate()

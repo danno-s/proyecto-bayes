@@ -133,13 +133,19 @@ def noise(lista, p):
     list
         La sesion con ruido
     """
+   # print (lista)
+
+   # for key,values in p.items():
+   #     print(key)
+   #     print(values)
+
     l = list(lista)
     if len(lista) <= 2:
         return l
 
-    ins = np.random.multinomial(1, p[len(lista)], size=1).tolist()[
+    ins = np.random.multinomial(1, p[len(lista)%3+3], size=1).tolist()[
         0]  # numero de inserciones
-    dele = np.random.multinomial(1, p[len(lista)], size=1).tolist()[
+    dele = np.random.multinomial(1, p[len(lista)%3+3], size=1).tolist()[
         0]  # numero de eliminaciones
 
     for i in range(ins.index(1)):
@@ -226,6 +232,7 @@ def generate():
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id) VALUES (%s, %s, %s, %s, %s)"
     sqlCD.truncateSimulated("nodes", readParams, sqlWrite)
 
+    sqlClean = "DELETE FROM users WHERE simulated = 1"
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 

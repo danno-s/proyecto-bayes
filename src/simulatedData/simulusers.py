@@ -8,12 +8,17 @@ import random
 import json
 import numpy as np
 import re
+import os
+import pprint
+
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
 
 def cleanJSON(JSONFile):
+    print("path: "+os.path.dirname(os.path.abspath(__file__)))
+    dirname = os.path.dirname(os.path.abspath(__file__)) + "/src/simulatedData/"
     commentREGEX = re.compile('/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/', re.DOTALL | re.MULTILINE)
-    with open(JSONFile) as J:
+    with open(dirname + JSONFile) as J:
         content = ''.join(J.readlines())
         match = commentREGEX.search(content)
 
@@ -60,7 +65,7 @@ def simulusers(n1=70, n2=23, n3=7, n=200):  # TODO: estos parametros deberian se
     sqlPD.truncateSimulated("users", readParams, sqlWrite)
     # Guardar usuarios
     sqlWrite = "INSERT INTO users (user_id,username,profile, simulated, label) VALUES (%s, %s, %s, %s ,%s)"
-    print(user_id)
+    #print(user_id)
     for i in range(len(user_id)):
         # TODO: Insertar label de cluster (a priori).
         sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i], True, None))
@@ -209,6 +214,38 @@ def getsession():
         L = [[int(s) for s in y.split(' ')] for y in [x[0] for x in rows]]
     return L
 
+def cleanDB():
+    sqlCD = sqlWrapper(db='CD')
+    sqlPD = sqlWrapper(db='PD')
+    deleteUsers = "DELETE FROM users WHERE simulated = 1"
+    deleteSessions = "DELETE FROM sessions WHERE simulated = 1"
+    deleteNodes = "DELETE FROM nodes WHERE simulated = 1"
+    sqlPD.write(deleteUsers); sqlCD.write(deleteSessions); sqlCD.write(deleteNodes)
+    print("Database cleaned")
+
+def showSimulated():
+    sqlCD = sqlWrapper(db='CD')
+    sqlPD = sqlWrapper(db='PD')
+    getUsers = "SELECT * FROM users WHERE simulated = 1"
+    getSessions = "SELECT * FROM sessions WHERE simulated = 1"
+    getNodes = "SELECT * FROM nodes WHERE simulated = 1"
+    print("Users:")
+    print([i[0] for i in sqlPD.read(getUsers)])
+    print("Sessions:")
+    print([i[0] for i in sqlCD.read(getSessions)])
+    print("Nodes:")
+    print([i[0] for i in sqlCD.read(getNodes)])
+
+def dirichlet(alpha=[70,24,6], size=200):
+    dirich = np.random.dirichlet(alpha, size)
+    #print(dirich)
+    multis = []
+    for u in range(size):
+        multi = np.random.multinomial(n=100, pvals=dirich[u], size=1)
+        #print(multi)
+        multis.append(multi.tolist())
+    return multis
+
 
 def generate():
     """
@@ -220,23 +257,31 @@ def generate():
     simulationConfig = Config.getDict("simulation")
     ufrac = simulationConfig["userfrac"]
     sfrac = simulationConfig["sessionfrac"]
+    numSessions = simulationConfig["sessions"]
     users = simulusers(ufrac["n1"], ufrac["n2"], ufrac[
                        "n3"], simulationConfig["users"])
     session = getsession()
+
+    dirich = dirichlet([sfrac["n1"], sfrac["n2"], sfrac["n3"]], len(users))
+
     sprob = __probses(len(session), sfrac["n1"], sfrac["n2"])
     prob = __probtable(
         list({len(x) for y in session for x in y if len(x) >= 3}))
+
+    pprint.pprint("dirich: " + str(dirich))
+    pprint.pprint("session: " + str(session))
+    pprint.pprint("sprob: " + str(sprob))
+    pprint.pprint("prob: " + str(prob))
 
     sqlCD = sqlWrapper(db='CD')
     readParams = "user_id, clickDate, urls_id, profile, micro_id"
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id) VALUES (%s, %s, %s, %s, %s)"
     sqlCD.truncateSimulated("nodes", readParams, sqlWrite)
 
-    sqlClean = "DELETE FROM users WHERE simulated = 1"
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile, micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 
-    for i in range(simulationConfig["sessions"]):
+    for i in range(numSessions):
         for u in users:
             # TODO: se debe usar los parametros en simulConfig para elegir una sesion
             # Se elige el grupo de sesiones de donde se seleccionara la session
@@ -262,6 +307,10 @@ def generate():
                 sqlCD.write(sqlWrite, L)  # Se guarda en la base de datos
                 d += random.randint(1,
                                     Config.getValue('session_tlimit', 'INT') - 1)
+    print ("Ok, %s users simulated, %s sessions simulated, %s nodes created" % (len(users), numSessions, numSessions * len(users)))
 
 if __name__ == '__main__':
+    #dirichlet()
+    cleanDB()
     generate()
+    #showSimulated()

@@ -5,7 +5,12 @@ Dit_N_sessions (Distancia entre las sesiones)
 */
 {
   "N_clusters" : 3,
-  "Param_Dirich" : [],
+  "Param_Dirich" : [[70, 24, 6],
+                    [20, 30, 50],
+                    [10, 80, 10]],
+  "N_usuarios": [100,
+                 70,
+                 30],
   "Dist_N_user" : ["Uniforme", [0,100]],
   "Dist_N_session" : ["Uniforme", [0,100]]
 }

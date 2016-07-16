@@ -274,7 +274,7 @@ def showSimulated():
     print([i[0] for i in sqlCD.read(getNodes)])
 
 
-def dirichlet(alpha=[70, 24, 6], size=200):
+def dirichlet(alpha, size=200):
     """
     Genera multinomiales para un cluster
     a partir de una distribucion de dirichlet.
@@ -333,25 +333,23 @@ def newGenerate():
     # Se asignan las sesiones
     sessions = getsession()
     numSessions = len(sessions)
+    print("numsessions: ", numSessions)
 
-    for i in range(numSessions):
-        for user in users:  # (id, perfil, label)
-            userId = user.id
-            date = random.randint(
-                1450000000, 1462534931)  # Timestamp de inicio
-            profile = user.profile
-            label = user.cluster
+    for user in users:  # (id, perfil, label)
+        userId = user.id
+        profile = user.profile
+        label = user.cluster
+        userIdx = users.index(user) % n_usuarios[label]
 
-            userIdx = users.index(user)
-            print((label, userIdx))
-            multi = multis[label][userIdx].tolist()
-            print(multi)
-            idx = multi.index(1)
+        multi = multis[label][userIdx]
+        idx = np.nonzero(multi == 1)[0][0] #idx = multi.index(1)
+        session = sessions[idx]
+        print(userIdx)
+        print(multi)
 
-            # TODO asignar sesion al usuario. Como lo hago? Se deben usar los
-            # parametros de la multi?
-
-            session = sessions[idx]
+        for i in range(numSessions):
+            # Timestamp de inicio
+            date = random.randint(1450000000, 1462534931)
             for subSession in session:
                 if type(subSession) is str:
                     url = [int(x) for x in subSession.split(",")]
@@ -361,6 +359,7 @@ def newGenerate():
                     url = subSession
                     microId = None
                 insert = [userId, date, url, profile, microId, True, label]
+                print(insert)
                 sqlCD.write(sqlWrite, insert)
 
 

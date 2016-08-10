@@ -17,12 +17,12 @@ def extractURLs():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = 'SELECT DISTINCT url from pageview'
+    sqlRead = 'SELECT DISTINCT url from pageview2'
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     L = [x[0] for x in rows]  # Obtiene URLs desde los eventos capturados.
 
-    sqlRead = 'SELECT DISTINCT urls from pageview'
+    sqlRead = 'SELECT DISTINCT urls from pageview2'
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     URLs = [x for x in rows]
@@ -36,8 +36,10 @@ def extractURLs():
     sqlPD.truncate("urls")
 
     sqlWrite = "INSERT INTO url (url) VALUES ("  # Guardar URLs desde evento.
-
+    i=0
     for url in L:
+        print(i)
+        i+=1
         sqlPD.write(sqlWrite + '"' + url + '");')
 
     # Guardar arboles completos de URLs.

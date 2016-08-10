@@ -1,6 +1,6 @@
 """
-Este módulo permite modificar la base de datos donde se guardan las capturas realizadas desde el sitio del MINEDUC.
-De manera de etiquetar un proceso en particular que será realizado de manera controlada. Esto puede definir una base
+Este modulo permite modificar la base de datos donde se guardan las capturas realizadas desde el sitio del MINEDUC.
+De manera de etiquetar un proceso en particular que sera realizado de manera controlada. Esto puede definir una base
 de ground truth que incorpora los procesos nombrados en la variable "processes".
 """
 
@@ -8,7 +8,7 @@ from src.utils.sqlUtils import sqlWrapper
 import yaml
 
 processes = {
-    0: "Filtrar Presentación de Proyectos (Municipal, Secreduc, Revisor Central)",
+    0: "Filtrar Presentacion de Proyectos (Municipal, Secreduc, Revisor Central)",
     1: "Crear proyecto (Municipal)",
     2: "Revisar ficha proyecto (Municipal, Secreduc, Revisor Central)",
     3: "Cargar informes (Municipal, Secreduc, Revisor Central)",
@@ -20,13 +20,13 @@ processes = {
 
 
 def getLastDataTime():
-    """Retorna último timestamp capturado.
+    """Retorna ultimo timestamp capturado.
     Returns
     -------
     int
-        un timestamp con el tiempo de la última captura.
+        un timestamp con el tiempo de la ultima captura.
     """
-    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederán
+    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
     rows = sqlGT.read(
         "SELECT clickDate FROM pageview ORDER BY id DESC LIMIT 1")
     if len(rows) > 0:
@@ -43,7 +43,7 @@ def getFirstDataTime():
     int
         un timestamp con el tiempo de la primera captura.
     """
-    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederán
+    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
     rows = sqlGT.read("SELECT clickDate FROM pageview ORDER BY id ASC LIMIT 1")
     if len(rows) > 0:
         tdata = rows[0][0]
@@ -53,14 +53,14 @@ def getFirstDataTime():
 
 
 def getLastRecID():
-    """Retorna último id de "grabación"
+    """Retorna ultimo id de "grabacion"
 
     Returns
     -------
     int:
-        última id de "grabación"
+        ultima id de "grabacion"
     """
-    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederán
+    sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
     rows = sqlGT.read("SELECT rec_id FROM pageview ORDER BY id DESC LIMIT 1")
     if len(rows) > 0:
         rec_id = rows[0][0]
@@ -79,16 +79,16 @@ def labelData(tinit, tend, rec_id, label=''):
     tend: int
         un timestamp de tiempo final
     rec_id: int
-        un id de "grabación"
+        un id de "grabacion"
     label:
-        la etiqueta del dato capturado que indica a qué proceso pertenece.
+        la etiqueta del dato capturado que indica a que proceso pertenece.
 
     Returns
     -------
 
     """
     try:
-        # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederan
         sqlGT = sqlWrapper(db='GT')
     except:
         raise
@@ -111,10 +111,10 @@ def labelGroundTruthProcess():
     pID = eval(input("Ingrese etiqueta (ID) del proceso a realizar:"))
 
     if pID not in [int(x) for x in processes.keys()]:
-        print("Etiqueta no corresponde a un proceso válido...")
+        print("Etiqueta no corresponde a un proceso valido...")
         return
     confirmation = input(
-        "Está seguro que desea registrar el proceso '" + processes[pID] + "'? (Y/N)")
+        "Esta seguro que desea registrar el proceso '" + processes[pID] + "'? (Y/N)")
     if confirmation.upper() != 'Y':
         return
 

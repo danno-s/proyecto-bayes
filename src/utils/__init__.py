@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Módulo utils incluye scripts con funciones utilitarias para distintos componentes del sistema.
+Modulo utils incluye scripts con funciones utilitarias para distintos componentes del sistema.
 
 """

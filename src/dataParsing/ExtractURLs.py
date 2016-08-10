@@ -4,7 +4,7 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def extractURLs():
-    """Extrae URLs únicas de los datos capturados en la base de datos, y los árboles completos de URLs del
+    """Extrae URLs unicas de los datos capturados en la base de datos, y los arboles completos de URLs del
     sitio de las capturas.
 
     Returns
@@ -12,7 +12,7 @@ def extractURLs():
 
     """
     try:
-        # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederan
         sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:
@@ -26,7 +26,7 @@ def extractURLs():
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     URLs = [x for x in rows]
-    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de
+    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene arboles completos de
     # URLs del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
@@ -40,7 +40,7 @@ def extractURLs():
     for url in L:
         sqlPD.write(sqlWrite + '"' + url + '");')
 
-    # Guardar Árboles completos de URLs.
+    # Guardar arboles completos de URLs.
     sqlWrite = "INSERT INTO urls (urls) VALUES ("
 
     for urlstree in URLs:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Modelo de representación de una sesión.
+Modelo de representacion de una sesion.
 """
 
 from src.nodeClass.Node import Node
@@ -9,7 +9,7 @@ from src.nodeClass.Node import Node
 
 class Session:
     """
-    Clase Session, representa una sesión en el sistema
+    Clase Session, representa una sesion en el sistema
     """
 
     def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None):
@@ -20,15 +20,15 @@ class Session:
         sequence : [tuple]
             lista de tuplas (macro_id, micro_id), o (macro_id, None).
         profile : str
-            perfil de usuario que realizó la sesión.
+            perfil de usuario que realizo la sesion.
         initTime : datetime | str
-            tiempo de inicio de sesión
+            tiempo de inicio de sesion
         endTime : datetime | str
-            tiempo de término de sesión
+            tiempo de termino de sesion
         user_id : int
             id de usuario.
         session_id : int
-            id de la sesión.
+            id de la sesion.
 
         Returns
         -------
@@ -48,7 +48,7 @@ class Session:
         Parameters
         ----------
         node : Node
-            Primer nodo de una sesión.
+            Primer nodo de una sesion.
 
         Returns
         -------
@@ -66,7 +66,7 @@ class Session:
         return sequence
 
     def getFirstNode(self, steps=None):
-        """Permite obtener un objeto Nodo que representa el inicio de una sesión representada como lista enlazada.
+        """Permite obtener un objeto Nodo que representa el inicio de una sesion representada como lista enlazada.
 
         Parameters
         ----------
@@ -109,18 +109,18 @@ class Session:
         visitor.metSession(self)
 
     def __str__(self):
-        """ Retorna representación de str de esta sesión.
+        """ Retorna representacion de str de esta sesion.
 
         Returns
         -------
         str
-            string con la información de la sesión.
+            string con la informacion de la sesion.
         """
         return str(self.user_id) + " [" + str(self.profile) + "] " + ":\t" + self.__sequenceToStr(self.sequence) + " ;\t " + str(
             self.initTime) + " >> " + str(self.endTime)
 
     def __sequenceToStr(self, sequence):
-        """ Retorna la representación de string de una secuencia de nodos.
+        """ Retorna la representacion de string de una secuencia de nodos.
 
         Parameters
         ----------
@@ -141,7 +141,7 @@ class Session:
         return s
 
     def toSQLItem(self):
-        """ Permite transformar la sesión a un item que el sqlWrapper puede escribir en una base de datos.
+        """ Permite transformar la sesion a un item que el sqlWrapper puede escribir en una base de datos.
 
         Returns
         -------

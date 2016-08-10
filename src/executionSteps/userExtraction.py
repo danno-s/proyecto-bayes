@@ -2,7 +2,7 @@
 
 """
 Paso 2
-Script para ejecución del proceso de extracción de usuarios.
+Script para ejecucion del proceso de extraccion de usuarios.
 """
 from src.dataParsing.ExtractUsers import extractUsers
 

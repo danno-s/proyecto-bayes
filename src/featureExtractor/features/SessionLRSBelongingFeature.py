@@ -6,7 +6,7 @@ from src.utils.sqlUtils import sqlWrapper
 
 class SessionLRSBelongingFeature(SessionFeature):
     """
-    Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
+    Implementacion de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesion.
     """
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + \
@@ -18,7 +18,7 @@ class SessionLRSBelongingFeature(SessionFeature):
         Parameters
         ----------
         session_id : int
-            id de sesión.
+            id de sesion.
 
         Returns
         -------
@@ -30,7 +30,7 @@ class SessionLRSBelongingFeature(SessionFeature):
         self.session_id = int(session_id)
 
     def extract(self):
-        """Implementación de extracción de feature.
+        """Implementacion de extraccion de feature.
 
         Returns
         -------
@@ -42,7 +42,7 @@ class SessionLRSBelongingFeature(SessionFeature):
             str(self.session_id)
         session = sqlCD.read(sqlRead)
         assert len(session) > 0
-        # Cálculo de subsecuencias y correspondencia con uso de LRSs.
+        # Calculo de subsecuencias y correspondencia con uso de LRSs.
         for row in session:
             seq = row[0].split(' ')
             subseqs = set(subsequences(seq))

@@ -18,10 +18,10 @@ class ClusterExtractor:
         ----------
         userClusteringsConfD :{class:dict}
             Diccionario con clases UserClustering como llaves, y cuyos valores son diccionarios con valores
-            de configuración del clustering.
+            de configuracion del clustering.
         sessionClusteringsConfD : {class:dict}
             Diccionario con clases SessionClustering como llaves, y cuyos valores son diccionarios con valores
-            de configuración del clustering.
+            de configuracion del clustering.
 
         Returns
         -------
@@ -34,7 +34,7 @@ class ClusterExtractor:
         # Diccionario con todos los clusters de usuario. La llave es la clase
         # de UserClustering.
         self.userClusterD = dict()
-        # Diccionario con todos los clusters de sesión. La llave es la clase de
+        # Diccionario con todos los clusters de sesion. La llave es la clase de
         # SessionClustering.
         self.sessionClusterD = dict()
 
@@ -70,7 +70,7 @@ class ClusterExtractor:
         Parameters
         ----------
         clustering : UserClustering
-            clase implementación de UserClustering
+            clase implementacion de UserClustering
 
         Returns
         -------
@@ -101,7 +101,7 @@ class ClusterExtractor:
         Parameters
         ----------
         clustering : SessionClustering
-            clase implementación de SessionClustering
+            clase implementacion de SessionClustering
 
         Returns
         -------
@@ -155,7 +155,7 @@ class ClusterExtractor:
         Parameters
         ----------
         clustering : SessionClustering
-            el tipo de clustering de sesión para imprimir.
+            el tipo de clustering de sesion para imprimir.
 
         Returns
         -------

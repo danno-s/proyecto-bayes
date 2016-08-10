@@ -23,7 +23,7 @@ class SessionBuffer:
         Returns
         -------
         (int,int) | other
-            Tupla de IDs de un nodo de una sesión. O alguna otra forma de representación de los nodos.
+            Tupla de IDs de un nodo de una sesion. O alguna otra forma de representacion de los nodos.
         """
         return self.session[i]
 
@@ -46,8 +46,8 @@ class SessionBuffer:
 
         Parameters
         ----------
-        other : (int,int) | otra representación
-            un nodo de sesión
+        other : (int,int) | otra representacion
+            un nodo de sesion
         Returns
         -------
 
@@ -55,12 +55,12 @@ class SessionBuffer:
         self.session.append(other)
 
     def last(self):
-        """ Permite obtener el último elemento del buffer
+        """ Permite obtener el ultimo elemento del buffer
 
         Returns
         -------
-        (int,int) | otra representación
-            Retorna el nodo de sesión que se encuentra al final del buffer.
+        (int,int) | otra representacion
+            Retorna el nodo de sesion que se encuentra al final del buffer.
         """
         return self.session[-1]
 
@@ -69,13 +69,13 @@ class SessionBuffer:
 
         Returns
         -------
-        (int,int) | otra representación
-            Retorna el nodo de sesión que se encuentra al principio del buffer.
+        (int,int) | otra representacion
+            Retorna el nodo de sesion que se encuentra al principio del buffer.
         """
         return self.session[0]
 
     def dump(self):
-        """ Retorna todo el contenido del buffer y luego lo vacía.
+        """ Retorna todo el contenido del buffer y luego lo vacia.
 
         Returns
         -------
@@ -109,17 +109,17 @@ class SessionBuffer:
         self.session.clear()
 
     def isEmpty(self):
-        """ Permite verificar si el buffer está vacío o no.
+        """ Permite verificar si el buffer esta vacio o no.
 
         Returns
         -------
         bool
-            True si el buffer esta vacío. False si no.
+            True si el buffer esta vacio. False si no.
         """
         return len(self.session) == 0
 
     def __str__(self):
-        """ Representación en str de la sesión almacenadas en el buffer.
+        """ Representacion en str de la sesion almacenadas en el buffer.
 
         Returns
         -------

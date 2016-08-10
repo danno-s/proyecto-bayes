@@ -1,12 +1,12 @@
 """
-Jerarquía de clases abstractas que definen características (Features) de sesiones o usuarios.
+Jerarquia de clases abstractas que definen caracteristicas (Features) de sesiones o usuarios.
 """
 from abc import ABCMeta, abstractmethod
 
 
 class Feature:
     """
-    Clase abstracta Feature, representa una característica de un usuario o sesión.
+    Clase abstracta Feature, representa una caracteristica de un usuario o sesion.
     """
     __metaclass__ = ABCMeta
 
@@ -24,7 +24,7 @@ class Feature:
 
 class UserFeature(Feature):
     """
-    Implementación abstracta específica de Features de usuario.
+    Implementacion abstracta especifica de Features de usuario.
     """
     __metaclass__ = ABCMeta
 
@@ -40,7 +40,7 @@ class UserFeature(Feature):
 
 class SessionFeature(Feature):
     """
-    Implementación abstracta específica de Features de sesión.
+    Implementacion abstracta especifica de Features de sesion.
     """
     __metaclass__ = ABCMeta
 

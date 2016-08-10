@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Jerarquía de clases abstractas que definen formas de comparar sesiones o nodos.
+Jerarquia de clases abstractas que definen formas de comparar sesiones o nodos.
 """
 from abc import ABCMeta, abstractmethod
 
 
 class Metric:
     """
-    Clase abstracta Metric, representa métrica para comparar sesiones, nodos o micronodos
+    Clase abstracta Metric, representa metrica para comparar sesiones, nodos o micronodos
 
     """
     __metaclass__ = ABCMeta
@@ -19,7 +19,7 @@ class Metric:
 
 class SessionMetric(Metric):
     """
-    Implementación de Metric específica para sesiones.
+    Implementacion de Metric especifica para sesiones.
     """
 
     def __init__(self):
@@ -36,7 +36,7 @@ class SessionMetric(Metric):
         Returns
         -------
         float
-            distancia entre sesiones dependiendo de la métrica específica.
+            distancia entre sesiones dependiendo de la metrica especifica.
         """
         try:
             return self.distance(comparator.s1, comparator.s2)
@@ -49,7 +49,7 @@ class SessionMetric(Metric):
 
 class NodeMetric(Metric):
     """
-    Implementación de Metric específica para nodos.
+    Implementacion de Metric especifica para nodos.
     """
 
     def __init__(self):
@@ -66,7 +66,7 @@ class NodeMetric(Metric):
         Returns
         -------
         float
-            distancia entre nodos dependiendo de la métrica específica.
+            distancia entre nodos dependiendo de la metrica especifica.
         """
         return self.distance(comparator.n1, comparator.n2)
 
@@ -76,7 +76,7 @@ class NodeMetric(Metric):
 
 class UserMetric(Metric):
     """
-    Implementación de Metric específica para usuarios.
+    Implementacion de Metric especifica para usuarios.
     """
 
     def __init__(self):
@@ -93,7 +93,7 @@ class UserMetric(Metric):
         Returns
         -------
         float
-            distancia entre usuarios dependiendo de la métrica específica.
+            distancia entre usuarios dependiendo de la metrica especifica.
         """
         return self.distance(comparator.u1, comparator.u2)
 

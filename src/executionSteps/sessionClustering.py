@@ -1,6 +1,6 @@
 """
 Paso 11
-Script para ejecución del proceso de clustering de sesiones.
+Script para ejecucion del proceso de clustering de sesiones.
 """
 from src.clustering.ClusterExtractor import ClusterExtractor
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Definición de distintas Distance (implementacicones de SessionMetric) que utilizan comparación directa de los nodos
+Definicion de distintas Distance (implementacicones de SessionMetric) que utilizan comparacion directa de los nodos
 de las sesiones.
 """
 from src.metrics.Metric import SessionMetric
@@ -14,7 +14,7 @@ from src.metrics.nodeMetrics.NodeMetrics import MicroDistance
 
 class MacroSequenceMSSDistance(SessionMetric):
     """
-    Clase que implementa la métrica como una heurística calculada en base a los MSS y considera únicamente los
+    Clase que implementa la metrica como una heuristica calculada en base a los MSS y considera unicamente los
     macro estados de los nodos.
     """
 
@@ -22,8 +22,8 @@ class MacroSequenceMSSDistance(SessionMetric):
         SessionMetric.__init__(self)
 
     def distance(self, s1, s2):
-        """Distancia de las sesiones s1 y s2 definida como la cantidad de nodos que no tienen en común, MÁS la cantidad
-         de nodos saltados para poder obtener los MSS (ver documentación de getMSS)
+        """Distancia de las sesiones s1 y s2 definida como la cantidad de nodos que no tienen en comun, MaS la cantidad
+         de nodos saltados para poder obtener los MSS (ver documentacion de getMSS)
 
         See Also
             getMSS
@@ -31,9 +31,9 @@ class MacroSequenceMSSDistance(SessionMetric):
         Parameters
         ----------
         s1 : Session
-            una sesión.
+            una sesion.
         s2 : Session
-            una sesión.
+            una sesion.
         Returns
         -------
         float
@@ -48,7 +48,7 @@ class MacroSequenceMSSDistance(SessionMetric):
 
 class SequenceMSSDistance(SessionMetric):
     """
-    Clase que implementa la métrica como una heurística calculada en base a los MSS y considera los
+    Clase que implementa la metrica como una heuristica calculada en base a los MSS y considera los
     macro estados y micro estados de los nodos.
     """
 
@@ -58,8 +58,8 @@ class SequenceMSSDistance(SessionMetric):
         self.beta = 1.0
 
     def distance(self, s1, s2):
-        """Distancia de las sesiones s1 y s2 definida como la cantidad de nodos que no tienen en común, MÁS la cantidad
-         de nodos saltados para poder obtener los MSS (ver documentación de getMSS), MÁS la distancia entre los
+        """Distancia de las sesiones s1 y s2 definida como la cantidad de nodos que no tienen en comun, MaS la cantidad
+         de nodos saltados para poder obtener los MSS (ver documentacion de getMSS), MaS la distancia entre los
          micro estados de los nodos de MSS.
 
         See Also
@@ -68,9 +68,9 @@ class SequenceMSSDistance(SessionMetric):
         Parameters
         ----------
         s1 : Session
-            una sesión.
+            una sesion.
         s2 : Session
-            una sesión.
+            una sesion.
         Returns
         -------
         float

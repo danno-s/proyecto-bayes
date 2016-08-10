@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='userempathetic',
     version='0.1',
-    packages=['src', 'src.simulated', 'src.simulated.simulatedData', 'src.utils',
+    packages=['src', 'src.simulatedData', 'src.utils',
         'src.metrics', 'src.metrics.sessionMetrics', 'src.metrics.nodeMetrics',
         'src.testing', 'src.nodeClass',
               'src.clustering', 'src.clustering.clusterings',
@@ -20,7 +20,7 @@ setup(
     author_email='sebastian.galvez@ing.uchile.cl',
     description='Prototipo de clustering de sesiones y usuarios.',
     install_requires=[
-        'mysql-connector-python',
+        'pymysql',
         'pyyaml',
         'numpy',
         'scikit-learn',

@@ -3,12 +3,12 @@ from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 class MacroEdgesSessionizer(Sessionizer):
     """
-    Sessionizer que considera sólo los pasos de "borde" para cada macro estado para formar una sesión.
+    Sessionizer que considera solo los pasos de "borde" para cada macro estado para formar una sesion.
 
-    Esto es, dado una parte de la secuencia en que se repiten los macro IDs, considerará únicamente el primero
-    y el último.
+    Esto es, dado una parte de la secuencia en que se repiten los macro IDs, considerara unicamente el primero
+    y el ultimo.
 
-    Guarda únicamente el macro estado de cada paso en la sesión.
+    Guarda unicamente el macro estado de cada paso en la sesion.
     """
 
     def __init__(self):
@@ -37,7 +37,7 @@ class MacroEdgesSessionizer(Sessionizer):
             return True
 
     def toIDPair(self, macro_id, micro_id):
-        """Retorna la tupla únicamente con el macro ID.
+        """Retorna la tupla unicamente con el macro ID.
 
         Parameters
         ----------

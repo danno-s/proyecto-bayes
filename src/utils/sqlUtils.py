@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 
 """
-Módulo para lectura y escritura en bases de datos SQL, mediante la librería mysql.connector
+Modulo para lectura y escritura en bases de datos SQL, mediante la libreria mysql.connector
 """
 
 import os
 import json
-import mysql.connector
-
-
+import pymysql
 class sqlWrapper:
     """
-    Clase genera wrappers para la conexión a bases de datos SQL
+    Clase genera wrappers para la conexion a bases de datos SQL
     """
-    conns = dict()  # Diccionario donde se encuentran los datos de conexión a las bases de datos
+    conns = dict()  # Diccionario donde se encuentran los datos de conexion a las bases de datos
 
     def __init__(self, db):
         """Constructor de la clase
@@ -58,7 +56,7 @@ class sqlWrapper:
         where_condition : str
             Si existe, se realiza un 'DELETE FROM table WHERE where_condition'
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         if where_condition:
@@ -78,19 +76,19 @@ class sqlWrapper:
             self.write(sqlWrite, row)
 
     def read(self, sqlRead):
-        """Efectúa la consulta sqlRead
+        """Efectua la consulta sqlRead
 
         Parameters
         ----------
         sqlRead : str
-            La consulta que se hará a la base de datos del sqlWrapper.
+            La consulta que se hara a la base de datos del sqlWrapper.
 
         Returns
         -------
         List
             La tabla de los resultados de la consulta, en forma de lista de tuplas.
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         cursor.execute(sqlRead)
@@ -99,10 +97,10 @@ class sqlWrapper:
         return rows
 
     def write(self, sqlWrite, item=None):
-        """Efectúa la escritura sqlWrite.
+        """Efectua la escritura sqlWrite.
 
         Notes
-            Se pueden incluir los valores dentro del atributo sqlWrite o ser pasados a través de item. En cuyo caso,
+            Se pueden incluir los valores dentro del atributo sqlWrite o ser pasados a traves de item. En cuyo caso,
         el query debe contener los caracteres %s indicando cuantos valores son pasados.
 
         Parameters
@@ -116,7 +114,7 @@ class sqlWrapper:
         -------
 
         """
-        cnx = mysql.connector.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()
         if item is not None:

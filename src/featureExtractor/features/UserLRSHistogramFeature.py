@@ -17,7 +17,7 @@ class UserLRSHistogramFeature(UserFeature):
         self.count = 0
 
     def extract(self):
-        """Implementación de extracción de feature
+        """Implementacion de extraccion de feature
 
         Returns
         -------
@@ -29,14 +29,14 @@ class UserLRSHistogramFeature(UserFeature):
             str(self.user_id)
         userSeq = sqlCD.read(sqlRead)
         assert len(userSeq) > 0
-        # Cálculo de histograma de uso de LRSs.
+        # Calculo de histograma de uso de LRSs.
         for row in userSeq:
             seq = row[0].split(' ')
             subseqs = set(subsequences(seq))
             for i, lrs in enumerate(self.LRSs):
                 if lrs in subseqs or isSubContained(lrs, subseqs):
                     self.vector[i] += 1
-        # Normalización de frecuencias.
+        # Normalizacion de frecuencias.
         self.count = sum(self.vector)
         if self.count != 0:
             self.vector = [val / self.count for val in self.vector]

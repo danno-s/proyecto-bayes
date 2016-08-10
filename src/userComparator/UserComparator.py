@@ -2,7 +2,7 @@
 
 class UserComparator:
     """
-    Clase que permite comparar dos usuarios según distintas métricas definidas.
+    Clase que permite comparar dos usuarios segun distintas metricas definidas.
     """
 
     def __init__(self, uID1, uID2):
@@ -22,17 +22,17 @@ class UserComparator:
         self.u2 = uID2
 
     def compareUsers(self, metric):
-        """Retorna valor de comparación entre los dos usuarios cargados en el UserComparator.
+        """Retorna valor de comparacion entre los dos usuarios cargados en el UserComparator.
 
         Parameters
         ----------
         metric : UserMetric
-            instancia de una implementación de UserMetric.
+            instancia de una implementacion de UserMetric.
 
         Returns
         -------
         float | int
-            Valor de comparación entre los dos usuarios.
+            Valor de comparacion entre los dos usuarios.
         """
         # assert isinstance(metric,UserMetric)
         print(self.u1)

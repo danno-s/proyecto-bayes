@@ -19,7 +19,7 @@ class FullUserClustering(UserClustering):
     """
     xlabel = "Dimensiones"
     ylabel = "Valor"
-    title = "Valores en cada dimensión de usuario representativo de cada cluster"
+    title = "Valores en cada dimension de usuario representativo de cada cluster"
 
     def __init__(self, confD=None):
         """Constructor

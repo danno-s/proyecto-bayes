@@ -1,6 +1,6 @@
 """
 Paso 8
-Script para ejecución de la primera extracción de features.
+Script para ejecucion de la primera extraccion de features.
 """
 from src.featureExtraction.ExtractFeatures import extractFeatures
 from src.utils.sqlUtils import sqlWrapper

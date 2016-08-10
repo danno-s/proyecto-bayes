@@ -13,7 +13,7 @@ from src.executionSteps.userClustering import userClustering
 from src.executionSteps.secondFeatureExtraction import secondFeatureExtraction
 from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
-
+simulate = False
 if __name__ == '__main__':
     print("0 = urlExtraction\n" +
           "1 = userExtraction\n" +
@@ -45,9 +45,9 @@ if __name__ == '__main__':
     if a <= 4:
         print("Parsing nodes to sessions...")
         sessionParsing()
-    if a <= 5:
+    if a <= 5 and simulate == True:
         print("Simulating new Users, Nodes and Sessions...")
-        simulation(generation=True)
+        simulation(generation=False)
     if a <= 6:
         print("LRSs Extraction...")
         lrsExtraction()

@@ -14,7 +14,7 @@ class OutliersGroup(Cluster):
         Cluster.__init__(self, vectors, ids, -1, clusteringType)
 
     def toSQLItem(self):
-        """ Retorna versión reducida del SQL string, asignando None a la columna del centroide.
+        """ Retorna version reducida del SQL string, asignando None a la columna del centroide.
 
         Returns
         -------

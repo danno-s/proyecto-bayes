@@ -13,12 +13,12 @@ from src.utils.loadConfig import Config
 
 
 def parseSessions(simulation=False):
-    """ Extrae sesiones dependiendo de los sessionizers definidos en el archivo de configuración del sistema.
+    """ Extrae sesiones dependiendo de los sessionizers definidos en el archivo de configuracion del sistema.
 
     Parameters
     ----------
     simulation : bool
-        Modo de ejecución.
+        Modo de ejecucion.
 
     Returns
     -------

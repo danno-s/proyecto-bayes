@@ -7,16 +7,16 @@ from src.utils.sqlUtils import sqlWrapper
 
 def getMacroID(urls):
     """
-    Obtiene el id en la base de datos de un árbol de urls
+    Obtiene el id en la base de datos de un arbol de urls
 
     Parameters
     ----------
     urls : str
-        El árbol de urls a buscar
+        El arbol de urls a buscar
     Returns
     -------
     int
-        El id del árbol de urls
+        El id del arbol de urls
     """
     try:
         sqlPD = sqlWrapper(db='PD')
@@ -70,12 +70,12 @@ def getProfileOf(user_id):
 
 def getUserOfSession(session_id):
     """
-    Obtiene el ID del usuario que realizó la sesión de ID session_id
+    Obtiene el ID del usuario que realizo la sesion de ID session_id
 
     Parameters
     ----------
     session_id : int
-        El ID de la sesión.
+        El ID de la sesion.
     Returns
     -------
     int
@@ -177,7 +177,7 @@ def userStepsGen(user_id):
 
 
 def simulUserStepsGen(user_id):
-    """ Generador que permite obtener sólo los nodos simulados del usuario indicado.
+    """ Generador que permite obtener solo los nodos simulados del usuario indicado.
 
         Parameters
         ----------
@@ -198,3 +198,9 @@ def simulUserStepsGen(user_id):
     for row in rows:
         # (clickDate, urls_id, profile, micro_id)
         yield (row[0], row[2], row[3], row[4])
+
+if __name__ == '__main__':
+    a = userStepsGen(824)
+
+    print(a.__next__())
+    print(a.__next__())

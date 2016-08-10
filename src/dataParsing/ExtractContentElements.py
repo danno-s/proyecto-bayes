@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Extrae vectores que definen micro-estados únicos de los eventos en la base de datos.
+Extrae vectores que definen micro-estados unicos de los eventos en la base de datos.
 """
 
 from src.utils.dataParsingUtils import *
@@ -17,7 +17,7 @@ def extractContentElements():
 
     """
     try:
-        # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederan
         sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:
@@ -55,7 +55,7 @@ def extractContentElements():
 
     sqlPD.truncate("contentElements")
 
-    # Guarda sets únicos de elementos con sus macro_id en tabla
+    # Guarda sets unicos de elementos con sus macro_id en tabla
     # contentElements.
     sqlWrite = "INSERT INTO contentElements (macro_id"
     for el in elementTypes:

@@ -5,7 +5,7 @@ from src.utils.comparatorUtils import getSession
 
 class SessionComparator:
     """
-    Clase que permite comparar dos sesiones según distintas métricas definidas.
+    Clase que permite comparar dos sesiones segun distintas metricas definidas.
     """
 
     def __init__(self, sID1, sID2):
@@ -14,9 +14,9 @@ class SessionComparator:
         Parameters
         ----------
         sID1 : int
-            id de sesión a comparar
+            id de sesion a comparar
         sID2 : int
-            id de sesión a comparar
+            id de sesion a comparar
 
         Returns
         -------
@@ -25,17 +25,17 @@ class SessionComparator:
         self.s2 = getSession(sID2)
 
     def compareSessions(self, metric):
-        """Retorna valor de comparación entre los dos sesiones cargadas en el SessionComparator.
+        """Retorna valor de comparacion entre los dos sesiones cargadas en el SessionComparator.
 
         Parameters
         ----------
         metric : SessionMetric
-            instancia de una implementación de SessionMetric.
+            instancia de una implementacion de SessionMetric.
 
         Returns
         -------
         float | int
-            Valor de comparación entre las dos sesiones.
+            Valor de comparacion entre las dos sesiones.
         """
         # assert isinstance(metric,SessionMetric)
         # print(self.s1)

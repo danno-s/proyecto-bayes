@@ -4,26 +4,26 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def consecutiveIdxs(idxs, repeat):
-    """Genera tuplas de tamaño 'repeat' con los índices consecutivos extraidos de 'idxs'
+    """Genera tuplas de tamano 'repeat' con los indices consecutivos extraidos de 'idxs'
 
     Parameters
     ----------
     idxs : [int]
-        Lista de índices.
+        Lista de indices.
     repeat : int
-        Tamaño de las tuplas de índices consecutivos
+        Tamano de las tuplas de indices consecutivos
 
     Yields
     -------
     Tuple
-        Las tuplas de índices consecutivos
+        Las tuplas de indices consecutivos
     """
     for i in idxs[:-repeat + 1]:
         yield tuple(x for x in range(i, i + repeat))
 
 
 def subsequences(iterable):
-    """Generador de las subsecuencias posibles a partir de una sesión
+    """Generador de las subsecuencias posibles a partir de una sesion
 
     Parameters
     ----------
@@ -52,14 +52,14 @@ def contains(shortest, longest):
     Parameters
     ----------
     shortest : string
-        Subsecuencia más corta
+        Subsecuencia mas corta
     longest : string
-        Subsecuencia más larga
+        Subsecuencia mas larga
 
     Returns
     -------
     bool
-        True si shortest está contenido en longest, False si no está contenida o son iguales
+        True si shortest esta contenido en longest, False si no esta contenida o son iguales
     """
     if shortest == longest:
         return False
@@ -85,7 +85,7 @@ def isSubContained(item, iterable):
     Returns
     -------
     bool
-        True si está contenida, False si no
+        True si esta contenida, False si no
     """
     for i, val in enumerate(iterable):
         if contains(item, val):
@@ -94,7 +94,7 @@ def isSubContained(item, iterable):
 
 
 def getAllLRSs():
-    """Permite obtener una lista con todas las secuencias LRS extraídas.
+    """Permite obtener una lista con todas las secuencias LRS extraidas.
 
     Returns
     -------
@@ -109,7 +109,7 @@ def getAllLRSs():
 
 
 def getAllSessionIDs():
-    """Obtiene una lista con las IDs de sesiones extraídas.
+    """Obtiene una lista con las IDs de sesiones extraidas.
     Returns
     -------
     [int]

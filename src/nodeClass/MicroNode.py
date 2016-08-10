@@ -4,7 +4,7 @@ class MicroNode:
     """
     Clase MicroNode, representa los micro estados del modelo.
 
-    Contienen información sobre distintos elementos de la pagina: textareas,
+    Contienen informacion sobre distintos elementos de la pagina: textareas,
     selects, multiselects, radius, y otros,
     """
 
@@ -91,7 +91,7 @@ class MicroNode:
 
     def toDict(self):
         """
-        Representación del micro estado como diccionario
+        Representacion del micro estado como diccionario
 
         Returns
         -------

@@ -3,7 +3,7 @@ from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 class CompleteSessionizer(Sessionizer):
     """
-    Sessionizer que considera todos los pasos capturados para formar una sesión.
+    Sessionizer que considera todos los pasos capturados para formar una sesion.
     """
 
     def __init__(self):

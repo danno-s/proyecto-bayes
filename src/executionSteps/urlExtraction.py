@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Paso 1
-Script para ejecución del proceso de extracción de URLs.
+Script para ejecucion del proceso de extraccion de URLs.
 """
 from src.dataParsing.ExtractURLs import extractURLs
 

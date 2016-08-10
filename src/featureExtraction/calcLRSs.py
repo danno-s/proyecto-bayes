@@ -10,7 +10,7 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def calcLRSs():
-    """Calcula los LRSs en base a las sesiones extraídas.
+    """Calcula los LRSs en base a las sesiones extraidas.
 
     Parameters
     ----------
@@ -20,7 +20,7 @@ def calcLRSs():
 
     """
     # Lectura de sessions
-    sqlCD = sqlWrapper(db='CD')  # Asigna las bases de datos que se accederán
+    sqlCD = sqlWrapper(db='CD')  # Asigna las bases de datos que se accederan
     sqlRead = 'select id,profile,sequence,user_id,inittime,endtime from sessions'
 
     rows = sqlCD.read(sqlRead)

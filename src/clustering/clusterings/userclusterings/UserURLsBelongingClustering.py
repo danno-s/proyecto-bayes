@@ -15,7 +15,7 @@ class UserURLsBelongingClustering(UserClustering):
         UserURLsBelongingFeature
     """
     xlabel = "URLs IDs"
-    ylabel = "Utilización de URLs"
+    ylabel = "Utilizacion de URLs"
     title = "Uso de URLs por usuario representativo de cada cluster"
 
     def __init__(self, confD=None):

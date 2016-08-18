@@ -17,10 +17,8 @@ from src.utils.sqlUtils import sqlWrapper
 
 DEBUG = False
 
-
 def cleanJSON(JSONFile):
-    # print("path: "+os.path.dirname(os.path.abspath(__file__)))
-    dirname = os.path.dirname(os.path.abspath(__file__)) + "/simulatedData/"
+    dirname = os.path.dirname(os.path.abspath(__file__)) + "/"
     commentREGEX = re.compile(
         '/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/', re.DOTALL | re.MULTILINE)
     with open(dirname + JSONFile) as J:
@@ -58,27 +56,22 @@ def simulusers(params, cluster, n):
 
     usernQuery = "SELECT username FROM users WHERE simulated = 0"
 
-    usern = [i[0] for i in sqlPD.read(usernQuery)]
+    username = [i[0] for i in sqlPD.read(usernQuery)]
     user = [None] * n
     for i in range(n):
-        user[i] = random.choice(usern)
+        user[i] = random.choice(username)
 
     user_id = random.sample(range(80000), n)  # ids generados al azar
-
-    # random.shuffle(profile)
-                   # TODO: en lugar de asignarles un perfil, usar dirichlet
-                   # para asignar sesiones
 
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO " \
                "users (user_id,username,profile) VALUES (%s, %s, %s)"
-    # sqlPD.truncateSimulated("users", readParams, sqlWrite)
+
     # Guardar usuarios
     sqlWrite = "INSERT INTO " \
                "users (user_id,username,profile, simulated, label) " \
                "VALUES (%s, %s, %s, %s ,%s)"
 
-    # print(len(user_id), len(user))
     for i in range(n):
         n1 = params[i][0]
         n2 = params[i][1]
@@ -276,8 +269,8 @@ def showSimulated():
 
 def dirichlet(alpha, size=200):
     """
-    Genera multinomiales para un cluster
-    a partir de una distribucion de dirichlet.
+    Genera multinomiales para un cluster a partir de una distribucion de
+    dirichlet.
 
     Parameters
     __________
@@ -304,6 +297,9 @@ def dirichlet(alpha, size=200):
 
 
 def newGenerate():
+    """
+    Genera los datos simulados y los guarda en la tabla simulatednodes
+    """
     n_Clusters = conf["N_clusters"]
     n_usuarios = conf["N_usuarios"]
     param_dirich = conf["Param_Dirich"]
@@ -330,6 +326,7 @@ def newGenerate():
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile,\
                 micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
+
     # Se asignan las sesiones
     sessions = getsession()
     numSessions = len(sessions)

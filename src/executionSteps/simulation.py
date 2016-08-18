@@ -2,7 +2,7 @@
 Paso 6 (OPCIONAL)
 Script para ejecución del proceso de simulación de usuarios y nodos.
 """
-from src.simulatedData.simulusers import generate
+from src.simulatedData.simulusers import newGenerate as generate
 from src.dataParsing.parseSessions import parseSessions
 
 

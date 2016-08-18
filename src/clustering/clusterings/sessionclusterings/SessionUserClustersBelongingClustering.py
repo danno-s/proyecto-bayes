@@ -16,7 +16,7 @@ class SessionUserClustersBelongingClustering(SessionClustering):
     """
     xlabel = "User Cluster IDs"
     ylabel = "Pertenencia del usuario-cluster"
-    title = "Pertenencia de usuario-cluster por sesión representativa de cada cluster"
+    title = "Pertenencia de usuario-cluster por sesion representativa de cada cluster"
 
     def __init__(self, confD=None):
         """Constructor
@@ -45,7 +45,7 @@ class SessionUserClustersBelongingClustering(SessionClustering):
             vector = row[1].split(' ')
             for x in vector:
                 if x == '':
-                    raise Exception  # TODO: Crear excepción para esto
+                    raise Exception  # TODO: Crear excepcion para esto
             ids.append(int(row[0]))
             X.append([int(x) for x in vector])
         return X, ids

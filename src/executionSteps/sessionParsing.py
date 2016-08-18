@@ -2,7 +2,7 @@
 
 """
 Paso 5
-Script para ejecución del proceso de extracción de Sesiones.
+Script para ejecucion del proceso de extraccion de Sesiones.
 """
 from src.dataParsing.parseSessions import parseSessions
 

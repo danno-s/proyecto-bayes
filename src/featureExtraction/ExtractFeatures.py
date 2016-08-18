@@ -29,13 +29,13 @@ sessionPostClusteringFeaturesD = {
 
 
 def extractFeatures():
-    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema y que no
+    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuracion del sistema y que no
     requieren de haber realizado clustering previamente.
 
     Parameters
     ----------
     simulation : bool
-        Modo de ejecución.
+        Modo de ejecucion.
 
     Returns
     -------
@@ -59,13 +59,13 @@ def extractFeatures():
 
 
 def extractPostClusteringFeatures():
-    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuración del sistema
+    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuracion del sistema
     que requieren haber realizado clustering previamente.
 
     Parameters
     ----------
     simulation : bool
-        Modo de ejecución.
+        Modo de ejecucion.
 
     Returns
     -------

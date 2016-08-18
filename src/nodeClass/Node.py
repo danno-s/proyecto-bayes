@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Clase Node, representa un Nodo (paso) de una sesión
+Clase Node, representa un Nodo (paso) de una sesion
 """
 
 import json

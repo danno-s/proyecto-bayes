@@ -6,7 +6,7 @@ from src.featureExtractor.features.Feature import SessionFeature
 
 class SessionDistanceFeature(SessionFeature):
     """
-    Implementación de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesión.
+    Implementacion de feature correspondiente al vector de pertenencia a LRSs (LRS Belonging vector) para una sesion.
     """
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + \
@@ -18,7 +18,7 @@ class SessionDistanceFeature(SessionFeature):
         Parameters
         ----------
         session_id : int
-            id de sesión.
+            id de sesion.
 
         Returns
         -------
@@ -30,7 +30,7 @@ class SessionDistanceFeature(SessionFeature):
         self.session_id = int(session_id)
 
     def extract(self):
-        """Implementación de extracción de feature.
+        """Implementacion de extraccion de feature.
 
         Returns
         -------

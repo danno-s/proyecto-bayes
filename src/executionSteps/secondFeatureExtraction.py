@@ -1,6 +1,6 @@
 """
 Paso 10
-Script para ejecución de la segunda extracción de features (que requier clustering de usuarios).
+Script para ejecucion de la segunda extraccion de features (que requier clustering de usuarios).
 """
 from src.featureExtraction.ExtractFeatures import extractPostClusteringFeatures
 from src.utils.sqlUtils import sqlWrapper

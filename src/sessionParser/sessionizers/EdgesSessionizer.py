@@ -3,12 +3,12 @@ from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 class EdgesSessionizer(Sessionizer):
     """
-    Sessionizer que considera sólo los pasos de "borde" para cada macro estado para formar una sesión.
+    Sessionizer que considera solo los pasos de "borde" para cada macro estado para formar una sesion.
 
-    Esto es, dado una parte de la secuencia en que se repiten los macro IDs, considerará únicamente el primero
-    y el último.
+    Esto es, dado una parte de la secuencia en que se repiten los macro IDs, considerara unicamente el primero
+    y el ultimo.
 
-    Además, en la sesión guarda los micro estados de estos pasos.
+    Ademas, en la sesion guarda los micro estados de estos pasos.
     """
 
     def __init__(self):

@@ -10,7 +10,7 @@ from src.utils.dataParsingUtils import *
 class SessionParser:
     """
     Clase encargada de cargar nodos y utilizar un Sessionizer para obtener sesiones.
-    También guarda las sesiones en la tabla correspondiente.
+    Tambien guarda las sesiones en la tabla correspondiente.
     """
 
     def __init__(self, sessionizer, simulation=False):
@@ -39,8 +39,8 @@ class SessionParser:
         self.sessions = list()
 
     def parseSessions(self):
-        """Método que obtiene sesiones desde el Sessionizer y las guarda en la tabla correspondiente de la DB,
-        dependiendo del parámetro 'simulation' del SessionParser.
+        """Metodo que obtiene sesiones desde el Sessionizer y las guarda en la tabla correspondiente de la DB,
+        dependiendo del parametro 'simulation' del SessionParser.
 
         Returns
         -------
@@ -48,7 +48,7 @@ class SessionParser:
         """
         self.sessions = self.sessionizer.sessionize(self)
         sqlCD = sqlWrapper('CD')
-        if self.simulation:  # Borrar sólo los datos simulados anteriores.
+        if self.simulation:  # Borrar solo los datos simulados anteriores.
             readParams = "profile, sequence, user_id, inittime, endtime"
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
                 "(%s,%s,%s,%s,%s)"

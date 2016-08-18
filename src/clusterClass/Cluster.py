@@ -11,18 +11,18 @@ class Cluster:
         Parameters
         ----------
         vectors : [float]
-            lista representando los vectores de características de los elementos inliers del cluster..
+            lista representando los vectores de caracteristicas de los elementos inliers del cluster..
         ids: [int]
-            lista de ids de usuario o sesión, dependiendo del clustering utilizado, en el mismo orden que vectors.
+            lista de ids de usuario o sesion, dependiendo del clustering utilizado, en el mismo orden que vectors.
         label : str
-            etiqueta con número del cluster respecto del clustering realizado.
+            etiqueta con numero del cluster respecto del clustering realizado.
         clusteringType : str
             tipo de cluster
         -------
 
         """
         self.label = label
-        self.vectors = vectors    # vectores de características
+        self.vectors = vectors    # vectores de caracteristicas
         self.ids = ids         # ids de miembros del cluster
         self.size = len(self.vectors)
         assert self.size > 0
@@ -30,44 +30,44 @@ class Cluster:
         self.clusteringType = clusteringType or "unnamed"
 
     def getCentroid(self):
-        """Retorna el vector característico del centroide del cluster
+        """Retorna el vector caracteristico del centroide del cluster
 
         Notes
-            El "centroide" de un cluster es definido como el vector de característica obtenido al promediar cada una de
-            las dimensiones de los vectores de características de todos los inliers del cluster.
+            El "centroide" de un cluster es definido como el vector de caracteristica obtenido al promediar cada una de
+            las dimensiones de los vectores de caracteristicas de todos los inliers del cluster.
 
         Returns
         -------
         [float] | [int]
-            vector característico del centroide del cluster
+            vector caracteristico del centroide del cluster
         """
         return [sum([value[x] / self.size for value in self.vectors]) for x in range(self.features_dim)]
 
     def getMax(self):
-        """Retorna el vector característico del máximo del cluster
+        """Retorna el vector caracteristico del maximo del cluster
 
         Notes
-            El "máximo" de un cluster es definido como el vector de característica obtenido al obtener el
-            máximo en cada una de las dimensiones de los vectores de características de todos los inliers del cluster.
+            El "maximo" de un cluster es definido como el vector de caracteristica obtenido al obtener el
+            maximo en cada una de las dimensiones de los vectores de caracteristicas de todos los inliers del cluster.
 
         Returns
         -------
         [float] | [int]
-            vector característico del máximo del cluster
+            vector caracteristico del maximo del cluster
         """
         return [max([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
     def getMin(self):
-        """Retorna el vector característico del mínimo del cluster
+        """Retorna el vector caracteristico del minimo del cluster
 
         Notes
-            El "mínimo" de un cluster es definido como el vector de característica obtenido al obtener el
-            mínimo en cada una de las dimensiones de los vectores de características de todos los inliers del cluster.
+            El "minimo" de un cluster es definido como el vector de caracteristica obtenido al obtener el
+            minimo en cada una de las dimensiones de los vectores de caracteristicas de todos los inliers del cluster.
 
         Returns
         -------
         [float] | [int]
-            vector característico del mínimo del cluster
+            vector caracteristico del minimo del cluster
         """
         return [min([value[x] for value in self.vectors]) for x in range(self.features_dim)]
 
@@ -79,7 +79,7 @@ class Cluster:
         #"\n Elements Features:\n\t" + str(self.elements) + \
 
     def toSQLItem(self):
-        """Retorna tupla de strings con representación de los items que se almacenan en la base de datos SQL para el Cluster.
+        """Retorna tupla de strings con representacion de los items que se almacenan en la base de datos SQL para el Cluster.
 
         Returns
         -------
@@ -91,12 +91,12 @@ class Cluster:
                 [' '.join(map(str, x)) for x in self.vectors])
 
     def getRepresentativeMember(self):
-        """ Retorna str que muestra información del miembro(s) representativo(s) del cluster
+        """ Retorna str que muestra informacion del miembro(s) representativo(s) del cluster
 
         Returns
         -------
         str:
-            Información del miembro representativo del cluster.
+            Informacion del miembro representativo del cluster.
         """
         if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
             return self.__getRepresentativeUser()

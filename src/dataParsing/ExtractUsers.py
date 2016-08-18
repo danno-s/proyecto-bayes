@@ -5,14 +5,14 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def extractUsers():
-    """Extrae los usuarios con ID única que están en la base de datos de captura.
+    """Extrae los usuarios con ID unica que estan en la base de datos de captura.
 
     Returns
     -------
 
     """
     try:
-        # Asigna las bases de datos que se accederán
+        # Asigna las bases de datos que se accederan
         sqlGC = sqlWrapper(db='GC')
         sqlPD = sqlWrapper(db='PD')
     except:

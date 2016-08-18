@@ -15,8 +15,8 @@ class SessionLRSBelongingClustering(SessionClustering):
         LRSBelongingFeature
     """
     xlabel = "LRSs IDs"
-    ylabel = "Utilización del LRS"
-    title = "Uso de LRSs por sesión representativa de cada cluster"
+    ylabel = "Utilizacion del LRS"
+    title = "Uso de LRSs por sesion representativa de cada cluster"
 
     def __init__(self, confD=None):
         """Constructor

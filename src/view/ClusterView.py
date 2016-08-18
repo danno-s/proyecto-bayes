@@ -3,8 +3,8 @@ from src.utils.clusteringUtils import *
 
 
 class ClusterView:
-    """ Clase encargada de mostrar una visualización de los distintos clusters obtenidos en el sistema.
-    Obtiene los datos desde bases de datos y muestra un core sample promedio, máximo y mínimo según cada variable.
+    """ Clase encargada de mostrar una visualizacion de los distintos clusters obtenidos en el sistema.
+    Obtiene los datos desde bases de datos y muestra un core sample promedio, maximo y minimo segun cada variable.
     """
 
     def __init__(self):
@@ -17,7 +17,7 @@ class ClusterView:
             self.sessionClusteringD[uc] = getSessionClusters(pc)
 
     def view(self):
-        """ Utiliza módulo pyplot de matplotlib para graficar el valor por variable del centroide, máximo y mínimo de
+        """ Utiliza modulo pyplot de matplotlib para graficar el valor por variable del centroide, maximo y minimo de
         cada cluster, Para cada tipo de clustering realizado tanto para usuarios como sesiones.
 
         Returns
@@ -59,7 +59,7 @@ class ClusterView:
 
                 outliers = getUserOutliersIDs(clustering)
                 n_outliers = len(outliers)
-                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers), verticalalignment='center',
+                plt.text(0.85, -0.2, "N outliers = " + str(n_outliers), verticalalignment='center',
                          horizontalalignment='left', transform=ax[k].transAxes, color='red', fontsize=10,
                          rotation='horizontal', fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
@@ -103,14 +103,15 @@ class ClusterView:
 
                 outliers = getSessionOutliersIDs(clustering)
                 n_outliers = len(outliers)
-                plt.text(0.85, -0.2, "N° outliers = " + str(n_outliers), verticalalignment='center',
+                plt.text(0.85, -0.2, "N outliers = " + str(n_outliers), verticalalignment='center',
                          horizontalalignment='left', transform=ax[k].transAxes, color='red', fontsize=10,
                          rotation='horizontal', fontweight='bold')
                 plt.xlim([-0.2, features_dim - 1 + 0.2])
                 plt.yticks([0, 1])
                 plt.margins(0.2)
                 plt.xlabel(clustering.xlabel)
-                ax[n / 2].set_ylabel(clustering.ylabel)
+                index = int(n/2)
+                ax[index].set_ylabel(clustering.ylabel)
                 ax[0].set_title(clustering.title)
                 f2.suptitle(clustering.__name__)
         plt.show()

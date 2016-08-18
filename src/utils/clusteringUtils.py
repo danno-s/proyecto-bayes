@@ -21,7 +21,7 @@ def intersectionIDs(clusterIDs1, clusterIDs2):
 
 
 def combineUserClusterings(cE):
-    """Método de prueba para combinar clusters de usuarios obtenidos con distintas características en un único
+    """Metodo de prueba para combinar clusters de usuarios obtenidos con distintas caracteristicas en un unico
     cluster de usuario.
 
     Parameters
@@ -44,7 +44,7 @@ def combineUserClusterings(cE):
 
 
 def clusteringIntersections(clustersL1, clustersL2):
-    """Calcula elementos de la intersección entre dos Clusters
+    """Calcula elementos de la interseccion entre dos Clusters
 
     Parameters
     ----------
@@ -152,7 +152,7 @@ def getVectorsOfUserCluster(cl_id):
 
 
 def getVectorsOfSessionCluster(cl_id):
-    """ Retorna lista de vectores para cluster de sesión de ID cl_id
+    """ Retorna lista de vectores para cluster de sesion de ID cl_id
 
     Parameters
     ----------
@@ -161,7 +161,7 @@ def getVectorsOfSessionCluster(cl_id):
     Returns
     -------
     list
-        lista de vectores de cluster de sesión de ID cl_id.
+        lista de vectores de cluster de sesion de ID cl_id.
     """
     sqlCL = sqlWrapper('CL')
     rows = sqlCL.read(
@@ -197,7 +197,7 @@ def getSessionClusterLabels(clustering):
     Parameters
     ----------
     clustering: SessionClustering
-        clustering de sesión
+        clustering de sesion
 
     Returns
     -------
@@ -219,7 +219,7 @@ def getSessionOutliersIDs(clustering):
     Parameters
     ----------
     clustering: SessionClustering
-        clustering de sesión
+        clustering de sesion
 
     Returns
     -------
@@ -293,7 +293,7 @@ def getSessionClusters(clustering):
     Parameters
     ----------
     clustering: SessionClustering
-        clustering de sesión
+        clustering de sesion
 
     Returns
     -------

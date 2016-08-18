@@ -1,6 +1,6 @@
 """
 Paso 12
-Script para ejecución de la visualización de clusters extraídos.
+Script para ejecucion de la visualizacion de clusters extraidos.
 """
 from src.view.ClusterView import ClusterView
 

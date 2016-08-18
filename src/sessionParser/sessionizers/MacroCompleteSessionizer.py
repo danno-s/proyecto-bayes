@@ -3,7 +3,7 @@ from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 
 class MacroCompleteSessionizer(Sessionizer):
     """
-    Sessionizer que considera todos los pasos capturados para formar una sesión, pero guarda solo los macro estados.
+    Sessionizer que considera todos los pasos capturados para formar una sesion, pero guarda solo los macro estados.
     """
 
     def __init__(self):
@@ -26,7 +26,7 @@ class MacroCompleteSessionizer(Sessionizer):
         return True
 
     def toIDPair(self, macro_id, micro_id):
-        """Retorna la tupla únicamente con el macro ID.
+        """Retorna la tupla unicamente con el macro ID.
 
         Parameters
         ----------

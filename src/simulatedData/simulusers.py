@@ -41,7 +41,7 @@ def simulusers(params, cluster, n):
     Parameters
     ----------
     n : Int
-        El número de usuarios simulados
+        El numero de usuarios simulados
 
     Returns
     -------
@@ -145,7 +145,7 @@ def noise(lista, p):
     Parameters
     ----------
     lista : List
-        La sesión a la que se agregará ruido
+        La sesion a la que se agregara ruido
     p : Dict
         La tabla de probabilidades segun la que se agrega el ruido
 
@@ -215,7 +215,7 @@ def getsession():
         Lista con las sesiones segun el perfil de usuario
     """
     sqlPD = sqlWrapper(db='CD')
-    # TODO: CREO que deberias leer acá el perfil y relacionarlo con el que
+    # TODO: CREO que deberias leer aca el perfil y relacionarlo con el que
     # generabas randomicamente...
     sqlRead = 'SELECT sequence from sessions WHERE simulated = 0'
     rows = sqlPD.read(sqlRead)
@@ -403,11 +403,11 @@ def generate():
         for u in users:
             p = sprob[u[1]]
             idx = np.random.multinomial(1, p, size=1).tolist()[0].index(
-                1)  # Se guarda su índice para poder etiquetar
+                1)  # Se guarda su indice para poder etiquetar
             ses = session[idx]  # Se elige una sesion
             # idx = l.index(ses) + 1
             # TODO: desde aqui en adelante es lo mismo
-            ses = noise(ses, prob)  # Se añade ruido
+            ses = noise(ses, prob)  # Se anade ruido
             # if u[1] == 1:  # Se corrige la etiqueta
             #     idx += len(session[0])
             # elif u[1] == 2:

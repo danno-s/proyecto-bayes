@@ -5,8 +5,8 @@ from src.utils.dataParsingUtils import getUserOfSession
 
 class SessionUserClustersBelongingFeature(SessionFeature):
     """
-    Implementación de feature correspondiente al vector de pertenencia a User Clusters
-    (UserClusters Belonging vector) para una sesión.
+    Implementacion de feature correspondiente al vector de pertenencia a User Clusters
+    (UserClusters Belonging vector) para una sesion.
     """
     tablename = 'sessionfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + \
@@ -18,7 +18,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         Parameters
         ----------
         session_id : int
-            id de sesión.
+            id de sesion.
 
         Returns
         -------
@@ -30,7 +30,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         self.user = getUserOfSession(self.session_id)
 
     def extract(self):
-        """Implementación de extracción de feature.
+        """Implementacion de extraccion de feature.
 
         Returns
         -------

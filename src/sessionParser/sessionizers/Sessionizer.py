@@ -20,11 +20,11 @@ class Sessionizer:
 
         """
         self.tlimit = Config.getValue(
-            attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesión.
+            attr='session_tlimit', mode='INT')  # Tiempo limite entre pasos de una sesion.
 
     def sessionize(self, sParser):
-        """Método encargado de obtener sesiones a partir de los nodos cargados en el SessionParser.
-        El resultado de las sesiones depende de la implementación de bufferAccepts y toIDPair.
+        """Metodo encargado de obtener sesiones a partir de los nodos cargados en el SessionParser.
+        El resultado de las sesiones depende de la implementacion de bufferAccepts y toIDPair.
 
         Parameters
         ----------
@@ -34,7 +34,7 @@ class Sessionizer:
         Returns
         -------
         [Session]
-            Lista de sesiones extraídas.
+            Lista de sesiones extraidas.
         """
         # Obtener todos los usuarios.
         userL = sParser.userL
@@ -56,7 +56,7 @@ class Sessionizer:
         return sessions
 
     def extractSessionsOf(self, user_id, stepsGen):
-        """Método encargado de obtener sesiones del usuario indicado, a partir del generador de nodos indicado.
+        """Metodo encargado de obtener sesiones del usuario indicado, a partir del generador de nodos indicado.
 
         Parameters
         ---------
@@ -81,15 +81,15 @@ class Sessionizer:
         profile = prevStep[2]
         micro_id = prevStep[3]
 
-        sb = SessionBuffer()  # Buffer de sesión.
+        sb = SessionBuffer()  # Buffer de sesion.
         sb.append(self.toIDPair(macro_id, micro_id))
         for step in stepsGen:
             macro_id = step[1]
             micro_id = step[3]
-            # condición para mantenerse en sesión actual
+            # condicion para mantenerse en sesion actual
             if step[0] - prevStep[0] <= self.tlimit:
                 if self.bufferAccepts(sb, prevStep, step):
-                    # Agregar datos a sesión actual
+                    # Agregar datos a sesion actual
                     sb.append(self.toIDPair(prevStep[1], prevStep[3]))
             else:
                 endTime = prevStep[0]
@@ -97,20 +97,20 @@ class Sessionizer:
                 if sb.first() == sb.at(1):
                     sb.remove(0)
                 sessions.append(
-                    self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar sesión actual del usuario
+                    self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar sesion actual del usuario
 
-                # inicializar nueva sesión
+                # inicializar nueva sesion
                 sb.append(self.toIDPair(step[1], step[3]))
                 initTime = step[0]
             prevStep = step  # actualizar step previo.
         else:
-            # inicializar nueva sesión
+            # inicializar nueva sesion
             sb.append(self.toIDPair(macro_id, micro_id))
             endTime = prevStep[0]
             if sb.first() == sb.at(1):
                 sb.remove(0)
             sessions.append(
-                self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar última sesión del usuario.
+                self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar ultima sesion del usuario.
 
         return sessions
 
@@ -120,31 +120,31 @@ class Sessionizer:
         Parameters
         ----------
         sessionData : [(int,int)] | [(int,None)]
-            Lista de tuplas con pares de IDs correspondiente a los datos de la sesión.
+            Lista de tuplas con pares de IDs correspondiente a los datos de la sesion.
         profile : str
-            Perfil del usuario de la sesión.
+            Perfil del usuario de la sesion.
         initTime : int
-            timestamp del tiempo de inicio de sesión.
+            timestamp del tiempo de inicio de sesion.
         endTime : int
-            timestamp del tiempo de término de sesión.
+            timestamp del tiempo de termino de sesion.
         user_id : int
-            ID del usuario de la sesión.
+            ID del usuario de la sesion.
 
         Returns
         -------
         Session
-            una Sesión con los datos cargados.
+            una Sesion con los datos cargados.
         """
         return Session(sessionData, profile=profile, initTime=datetime.fromtimestamp(initTime).isoformat(' '),
                        endTime=datetime.fromtimestamp(endTime).isoformat(' '), user_id=user_id)
 
     @abstractmethod
     def bufferAccepts(self, sb, prevStep, step):
-        """Define si el buffer acepta el paso actual como parte de la sesión o no.
+        """Define si el buffer acepta el paso actual como parte de la sesion o no.
         Parameters
         ----------
         sb : SessionBuffer
-            Buffer de sesión
+            Buffer de sesion
         prevStep : (int,int) | (int,None)
             paso (nodo) previo al actual.
         step : (int,int) | (int,None)
@@ -152,17 +152,17 @@ class Sessionizer:
         Returns
         -------
         bool
-            True si la implementación de Sessionizer acepta el paso actual. False si no.
+            True si la implementacion de Sessionizer acepta el paso actual. False si no.
         """
         pass
 
     @abstractmethod
     def toIDPair(self, macro_id, micro_id):
         """Retorna una tupla de IDs que representa el estado de un nodo.
-        Dependiendo de la implementación del Sessionizer puede incluir o no el micro_id.
+        Dependiendo de la implementacion del Sessionizer puede incluir o no el micro_id.
 
         Notes
-            Una implementación que no incluya el micro_id, debe poner None en su lugar.
+            Una implementacion que no incluya el micro_id, debe poner None en su lugar.
 
         Parameters
         ----------

@@ -1,3 +1,6 @@
 /.idea/
 /**/*.pyc
 /src/connections.json
+/userempathetic.egg-info
+/build
+/dist

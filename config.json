@@ -115,8 +115,7 @@
     "TextAreas",
     "RadioButton",
     "Selects",
-    "InputText",
-    "Checkbox"
+    "InputText"
   ],
   "sessionizer_mode": "Edges",
   "user_features": [

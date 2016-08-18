@@ -1,6 +1,6 @@
 /*
-La idea de estos parámetros es poder setear el número de clusters que se quieren generar, y la distancia entre ellos.
-Para esto se tienen N_clusters, Param_Dirich (parámetros de la dirichlet), Dist_N_Usuario (Distancia entre los usuarios) y
+La idea de estos parametros es poder setear el numero de clusters que se quieren generar, y la distancia entre ellos.
+Para esto se tienen N_clusters, Param_Dirich (parametros de la dirichlet), Dist_N_Usuario (Distancia entre los usuarios) y
 Dit_N_sessions (Distancia entre las sesiones)
 */
 {

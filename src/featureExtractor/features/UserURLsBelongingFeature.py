@@ -5,8 +5,8 @@ from src.utils.sqlUtils import sqlWrapper
 
 class UserURLsBelongingFeature(UserFeature):
     """
-    Implementación de feature correspondiente al vector de pertenencia a URLs (URLs Belonging vector) para un usuario.
-    Esto indica los árboles de URLs usados por el usuario, en todas sus sesiones conocidas.
+    Implementacion de feature correspondiente al vector de pertenencia a URLs (URLs Belonging vector) para un usuario.
+    Esto indica los arboles de URLs usados por el usuario, en todas sus sesiones conocidas.
     """
     tablename = 'userfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + \
@@ -30,7 +30,7 @@ class UserURLsBelongingFeature(UserFeature):
         self.user = int(user_id)
 
     def extract(self):
-        """Implementación de extracción de feature.
+        """Implementacion de extraccion de feature.
 
         Returns
         -------
@@ -42,7 +42,7 @@ class UserURLsBelongingFeature(UserFeature):
             str(self.user)
         userUrls = sqlCD.read(sqlRead)
         assert len(userUrls) > 0
-        # Cálculo de vector de uso de URLs.
+        # Calculo de vector de uso de URLs.
         for row in userUrls:
             l = row[0]
             for i in range(len(self.URLs)):

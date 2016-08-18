@@ -2,7 +2,7 @@
 
 """
 Paso 4
-Script para ejecución del proceso de creación de nodos.
+Script para ejecucion del proceso de creacion de nodos.
 """
 from src.dataParsing.dataParse import dataParse
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Módulo para cargar configuración desde un archivo "config.json" en el path del proyecto.
+Modulo para cargar configuracion desde un archivo "config.json" en el path del proyecto.
 """
 
 import json
@@ -23,7 +23,7 @@ with open(os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + '/config
 
 class Config:
     """
-    Clase que permite extraer un valor o array dle archivo de configuración cargado.
+    Clase que permite extraer un valor o array dle archivo de configuracion cargado.
     """
     __parameters = json.loads(configurationJSON)  # objeto json cargado.
     userClusteringsD = {
@@ -45,17 +45,17 @@ class Config:
 
     @classmethod
     def getValue(self, attr, mode=None):
-        """Permite obtener el valor de un atributo indicado. Además se puede especificar si se desea un 'int' o no.
+        """Permite obtener el valor de un atributo indicado. Ademas se puede especificar si se desea un 'int' o no.
 
         Notes
-            Requiere que el atributo pedido corresponda a un valor único. Para obtener arrays usar getArray.
+            Requiere que el atributo pedido corresponda a un valor unico. Para obtener arrays usar getArray.
 
         Parameters
         ----------
         attr : str
             nombre del atributo
         mode : str
-            modo de lectura del atributo. Puede ser 'INT' o no estar especificado. En el último caso, retornará un str.
+            modo de lectura del atributo. Puede ser 'INT' o no estar especificado. En el ultimo caso, retornara un str.
 
         Returns
         -------
@@ -104,7 +104,7 @@ class Config:
         Returns
         -------
         {str:*}
-            Diccionario correspondientes al atributo. Las llaves siempre serán str. Pero los valores contenidos
+            Diccionario correspondientes al atributo. Las llaves siempre seran str. Pero los valores contenidos
             pueden ser array, valores o incluso otros diccionarios.
 
         """
@@ -114,12 +114,12 @@ class Config:
 
     @classmethod
     def getUserClusteringsConfigD(self):
-        """ Retorna dict con configuración para clusterings de usuario
+        """ Retorna dict con configuracion para clusterings de usuario
 
         Returns
         -------
         dict
-            con configuración de clusterings de usuario
+            con configuracion de clusterings de usuario
         """
 
         ucConfD = dict()
@@ -132,12 +132,12 @@ class Config:
 
     @classmethod
     def getSessionClusteringsConfigD(self):
-        """ Retorna dict con configuración para clusterings de sesión
+        """ Retorna dict con configuracion para clusterings de sesion
 
         Returns
         -------
         dict
-            con configuración de clusterings de sesión
+            con configuracion de clusterings de sesion
         """
         scConfD = dict()
         session_clusteringD = Config.getDict("session_clustering")

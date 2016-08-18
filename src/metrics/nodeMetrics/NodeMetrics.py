@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Definición de distintas Distance (implementacicones de NodeMetric) que comparan dos nodos.
+Definicion de distintas Distance (implementacicones de NodeMetric) que comparan dos nodos.
 """
 from src.metrics.Metric import NodeMetric
 from src.utils.comparatorUtils import getMicroNode, getURLsTree
@@ -10,7 +10,7 @@ import json
 
 class MacroDistance(NodeMetric):
     """
-    Clase que implementa la métrica como una heurística calculada en base a los árboles de URLs del macro estado
+    Clase que implementa la metrica como una heuristica calculada en base a los arboles de URLs del macro estado
     de los nodos.
     """
 
@@ -51,21 +51,21 @@ class MacroDistance(NodeMetric):
         if d['value'] is not '':
             urlset.add(d['value'].split('?')[0].split(
                 '#')[0])  # Filtra parametros de URL
-            # TODO: USAR urllib.parse OBTENER LOS PARÁMETROS y COMPARAR TANTO LA URL BASE COMO LOS PARÁMETROS != que hay.
+            # TODO: USAR urllib.parse OBTENER LOS PARaMETROS y COMPARAR TANTO LA URL BASE COMO LOS PARaMETROS != que hay.
             # urlset.add(d['value'])
         if d['children'] is not '':
             for child in d['children']:
                 self.getURLs(child, urlset)
 
-    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene árboles completos de
+    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene arboles completos de
     # URLs del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
     # for i,urltree in enumerate(URLs):
-    #   print("ARBOL DE URL N°"+str(i+1)+": " + json.dumps(urltree, indent=4))
+    #   print("ARBOL DE URL N"+str(i+1)+": " + json.dumps(urltree, indent=4))
 
-    # Función para encontrar URLs únicas dentro de un mismo árbol:
+    # Funcion para encontrar URLs unicas dentro de un mismo arbol:
 
     # def getURLs(d, urlset):
     #    for k,v in d.items():
@@ -86,7 +86,7 @@ class MacroDistance(NodeMetric):
 
 class MicroDistance(NodeMetric):
     """
-    Clase que implementa la métrica como una heurística calculada en base a los vectores de ciertos contentElements del
+    Clase que implementa la metrica como una heuristica calculada en base a los vectores de ciertos contentElements del
     micro estado de los nodos.
     """
 

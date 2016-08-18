@@ -1,6 +1,6 @@
 """
 Paso 7
-Script para ejecución del proceso de extracción de LRSs.
+Script para ejecucion del proceso de extraccion de LRSs.
 """
 from src.featureExtraction.calcLRSs import calcLRSs
 

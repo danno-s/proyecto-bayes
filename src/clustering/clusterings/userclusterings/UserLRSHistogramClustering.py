@@ -3,7 +3,7 @@
 """
 Clase SessionLRSBelongingClustering
 
-Crea clusters de uso de LRSs por sesión
+Crea clusters de uso de LRSs por sesion
 """
 
 from src.clustering.clusterings.Clustering import UserClustering

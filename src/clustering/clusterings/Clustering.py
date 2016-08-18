@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Jerarquía de clases abstractas que definen formas de realizar Clustering.
+Jerarquia de clases abstractas que definen formas de realizar Clustering.
 """
 from abc import ABCMeta, abstractmethod
 import numpy as np
@@ -16,12 +16,12 @@ class Clustering:
     __metaclass__ = ABCMeta
 
     def __init__(self, confD=None):
-        # Diccionario según etiqueta de los clusters obtenidos y sus elementos.
+        # Diccionario segun etiqueta de los clusters obtenidos y sus elementos.
         self.clustersD = dict()
         self.confD = confD or None
         self.n_outliers = None
         self.outliers = None
-        self.n_clusters = 0  # Número de clusters obtenidos.
+        self.n_clusters = 0  # Numero de clusters obtenidos.
         self.clusteringAlgorithm = self.initClusteringAlgorithm()
         try:
             self.X, self.ids = self.getData()
@@ -36,7 +36,7 @@ class Clustering:
 
     def clusterize(self):
         """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
-        quedan almacenados en la instancia del Clustering que ejecute esta función.
+        quedan almacenados en la instancia del Clustering que ejecute esta funcion.
 
         Returns
         -------
@@ -57,7 +57,7 @@ class Clustering:
         for k in unique_labels:
             # mascara de miembros de clase k.
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
-            # Sólo core sample de esa clase.
+            # Solo core sample de esa clase.
             xy = [(x, cl_id) for x, cl_id, i, j in zip(
                 self.X, self.ids, class_member_mask, core_samples_mask) if i & j]
             if k != -1:
@@ -109,12 +109,12 @@ class Clustering:
     def getData(self): pass
 
     def __getDimension(self):
-        """Entrega la dimensión del vector de características utilizado en el clustering.
+        """Entrega la dimension del vector de caracteristicas utilizado en el clustering.
 
         Returns
         -------
         int
-            Numero de dimensiones de los vectores de características. 0 si no se pudieron cargar los vectores.
+            Numero de dimensiones de los vectores de caracteristicas. 0 si no se pudieron cargar los vectores.
         """
         if self.X is None:
             return 0

@@ -18,7 +18,7 @@ class DirectSessionClustering(SessionClustering):
 
     xlabel = "IDs de Sesiones"
     ylabel = "Distancia"
-    title = "Distancia a otras sesiones, para sesión representativa de cada cluster"
+    title = "Distancia a otras sesiones, para sesion representativa de cada cluster"
 
     def __init__(self, confD=None):
         """Constructor

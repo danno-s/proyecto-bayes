@@ -7,16 +7,16 @@ from src.sessionClass.Session import Session
 
 
 def getURLsTree(urls_id):
-    """ Retorna un string en formato json correspondiente al árbol de URLs de la ID indicada.
+    """ Retorna un string en formato json correspondiente al arbol de URLs de la ID indicada.
 
     Parameters
     ----------
     urls_id : int
-        ID de árbol de URLs deseado
+        ID de arbol de URLs deseado
     Returns
     -------
     str
-        string de json con árbol de urls.
+        string de json con arbol de urls.
     """
     try:
         sqlPD = sqlWrapper(db='PD')
@@ -28,17 +28,17 @@ def getURLsTree(urls_id):
 
 
 def getSession(session_id):
-    """Retorna un objeto Session correspondiente a la sesión de ID indicada.
+    """Retorna un objeto Session correspondiente a la sesion de ID indicada.
 
     Parameters
     ----------
     session_id : int
-        ID de sesión deseada.
+        ID de sesion deseada.
 
     Returns
     -------
     Session
-        objeto Session con los datos de sesión cargados.
+        objeto Session con los datos de sesion cargados.
     """
     raw_session = getRawSessionData(session_id)
     sequence = raw_session[0].split(' ')
@@ -61,12 +61,12 @@ def getSession(session_id):
 
 
 def getRawSessionData(session_id):
-    """Retorna datos "crudos" de la sesión indicada desde la tabla indicada (por defecto, 'sessions').
+    """Retorna datos "crudos" de la sesion indicada desde la tabla indicada (por defecto, 'sessions').
 
     Parameters
     ----------
     session_id : int
-        ID de sesión.
+        ID de sesion.
 
     Returns
     -------
@@ -80,18 +80,18 @@ def getRawSessionData(session_id):
 
 
 def getFeatureOfSession(session_id, feature):
-    """Permite obtener el feature vector de una determinada sesión por su ID, para una caracterísitca específica.
+    """Permite obtener el feature vector de una determinada sesion por su ID, para una caracterisitca especifica.
 
     Parameters
     ----------
     session_id : int
-        id de sesión
+        id de sesion
     feature:
         alguna clase que extienda a SessionFeature y haya sido utilizada por el FeatureExtractor.
     Returns
     -------
         [int]
-            vector característica de la sesión.
+            vector caracteristica de la sesion.
 
     """
     from src.utils.loadConfig import Config
@@ -107,21 +107,21 @@ def getFeatureOfSession(session_id, feature):
 
 
 def getMSS(s1, s2):
-    """ Permite obtener los elementos comunes de cada sesión en forma de la máxima secuencia compartida.
+    """ Permite obtener los elementos comunes de cada sesion en forma de la maxima secuencia compartida.
 
     Parameters
     ----------
     s1 : Session
-        una sesión.
+        una sesion.
     s2 ; Session
-        una sesión.
+        una sesion.
 
     Returns
     -------
     [(int,int)]
-        Indica la secuencia MSS de la sesión de menor largo.
+        Indica la secuencia MSS de la sesion de menor largo.
     [(int,int)]
-        Indica la secuencia MSS de la sesión de mayor largo.
+        Indica la secuencia MSS de la sesion de mayor largo.
     [int]
         Indica cantidad de nodos de sesiones saltados para encontrar correspondencia entre los elementos del MSS.
     """
@@ -182,7 +182,7 @@ def getMicroNode(micro_id):
 
 
 def getFeatureOfUser(user_id, feature):
-    """Permite obtener el feature vector de un determinado usuario por su ID, para una caracterísitca específica.
+    """Permite obtener el feature vector de un determinado usuario por su ID, para una caracterisitca especifica.
 
     Parameters
     ----------
@@ -193,7 +193,7 @@ def getFeatureOfUser(user_id, feature):
     Returns
     -------
         [int]
-            vector característica del usuario.
+            vector caracteristica del usuario.
 
     """
     from src.utils.loadConfig import Config

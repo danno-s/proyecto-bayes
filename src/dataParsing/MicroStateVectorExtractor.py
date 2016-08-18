@@ -9,7 +9,7 @@ import json
 class MicroStateVectorExtractor:
     """
     Clase encargada de extraer los vectores de micro estado del sitio y almacenarlos en un diccionario.
-    Los elementos a extraer se definen en el archivo de configuración del sistema.
+    Los elementos a extraer se definen en el archivo de configuracion del sistema.
     """
 
     def __init__(self):
@@ -41,12 +41,12 @@ class MicroStateVectorExtractor:
                     self.getAvailableTypes()))
 
     def getElementTypes(self):
-        """Retorna una lista los tipos de elementos de micro estado a extraer, cargados desde configuración.
+        """Retorna una lista los tipos de elementos de micro estado a extraer, cargados desde configuracion.
 
         Returns
         -------
         [str]
-            tipos de elementos cargados desde configuración.
+            tipos de elementos cargados desde configuracion.
         """
         return sorted(self.elementTypes)
 
@@ -68,7 +68,7 @@ class MicroStateVectorExtractor:
         d : dict
             diccionario de un elemento de contenido textArea.
         L : list
-            vector de estado que contendrá los estados de todos los elementos textArea.
+            vector de estado que contendra los estados de todos los elementos textArea.
 
         Returns
         -------
@@ -89,7 +89,7 @@ class MicroStateVectorExtractor:
         d : dict
             diccionario de un elemento de contenido inputText.
         L : list
-            vector de estado que contendrá los estados de todos los elementos inputText.
+            vector de estado que contendra los estados de todos los elementos inputText.
 
         Returns
         -------
@@ -110,7 +110,7 @@ class MicroStateVectorExtractor:
         d : dict
             diccionario de un elemento de contenido radioButton.
         L : list
-            vector de estado que contendrá los estados de todos los elementos radioButton.
+            vector de estado que contendra los estados de todos los elementos radioButton.
 
         Returns
         -------
@@ -126,7 +126,7 @@ class MicroStateVectorExtractor:
         d : dict
             diccionario de un elemento de contenido select.
         L : list
-            vector de estado que contendrá los estados de todos los elementos select, agrupados si es el caso.
+            vector de estado que contendra los estados de todos los elementos select, agrupados si es el caso.
 
         Returns
         -------
@@ -143,7 +143,7 @@ class MicroStateVectorExtractor:
         d : dict
             diccionario de un elemento de contenido checkbox.
         L : list
-            vector de estado que contendrá los estados de todos los elementos checkbox, agrupados si es el caso.
+            vector de estado que contendra los estados de todos los elementos checkbox, agrupados si es el caso.
 
         Returns
         -------
@@ -157,7 +157,7 @@ class MicroStateVectorExtractor:
         L.append('-'.join(vector))
 
     def generateStateVectorFrom(self, contentElements, el_type, L):
-        """Función recursiva que recorre contentElements y va creando el vectore de estado en L para el tipo de
+        """Funcion recursiva que recorre contentElements y va creando el vectore de estado en L para el tipo de
          elemento indicado en type.
 
         Parameters
@@ -167,7 +167,7 @@ class MicroStateVectorExtractor:
         el_type : str
             tipo de elemento a extraer.
         L : list
-            vector de estado que contendrá los estados de todos los elementos del tipo indicado.
+            vector de estado que contendra los estados de todos los elementos del tipo indicado.
 
         Returns
         -------
@@ -189,7 +189,7 @@ class MicroStateVectorExtractor:
             self.generateStateVectorFrom(child, el_type, L)
 
     def getStateVectors(self, contentElements):
-        """Función que recorre todos los tipos de elementos cargados en el MicroStateVectorExtractor y los retorna en
+        """Funcion que recorre todos los tipos de elementos cargados en el MicroStateVectorExtractor y los retorna en
         un diccionario.
 
         Parameters

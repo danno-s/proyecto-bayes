@@ -7,6 +7,8 @@ Extrae vectores que definen micro-estados unicos de los eventos en la base de da
 
 from src.utils.dataParsingUtils import *
 from src.dataParsing.MicroStateVectorExtractor import *
+import src.utils as utils
+capture_table = utils.loadConfig.Config.getValue("capture_table")
 
 
 def extractContentElements():
@@ -26,12 +28,12 @@ def extractContentElements():
     msvE = MicroStateVectorExtractor()
     elementTypes = msvE.getElementTypes()
     # print('elementTypes:' +str(elementTypes))
-    sqlRead = 'SELECT DISTINCT urls,contentElements from pageview'
+    sqlRead = 'SELECT DISTINCT url,urls,contentElements from ' + capture_table
     rows = sqlGC.read(sqlRead)
     elementsL = list()
     for i, row in enumerate(rows):
-        macro_id = getMacroID(str(row[0]))
-        raw = row[1]
+        macro_id = getMacroID(row[0],row[1])
+        raw = row[2]
         contentElementUnique = json.loads(raw)
         eL = (macro_id,)
         try:

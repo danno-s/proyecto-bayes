@@ -7,7 +7,7 @@ Modulo para cargar configuracion desde un archivo "config.json" en el path del p
 import json
 import os
 import jsmin
-from src.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+from src.clustering.clusterings.userclusterings.UserMacroStatesBelongingClustering import UserMacroStatesBelongingClustering
 from src.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 from src.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
 
@@ -28,7 +28,7 @@ class Config:
     __parameters = json.loads(configurationJSON)  # objeto json cargado.
     userClusteringsD = {
         "UserLRSHistogram": UserLRSHistogramClustering,
-        "UserURLsBelonging": UserURLsBelongingClustering,
+        "UserMacroStatesBelonging": UserMacroStatesBelongingClustering,
         "FullUser": FullUserClustering
     }
 

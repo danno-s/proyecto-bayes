@@ -53,15 +53,15 @@ class Session:
         Returns
         -------
         [tuple]
-            (node.urls_id, None) | (node.urls_id, node.microNode)
+            (node.macro_id, None) | (node.macro_id, node.microNode)
         """
         sequence = list()
         while node:
-            if node.urls_id:
+            if node.macro_id:
                 if node.microNode:
-                    sequence.append((node.urls_id, node.microNode))
+                    sequence.append((node.macro_id, node.microNode))
                 else:
-                    sequence.append((node.urls_id, None))
+                    sequence.append((node.macro_id, None))
             node = node.next
         return sequence
 
@@ -71,7 +71,7 @@ class Session:
         Parameters
         ----------
         steps : [tuple]
-            (urls_id, micro_id) | (urls_id, None)
+            (macro_id, micro_id) | (macro_id, None)
 
         Returns
         -------
@@ -84,13 +84,13 @@ class Session:
         macro_id = firstStep[0]
         micro_id = firstStep[1]
         firstNode = Node(user_id=self.user_id, profile=self.profile,
-                         urls_id=macro_id, microNode=micro_id)
+                         macro_id=macro_id, microNode=micro_id)
         currentNode = firstNode
         for step in steps[1:]:
             macro_id = step[0]
             micro_id = step[1]
             newNode = Node(user_id=self.user_id, profile=self.profile,
-                           urls_id=macro_id, microNode=micro_id)
+                           macro_id=macro_id, microNode=micro_id)
             currentNode.addNext(newNode)
             currentNode = currentNode.next
         return firstNode

@@ -43,7 +43,7 @@ def calcLRSs():
     assert len(sessionSubseqs) > 0
     assert len(userD) > 0
 
-    Seqs = dict()  # (urlseq, count)
+    Seqs = dict()  # (nodeseq, count)
 
     # Calcular LRSs
 
@@ -53,11 +53,11 @@ def calcLRSs():
         # Identificar secuencias y contar repeticiones de cada una.
         #   [Sin discriminar secuencias repetidas por un mismo usuario]
 
-        for urlseq in fullseqsL:
-            if urlseq not in Seqs:
-                Seqs[urlseq] = 1
+        for nodeseq in fullseqsL:
+            if nodeseq not in Seqs:
+                Seqs[nodeseq] = 1
             else:
-                Seqs[urlseq] += 1
+                Seqs[nodeseq] += 1
 
     elif mode is 'COUNT_SUBSEQS':
         # Identificar subsecuencias y contar repeticiones de cada una.
@@ -77,17 +77,17 @@ def calcLRSs():
         # Identificar secuencias y contar repeticiones de cada una.
         #   [Discrimina secuencias repetidas por un mismo usuario]
 
-        userSeqs = dict()  # (urlseq, [users])
+        userSeqs = dict()  # (nodeseq, [users])
 
-        for urlseq, u_id in zip(fullseqsL, sessionSubseqs.keys()):
-            if urlseq not in Seqs:
-                Seqs[urlseq] = 0
-                userSeqs[urlseq] = [userD[u_id]]
-            elif userD[u_id] not in userSeqs[urlseq]:
-                userSeqs[urlseq].append(userD[u_id])
+        for nodeseq, u_id in zip(fullseqsL, sessionSubseqs.keys()):
+            if nodeseq not in Seqs:
+                Seqs[nodeseq] = 0
+                userSeqs[nodeseq] = [userD[u_id]]
+            elif userD[u_id] not in userSeqs[nodeseq]:
+                userSeqs[nodeseq].append(userD[u_id])
 
-        for urlseq in Seqs.keys():
-            Seqs[urlseq] = len(userSeqs[urlseq])
+        for nodeseq in Seqs.keys():
+            Seqs[nodeseq] = len(userSeqs[nodeseq])
 
     assert len(Seqs) > 0
 
@@ -96,7 +96,7 @@ def calcLRSs():
     T = Config.getValue(attr='LRS_threshold', mode='INT')
     assert T > 0
 
-    RepSeqs = list()  # [[urlseq]]
+    RepSeqs = list()  # [[nodeseq]]
     for seq in Seqs:
         if Seqs[seq] > T:
             RepSeqs.append(seq)

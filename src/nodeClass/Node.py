@@ -9,7 +9,7 @@ import json
 
 class Node(object):
 
-    def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, urls_id=None, microNode=None):
+    def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, macro_id=None, microNode=None):
         """
 
         Parameters
@@ -18,7 +18,7 @@ class Node(object):
         node_id
         user_id
         profile
-        urls_id
+        macro_id
         microNode
 
         Returns
@@ -29,15 +29,15 @@ class Node(object):
             self.id = sqlStr[0]
             self.user_id = sqlStr[1]
             self.clickdate = sqlStr[2]
-            self.urls_id = sqlStr[3]
+            self.macro_id = sqlStr[3]
             self.profile = sqlStr[4]
             self.microNode = sqlStr[5]
         if node_id:
             self.id = node_id
         if user_id:
             self.user_id = user_id
-        if urls_id:
-            self.urls_id = urls_id
+        if macro_id:
+            self.macro_id = macro_id
         if profile:
             self.profile = profile
         if microNode:
@@ -51,16 +51,16 @@ class Node(object):
         self.next = node
 
     def belongs(self, node):
-        return self.profile == node.profile and self.urls_id == node.urls_id
+        return self.profile == node.profile and self.macro_id == node.macro_id
 
     def equal(self, node):
         return self.belongs(node) and self.microNode.equal(node.microNode)
 
     def toJson(self):
-        Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
+        Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, macro_id=self.macro_id,
                     clickdate=self.clickdate, microNode=self.microNode.toDict())
         return json.dumps(Dict)
 
     def __str__(self):
-        return str(self.profile) + ":(" + str(self.urls_id) + "," + str(self.microNode) + ")"
+        return str(self.profile) + ":(" + str(self.macro_id) + "," + str(self.microNode) + ")"
 # TODO@ConstanzaEscobar: documentar bien esta clase.

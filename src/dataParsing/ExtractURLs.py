@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from src.utils.sqlUtils import sqlWrapper
+from src.utils.loadConfig import Config
 
+capture_table = Config.getValue("capture_table")
 
 def extractURLs():
-    """Extrae URLs unicas de los datos capturados en la base de datos, y los arboles completos de URLs del
+    """Extrae macro_ids unicas de los datos capturados en la base de datos, y los arboles completos de macro_ids del
     sitio de las capturas.
 
     Returns
@@ -17,38 +19,39 @@ def extractURLs():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = 'SELECT DISTINCT url from pageview2'
+    sqlRead = 'SELECT DISTINCT url from ' + capture_table
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
-    L = [x[0] for x in rows]  # Obtiene URLs desde los eventos capturados.
+    L = []
+    for x in rows:  # Obtiene macro_ids desde los eventos capturados.
+        urlstr = x[0]
+        if urlstr.endswith(' undefined'):
+            urlstr = urlstr[:-10]
+        L.append(urlstr)
 
-    sqlRead = 'SELECT DISTINCT urls from pageview2'
+    sqlRead = 'SELECT DISTINCT urls from ' + capture_table
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     URLs = [x for x in rows]
-    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene arboles completos de
-    # URLs del sitio en las capturas"
-
-    # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
     # Limpia las tablas
     sqlPD.truncate("url")
     sqlPD.truncate("urls")
 
-    sqlWrite = "INSERT INTO url (url) VALUES ("  # Guardar URLs desde evento.
+    sqlWrite = "INSERT INTO url (url) VALUES ("  # Guardar macro_ids desde evento.
     i=0
+    print(str(len(L))+ " url encontradas.")
     for url in L:
-        print(i)
         i+=1
         sqlPD.write(sqlWrite + '"' + url + '");')
 
-    # Guardar arboles completos de URLs.
+    # Guardar arboles completos de macro_ids.
     sqlWrite = "INSERT INTO urls (urls) VALUES ("
 
+    print(str(len(URLs))+ " arboles de URLs encontrados.")
+
     for urlstree in URLs:
-        # urljsonstr = json.dumps(urlstree).replace(' ', '')
         urljsonstr = urlstree[0].replace(' ', '')
-        # print(urljsonstr)
         sqlPD.write(sqlWrite + "'" + urljsonstr + "');")
 
 

@@ -1,30 +1,50 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
-
 from src.utils.sqlUtils import sqlWrapper
+from src.dataParsing.macroStateExtractors.URLsMacroStateExtractor import  URLsMacroStateExtractor
+from src.dataParsing.macroStateExtractors.CustomMacroStateExtractor import CustomMacroStateExtractor
+macroStateExtractorsD = {"URLs": URLsMacroStateExtractor,
+                         "Custom": CustomMacroStateExtractor}
+import src.utils as utils
 
-
-def getMacroID(urls):
+def getUserID(user_id_str):
     """
-    Obtiene el id en la base de datos de un arbol de urls
+    Obtiene el id entero de un usuario en la base de datos
 
     Parameters
     ----------
-    urls : str
-        El arbol de urls a buscar
+    user_id_str : str
+        El id de usuario como str a buscar.
     Returns
     -------
     int
-        El id del arbol de urls
+        El id entero del usuario.
     """
     try:
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select id from urls where urls = '" + urls + "'"
+    sqlRead = "select id from users where user_id = '" + user_id_str + "'"
     rows = sqlPD.read(sqlRead)
-    return str(rows[0][0])
+    return int(rows[0][0])
+
+def getMacroID(url, urls):
+    """
+    Obtiene el id en la base de datos de un macroestado.
+
+    Parameters
+    ----------
+    url: str
+        La url principal del sitio
+    urls : str
+        El arbol de urls a buscar
+    Returns
+    -------
+    int
+        El id del macroestado
+    """
+    macrostateE = macroStateExtractorsD[utils.loadConfig.Config.getValue("macrostate_extractor")]()
+    return macrostateE.map(url, urls)
 
 
 def getMicroID(contentElements):
@@ -63,7 +83,7 @@ def getProfileOf(user_id):
         el perfil del usuario.
     """
     sqlPD = sqlWrapper(db='PD')
-    sqlRead = "select profile from users where user_id = " + str(user_id)
+    sqlRead = "select profile from users where id = " + str(user_id)
     rows = sqlPD.read(sqlRead)
     return rows[0][0]
 
@@ -105,7 +125,7 @@ def getAllUserIDs():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select user_id from users"
+    sqlRead = "select id from users"
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
@@ -126,13 +146,13 @@ def getAllSimulUserIDs():
     except:
         print("excepcion con sql")
         raise
-    sqlRead = "select user_id from users WHERE simulated = 1"
+    sqlRead = "select id from users WHERE simulated = 1"
     rows = sqlPD.read(sqlRead)
     print("rows: "); print(rows)
     return [int(row[0]) for row in rows]
 
 
-def getAllURLsIDs():
+def getAllMacroStateIDs():
     """
     Obtiene una lista con las id de las urls desde la base de datos
 
@@ -163,16 +183,16 @@ def userStepsGen(user_id):
         Yields
         ----------
         tuple
-            (clickDate, urls_id, profile, micro_id)
+            (clickDate, macro_id, profile, micro_id)
         Returns
         -------
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+    rows = sqlCD.read("SELECT clickDate,user_id,macro_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
                       " AND simulated = 0")
     for row in rows:
-        # (clickDate, urls_id, profile, micro_id)
+        # (clickDate, macro_id, profile, micro_id)
         yield (row[0], row[2], row[3], row[4])
 
 
@@ -187,20 +207,14 @@ def simulUserStepsGen(user_id):
         Yields
         ----------
         tuple
-            (clickDate, urls_id, profile, micro_id)
+            (clickDate, macro_id, profile, micro_id)
         Returns
         -------
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+    rows = sqlCD.read("SELECT clickDate,user_id,macro_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
                       " AND simulated = 1")
     for row in rows:
-        # (clickDate, urls_id, profile, micro_id)
+        # (clickDate, macro_id, profile, micro_id)
         yield (row[0], row[2], row[3], row[4])
-
-if __name__ == '__main__':
-    a = userStepsGen(824)
-
-    print(a.__next__())
-    print(a.__next__())

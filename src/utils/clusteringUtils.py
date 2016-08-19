@@ -33,13 +33,13 @@ def combineUserClusterings(cE):
     -------
 
     """
-    from src.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+    from src.clustering.clusterings.userclusterings.UserMacroStatesBelongingClustering import UserMacroStatesBelongingClustering
     from src.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 
     userClustersL1 = [x.ids for x in cE.userClusterD[
         UserLRSHistogramClustering].values()]
     userClustersL2 = [x.ids for x in cE.userClusterD[
-        UserURLsBelongingClustering].values()]
+        UserMacroStatesBelongingClustering].values()]
     clusteringIntersections(userClustersL1, userClustersL2)
 
 
@@ -67,7 +67,7 @@ def clusteringIntersections(clustersL1, clustersL2):
 
 
 def getAllUserClusters(clustering_name):
-    """Obtiene una lista con las id de las urls desde la base de datos
+    """Obtiene una lista con las id de los macro estados desde la base de datos
 
     Parameters
     ----------

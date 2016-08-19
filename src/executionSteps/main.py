@@ -1,6 +1,7 @@
 """
 Ejecuta todos los pasos del sistema a partir del paso indicado en consola.
 """
+from src.executionSteps.macroStatesExtraction import macroStateExtraction
 from src.executionSteps.urlExtraction import urlExtraction
 from src.executionSteps.userExtraction import userExtraction
 from src.executionSteps.contentElementsExtraction import contentElementsExtraction
@@ -15,7 +16,7 @@ from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
 simulate = False
 if __name__ == '__main__':
-    print("0 = urlExtraction\n" +
+    print("0 = macroStateExtraction\n" +
           "1 = userExtraction\n" +
           "2 = contentElementsExtraction\n" +
           "3 = nodesCreation\n" +
@@ -31,8 +32,9 @@ if __name__ == '__main__':
 
     a = int(input("Ingrese paso de inicio:"))
     if a <= 0:
-        print("URLs Extraction...")
         urlExtraction()
+        print("MacroStates Extraction...")
+        macroStateExtraction()
     if a <= 1:
         print("User Extraction...")
         userExtraction()

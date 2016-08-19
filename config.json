@@ -30,7 +30,7 @@
 "user_features" : Types of user features for the FeatureExtractor to extract.
                   "user_features":
                   [
-                    "UserURLsBelonging",
+                    "UserMacroStatesBelonging",
                     "UserLRSHistogram"
                   ]
 
@@ -44,7 +44,7 @@
   "user_clustering": Types of user clustering methods and their parameters (eps,min_samples,metric).
 
   {
-    "UserURLsBelonging":
+    "UserMacroStatesBelonging":
     {
       "eps": 0.8,
       "min_samples": 5,
@@ -109,6 +109,8 @@
 
 */
 {
+  "capture_table": "pageview",
+  "macrostate_extractor": "URLs",
   "session_tlimit": "20",
   "LRS_threshold": "20",
   "elementTypes": [
@@ -119,14 +121,14 @@
   ],
   "sessionizer_mode": "Edges",
   "user_features": [
-    "UserURLsBelonging",
+    "UserMacroStatesBelonging",
     "UserLRSHistogram"
   ],
   "session_features": [
     "SessionLRSBelonging"
   ],
   "user_clustering": {
-    "UserURLsBelonging":
+    "UserMacroStatesBelonging":
     {
       "eps": 0.8,
       "min_samples": 5,

@@ -7,12 +7,12 @@ from src.sessionClass.Session import Session
 
 
 def getURLsTree(urls_id):
-    """ Retorna un string en formato json correspondiente al arbol de URLs de la ID indicada.
+    """ Retorna un string en formato json correspondiente al arbol de macro_ids de la ID indicada.
 
     Parameters
     ----------
     urls_id : int
-        ID de arbol de URLs deseado
+        ID de arbol de macro_ids deseado
     Returns
     -------
     str

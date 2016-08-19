@@ -5,7 +5,7 @@ from src.utils.featureExtractionUtils import *
 from src.utils.sqlUtils import sqlWrapper
 from src.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
-from src.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
+from src.featureExtractor.features.UserMacroStatesBelongingFeature import UserMacroStatesBelongingFeature
 from src.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
 
 
@@ -26,9 +26,9 @@ class MyTestCase(unittest.TestCase):
             self.assertTrue(isinstance(count, int))
             L = seq.split(' ')
             self.assertTrue(len(L) > 0)
-
-    def test_extractUserURLsBelongingFeatures(self):
-        ufL = [UserURLsBelongingFeature]
+    '''
+    def test_extractUserMacroStatesBelongingFeatures(self):
+        ufL = [UserMacroStatesBelongingFeature]
         fE = FeatureExtractor(userFeaturesL=ufL)
         fE.extractUserFeatures()
         try:
@@ -81,6 +81,7 @@ class MyTestCase(unittest.TestCase):
                     self.assertTrue(x == '1' or x == '0')
         except:
             self.assertTrue(False)
+    '''
 
     def test_consecutiveIdxs(self):
         s = [0, 1, 2, 3, 4]

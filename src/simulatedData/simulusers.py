@@ -327,7 +327,7 @@ def newGenerate():
         multis.append(parametros)
         users += new_users
 
-    sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile,\
+    sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile,\
                 micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
     # Se asignan las sesiones
@@ -391,14 +391,14 @@ def generate():
         pprint.pprint("prob: " + str(prob))
 
     sqlCD = sqlWrapper(db='CD')
-    readParams = "user_id, clickDate, urls_id, profile, micro_id"
+    readParams = "user_id, clickDate, macro_id, profile, micro_id"
     sqlWrite = "INSERT INTO nodes " \
-               "(user_id, clickDate, urls_id, profile, micro_id) " \
+               "(user_id, clickDate, macro_id, profile, micro_id) " \
                "VALUES (%s, %s, %s, %s, %s)"
     sqlCD.truncateSimulated("nodes", readParams, sqlWrite)
 
     sqlWrite = "INSERT INTO nodes " \
-               "(user_id, clickDate, urls_id, profile, micro_id, simulated, " \
+               "(user_id, clickDate, macro_id, profile, micro_id, simulated, " \
                "label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 

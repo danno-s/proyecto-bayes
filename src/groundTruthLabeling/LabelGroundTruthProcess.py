@@ -6,6 +6,9 @@ de ground truth que incorpora los procesos nombrados en la variable "processes".
 
 from src.utils.sqlUtils import sqlWrapper
 import yaml
+from src.utils.loadConfig import Config
+
+capture_table = Config.getValue("capture_table")
 
 processes = {
     0: "Filtrar Presentacion de Proyectos (Municipal, Secreduc, Revisor Central)",
@@ -28,7 +31,7 @@ def getLastDataTime():
     """
     sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
     rows = sqlGT.read(
-        "SELECT clickDate FROM pageview ORDER BY id DESC LIMIT 1")
+        "SELECT clickDate FROM "+capture_table +" ORDER BY id DESC LIMIT 1")
     if len(rows) > 0:
         tdata = rows[0][0]
     else:
@@ -44,7 +47,7 @@ def getFirstDataTime():
         un timestamp con el tiempo de la primera captura.
     """
     sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
-    rows = sqlGT.read("SELECT clickDate FROM pageview ORDER BY id ASC LIMIT 1")
+    rows = sqlGT.read("SELECT clickDate FROM "+capture_table+" ORDER BY id ASC LIMIT 1")
     if len(rows) > 0:
         tdata = rows[0][0]
     else:
@@ -61,7 +64,7 @@ def getLastRecID():
         ultima id de "grabacion"
     """
     sqlGT = sqlWrapper(db='GT')  # Asigna las bases de datos que se accederan
-    rows = sqlGT.read("SELECT rec_id FROM pageview ORDER BY id DESC LIMIT 1")
+    rows = sqlGT.read("SELECT rec_id FROM "+capture_table+" ORDER BY id DESC LIMIT 1")
     if len(rows) > 0:
         rec_id = rows[0][0]
     else:
@@ -92,7 +95,7 @@ def labelData(tinit, tend, rec_id, label=''):
         sqlGT = sqlWrapper(db='GT')
     except:
         raise
-    sqlUpdate = "UPDATE pageview SET process_id=" + str(label) + ",rec_id=" + str(
+    sqlUpdate = "UPDATE "+capture_table+" SET process_id=" + str(label) + ",rec_id=" + str(
         rec_id) + " WHERE clickDate BETWEEN " + str(tinit) + " and " + str(tend)
     sqlGT.write(sqlUpdate)
 

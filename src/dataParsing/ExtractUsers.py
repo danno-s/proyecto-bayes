@@ -3,6 +3,10 @@
 import json
 from src.utils.sqlUtils import sqlWrapper
 
+from src.utils.loadConfig import Config
+
+capture_table = Config.getValue("capture_table")
+
 
 def extractUsers():
     """Extrae los usuarios con ID unica que estan en la base de datos de captura.
@@ -17,7 +21,7 @@ def extractUsers():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = 'select distinct variables from pageview'
+    sqlRead = "select distinct variables from "+capture_table+" WHERE variables NOT LIKE 'null'"
     rows = sqlGC.read(sqlRead)
     assert len(rows) > 0
     L = set()
@@ -27,7 +31,7 @@ def extractUsers():
         l = json.loads(row[0])
         try:
             username = l['user']
-            user_id = int(l['id_usuario'])
+            user_id = l['id_usuario']
             profile = l['profile']
             L.add((user_id, username, profile))
         except KeyError:
@@ -37,8 +41,6 @@ def extractUsers():
             print("Texto no corresponde a datos de usuario, variable leida = " + str(l))
 
     assert len(L) > 0
-    #  print(L)
-
     sqlPD.truncate("users")  # Limpia la tabla
     # Guardar usuarios
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"

@@ -10,13 +10,13 @@ from src.featureExtractor.features.SessionUserClustersBelongingFeature import \
 from src.featureExtractor.features.SessionDistanceFeature import SessionDistanceFeature
 
 from src.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
-from src.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
+from src.featureExtractor.features.UserMacroStatesBelongingFeature import UserMacroStatesBelongingFeature
 
 from src.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.utils.loadConfig import Config
 
 userFeaturesD = {
-    "UserURLsBelonging": UserURLsBelongingFeature,
+    "UserMacroStatesBelonging": UserMacroStatesBelongingFeature,
     "UserLRSHistogram": UserLRSHistogramFeature
 }
 sessionFeaturesD = {

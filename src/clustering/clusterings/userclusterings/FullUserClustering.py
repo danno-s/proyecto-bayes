@@ -7,15 +7,15 @@ from src.utils.sqlUtils import sqlWrapper
 from src.clusterClass.Cluster import Cluster
 from src.utils.dataParsingUtils import getAllUserIDs
 from src.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
-from src.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+from src.clustering.clusterings.userclusterings.UserMacroStatesBelongingClustering import UserMacroStatesBelongingClustering
 
 
 class FullUserClustering(UserClustering):
-    """Clase UserURLsBelongingClustering implementa un UserClustering que realiza clustering utilizando
-    el feature UserURLsBelongingFeature.
+    """Clase UserMacroStatesBelongingClustering implementa un UserClustering que realiza clustering utilizando
+    el feature UserMacroStatesBelongingFeature.
 
     See Also
-        UserURLsBelongingFeature
+        UserMacroStatesBelongingFeature
     """
     xlabel = "Dimensiones"
     ylabel = "Valor"
@@ -35,7 +35,7 @@ class FullUserClustering(UserClustering):
 
     def getData(self):
         X_lrs, ids = UserLRSHistogramClustering.getData()
-        X_url, _ = UserURLsBelongingClustering.getData()
+        X_url, _ = UserMacroStatesBelongingClustering.getData()
         X = list()
         for i, user_id in enumerate(ids):
             vector = []
@@ -53,4 +53,4 @@ if __name__ == '__main__':
     fuc = FullUserClustering()
     print(fuc.featuresDIM)
     print(UserLRSHistogramClustering().featuresDIM)
-    print(UserURLsBelongingClustering().featuresDIM)
+    print(UserMacroStatesBelongingClustering().featuresDIM)

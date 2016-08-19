@@ -1,12 +1,12 @@
 from src.featureExtractor.features.Feature import UserFeature
-from src.utils.dataParsingUtils import getAllURLsIDs
+from src.utils.dataParsingUtils import getAllMacroStateIDs
 from src.utils.sqlUtils import sqlWrapper
 
 
-class UserURLsBelongingFeature(UserFeature):
+class UserMacroStatesBelongingFeature(UserFeature):
     """
-    Implementacion de feature correspondiente al vector de pertenencia a URLs (URLs Belonging vector) para un usuario.
-    Esto indica los arboles de URLs usados por el usuario, en todas sus sesiones conocidas.
+    Implementacion de feature correspondiente al vector de pertenencia a macro_ids (macro_ids Belonging vector) para un usuario.
+    Esto indica los arboles de macro_ids usados por el usuario, en todas sus sesiones conocidas.
     """
     tablename = 'userfeatures'
     sqlWrite = 'INSERT INTO ' + tablename + \
@@ -25,8 +25,8 @@ class UserURLsBelongingFeature(UserFeature):
 
         """
         UserFeature.__init__(self)
-        self.URLs = getAllURLsIDs()
-        self.vector = [0] * len(self.URLs)
+        self.macro_ids = getAllMacroStateIDs()
+        self.vector = [0] * len(self.macro_ids)
         self.user = int(user_id)
 
     def extract(self):
@@ -38,15 +38,15 @@ class UserURLsBelongingFeature(UserFeature):
         """
         # Lectura de nodos de usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select urls_id, user_id from nodes where user_id=' + \
+        sqlRead = 'select macro_id, user_id from nodes where user_id=' + \
             str(self.user)
-        userUrls = sqlCD.read(sqlRead)
-        assert len(userUrls) > 0
-        # Calculo de vector de uso de URLs.
-        for row in userUrls:
+        userMacroStates = sqlCD.read(sqlRead)
+        assert len(userMacroStates) > 0
+        # Calculo de vector de uso de macro_ids.
+        for row in userMacroStates:
             l = row[0]
-            for i in range(len(self.URLs)):
-                if self.URLs[i] == l:
+            for i in range(len(self.macro_ids)):
+                if self.macro_ids[i] == l:
                     self.vector[i] = 1
 
     def __str__(self):

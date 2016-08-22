@@ -70,6 +70,14 @@ class Cluster:
             vector caracteristico del minimo del cluster
         """
         return [min([value[x] for value in self.vectors]) for x in range(self.features_dim)]
+    def getVar(self):
+        """
+        Retorna un vector con la varianza de cada una de las
+        dimensiones del cluster.
+        """
+        mean = self.getCentroid()
+        return [sum([(value[x] - mean[x]) ** 2 / self.size for value in self.vectors]) for x in range(self.features_dim)]
+
 
     def __str__(self):
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \

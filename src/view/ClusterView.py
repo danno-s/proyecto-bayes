@@ -23,15 +23,15 @@ class ClusterView(object):
             self.session_clustering_dict[performed_c] = \
                     getSessionClusters(performed_c)
 
-    def _set_errorbar(self, axis, idx, low, mid, up):
+    def _set_errorbar(self, axis, idx, low, mid, up, var):
         axis.errorbar(
             idx,
             mid,
             fmt="b.",
             ecolor="r",
             yerr=[
-                [x - y for x, y in zip(mid, low)],
-                [x - y for x, y in zip(up, mid)]],
+                [x + y for x, y in zip(mid, var)],
+                [x - y for x, y in zip(mid, var)]],
             capsize=3,
             markersize=8)
 
@@ -108,10 +108,11 @@ class ClusterView(object):
                 low = v.getMin()
                 mid = v.getCentroid()
                 up = v.getMax()
+                var = v.getVar()
                 idx = range(features_dim)
 
                 try:
-                    self._set_errorbar(axis[k], idx, low, mid, up)
+                    self._set_errorbar(axis[k], idx, low, mid, up, var)
                     self._set_text(axis[k], k, v)
                 except IndexError as error:
                     print(error, k)

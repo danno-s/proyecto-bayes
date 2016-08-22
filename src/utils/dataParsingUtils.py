@@ -64,8 +64,11 @@ def getProfileOf(user_id):
     """
     sqlPD = sqlWrapper(db='PD')
     sqlRead = "select profile from users where user_id = " + str(user_id)
-    rows = sqlPD.read(sqlRead)
-    return rows[0][0]
+    try:
+        rows = sqlPD.read(sqlRead)
+        return rows[0][0]
+    except IndexError as ie:
+        print(ie, "Empty querie for user_id=", user_id)
 
 
 def getUserOfSession(session_id):

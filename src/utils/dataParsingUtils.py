@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from src.utils.sqlUtils import sqlWrapper
-from src.dataParsing.macroStateExtractors.URLsMacroStateExtractor import  URLsMacroStateExtractor
 from src.dataParsing.macroStateExtractors.CustomMacroStateExtractor import CustomMacroStateExtractor
+from src.dataParsing.macroStateExtractors.URLsMacroStateExtractor import  URLsMacroStateExtractor
+from src.utils.sqlUtils import sqlWrapper
+
 macroStateExtractorsD = {"URLs": URLsMacroStateExtractor,
                          "Custom": CustomMacroStateExtractor}
-import src.utils as utils
+import json
 
-def getUserID(user_id_str):
+
+def getUserID(variables):
     """
     Obtiene el id entero de un usuario en la base de datos
 
     Parameters
     ----------
-    user_id_str : str
-        El id de usuario como str a buscar.
+    variables : str
+        El json de variables que incluye la id de usuario como str a buscar.
     Returns
     -------
     int
@@ -24,28 +26,46 @@ def getUserID(user_id_str):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
+
+    varD = json.loads(variables)
+    if not varD or 'id_usuario' not in varD.keys():
+        return False
+    user_id_str = json.loads(variables)['id_usuario']
     sqlRead = "select id from users where user_id = '" + user_id_str + "'"
     rows = sqlPD.read(sqlRead)
-    return int(rows[0][0])
+    if len(rows) is not 0:
+        return int(rows[0][0])
+    return False
 
-def getMacroID(url, urls):
+def getMacroID(data):
     """
-    Obtiene el id en la base de datos de un macroestado.
+    Obtiene el id en la base de datos del macro estado
 
     Parameters
     ----------
-    url: str
-        La url principal del sitio
-    urls : str
-        El arbol de urls a buscar
+    data: (url,urls,variables)
+        La url principal a buscar, el arbol de urls a buscar y las variables de la captura.
     Returns
     -------
     int
-        El id del macroestado
+        La id del macro estado.
     """
-    macrostateE = macroStateExtractorsD[utils.loadConfig.Config.getValue("macrostate_extractor")]()
-    return macrostateE.map(url, urls)
+    from src.dataParsing.MacroStateMapper import MacroStateMapper
 
+    msmapper = MacroStateMapper()
+    urlstr = data[0]
+    if urlstr.endswith(' undefined'):
+        urlstr = urlstr[:-10]
+    res = msmapper.map((urlstr, data[1], data[2]))
+    if res is not False and not isinstance(res, str):
+        return res.getId()
+    return False
+
+def getMacroStateMap(macrostatemap_id):
+
+    from src.utils.loadConfig import Config
+    macrostateE = macroStateExtractorsD[Config.getValue("macrostate_extractor")]()
+    return macrostateE.macroStatesD[macrostatemap_id]
 
 def getMicroID(contentElements):
     """
@@ -64,9 +84,11 @@ def getMicroID(contentElements):
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select id from contentElements where raw = '" + contentElements + "'"
+    sqlRead = "select id from contentElements where raw LIKE '" + contentElements + "'"
     rows = sqlPD.read(sqlRead)
-    return str(rows[0][0])
+    if len(rows) is not 0:
+        return str(rows[0][0])
+    return False
 
 
 def getProfileOf(user_id):
@@ -85,7 +107,9 @@ def getProfileOf(user_id):
     sqlPD = sqlWrapper(db='PD')
     sqlRead = "select profile from users where id = " + str(user_id)
     rows = sqlPD.read(sqlRead)
-    return rows[0][0]
+    if len(rows) is not 0:
+        return str(rows[0][0])
+    return False
 
 
 def getUserOfSession(session_id):
@@ -107,8 +131,9 @@ def getUserOfSession(session_id):
         raise
     sqlRead = "select user_id from sessions where id = " + str(session_id)
     rows = sqlCD.read(sqlRead)
-    return rows[0][0]
-
+    if len(rows) is not 0:
+        return str(rows[0][0])
+    return False
 
 def getAllUserIDs():
     """

@@ -39,16 +39,14 @@ class URLsMacroStateExtractor(MacroStateExtractor):
         macrostates = [urlstree[0].replace(' ', '') for urlstree in URLs]
         return macrostates
 
-    def map(self, url, urls):
+    def map(self, data):
         """
         Obtiene el id en la base de datos de un arbol de urls
 
         Parameters
         ----------
-        url: str
-            La url principal a buscar
-        urls : str
-            El arbol de urls a buscar
+        data: (url,urls,variables)
+            La url principal a buscar, el arbol de urls a buscar y las variables de la captura.
         Returns
         -------
         int
@@ -58,7 +56,7 @@ class URLsMacroStateExtractor(MacroStateExtractor):
             sqlPD = sqlWrapper(db='PD')
         except:
             raise
-        sqlRead = "select id from macrostates where macrostate = '" + urls + "'"
+        sqlRead = "select id from macrostates where macrostate = '" + data[1] + "'"
         rows = sqlPD.read(sqlRead)
         return str(rows[0][0])
 

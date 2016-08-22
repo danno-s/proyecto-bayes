@@ -7,8 +7,6 @@ Extrae vectores que definen micro-estados unicos de los eventos en la base de da
 
 from src.utils.dataParsingUtils import *
 from src.dataParsing.MicroStateVectorExtractor import *
-import src.utils as utils
-capture_table = utils.loadConfig.Config.getValue("capture_table")
 
 
 def extractContentElements():
@@ -28,12 +26,15 @@ def extractContentElements():
     msvE = MicroStateVectorExtractor()
     elementTypes = msvE.getElementTypes()
     # print('elementTypes:' +str(elementTypes))
-    sqlRead = 'SELECT DISTINCT url,urls,contentElements from ' + capture_table
+    from src.utils.loadConfig import Config
+    capture_table = Config.getValue("capture_table")
+
+    sqlRead = 'SELECT DISTINCT url,urls,variables, contentElements from ' + capture_table +" WHERE variables NOT LIKE 'null'"
     rows = sqlGC.read(sqlRead)
     elementsL = list()
     for i, row in enumerate(rows):
-        macro_id = getMacroID(row[0],row[1])
-        raw = row[2]
+        macro_id = getMacroID((row[0],row[1],row[2]))
+        raw = row[3]
         contentElementUnique = json.loads(raw)
         eL = (macro_id,)
         try:
@@ -42,6 +43,8 @@ def extractContentElements():
             print("Error en fila: " + str(i))
             print(json.dumps(contentElementUnique, indent=2))
             raise
+        if allElementsEmpty(data):
+            continue
         for el_type in elementTypes:
             eL = eL + (data[el_type],)
         eL = eL + (raw,)
@@ -69,6 +72,12 @@ def extractContentElements():
     #    print(sqlWrite)
     for tp in uniqueElementsS:
         sqlPD.write(sqlWrite, tp)
+
+def allElementsEmpty(data):
+    for v in data.values():
+        if v is not '':
+            return False
+    return True
 
 
 if __name__ == '__main__':

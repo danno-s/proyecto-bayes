@@ -16,15 +16,6 @@ def extractMacroStates():
     -------
     """
     mse = Config.getValue("macrostate_extractor")
-    '''
-    if mse == 'URLs':
-        macrostateE = URLsMacroStateExtractor()
-    elif mse == 'Custom':
-        macrostateE = CustomMacroStateExtractor()
-    else:
-        print("Error iniciando MacroStateExtractor")
-        return
-    '''
     macrostateE = macroStateExtractorsD[mse]()
     macrostateE.saveMacroStates()
 

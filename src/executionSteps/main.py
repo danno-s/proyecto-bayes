@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     a = int(input("Ingrese paso de inicio:"))
     if a <= 0:
-        urlExtraction()
+        #urlExtraction()
         print("MacroStates Extraction...")
         macroStateExtraction()
     if a <= 1:

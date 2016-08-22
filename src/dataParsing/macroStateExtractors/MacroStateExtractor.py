@@ -7,7 +7,6 @@ from abc import ABCMeta, abstractmethod
 
 from src.utils.sqlUtils import sqlWrapper
 import src.utils as utils
-
 class MacroStateExtractor:
     """
     Clase encargada de extraer los macro estados del sitio y almacenarlos en la base de datos.
@@ -21,8 +20,8 @@ class MacroStateExtractor:
         -------
 
         """
-        self.capture_table = utils.loadConfig.Config.getValue("capture_table")
-        self.macroStatesL= self.loadMacroStates()
+#        self.capture_table = utils.loadConfig.Config.getValue("capture_table")
+        self.macroStatesL = self.loadMacroStates()
 
     @abstractmethod
     def loadMacroStates(self): pass
@@ -36,11 +35,11 @@ class MacroStateExtractor:
         # Limpia las tablas
         sqlPD.truncate("macrostates")
 
-        sqlWrite = "INSERT INTO macrostates (macrostate, rule) VALUES ("  # Guardar contenido de macro estado.
+        sqlWrite = "INSERT INTO macrostates (macrostate) VALUES ("  # Guardar contenido de macro estado.
         for macrostate in self.macroStatesL:
-            sqlPD.write(sqlWrite + "'" + macrostate + "', '=');")
+            sqlPD.write(sqlWrite + "'" + str(macrostate) + "');")
 
 
     @abstractmethod
-    def map(self,url,urls):
+    def map(self,data):
         pass

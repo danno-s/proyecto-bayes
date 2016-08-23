@@ -65,7 +65,10 @@ class FeatureExtractor:
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
             f = feature(user)
-            f.extract()
+            try:
+                f.extract()
+            except AssertionError:
+                continue
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             if '[]' not in str(f):
                 print(f)

@@ -1,46 +1,38 @@
 import json
 import re
 
-from src.dataParsing.macroStateModel import MacroStateRule
+from src.dataParsing.macroStateModel.MacroStateRule import MacroStateRule
 from src.utils.sqlUtils import sqlWrapper
 
 
 class MacroStateMapper:
     __instance = None
 
-    def __new__(cls):
+    def __new__(cls,rules):
+        """
+
+        Parameters
+        ----------
+        rules : dict
+            un dict con los objetos MacroStateRule que representan las reglas de mapeo de macro estados.
+
+        Returns
+        -------
+        """
         if MacroStateMapper.__instance is None:
             MacroStateMapper.__instance = object.__new__(cls)
-            MacroStateMapper.__instance.rules = MacroStateMapper.__instance.__getRules()
+            MacroStateMapper.__instance.rulesD = rules
         return MacroStateMapper.__instance
 
-    def __getRules(self):
-        try:
-            # Asigna las bases de datos que se accederan
-            sqlPD = sqlWrapper(db='PD')
-        except:
-            raise
-        sqlRead = "SELECT id,macrostatemap_id,arg,type,weight,var_type from macrostaterule"
-        rows = sqlPD.read(sqlRead)
-        assert len(rows) > 0
-        L = []
-        from src.utils.dataParsingUtils import getMacroStateMap
-        for row in rows:
-            msRule = MacroStateRule(row[0],row[2],row[3],row[5],row[4])
-            msMap = getMacroStateMap(row[1])
-            msMap.addRule(msRule)
-            L.append(msRule)
-        return L
-
     def mapStrict(self, data):
-        for macroStateRules in self.rules:
+        for macroStateRules in self.rulesD.values():
             result = self.evaluateMapping(macroStateRules)
             if result is not False:
                 return result
         return False
 
     def map(self, data):
-        for macroStateRules in self.rules:
+        for macroStateRules in self.rulesD.values():
             result = self.evaluateMapping(macroStateRules,data)
             if result is not False:
                 return result
@@ -59,6 +51,11 @@ class MacroStateMapper:
             if data[2] is 'null':
                 return False
             info = json.loads(data[2]) # variables
+            if not info:
+                return False
+
+        if varType == 'urljson':
+            info = data[1] # urls
             if not info:
                 return False
 

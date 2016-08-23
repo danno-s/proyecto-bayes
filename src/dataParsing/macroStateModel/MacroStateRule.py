@@ -1,6 +1,6 @@
 class MacroStateRule:
 
-    def __init__(self,id,arg,ruleType,varType,weight):
+    def __init__(self,id,arg,ruleType,varType,weight=0):
         self.id = id
         self.arg = arg
         self.ruleType = ruleType

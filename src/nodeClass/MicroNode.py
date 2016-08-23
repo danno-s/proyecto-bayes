@@ -8,27 +8,31 @@ class MicroNode:
     selects, multiselects, radius, y otros,
     """
 
-    def __init__(self, sqlStr, key):
+    def __init__(self, micro_id,macro_id,TextAreas,InputText,RadioButton,Selects,Checkbox, key):
         self.key = key
-        self.id = sqlStr[0][0]
-        self.id_macro = sqlStr[0][1]
+        self.micro_id = micro_id
+        self.macro_id = macro_id
         self.textArea = []
         self.inputText = []
         self.radioButton = []
         self.selects = []
         self.checkbox = []
-        if sqlStr[0][2] != '':
-            self.textArea = [int(x) for x in sqlStr[0][2].split(" ")]
-        if sqlStr[0][3] != '':
-            self.inputText = [int(x) for x in sqlStr[0][3].split(" ")]
-        if sqlStr[0][4] != '':
-            self.radioButton = [int(x) for x in sqlStr[0][4].split(" ")]
-        if sqlStr[0][5] != '':
-            self.selects = [int(x) for x in sqlStr[0][5].split(" ")]
-        if sqlStr[0][6] != '':
+        if TextAreas and TextAreas != '':
+            self.textArea = [int(x) for x in TextAreas.split(" ")]
+        if InputText and InputText != '':
+            self.inputText = [int(x) for x in InputText.split(" ")]
+        if RadioButton and RadioButton != '':
+            self.radioButton = [int(x) for x in RadioButton.split(" ")]
+        if Selects and Selects != '':
+            if '-' in Selects:
+                self.selects =[[int(y) for y in x.split("-")]
+                             for x in Selects.split(" ")]
+            else:
+                self.selects = [int(x) for x in Selects.split(" ") if x is not '']
+        if Checkbox and Checkbox != '':
             self.checkbox = [[int(y) for y in x.split("-")]
-                             for x in sqlStr[0][6].split(" ")]
-        pass
+                             for x in Checkbox.split(" ")]
+
 
     # def define(self, textArea = None, select = None, multi = None, radius = None, other = None):
     #     """
@@ -98,7 +102,7 @@ class MicroNode:
         Dict
             El diccionario que representa a este micro estado
         """
-        Dict = dict(key=self.key, id=self.id, textArea=self.textArea, inputText=self.inputText,
+        Dict = dict(key=self.key, id=self.micro_id, textArea=self.textArea, inputText=self.inputText,
                     radioButton=self.radioButton, selects=self.selects, checkbox=self.checkbox)
         return Dict
 
@@ -121,4 +125,3 @@ class MicroNode:
         }
         return switcher.get(case, "nothing")
 
-# TODO@ConstanzaEscobar: documentar bien esta clase.

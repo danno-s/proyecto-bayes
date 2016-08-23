@@ -63,4 +63,3 @@ class Node(object):
 
     def __str__(self):
         return str(self.profile) + ":(" + str(self.macro_id) + "," + str(self.microNode) + ")"
-# TODO@ConstanzaEscobar: documentar bien esta clase.

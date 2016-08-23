@@ -121,8 +121,7 @@ def calcLRSs():
     # Guardar nueva info.
 
     sqlWrite = "INSERT INTO lrss (sequence,count) VALUES (%s,%s)"
-    for seq in LRSs:
-        sqlCD.write(sqlWrite, (seq, Seqs[seq]))
+    sqlCD.writeMany(sqlWrite, [(seq, Seqs[seq]) for seq in LRSs])
 
 
 if __name__ == '__main__':

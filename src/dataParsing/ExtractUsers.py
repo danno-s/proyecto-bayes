@@ -44,8 +44,7 @@ def extractUsers():
     sqlPD.truncate("users")  # Limpia la tabla
     # Guardar usuarios
     sqlWrite = "INSERT INTO users (user_id,username,profile) VALUES (%s, %s, %s)"
-    for item in L:
-        sqlPD.write(sqlWrite, item)
+    sqlPD.writeMany(sqlWrite, L)
 
 
 if __name__ == '__main__':

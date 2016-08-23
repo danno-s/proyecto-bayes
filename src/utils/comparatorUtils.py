@@ -176,9 +176,17 @@ def getMicroNode(micro_id):
 
     """
     sqlPD = sqlWrapper('PD')
-    sqlRead = "SELECT * FROM contentElements WHERE id = " + str(micro_id)
+    sqlRead = "SELECT id,macro_id,TextAreas,InputText,RadioButton,Selects,Checkbox,raw FROM contentElements WHERE id = " + str(micro_id)
     row = sqlPD.read(sqlRead)
-    return MicroNode(row, key="")  # TODO: FIND OUT WTF IS key...
+    return MicroNode(micro_id=row[0],
+                     macro_id=row[1],
+                     TextAreas=row[2],
+                     InputText=row[3],
+                     RadioButton=row[4],
+                     Selects=row[5],
+                     Checkbox=row[6],
+                     raw=row[7],
+                     key="")
 
 
 def getFeatureOfUser(user_id, feature):

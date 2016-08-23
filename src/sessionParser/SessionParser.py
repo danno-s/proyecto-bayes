@@ -56,16 +56,12 @@ class SessionParser:
 
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
                 "(%s,%s,%s,%s,%s,%s,%s)"
-            for session in self.sessions:
-                # TODO: Agregar label de clustering.
-                # "(%s,%s,%s,%s,%s,%s,%s)"
-                sqlCD.write(sqlWrite, session.toSQLItem() + (True, None))
+            sqlCD.write(sqlWrite, [session.toSQLItem() + (True, None) for session in self.sessions])
         else:               # Borrar toda la tabla.
             sqlCD.truncate('sessions')
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
                 "(%s,%s,%s,%s,%s)"
-            for session in self.sessions:
-                sqlCD.write(sqlWrite, session.toSQLItem())
+            sqlCD.writeMany(sqlWrite, [session.toSQLItem() for session in self.sessions])
 
     def printSessions(self):
         """Imprime en consola las sesiones contenidas en el SessionParser.

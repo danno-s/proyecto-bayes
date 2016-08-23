@@ -50,9 +50,7 @@ def getMacroID(data):
     int
         La id del macro estado.
     """
-    from src.dataParsing.MacroStateMapper import MacroStateMapper
-
-    msmapper = MacroStateMapper()
+    msmapper = getMacroMapper()
     urlstr = data[0]
     if urlstr.endswith(' undefined'):
         urlstr = urlstr[:-10]
@@ -60,6 +58,17 @@ def getMacroID(data):
     if res is not False and not isinstance(res, str):
         return res.getId()
     return False
+
+def getMacroMapper():
+    from src.utils.loadConfig import Config
+    from src.dataParsing.macroStateExtractors.URLsMacroStateExtractor import URLsMacroStateExtractor
+    from src.dataParsing.macroStateExtractors.CustomMacroStateExtractor import CustomMacroStateExtractor
+
+    macroStateExtractorsD = {"URLs": URLsMacroStateExtractor,
+                             "Custom": CustomMacroStateExtractor}
+    mse = Config.getValue("macrostate_extractor")
+    macrostateE = macroStateExtractorsD[mse]()
+    return macrostateE.getMacroMapper()
 
 def getMacroStateMap(macrostatemap_id):
 
@@ -179,20 +188,20 @@ def getAllSimulUserIDs():
 
 def getAllMacroStateIDs():
     """
-    Obtiene una lista con las id de las urls desde la base de datos
+    Obtiene una lista con las id de los macro estados desde la base de datos
 
     Parameters
     ----------
     Returns
     -------
     list
-        list de IDs de urls en forma de int
+        list de IDs de macro estados en forma de int
     """
     try:
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-    sqlRead = "select id from urls"
+    sqlRead = "select id from macrostatemap"
     rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 

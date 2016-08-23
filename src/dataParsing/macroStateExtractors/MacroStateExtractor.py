@@ -4,9 +4,8 @@
 Mapeador de los macro estados del sitio para los datos capturados.
 """
 from abc import ABCMeta, abstractmethod
+from src.dataParsing.MacroStateMapper import MacroStateMapper
 
-from src.utils.sqlUtils import sqlWrapper
-import src.utils as utils
 class MacroStateExtractor:
     """
     Clase encargada de extraer los macro estados del sitio y almacenarlos en la base de datos.
@@ -20,26 +19,19 @@ class MacroStateExtractor:
         -------
 
         """
-#        self.capture_table = utils.loadConfig.Config.getValue("capture_table")
-        self.macroStatesL = self.loadMacroStates()
+        self.macroStatesD = self.loadMacroStates()
+        self.macroStateRulesD = self.loadMacroStateRules()
+        self.macroMapper = MacroStateMapper(self.macroStateRulesD)
+
 
     @abstractmethod
     def loadMacroStates(self): pass
 
-    def saveMacroStates(self):
-        try:
-            # Asigna las bases de datos que se accederan
-            sqlPD = sqlWrapper(db='PD')
-        except:
-            raise
-        # Limpia las tablas
-        sqlPD.truncate("macrostates")
-
-        sqlWrite = "INSERT INTO macrostates (macrostate) VALUES ("  # Guardar contenido de macro estado.
-        for macrostate in self.macroStatesL:
-            sqlPD.write(sqlWrite + "'" + str(macrostate) + "');")
-
+    @abstractmethod
+    def loadMacroStateRules(self): pass
 
     @abstractmethod
-    def map(self,data):
-        pass
+    def saveMacroStates(self): pass
+
+    def getMacroMapper(self):
+        return self.macroMapper

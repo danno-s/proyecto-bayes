@@ -141,7 +141,11 @@ class MicroStateVectorExtractor:
                 print(d)
                 raise
             if len(options) > 0:
-                L.append('-'.join(options))
+                auxoptions = list()
+                for op in options:
+                    if not isinstance(op,str):
+                        auxoptions.append(op)
+                L.append('-'.join(auxoptions))
         else:
             L.append(d)
     def __getCheckboxes(self, d, L):

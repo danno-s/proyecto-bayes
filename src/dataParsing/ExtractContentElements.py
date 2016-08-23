@@ -29,11 +29,11 @@ def extractContentElements():
     from src.utils.loadConfig import Config
     capture_table = Config.getValue("capture_table")
 
-    sqlRead = 'SELECT DISTINCT url,urls,variables, contentElements from ' + capture_table +" WHERE variables NOT LIKE 'null'"
+    sqlRead = 'SELECT DISTINCT url,urls,variables, contentElements from ' + capture_table + " WHERE variables NOT LIKE 'null'"
     rows = sqlGC.read(sqlRead)
     elementsL = list()
     for i, row in enumerate(rows):
-        macro_id = getMacroID((row[0],row[1],row[2]))
+        macro_id = getMacroID((row[0], row[1], row[2]))
         raw = row[3]
         contentElementUnique = json.loads(raw)
         eL = (macro_id,)
@@ -70,8 +70,8 @@ def extractContentElements():
         sqlWrite += ",%s"
     sqlWrite += ",%s)"
     #    print(sqlWrite)
-    for tp in uniqueElementsS:
-        sqlPD.write(sqlWrite, tp)
+    sqlPD.writeMany(sqlWrite, uniqueElementsS)
+
 
 def allElementsEmpty(data):
     for v in data.values():

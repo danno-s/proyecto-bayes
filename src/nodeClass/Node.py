@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-"""
-Clase Node, representa un Nodo (paso) de una sesion
-"""
 
 import json
 
 
 class Node(object):
+    """
+    Clase Node, representa un Nodo (paso) de una sesion
+    """
 
-    def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, urls_id=None, microNode=None):
+    def __init__(self, sqlStr=None, node_id=None, user_id=None, profile=None, \
+            urls_id=None, microNode=None):
         """
 
         Parameters
@@ -57,10 +58,12 @@ class Node(object):
         return self.belongs(node) and self.microNode.equal(node.microNode)
 
     def toJson(self):
-        Dict = dict(id_node=self.id, user_id=self.user_id, profile=self.profile, urls_id=self.urls_id,
-                    clickdate=self.clickdate, microNode=self.microNode.toDict())
+        Dict = dict(id_node=self.id, user_id=self.user_id, \
+                profile=self.profile, urls_id=self.urls_id, \
+                clickdate=self.clickdate, microNode=self.microNode.toDict())
         return json.dumps(Dict)
 
     def __str__(self):
-        return str(self.profile) + ":(" + str(self.urls_id) + "," + str(self.microNode) + ")"
+        return str(self.profile) + ":(" + str(self.urls_id) + "," + \
+                str(self.microNode) + ")"
 # TODO@ConstanzaEscobar: documentar bien esta clase.

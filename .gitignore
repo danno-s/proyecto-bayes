@@ -4,3 +4,6 @@
 /userempathetic.egg-info
 /build
 /dist
+/src/env
+/src/pylintrc
+install.sh

@@ -319,5 +319,4 @@ if __name__ == '__main__':
     #a = getUserClusters(UserLRSHistogramClustering)
     # for k,v in a.items():
     #    print(str(k)+": "+str(v))
-
-    from src.utils.dataParsingUtils import getProfileOf
+    pass

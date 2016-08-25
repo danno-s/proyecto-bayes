@@ -5,7 +5,6 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 from src.utils.sqlUtils import sqlWrapper
 from src.clusterClass.Cluster import Cluster
-from src.utils.dataParsingUtils import getAllUserIDs
 from src.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 from src.clustering.clusterings.userclusterings.UserMacroStatesBelongingClustering import UserMacroStatesBelongingClustering
 

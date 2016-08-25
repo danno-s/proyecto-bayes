@@ -5,6 +5,7 @@ determinada por el Sessionizer utilizado.
 
 from src.sessionParser.sessionizers.Sessionizer import Sessionizer
 from src.utils.dataParsingUtils import *
+from src.dataParsing.DataParser import DataParser
 
 
 class SessionParser:
@@ -81,7 +82,7 @@ class SessionParser:
 
         """
         # Obtener todos los usuarios.
-        self.userL = getAllUserIDs()
+        self.userL = DataParser().getAllUserIDs()
         assert len(self.userL) > 0
         # Extraer datos de nodos para cada usuario
         self.nodesD = dict()

@@ -1,5 +1,5 @@
 from src.featureExtractor.features.Feature import UserFeature
-from src.utils.dataParsingUtils import getAllMacroStateIDs
+from src.dataParsing.DataParser import DataParser
 from src.utils.sqlUtils import sqlWrapper
 
 
@@ -25,7 +25,7 @@ class UserMacroStatesBelongingFeature(UserFeature):
 
         """
         UserFeature.__init__(self)
-        self.macro_ids = getAllMacroStateIDs()
+        self.macro_ids = DataParser().getAllMacroStateIDs()
         self.vector = [0] * len(self.macro_ids)
         self.user = int(user_id)
 

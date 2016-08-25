@@ -66,6 +66,7 @@ def calcLRSs():
 
         print("Buscando LRSs para un total de " +
               str(len(allsubseqsL)) + " subsecuencias.")
+        if len(allsubseqsL) > 50000: print("Warning: Demasiadas subsecuencias, puede tardar varios minutos...")
         for seq in allsubseqsL:
             for k, v in sessionSubseqs.items():
                 if seq not in Seqs:
@@ -113,6 +114,8 @@ def calcLRSs():
     LRSs.sort()
     print("Longest Repeated Subsequences:\n " + str(LRSs))
     print("Accessed: \n" + str([Seqs[lrs] for lrs in LRSs]) + " times.")
+    print("Total: \n" + str(len(LRSs)) + " LRSs.")
+
 
     # Completar tabla para LRSs en la base de datos
     # Resetear lrss

@@ -6,6 +6,7 @@ Mapeador de los macro estados del sitio para los datos capturados.
 from src.dataParsing.macroStateExtractors.MacroStateExtractor import MacroStateExtractor
 from src.dataParsing.macroStateModel.MacroStateRule import MacroStateRule
 from src.dataParsing.macroStateModel.MacroStateMap import MacroStateMap
+from src.dataParsing.MacroStateMapper import MacroStateMapper
 
 from src.utils.sqlUtils import sqlWrapper
 
@@ -25,7 +26,9 @@ class URLsMacroStateExtractor(MacroStateExtractor):
             URLsMacroStateExtractor.__instance = object.__new__(cls)
             URLsMacroStateExtractor.__instance.urlsL = URLsMacroStateExtractor.__instance.__loadURLs()
             URLsMacroStateExtractor.__instance.argsD = URLsMacroStateExtractor.__instance.__loadArgs()
-            MacroStateExtractor.__init__(URLsMacroStateExtractor.__instance)
+            URLsMacroStateExtractor.__instance.macroStatesD = URLsMacroStateExtractor.__instance.loadMacroStates()
+            URLsMacroStateExtractor.__instance.macroStateRulesD = URLsMacroStateExtractor.__instance.loadMacroStateRules()
+            URLsMacroStateExtractor.__instance.macroMapper = MacroStateMapper(URLsMacroStateExtractor.__instance.macroStateRulesD)
 
         return URLsMacroStateExtractor.__instance
 
@@ -108,6 +111,15 @@ class URLsMacroStateExtractor(MacroStateExtractor):
         sqlRead = "select id from macrostates where macrostate = '" + data[1] + "'"
         rows = sqlPD.read(sqlRead)
         return str(rows[0][0])
+
+
+    def getMacroMapper(self):
+        try:
+            return self.macroMapper
+        except AttributeError:
+            macroMapper = MacroStateMapper(URLsMacroStateExtractor.__instance.macroStateRulesD)
+            URLsMacroStateExtractor.__instance.macroMapper = macroMapper
+            return macroMapper
 
 if __name__ == '__main__':
 

@@ -14,6 +14,7 @@ from src.executionSteps.userClustering import userClustering
 from src.executionSteps.secondFeatureExtraction import secondFeatureExtraction
 from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
+
 simulate = False
 if __name__ == '__main__':
     print("0 = macroStateExtraction\n" +
@@ -31,40 +32,57 @@ if __name__ == '__main__':
           )
 
     a = int(input("Ingrese paso de inicio:"))
+    b = input("Ingrese paso de fin:")
+    if b == '': b = 11
+    else: b = int(b)
+
     if a <= 0:
-        #urlExtraction()
         print("MacroStates Extraction...")
+        #urlExtraction()
         macroStateExtraction()
+        if b== 0: exit()
+
     if a <= 1:
         print("User Extraction...")
         userExtraction()
+        if b == 1: exit()
     if a <= 2:
         print("ContentElements Extraction...")
         contentElementsExtraction()
+        if b == 2: exit()
     if a <= 3:
         print("Nodes Creation...")
         nodesCreation()
+        if b == 3: exit()
     if a <= 4:
         print("Parsing nodes to sessions...")
         sessionParsing()
+        if b == 4: exit()
     if a <= 5 and simulate == True:
         print("Simulating new Users, Nodes and Sessions...")
         simulation(generation=False)
+        if b == 5: exit()
     if a <= 6:
         print("LRSs Extraction...")
         lrsExtraction()
+        if b == 6: exit()
     if a <= 7:
         print("First Feature Extraction...")
         firstFeatureExtraction()
+        if b == 7: exit()
     if a <= 8:
         print("User Clustering...")
         userClustering()
+        if b == 8: exit()
     if a <= 9:
         print("Second Feature Extraction (post User Clustering)...")
         secondFeatureExtraction()
+        if b == 9: exit()
     if a <= 10:
         print("Session Clustering...")
         sessionClustering()
+        if b == 10: exit()
     if a <= 11:
         print("Clustering Visualization...")
         clusterVisualization()
+        if b== 11: exit()

@@ -9,34 +9,7 @@ macroStateExtractorsD = {"URLs": URLsMacroStateExtractor,
 import json
 
 
-def getUserID(variables):
-    """
-    Obtiene el id entero de un usuario en la base de datos
-
-    Parameters
-    ----------
-    variables : str
-        El json de variables que incluye la id de usuario como str a buscar.
-    Returns
-    -------
-    int
-        El id entero del usuario.
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-
-    varD = json.loads(variables)
-    if not varD or 'id_usuario' not in varD.keys():
-        return False
-    user_id_str = json.loads(variables)['id_usuario']
-    sqlRead = "select id from users where user_id = '" + user_id_str + "'"
-    rows = sqlPD.read(sqlRead)
-    if len(rows) is not 0:
-        return int(rows[0][0])
-    return False
-
+'''
 def getMacroID(data):
     """
     Obtiene el id en la base de datos del macro estado
@@ -58,67 +31,7 @@ def getMacroID(data):
     if res is not False and not isinstance(res, str):
         return res.getId()
     return False
-
-def getMacroMapper():
-    from src.utils.loadConfig import Config
-    from src.dataParsing.macroStateExtractors.URLsMacroStateExtractor import URLsMacroStateExtractor
-    from src.dataParsing.macroStateExtractors.CustomMacroStateExtractor import CustomMacroStateExtractor
-
-    macroStateExtractorsD = {"URLs": URLsMacroStateExtractor,
-                             "Custom": CustomMacroStateExtractor}
-    mse = Config.getValue("macrostate_extractor")
-    macrostateE = macroStateExtractorsD[mse]()
-    return macrostateE.getMacroMapper()
-
-def getMacroStateMap(macrostatemap_id):
-
-    from src.utils.loadConfig import Config
-    macrostateE = macroStateExtractorsD[Config.getValue("macrostate_extractor")]()
-    return macrostateE.macroStatesD[macrostatemap_id]
-
-def getMicroID(contentElements):
-    """
-    Obtiene el id en la base de datos de un micro estado
-
-    Parameters
-    ----------
-    contentElements : str
-        El microestado a buscar
-    Returns
-    -------
-    int
-        El id del microestado
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select id from contentElements where raw LIKE '" + contentElements + "'"
-    rows = sqlPD.read(sqlRead)
-    if len(rows) is not 0:
-        return str(rows[0][0])
-    return False
-
-
-def getProfileOf(user_id):
-    """
-    Obtiene el perfil del usuario con ID user_id
-
-    Parameters
-    ----------
-    user_id : int
-        El ID del usuario.
-    Returns
-    -------
-    str
-        el perfil del usuario.
-    """
-    sqlPD = sqlWrapper(db='PD')
-    sqlRead = "select profile from users where id = " + str(user_id)
-    rows = sqlPD.read(sqlRead)
-    if len(rows) is not 0:
-        return str(rows[0][0])
-    return False
+'''
 
 
 def getUserOfSession(session_id):
@@ -144,26 +57,6 @@ def getUserOfSession(session_id):
         return str(rows[0][0])
     return False
 
-def getAllUserIDs():
-    """
-    Obtiene una lista con las id de los usuarios desde la base de datos
-
-    Parameters
-    ----------
-    Returns
-    -------
-    list
-        list de IDs de usuarios en forma de int
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select id from users"
-    rows = sqlPD.read(sqlRead)
-    return [int(row[0]) for row in rows]
-
-
 def getAllSimulUserIDs():
     """
     Obtiene una lista con las id de los usuarios SIMULADOS desde la base de datos
@@ -183,26 +76,6 @@ def getAllSimulUserIDs():
     sqlRead = "select id from users WHERE simulated = 1"
     rows = sqlPD.read(sqlRead)
     print("rows: "); print(rows)
-    return [int(row[0]) for row in rows]
-
-
-def getAllMacroStateIDs():
-    """
-    Obtiene una lista con las id de los macro estados desde la base de datos
-
-    Parameters
-    ----------
-    Returns
-    -------
-    list
-        list de IDs de macro estados en forma de int
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select id from macrostatemap"
-    rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
 

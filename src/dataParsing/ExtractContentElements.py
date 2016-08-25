@@ -7,6 +7,7 @@ Extrae vectores que definen micro-estados unicos de los eventos en la base de da
 
 from src.utils.dataParsingUtils import *
 from src.dataParsing.MicroStateVectorExtractor import *
+from src.dataParsing.DataParser import DataParser
 
 
 def extractContentElements():
@@ -22,7 +23,7 @@ def extractContentElements():
         sqlPD = sqlWrapper(db='PD')
     except:
         raise
-
+    dp = DataParser()
     msvE = MicroStateVectorExtractor()
     elementTypes = msvE.getElementTypes()
     # print('elementTypes:' +str(elementTypes))
@@ -33,7 +34,7 @@ def extractContentElements():
     rows = sqlGC.read(sqlRead)
     elementsL = list()
     for i, row in enumerate(rows):
-        macro_id = getMacroID((row[0], row[1], row[2]))
+        macro_id = dp.getMacroID((row[0], row[1], row[2]))
         raw = row[3]
         contentElementUnique = json.loads(raw)
         eL = (macro_id,)
@@ -43,8 +44,8 @@ def extractContentElements():
             print("Error en fila: " + str(i))
             print(json.dumps(contentElementUnique, indent=2))
             raise
-        if allElementsEmpty(data):
-            continue
+        #if allElementsEmpty(data):
+        #    continue
         for el_type in elementTypes:
             eL = eL + (data[el_type],)
         eL = eL + (raw,)

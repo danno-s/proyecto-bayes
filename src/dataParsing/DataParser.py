@@ -15,8 +15,7 @@ class DataParser:
         if DataParser.__instance is None:
             DataParser.__instance = object.__new__(cls)
             DataParser.__instance.userD = DataParser.__instance.__loadUsers()
-            DataParser.__instance.macroStatesD= DataParser.__instance.__loadMacroStates()
-            DataParser.__instance.microStatesD, DataParser.__instance.contentElementsD = DataParser.__instance.__loadContentElements()
+            DataParser.__instance.macroStatesD = DataParser.__instance.__loadMacroStates()
             DataParser.__instance.macroStateMapper = DataParser.__instance.getMacroMapper()
         return DataParser.__instance
 
@@ -73,8 +72,12 @@ class DataParser:
                              Selects = row[5],
                              Checkbox = row[6],
                              key="")
-            microStatesD[mn.micro_id]=mn
-            rawD[mn.micro_id]=row[7]
+            if mn.macro_id not in microStatesD.keys():
+                microStatesD[mn.macro_id] = list()
+            microStatesD[mn.macro_id].append(mn)
+            if row[7] not in rawD.keys():
+                rawD[row[7]] = list()
+            rawD[row[7]].append(mn.micro_id)
         return microStatesD, rawD
 
     def getMacroMapper(self):
@@ -138,7 +141,7 @@ class DataParser:
     def getMacroStateMap(self,macrostatemap_id):
         return self.macroStatesD[macrostatemap_id]
 
-    def getMicroID(self, contentElements):
+    def getMicroID(self, contentElements, macro_id):
         """
         Obtiene el id en la base de datos de un micro estado
 
@@ -151,8 +154,16 @@ class DataParser:
         int
             El id del microestado
         """
-        if contentElements in self.contentElementsD.values():
-            return list(self.contentElementsD.keys())[list(self.contentElementsD.values()).index(contentElements)]
+        try:
+            a = len(self.contentElementsD)
+        except AttributeError:
+            DataParser.__instance.microStatesD, DataParser.__instance.contentElementsD = DataParser.__instance.__loadContentElements()
+        microNodesL = self.microStatesD[macro_id] # Encontrar lista de micro nodos para el macro estado indicado.
+        if contentElements in self.contentElementsD.keys():
+            ids = self.contentElementsD[contentElements]
+            for mn in microNodesL:
+                if mn.micro_id in ids:
+                    return mn.micro_id
         return False
 
     def getProfileOf(self,user_id):
@@ -168,9 +179,8 @@ class DataParser:
         str
             el perfil del usuario.
         """
-        sqlPD = sqlWrapper(db='PD')
         if user_id in self.userD.keys():
-            return self.userD[user_id]
+            return self.userD[user_id][1]
         return False
 
     def getAllUserIDs(self):
@@ -228,11 +238,11 @@ class DataParser:
             for row in info:
                 urlstr = row[1]
                 macro = self.getMacroID((urlstr, row[2], row[3]))
-                micro = self.getMicroID(row[5])
+                micro = self.getMicroID(row[5], macro)
                 if not macro:
                     continue
                 if not micro:
-                    micro = -1
+                    micro = None
                 usr = self.getUserID(row[3])
                 if not usr:
                     continue

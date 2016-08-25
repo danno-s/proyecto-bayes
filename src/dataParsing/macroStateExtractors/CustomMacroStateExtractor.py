@@ -7,6 +7,7 @@ from src.dataParsing.macroStateExtractors.MacroStateExtractor import MacroStateE
 from src.dataParsing.macroStateModel.MacroStateMap import MacroStateMap
 from src.dataParsing.macroStateModel.MacroStateRule import MacroStateRule
 from src.utils.sqlUtils import sqlWrapper
+from src.dataParsing.MacroStateMapper import MacroStateMapper
 
 
 class CustomMacroStateExtractor(MacroStateExtractor):
@@ -22,7 +23,10 @@ class CustomMacroStateExtractor(MacroStateExtractor):
         """
         if CustomMacroStateExtractor.__instance is None:
             CustomMacroStateExtractor.__instance = object.__new__(cls)
-            MacroStateExtractor.__init__(CustomMacroStateExtractor.__instance)
+            CustomMacroStateExtractor.__instance.macroStatesD = CustomMacroStateExtractor.__instance.loadMacroStates()
+            CustomMacroStateExtractor.__instance.macroStateRulesD = CustomMacroStateExtractor.__instance.loadMacroStateRules()
+            CustomMacroStateExtractor.__instance.macroMapper = CustomMacroStateExtractor.__instance.getMacroMapper()
+
         return CustomMacroStateExtractor.__instance
 
     def loadMacroStates(self):
@@ -77,11 +81,24 @@ class CustomMacroStateExtractor(MacroStateExtractor):
         writeL = [(x.getId(),x.getMacrostatemap().getId(), x.getArg(),x.getRuleType(),x.getWeight(),x.getVarType()) for x in self.macroStateRulesD.values()]
         sqlPD.writeMany(sqlWrite, writeL)
 
-if __name__ == '__main__':
-    from src.utils.sqlUtils import sqlWrapper
+    def getMacroMapper(self):
+        try:
+            return self.macroMapper
+        except AttributeError:
+            macroMapper = MacroStateMapper(CustomMacroStateExtractor.__instance.macroStateRulesD)
+            CustomMacroStateExtractor.__instance.macroMapper = macroMapper
+            return macroMapper
 
-    cmse = CustomMacroStateExtractor()
-    #rows = sqlPD.read("SELECT url FROM url")
-    #for row in rows:
-    #    cmse.map(row[0],None)
-    cmse.saveMacroStates()
+if __name__ == '__main__':
+    import time
+
+    start_time = time.time()
+
+    cmse= CustomMacroStateExtractor()
+    print("time elapsed: {:.2f}s".format(time.time() - start_time))
+    start_time = time.time()
+
+    cmse2= CustomMacroStateExtractor()
+
+    print("time elapsed2: {:.2f}s".format(time.time() - start_time))
+

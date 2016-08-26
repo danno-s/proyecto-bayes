@@ -24,7 +24,7 @@ class DataParser:
             sqlPD = sqlWrapper(db='PD')
         except:
             raise
-        sqlRead = "select id,user_id,profile from users"
+        sqlRead = "select id,capture_userid,profile from users"
         rows = sqlPD.read(sqlRead)
         userD = dict()
         for row in rows:
@@ -95,7 +95,7 @@ class DataParser:
             macrostateE = macroStateExtractorsD[mse]()
             return macrostateE.getMacroMapper()
 
-    def getUserID(self,variables):
+    def getUserID(self,variables, captured_ip):
         """
         Obtiene el id entero de un usuario en la base de datos
 
@@ -103,6 +103,8 @@ class DataParser:
         ----------
         variables : str
             El json de variables que incluye la id de usuario como str a buscar.
+        captured_ip : str
+            La ip capturada.
         Returns
         -------
         int
@@ -112,11 +114,15 @@ class DataParser:
         if not varD or 'id_usuario' not in varD.keys():
             return False
         user_id_str = json.loads(variables)['id_usuario']
+        if user_id_str == 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c':
+            user_id_str = captured_ip
+        return self.findUserID(user_id_str)
+
+    def findUserID(self,user_id_str):
         for k,v in self.userD.items():
             if v[0] == user_id_str:
                 return k
         return False
-
     def getMacroID(self,data):
         """
         Obtiene el id en la base de datos del macro estado
@@ -213,7 +219,7 @@ class DataParser:
         from src.utils.loadConfig import Config
         capture_table = Config.getValue("capture_table")
 
-        return "SELECT id, url, urls, variables, clickDate, contentElements FROM " + capture_table + " WHERE variables NOT LIKE 'null'" + " LIMIT " + str(
+        return "SELECT id, url, urls, variables, clickDate, contentElements, IP FROM " + capture_table + " WHERE variables NOT LIKE 'null'" + " LIMIT " + str(
             n) + ", "+ str(bufferSize)
 
     def parseData(self):
@@ -226,9 +232,11 @@ class DataParser:
         sqlCD = sqlWrapper(db='CD')
 
         sqlCD.truncate("nodes")
-        sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile, micro_id) VALUES (%s,%s,%s,%s,%s)"
+        sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile, micro_id, pageview_id) " \
+                   "VALUES (%s,%s,%s,%s,%s,%s)"
         i = 0
         Nnodes = 0
+        skipped = {'MacroID not mapped':[],'User data not found':[]}
         bufferSize = 500
         while True:
             info = sqlGC.read(self.__parseQuery(i,bufferSize))
@@ -236,24 +244,31 @@ class DataParser:
             if not info:
                 break
             for row in info:
+                pageview_id = row[0]
                 urlstr = row[1]
                 macro = self.getMacroID((urlstr, row[2], row[3]))
                 micro = self.getMicroID(row[5], macro)
+                captured_ip = row[6]
                 if not macro:
+                    skipped['MacroID not mapped'].append(pageview_id)
                     continue
                 if not micro:
                     micro = None
-                usr = self.getUserID(row[3])
+                usr = self.getUserID(row[3],captured_ip)
                 if not usr:
+                    skipped['User data not found'].append(pageview_id)
                     continue
                 profile = json.loads(row[3])['profile']
                 if not profile:
                     profile = None
                 click = row[4]
-                writeL.append((usr, click, macro, profile, micro))
+                writeL.append((usr, click, macro, profile, micro,pageview_id))
                 Nnodes += 1
             sqlCD.writeMany(sqlWrite,writeL)
 
             i += bufferSize
 
         print("Total nodes: " + str(Nnodes))
+        print("Skipped nodes:")
+        for k,v in skipped.items():
+            print("\t"+ str(k) + "("+str(len(skipped[k]))+"): "+str(v))

@@ -26,62 +26,6 @@ class MyTestCase(unittest.TestCase):
             self.assertTrue(isinstance(count, int))
             L = seq.split(' ')
             self.assertTrue(len(L) > 0)
-    '''
-    def test_extractUserMacroStatesBelongingFeatures(self):
-        ufL = [UserMacroStatesBelongingFeature]
-        fE = FeatureExtractor(userFeaturesL=ufL)
-        fE.extractUserFeatures()
-        try:
-            rows = self.sqlFT.read('SELECT * FROM userurlsbelongingfeatures')
-            self.assertTrue(len(rows) != 0)
-            for row in rows:
-                u_id = row[0]
-                featurevector = row[1].split(' ')
-                self.assertTrue(isinstance(u_id, int))
-                self.assertTrue(len(featurevector) > 0)
-                for x in featurevector:
-                    self.assertTrue(x == '1' or x == '0')
-        except:
-            self.assertTrue(False)
-
-    def test_extractUserLRSHistogramFeatures(self):
-        ufL = [UserLRSHistogramFeature]
-        fE = FeatureExtractor(userFeaturesL=ufL)
-        fE.extractUserFeatures()
-        rows = self.sqlFT.read('SELECT * FROM userlrshistogramfeatures')
-        self.assertTrue(len(rows) != 0)
-        try:
-            for row in rows:
-                feat_id = row[0]
-                hist = row[1].split(' ')
-                self.assertTrue(isinstance(feat_id, int))
-                self.assertTrue(len(hist) > 0)
-                hist_f = [float(x) for x in hist]
-                for x in hist_f:
-                    self.assertTrue(0.0 <= x <= 1.0)
-                s = sum(hist_f)
-                if s != 0.0:
-                    self.assertAlmostEquals(s, 1.0, 0.1)
-        except:
-            self.assertTrue(False)
-
-    def test_extractSessionLRSBelongingFeatures(self):
-        sfL = [SessionLRSBelongingFeature]
-        fE = FeatureExtractor(sessionFeaturesL=sfL)
-        fE.extractUserFeatures()
-        try:
-            rows = self.sqlFT.read('SELECT * FROM sessionlrsbelongingfeatures')
-            self.assertTrue(len(rows) != 0)
-            for row in rows:
-                feat_id = row[0]
-                featurevector = row[1].split(' ')
-                self.assertTrue(isinstance(feat_id, int))
-                self.assertTrue(len(featurevector) > 0)
-                for x in featurevector:
-                    self.assertTrue(x == '1' or x == '0')
-        except:
-            self.assertTrue(False)
-    '''
 
     def test_consecutiveIdxs(self):
         s = [0, 1, 2, 3, 4]

@@ -114,7 +114,7 @@ def calcLRSs():
     LRSs.sort()
     print("Longest Repeated Subsequences:\n " + str(LRSs))
     print("Accessed: \n" + str([Seqs[lrs] for lrs in LRSs]) + " times.")
-    print("Total: \n" + str(len(LRSs)) + " LRSs.")
+    print("Total: " + str(len(LRSs)) + " LRSs.")
 
 
     # Completar tabla para LRSs en la base de datos

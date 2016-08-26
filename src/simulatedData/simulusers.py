@@ -71,11 +71,11 @@ def simulusers(params, cluster, n):
 
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO " \
-               "users (user_id,username,profile) VALUES (%s, %s, %s)"
+               "users (capture_user_id,username,profile) VALUES (%s, %s, %s)"
     # sqlPD.truncateSimulated("users", readParams, sqlWrite)
     # Guardar usuarios
     sqlWrite = "INSERT INTO " \
-               "users (user_id,username,profile, simulated, label) " \
+               "users (capture_user_id,username,profile, simulated, label) " \
                "VALUES (%s, %s, %s, %s ,%s)"
 
     # print(len(user_id), len(user))

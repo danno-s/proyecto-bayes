@@ -110,24 +110,31 @@
 */
 {
   "capture_table": "pageview",
-  "macrostate_extractor": "URLs",
-  "session_tlimit": "20",
-  "LRS_threshold": "20",
+  "macrostate_extractor": "Custom",
+  "session_tlimit": "100",
+  "LRS_threshold": "500",
   "elementTypes": [
     "TextAreas",
     "RadioButton",
     "Selects",
     "InputText"
   ],
-  "sessionizer_mode": "Edges",
+  "sessionizer_mode": "MacroEdges",
   "user_features": [
     "UserMacroStatesBelonging",
     "UserLRSHistogram"
   ],
   "session_features": [
-    "SessionLRSBelonging"
+
   ],
-  "user_clustering": {
+  "user_clustering":[
+    "UserMacroStatesBelonging",
+    "UserLRSHistogram"
+  ],
+  "session_clustering":[
+
+  ],
+  "user_clustering_config": {
     "UserMacroStatesBelonging":
     {
       "eps": 0.8,
@@ -136,12 +143,12 @@
     },
     "UserLRSHistogram":
     {
-      "eps": 0.8,
+      "eps": 0.5,
       "min_samples": 5,
       "metric":"euclidean"
     }
   },
-  "session_clustering":{
+  "session_clustering_config":{
       "SessionLRSBelonging":
       {
         "eps": 0.3,

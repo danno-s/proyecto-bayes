@@ -9,9 +9,19 @@ import json
 
 
 class DataParser:
+    """
+    Clase encargada de extraer los datos necesarios para definir nodos, almacenarlos en diccionarios y posteriormente
+    generar nodos a partir de cada captura.
+    """
     __instance = None
 
     def __new__(cls):
+        """
+        Constructor segun patron Singleton para que se carguen los datos una sola vez sobre una unica instancia.
+        Returns
+        -------
+
+        """
         if DataParser.__instance is None:
             DataParser.__instance = object.__new__(cls)
             DataParser.__instance.userD = DataParser.__instance.__loadUsers()
@@ -20,6 +30,12 @@ class DataParser:
         return DataParser.__instance
 
     def __loadUsers(self):
+        """
+        Carga usuarios de base de datos "parseddata"
+        Returns
+        -------
+
+        """
         try:
             sqlPD = sqlWrapper(db='PD')
         except:
@@ -32,12 +48,11 @@ class DataParser:
         return userD
 
     def __loadMacroStates(self):
-        """Carga Macro estados predefinidos a la tabla macrostates.
-
-                Returns
-                -------
-
-                """
+        """
+        Carga Macro estados predefinidos a la tabla macrostatemap.
+        Returns
+        -------
+        """
         try:
             # Asigna las bases de datos que se accederan
             sqlPD = sqlWrapper(db='PD')
@@ -53,6 +68,12 @@ class DataParser:
         return macroStatesD
 
     def __loadContentElements(self):
+        """
+        Carga contentElements que definen los distintos microestados.
+        Returns
+        -------
+
+        """
 
         try:
             # Asigna las bases de datos que se accederan
@@ -81,6 +102,13 @@ class DataParser:
         return microStatesD, rawD
 
     def getMacroMapper(self):
+        """
+        Permite obtener el mapeador de macroestados que utiliza las reglas definidas en tabla "macrostaterule"
+        Returns
+        -------
+        MacroStateMapper
+
+        """
         try:
             return self.macroStateMapper
         except AttributeError:
@@ -116,9 +144,20 @@ class DataParser:
         user_id_str = json.loads(variables)['id_usuario']
         if user_id_str == 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c':
             user_id_str = captured_ip
-        return self.findUserID(user_id_str)
+        return self.__findUserID(user_id_str)
 
-    def findUserID(self,user_id_str):
+    def __findUserID(self,user_id_str):
+        """
+        Permite encontrar id del usuario en el diccionario interno de la clase.
+        Parameters
+        ----------
+        user_id_str
+
+        Returns
+        -------
+        False si no encuentra el id del usuario.
+        int correspondiente al id numerico del usuario.
+        """
         for k,v in self.userD.items():
             if v[0] == user_id_str:
                 return k
@@ -145,6 +184,17 @@ class DataParser:
         return False
 
     def getMacroStateMap(self,macrostatemap_id):
+        """
+        Retorna un MacroStateMap que define un macro estado con sus reglas de mapeo.
+        Parameters
+        ----------
+        macrostatemap_id: int
+            el ID del macro estado.
+
+        Returns
+        -------
+    MacroStateMap
+        """
         return self.macroStatesD[macrostatemap_id]
 
     def getMicroID(self, contentElements, macro_id):
@@ -231,7 +281,7 @@ class DataParser:
         sqlGC = sqlWrapper(db='GC')
         sqlCD = sqlWrapper(db='CD')
 
-        sqlCD.truncate("nodes")
+        sqlCD.truncateRestricted("nodes")
         sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile, micro_id, pageview_id) " \
                    "VALUES (%s,%s,%s,%s,%s,%s)"
         i = 0
@@ -271,4 +321,5 @@ class DataParser:
         print("Total nodes: " + str(Nnodes))
         print("Skipped nodes:")
         for k,v in skipped.items():
-            print("\t"+ str(k) + "("+str(len(skipped[k]))+"): "+str(v))
+            if len(v) > 0:
+                print("\t"+ str(k) + "("+str(len(v))+"): "+str(v))

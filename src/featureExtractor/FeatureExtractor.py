@@ -64,8 +64,8 @@ class FeatureExtractor:
         sqlFT = sqlWrapper('FT')
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
-            f = feature(user)
             try:
+                f = feature(user)
                 f.extract()
             except AssertionError:
                 continue

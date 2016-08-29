@@ -71,7 +71,7 @@ class sqlWrapper:
     def truncateSimulated(self, table, readParams, sqlWrite):
         old_rows = self.read("SELECT " + readParams +
                              " FROM " + table + " WHERE simulated = 0")
-        self.truncate(table)
+        self.truncateRestricted(table)
         for row in old_rows:
             self.write(sqlWrite, row)
 
@@ -197,3 +197,12 @@ class sqlWrapper:
             self.conns['CL'] = connections['clusters']
         except:
             raise
+
+    def setGlobalFKChecks(self,val):
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+        cursor = cnx.cursor()
+        cursor.execute("SET GLOBAL FOREIGN_KEY_CHECKS = "+str(val)+";")
+        cnx.commit()
+        cnx.close()
+

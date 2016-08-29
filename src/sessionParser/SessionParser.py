@@ -59,7 +59,7 @@ class SessionParser:
                 "(%s,%s,%s,%s,%s,%s,%s)"
             sqlCD.write(sqlWrite, [session.toSQLItem() + (True, None) for session in self.sessions])
         else:               # Borrar toda la tabla.
-            sqlCD.truncate('sessions')
+            sqlCD.truncateRestricted('sessions')
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
                 "(%s,%s,%s,%s,%s)"
             sqlCD.writeMany(sqlWrite, [session.toSQLItem() for session in self.sessions])

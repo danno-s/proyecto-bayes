@@ -16,7 +16,9 @@ from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
 
 simulate = False
+
 if __name__ == '__main__':
+
     print("0 = macroStateExtraction\n" +
           "1 = userExtraction\n" +
           "2 = contentElementsExtraction\n" +
@@ -86,3 +88,33 @@ if __name__ == '__main__':
         print("Clustering Visualization...")
         clusterVisualization()
         if b== 11: exit()
+
+
+def start():
+    """
+    Permite deshabilitar verificacion de llaves secundarias para vaciar tablas de un paso en particular.
+    Returns
+    -------
+
+    """
+    from src.utils.sqlUtils import sqlWrapper
+    try:
+        sqlPD = sqlWrapper('PD')
+        sqlPD.setGlobalFKChecks('0')
+    except:
+        print("ERROR")
+
+
+def finish():
+    """
+    Permite habilitar verificacion de llaves secundarias una vez ejecutado un paso.
+    Returns
+    -------
+
+    """
+    from src.utils.sqlUtils import sqlWrapper
+    try:
+        sqlPD = sqlWrapper('PD')
+        sqlPD.setGlobalFKChecks('1')
+    except:
+        print("ERROR")

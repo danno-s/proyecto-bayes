@@ -59,7 +59,7 @@ def extractContentElements():
 
     # Limpia las tablas
 
-    sqlPD.truncate("contentElements")
+    sqlPD.truncateRestricted("contentElements")
 
     # Guarda sets unicos de elementos con sus macro_id en tabla
     # contentElements.

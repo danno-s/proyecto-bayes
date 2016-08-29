@@ -1,4 +1,9 @@
 /*
+"capture_table": Name of the table with capture data, usually "pageview" or "pageview2".
+
+"macrostate_extractor": Choose which method of MacroState extraction will be executed.
+            "Custom": Requires 'macrostatemap' and 'macrostaterule' tables in guidecapture database.
+            "URLs": Extracts directly from the capture table. (May be slower)
 
 "session_tlimit": Maximium time in seconds between steps that allows the user
                  to stay in the same session.
@@ -40,8 +45,17 @@
                     "SessionLRSBelonging"
                     "SessionUserClustersBelonging"
                   ]
-
-  "user_clustering": Types of user clustering methods and their parameters (eps,min_samples,metric).
+"user_clustering": List of user clusterings to be computed:
+                  [
+                  "UserMacroStatesBelonging",
+                  "UserLRSHistogram"
+                  ],
+ "session_clustering": List of session clusterings to be computed:
+                  [
+                  "SessionLRSBelonging"
+                  ],
+  "user_clustering_config": Types of user clustering methods and their parameters (eps,min_samples,metric).
+                            ONLY EDIT VALUES, DO NOT DELETE.
 
   {
     "UserMacroStatesBelonging":
@@ -65,9 +79,10 @@
   }
 
 
-  "session_clustering": Types of session clustering methods and their parameters (eps,min_samples,metric).
+  "session_clustering_config": Session clustering methods and their parameters (eps,min_samples,metric).
                       The CompositeSession clustering method requires a list of features or metrics to
                        be composed onto a single descriptor that is used for clustering.
+                       ONLY EDIT VALUES, DO NOT DELETE.
 
    {
       "SessionLRSBelonging":
@@ -109,7 +124,7 @@
 
 */
 {
-  "capture_table": "pageview",
+  "capture_table": "pageview2",
   "macrostate_extractor": "Custom",
   "session_tlimit": "100",
   "LRS_threshold": "500",
@@ -146,6 +161,12 @@
       "eps": 0.5,
       "min_samples": 5,
       "metric":"euclidean"
+    },
+    "FullUser":
+    {
+      "eps": 0.7,
+      "min_samples": 5,
+      "metric":"euclidean"
     }
   },
   "session_clustering_config":{
@@ -153,6 +174,35 @@
       {
         "eps": 0.3,
         "min_samples": 5,
+        "metric":"euclidean"
+      },
+      "SessionUserClustersBelonging":
+      {
+        "eps":0.7,
+        "min_samples": 5,
+        "metric":"euclidean"
+      },
+      "CompositeSession":
+      {
+        "eps":0.7,
+        "min_samples": 5,
+        "metric":"euclidean",
+        "features":
+        [
+          "SessionLRSBelonging",
+          "SessionUserClustersBelonging"
+        ]
+      },
+      "DirectSession":
+      {
+        "eps":2.0,
+        "min_samples": 10,
+        "metric":"precomputed"
+      },
+      "FullSession":
+      {
+        "eps":0.8,
+        "min_samples":5,
         "metric":"euclidean"
       }
   },

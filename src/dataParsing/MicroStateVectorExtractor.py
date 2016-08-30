@@ -73,13 +73,14 @@ class MicroStateVectorExtractor:
         Returns
         -------
         """
-        hasValue = d['HasValue']
-        # isHidden = d['IsHidden']
-        if True:  # isHidden == 'false' or isHidden == 'true':
-            if hasValue == 'true':
-                L.append(1)
-            else:
-                L.append(0)
+        if isinstance(d,dict) and 'HasValue' in d.keys():
+            hasValue = d['HasValue']
+            # isHidden = d['IsHidden']
+            if True:  # isHidden == 'false' or isHidden == 'true':
+                if hasValue == 'true':
+                    L.append(1)
+                else:
+                    L.append(0)
 
     def __getInputText(self, d, L):
         """Agrega a la lista L de entrada el valor de estado del elemento inputText ingresado en d.
@@ -94,13 +95,14 @@ class MicroStateVectorExtractor:
         Returns
         -------
         """
-        hasValue = d['HasValue']
-        isHidden = d['IsHidden']
-        if isHidden == 'false' or isHidden == 'true':
-            if hasValue == 'true':
-                L.append(1)
-            else:
-                L.append(0)
+        if isinstance(d,dict) and 'HasValue' in d.keys() and 'IsHidden' in d.keys():
+            hasValue = d['HasValue']
+            isHidden = d['IsHidden']
+            if isHidden == 'false' or isHidden == 'true':
+                if hasValue == 'true':
+                    L.append(1)
+                else:
+                    L.append(0)
 
     def __getRadioButtons(self, d, L):
         """Agrega a la lista L de entrada el valor de estado del elemento radioButton ingresado en d.
@@ -115,8 +117,9 @@ class MicroStateVectorExtractor:
         Returns
         -------
         """
-        selected = d['Selected']
-        L.append(selected)
+        if isinstance(d,dict) and 'Selected' in d.keys():
+            selected = d['Selected']
+            L.append(selected)
 
     def __getSelects(self, d, L):
         """Agrega a la lista L de entrada el valor de estado del elemento select ingresado en d.
@@ -131,10 +134,20 @@ class MicroStateVectorExtractor:
         Returns
         -------
         """
-        options = d['Selected']
-        if len(options) > 0:
-            L.append('-'.join(options))
-
+        if isinstance(d,dict) and 'Selected' in d.keys():
+            try:
+                options = d['Selected']
+            except:
+                print(d)
+                raise
+            if len(options) > 0:
+                auxoptions = list()
+                for op in options:
+                    if not isinstance(op,str):
+                        auxoptions.append(op)
+                L.append('-'.join(auxoptions))
+        else:
+            L.append(d)
     def __getCheckboxes(self, d, L):
         """Agrega a la lista L de entrada el valor de estado del elemento checkbox ingresado en d.
 
@@ -148,13 +161,14 @@ class MicroStateVectorExtractor:
         Returns
         -------
         """
-        quantity = int(d['Quantity'])
-        vector = ['0'] * quantity
-        options = d['Selected']
-        if options != '':
-            for i in options:
-                vector[int(i)] = '1'
-        L.append('-'.join(vector))
+        if isinstance(d,dict) and 'Selected' in d.keys() and 'Quantity' in d.keys():
+            quantity = int(d['Quantity'])
+            vector = ['0'] * quantity
+            options = d['Selected']
+            if options != '':
+                for i in options:
+                    vector[int(i)] = '1'
+            L.append('-'.join(vector))
 
     def generateStateVectorFrom(self, contentElements, el_type, L):
         """Funcion recursiva que recorre contentElements y va creando el vectore de estado en L para el tipo de
@@ -176,17 +190,19 @@ class MicroStateVectorExtractor:
         if len(contentElements) == 0:
             return
         valueD = contentElements['value']
-        try:
-            elementL = valueD[el_type]
-        except:
-            print(valueD)
-            raise
-        if elementL != '':
-            for el in elementL:
-                self.funcD[el_type](el, L)
-        children = contentElements['children']
-        for child in children:
-            self.generateStateVectorFrom(child, el_type, L)
+        if el_type in valueD.keys():
+            try:
+                 elementL = valueD[el_type]
+            except:
+                print(valueD)
+                raise
+            if elementL != '':
+                for el in elementL:
+                    self.funcD[el_type](el, L)
+            if 'children' in contentElements.keys():
+                children = contentElements['children']
+                for child in children:
+                    self.generateStateVectorFrom(child, el_type, L)
 
     def getStateVectors(self, contentElements):
         """Funcion que recorre todos los tipos de elementos cargados en el MicroStateVectorExtractor y los retorna en
@@ -210,6 +226,6 @@ class MicroStateVectorExtractor:
                 self.generateStateVectorFrom(contentElements, el_type, L)
                 data[el_type] = ' '.join(map(str, L))
             except:
-                print(json.dumps(contentElements, indent=2))
+    #            print(json.dumps(contentElements, indent=2))
                 raise
         return data

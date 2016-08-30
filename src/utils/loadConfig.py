@@ -7,7 +7,7 @@ Modulo para cargar configuracion desde un archivo "config.json" en el path del p
 import json
 import os
 import jsmin
-from src.clustering.clusterings.userclusterings.UserURLsBelongingClustering import UserURLsBelongingClustering
+from src.clustering.clusterings.userclusterings.UserMacroStatesBelongingClustering import UserMacroStatesBelongingClustering
 from src.clustering.clusterings.userclusterings.UserLRSHistogramClustering import UserLRSHistogramClustering
 from src.clustering.clusterings.userclusterings.FullUserClustering import FullUserClustering
 
@@ -28,7 +28,7 @@ class Config:
     __parameters = json.loads(configurationJSON)  # objeto json cargado.
     userClusteringsD = {
         "UserLRSHistogram": UserLRSHistogramClustering,
-        "UserURLsBelonging": UserURLsBelongingClustering,
+        "UserMacroStatesBelonging": UserMacroStatesBelongingClustering,
         "FullUser": FullUserClustering
     }
 
@@ -87,7 +87,6 @@ class Config:
 
         """
         jsonArray = self.__parameters[attr]
-        assert len(jsonArray) > 0
         return jsonArray
 
     @classmethod
@@ -123,9 +122,10 @@ class Config:
         """
 
         ucConfD = dict()
-        user_clusteringD = Config.getDict("user_clustering")
+        user_clusteringD = Config.getDict("user_clustering_config")
+        userClusteringsL = Config.getArray("user_clustering")
         for k, v in user_clusteringD.items():
-            if k in self.userClusteringsD.keys():
+            if k in userClusteringsL:
                 ucConfD[self.userClusteringsD[k]] = v
 
         return ucConfD
@@ -140,9 +140,11 @@ class Config:
             con configuracion de clusterings de sesion
         """
         scConfD = dict()
-        session_clusteringD = Config.getDict("session_clustering")
+        session_clusteringD = Config.getDict("session_clustering_config")
+        sessionClusteringsL = Config.getArray("session_clustering")
+
         for k, v in session_clusteringD.items():
-            if k in self.sessionClusteringsD.keys():
+            if k in sessionClusteringsL:
                 scConfD[self.sessionClusteringsD[k]] = v
 
         return scConfD

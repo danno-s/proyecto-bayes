@@ -7,10 +7,13 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def firstFeatureExtraction():
+    from src.executionSteps.main import start, finish
+    start()
     sqlFT = sqlWrapper('FT')
-    sqlFT.truncate('userfeatures')
-    sqlFT.truncate('sessionfeatures')
+    sqlFT.truncateRestricted('userfeatures')
+    sqlFT.truncateRestricted('sessionfeatures')
     extractFeatures()
+    finish()
 
 if __name__ == '__main__':
     firstFeatureExtraction()

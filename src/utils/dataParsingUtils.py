@@ -90,28 +90,9 @@ def getUserOfSession(session_id):
         raise
     sqlRead = "select user_id from sessions where id = " + str(session_id)
     rows = sqlCD.read(sqlRead)
-    return rows[0][0]
-
-
-def getAllUserIDs():
-    """
-    Obtiene una lista con las id de los usuarios desde la base de datos
-
-    Parameters
-    ----------
-    Returns
-    -------
-    list
-        list de IDs de usuarios en forma de int
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select user_id from users"
-    rows = sqlPD.read(sqlRead)
-    return [int(row[0]) for row in rows]
-
+    if len(rows) is not 0:
+        return str(rows[0][0])
+    return False
 
 def getAllSimulUserIDs():
     """
@@ -129,29 +110,9 @@ def getAllSimulUserIDs():
     except:
         print("excepcion con sql")
         raise
-    sqlRead = "select user_id from users WHERE simulated = 1"
+    sqlRead = "select id from users WHERE simulated = 1"
     rows = sqlPD.read(sqlRead)
     print("rows: "); print(rows)
-    return [int(row[0]) for row in rows]
-
-
-def getAllURLsIDs():
-    """
-    Obtiene una lista con las id de las urls desde la base de datos
-
-    Parameters
-    ----------
-    Returns
-    -------
-    list
-        list de IDs de urls en forma de int
-    """
-    try:
-        sqlPD = sqlWrapper(db='PD')
-    except:
-        raise
-    sqlRead = "select id from urls"
-    rows = sqlPD.read(sqlRead)
     return [int(row[0]) for row in rows]
 
 
@@ -166,16 +127,16 @@ def userStepsGen(user_id):
         Yields
         ----------
         tuple
-            (clickDate, urls_id, profile, micro_id)
+            (clickDate, macro_id, profile, micro_id)
         Returns
         -------
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+    rows = sqlCD.read("SELECT clickDate,user_id,macro_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
                       " AND simulated = 0")
     for row in rows:
-        # (clickDate, urls_id, profile, micro_id)
+        # (clickDate, macro_id, profile, micro_id)
         yield (row[0], row[2], row[3], row[4])
 
 
@@ -190,20 +151,14 @@ def simulUserStepsGen(user_id):
         Yields
         ----------
         tuple
-            (clickDate, urls_id, profile, micro_id)
+            (clickDate, macro_id, profile, micro_id)
         Returns
         -------
 
         """
     sqlCD = sqlWrapper('CD')
-    rows = sqlCD.read("SELECT clickDate,user_id,urls_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
+    rows = sqlCD.read("SELECT clickDate,user_id,macro_id,profile,micro_id from nodes WHERE user_id=" + str(user_id) +
                       " AND simulated = 1")
     for row in rows:
-        # (clickDate, urls_id, profile, micro_id)
+        # (clickDate, macro_id, profile, micro_id)
         yield (row[0], row[2], row[3], row[4])
-
-if __name__ == '__main__':
-    a = userStepsGen(824)
-
-    print(a.__next__())
-    print(a.__next__())

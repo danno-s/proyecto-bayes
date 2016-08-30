@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from src.dataParsing.DataParser import DataParser
+
 
 class Cluster:
     """
@@ -84,6 +86,7 @@ class Cluster:
         """
         return [min([value[x] for value in self.vectors]) \
                 for x in range(self.features_dim)]
+
     def getVar(self):
         """
         Retorna un vector con la varianza de cada una de las
@@ -93,7 +96,6 @@ class Cluster:
         return [sum([(value[x] - mean[x]) ** 2 / self.size \
                 for value in self.vectors]) \
                 for x in range(self.features_dim)]
-
 
     def __str__(self):
         return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
@@ -134,7 +136,6 @@ class Cluster:
             print("Failed")
 
     def __getRepresentativeUser(self):
-        from src.utils.dataParsingUtils import getProfileOf
         centroid_vector = self.getCentroid()
         closestU = []
         closestV = set()
@@ -156,7 +157,7 @@ class Cluster:
         s += "Min Distance to centroid: " + str(min_dist) + "\n\t"
         s += "Closest User(s) with profiles: "
         for u in closestU:
-            s += str(u) + " [" + str(getProfileOf(u)) + "], \t"
+            s += str(u) + " [" + DataParser().getProfileOf(u) + "], \t"
         s += "\n\tClosest Vector(s): \n\t"
         for v in closestV:
             s += str(v) + "\n\t"

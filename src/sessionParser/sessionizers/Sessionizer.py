@@ -39,7 +39,7 @@ class Sessionizer:
         # Obtener todos los usuarios.
         userL = sParser.userL
         assert len(userL) > 0
-        # nodesD[user_id]= stepGen: (clickDate,urls_id, profile,microNode)
+        # nodesD[user_id]= stepGen: (clickDate,macro_id, profile,microNode)
         nodesD = sParser.nodesD
         assert len(nodesD) > 0
         # Extraer sesiones para cada usuario, dado un tiempo limite entre
@@ -167,7 +167,7 @@ class Sessionizer:
         Parameters
         ----------
         macro_id : int
-            ID del arbol de URLs del nodo.
+            ID del arbol de macro_ids del nodo.
         micro_id : int
             ID del micro estado del nodo.
 

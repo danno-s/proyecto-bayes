@@ -3,8 +3,8 @@ Elemento encargado de extraer features (caracteristicas) de usuarios y
 sesiones capturadas.
 """
 from src.utils.sqlUtils import sqlWrapper
-from src.utils.dataParsingUtils import getAllUserIDs
 from src.utils.featureExtractionUtils import getAllSessionIDs
+from src.dataParsing.DataParser import DataParser
 
 
 class FeatureExtractor:
@@ -28,7 +28,7 @@ class FeatureExtractor:
             """
         self.userFeaturesL = userFeaturesL or []
         self.sessionFeaturesL = sessionFeaturesL or []
-        self.users = getAllUserIDs()
+        self.users = DataParser().getAllUserIDs()
         self.sessionIDs = getAllSessionIDs()
 
     def extractUserFeatures(self):
@@ -72,8 +72,11 @@ class FeatureExtractor:
         sqlFT = sqlWrapper('FT')
         print("\n" + str(feature.__name__) + ":\n")
         for user in self.users:
-            f = feature(user)
-            f.extract()
+            try:
+                f = feature(user)
+                f.extract()
+            except AssertionError:
+                continue
             sqlFT.write(f.sqlWrite, f.toSQLItem())
             if '[]' not in str(f):
                 print(f)

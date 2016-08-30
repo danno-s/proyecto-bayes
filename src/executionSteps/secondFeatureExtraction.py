@@ -7,10 +7,12 @@ from src.utils.sqlUtils import sqlWrapper
 
 
 def secondFeatureExtraction():
+    from src.executionSteps.main import start, finish
+    start()
     sqlFT = sqlWrapper('FT')
     sqlFT.truncate('sessionfeatures',
                    "feature_name = 'SessionUserClustersBelonging'")
     extractPostClusteringFeatures()
-
+    finish()
 if __name__ == '__main__':
     secondFeatureExtraction()

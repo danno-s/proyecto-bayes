@@ -90,7 +90,7 @@ class ClusterView(object):
             cluster = cluster_dict[clustering]
             len_cd = len(cluster)
             if len_cd <= 1:
-                break
+                continue
 
             fig, axis = plt.subplots(len_cd, sharex=True, sharey=True,\
                 num=plot_count)

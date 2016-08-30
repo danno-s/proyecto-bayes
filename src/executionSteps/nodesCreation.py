@@ -8,7 +8,9 @@ from src.dataParsing.dataParse import dataParse
 
 
 def nodesCreation():
+    from src.executionSteps.main import start, finish
+    start()
     dataParse()
-
+    finish()
 if __name__ == '__main__':
     nodesCreation()

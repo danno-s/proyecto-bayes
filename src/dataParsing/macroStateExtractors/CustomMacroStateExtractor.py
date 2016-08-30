@@ -32,10 +32,9 @@ class CustomMacroStateExtractor(MacroStateExtractor):
     def loadMacroStates(self):
         """Carga Macro estados predefinidos a la tabla macrostates.
 
-                Returns
-                -------
-
-                """
+        Returns
+        -------
+        """
         try:
             # Asigna las bases de datos que se accederan
             sqlGC = sqlWrapper(db='GC')
@@ -60,12 +59,18 @@ class CustomMacroStateExtractor(MacroStateExtractor):
         assert len(rows) > 0
         rulesD = dict()
         for row in rows:
-            msRule = MacroStateRule(row[0],row[2],row[3],row[5],row[4])
+            msRule = MacroStateRule(_id=row[0],_arg=row[2],_ruleType=row[3],_weight=row[5],_varType=row[4])
             self.macroStatesD[row[1]].addRule(msRule)
             rulesD[row[0]]=msRule
         return rulesD
 
     def saveMacroStates(self):
+        """
+        Almacena las reglas y macro estados extraidos en la base de datos "parseddata".
+        Returns
+        -------
+
+        """
         try:
             sqlPD = sqlWrapper(db='PD')
         except:
@@ -82,6 +87,13 @@ class CustomMacroStateExtractor(MacroStateExtractor):
         sqlPD.writeMany(sqlWrite, writeL)
 
     def getMacroMapper(self):
+        """
+        Retorna el MacroStateMapper utilizado para mapear los macro estados. En caso de no haber sido instanciado,
+        se construye usando el diccionario de reglas cargado desde la base de datos.
+        Returns
+        -------
+
+        """
         try:
             return self.macroMapper
         except AttributeError:
@@ -89,16 +101,4 @@ class CustomMacroStateExtractor(MacroStateExtractor):
             CustomMacroStateExtractor.__instance.macroMapper = macroMapper
             return macroMapper
 
-if __name__ == '__main__':
-    import time
-
-    start_time = time.time()
-
-    cmse= CustomMacroStateExtractor()
-    print("time elapsed: {:.2f}s".format(time.time() - start_time))
-    start_time = time.time()
-
-    cmse2= CustomMacroStateExtractor()
-
-    print("time elapsed2: {:.2f}s".format(time.time() - start_time))
 

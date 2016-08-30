@@ -52,7 +52,6 @@ class URLsMacroStateExtractor(MacroStateExtractor):
         return [urlstree[0].replace(' ', '') for urlstree in URLs]
 
     def loadMacroStates(self):
-
         macroStatesD = dict()
         for i in range(len(self.urlsL)):
             msMap = MacroStateMap(i+1, "S"+str(i+1))
@@ -65,16 +64,21 @@ class URLsMacroStateExtractor(MacroStateExtractor):
             argsD[i+1] = urlstree.replace(' ', '')
         return argsD
 
-
     def loadMacroStateRules(self):
         rulesD = dict()
         for i in self.macroStatesD.keys():
-            msRule = MacroStateRule(i, self.argsD[i], 'equal','urljson',1)
+            msRule = MacroStateRule(_id=i, _arg=self.argsD[i],_ruleType= 'equal',_varType='urljson',_weight=1)
             self.macroStatesD[i].addRule(msRule)
             rulesD[i]= msRule
         return rulesD
 
     def saveMacroStates(self):
+        """
+        Almacena las reglas y macro estados extraidos en la base de datos "parseddata".
+        Returns
+        -------
+
+        """
         try:
             sqlPD = sqlWrapper(db='PD')
         except:
@@ -90,30 +94,15 @@ class URLsMacroStateExtractor(MacroStateExtractor):
         writeL = [(x.getId(),x.getMacrostatemap().getId(), x.getArg(),x.getRuleType(),x.getWeight(),x.getVarType()) for x in self.macroStateRulesD.values()]
         sqlPD.writeMany(sqlWrite, writeL)
 
-
-    def map(self, data):
+    def getMacroMapper(self):
         """
-        Obtiene el id en la base de datos de un arbol de urls
-
-        Parameters
-        ----------
-        data: (url,urls,variables)
-            La url principal a buscar, el arbol de urls a buscar y las variables de la captura.
+        Retorna el MacroStateMapper utilizado para mapear los macro estados. En caso de no haber sido instanciado,
+        se construye usando el diccionario de reglas cargado desde la base de datos.
         Returns
         -------
-        int
-            El id del arbol de urls
+
         """
-        try:
-            sqlPD = sqlWrapper(db='PD')
-        except:
-            raise
-        sqlRead = "select id from macrostates where macrostate = '" + data[1] + "'"
-        rows = sqlPD.read(sqlRead)
-        return str(rows[0][0])
 
-
-    def getMacroMapper(self):
         try:
             return self.macroMapper
         except AttributeError:

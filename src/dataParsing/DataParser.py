@@ -34,7 +34,7 @@ class DataParser:
         Carga usuarios de base de datos "parseddata"
         Returns
         -------
-
+        {user_id: (capture_userid, profile)}
         """
         try:
             sqlPD = sqlWrapper(db='PD')
@@ -72,7 +72,8 @@ class DataParser:
         Carga contentElements que definen los distintos microestados.
         Returns
         -------
-
+        {microid: MicroNode}, {jsonContentElements : microid}
+            Diccionarios con microestados y representacion en json del microestado
         """
 
         try:
@@ -107,7 +108,7 @@ class DataParser:
         Returns
         -------
         MacroStateMapper
-
+            Instancia del objeto que permite mapear macro estados.
         """
         try:
             return self.macroStateMapper
@@ -137,6 +138,8 @@ class DataParser:
         -------
         int
             El id entero del usuario.
+        False
+            si no encuentra el id del usuario.
         """
         varD = json.loads(variables)
         if not varD or 'id_usuario' not in varD.keys():
@@ -152,16 +155,19 @@ class DataParser:
         Parameters
         ----------
         user_id_str
-
+            texto con id de usuario asignado desde la captura (capture_userid)
         Returns
         -------
-        False si no encuentra el id del usuario.
-        int correspondiente al id numerico del usuario.
+        False
+            si no encuentra el id del usuario.
+        int
+            ID numerico del usuario.
         """
         for k,v in self.userD.items():
             if v[0] == user_id_str:
                 return k
         return False
+
     def getMacroID(self,data):
         """
         Obtiene el id en la base de datos del macro estado
@@ -174,6 +180,8 @@ class DataParser:
         -------
         int
             La id del macro estado.
+        False
+            si no se puede mapear el dato a un macro estado conocido.
         """
         urlstr = data[0]
         if urlstr.endswith(' undefined'):
@@ -189,26 +197,31 @@ class DataParser:
         Parameters
         ----------
         macrostatemap_id: int
-            el ID del macro estado.
+            el ID del macro estado deseado.
 
         Returns
         -------
-    MacroStateMap
+        MacroStateMap
+            MacroStateMap cargado con reglas correspondientes al macro estado de ID 'macrostatemap_id'
         """
         return self.macroStatesD[macrostatemap_id]
 
     def getMicroID(self, contentElements, macro_id):
         """
-        Obtiene el id en la base de datos de un micro estado
+        Obtiene el id correspondiente a un micro estado
 
         Parameters
         ----------
         contentElements : str
-            El microestado a buscar
+            El microestado del dato a buscar
+        macro_id : int
+            El ID del macro estado del dato.
         Returns
         -------
         int
             El id del microestado
+        False
+            Si no se puede mapear el dato a un micro estado conocido.
         """
         try:
             a = len(self.contentElementsD)
@@ -234,6 +247,8 @@ class DataParser:
         -------
         str
             el perfil del usuario.
+        False
+            si perfil de usuario no se encuentra o no existe el usuario.
         """
         if user_id in self.userD.keys():
             return self.userD[user_id][1]
@@ -241,7 +256,7 @@ class DataParser:
 
     def getAllUserIDs(self):
         """
-        Obtiene una lista con las id de los usuarios desde la base de datos
+        Retorna una lista con las id de los usuarios.
 
         Parameters
         ----------
@@ -254,18 +269,33 @@ class DataParser:
 
     def getAllMacroStateIDs(self):
         """
-        Obtiene una lista con las id de las urls desde la base de datos
+        Retorna una lista con las id de los macro estados
 
         Parameters
         ----------
         Returns
         -------
         list
-            list de IDs de urls en forma de int
+            list de IDs (int) de macro estados
         """
         return list(self.macroStatesD.keys())
 
     def __parseQuery(self,n,bufferSize):
+        """ Define el query de SQL a utilizar para obtener 'bufferSize' cantidad de filas comenzando desde la fila 'n'.
+        Para ser utilizado en el parseo de datos de captura de la tabla respectiva en la base de datos "guidecapture".
+
+        Parameters
+        ----------
+        n: int
+
+           numero de fila inicial a obtener.
+        bufferSize: int
+            cantidad de filas a seleccionar desde el query.
+
+        Returns
+        -------
+
+        """
         from src.utils.loadConfig import Config
         capture_table = Config.getValue("capture_table")
 
@@ -287,24 +317,24 @@ class DataParser:
         i = 0
         Nnodes = 0
         skipped = {'MacroID not mapped':[],'User data not found':[]}
-        bufferSize = 500
+        bufferSize = 500    # Se hacen querys de a lo mas 500 filas, para reducir numero de querys (se vuelve lento).
         while True:
-            info = sqlGC.read(self.__parseQuery(i,bufferSize))
+            info = sqlGC.read(self.__parseQuery(i,bufferSize))  # filas con informacion de captura.
             writeL = list()
-            if not info:
+            if not info: # Iterar hasta recorrer todas las filas.
                 break
-            for row in info:
+            for row in info: # Extrae datos para nodo
                 pageview_id = row[0]
                 urlstr = row[1]
-                macro = self.getMacroID((urlstr, row[2], row[3]))
-                micro = self.getMicroID(row[5], macro)
+                macro = self.getMacroID((urlstr, row[2], row[3]))   # Mapeo de macro ID
+                micro = self.getMicroID(row[5], macro)              # Mapeo de micro ID
                 captured_ip = row[6]
                 if not macro:
                     skipped['MacroID not mapped'].append(pageview_id)
                     continue
                 if not micro:
                     micro = None
-                usr = self.getUserID(row[3],captured_ip)
+                usr = self.getUserID(row[3],captured_ip)            # Mapeo de ID de usuario.
                 if not usr:
                     skipped['User data not found'].append(pageview_id)
                     continue
@@ -314,7 +344,7 @@ class DataParser:
                 click = row[4]
                 writeL.append((usr, click, macro, profile, micro,pageview_id))
                 Nnodes += 1
-            sqlCD.writeMany(sqlWrite,writeL)
+            sqlCD.writeMany(sqlWrite,writeL)        # Almacena nodos generados en base de datos "coredata"
 
             i += bufferSize
 

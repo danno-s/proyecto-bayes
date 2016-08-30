@@ -1,11 +1,28 @@
 class MacroStateRule:
+    """
+    Clase que modela una regla para mapear Macro Estados.
+    """
 
-    def __init__(self,id,arg,ruleType,varType,weight=0):
-        self.id = id
-        self.arg = arg
-        self.ruleType = ruleType
-        self.varType = varType
-        self.weight = weight
+    def __init__(self, _id, _arg, _ruleType, _varType, _weight=0):
+        """ Constructor.
+
+        Parameters
+        ----------
+        _id : int con ID de la regla
+        _arg: str con argumento de la regla.
+        _ruleType: str con tipo de regla ('exist', 'existAndEqual', 'equal', 'startsWith','regexp')
+        _varType: str con tipo de variable del argumento ('url','urljson','variables, content_type')
+        _weight: peso de la regla que define prioridad de aplicacion de la misma.
+
+        Returns
+        -------
+
+        """
+        self.id = _id
+        self.arg = _arg
+        self.ruleType = _ruleType
+        self.varType = _varType
+        self.weight = _weight
         self.macrostatemap = None
 
     def getId(self):

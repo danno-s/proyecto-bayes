@@ -1,13 +1,40 @@
 
 
 class MacroStateMap:
+    """
+    Clase que modela una Macro Estado conocido (puede ser mapeado).
+    """
 
-    def __init__(self,id,name):
-        self.id = id
-        self.name = name
+    def __init__(self,_id,_name):
+        """
+
+        Parameters
+        ----------
+        _id : int
+            ID del macro estado.
+        _name: str
+            Nombre del macro estado.
+
+        Returns
+        -------
+
+        """
+        self.id = _id
+        self.name = _name
         self.rules = list()
 
     def setRules(self,rules):
+        """
+
+        Parameters
+        ----------
+        rules : list
+            Lista de MacroStateRule .
+
+        Returns
+        -------
+
+        """
         self.rules = rules
 
     def getRules(self):
@@ -28,7 +55,6 @@ class MacroStateMap:
 
     def setName(self,name):
         self.name = name
-
 
     def getName(self):
         return self.name

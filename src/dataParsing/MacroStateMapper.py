@@ -1,15 +1,16 @@
 import json
 import re
 
-from src.dataParsing.macroStateModel.MacroStateRule import MacroStateRule
-from src.utils.sqlUtils import sqlWrapper
-
 
 class MacroStateMapper:
+    """
+    Clase encargada de mapear datos capturados desde base de datos "guidecapture" a sus Macro Estados
+    correspondientes, segun una serie de reglas.
+    """
     __instance = None
 
     def __new__(cls,rules):
-        """
+        """ Constructor de MacroStateMapper que sigue patron de diseño Singleton para asignar una unica vez las reglas.
 
         Parameters
         ----------
@@ -25,6 +26,22 @@ class MacroStateMapper:
         return MacroStateMapper.__instance
 
     def mapStrict(self, data):
+        """ Mapeo de 'data' que retorna el MacroStateMap que representa el Macro Estado asociado al dato.
+        En caso de no realizar el mapeo retorna False.
+
+        Parameters
+        ----------
+        data : tuple
+            (url, urls, variables) desde una fila de la tabla con datos de captura.
+
+        Returns
+        -------
+        MacroStateMap
+            Contiene reglas de mapeo, el ID del macro estado y su nombre.
+        False
+            Si no se encuentra un macro estado para el dato.
+
+        """
         for macroStateRules in self.rulesD.values():
             result = self.evaluateMapping(macroStateRules)
             if result is not False:
@@ -32,6 +49,21 @@ class MacroStateMapper:
         return False
 
     def map(self, data):
+        """ Mapeo de 'data' que retorna el MacroStateMap que representa el Macro Estado asociado al dato.
+        En caso de no realizar el mapeo retorna la url (data[0]).
+
+        Parameters
+        ----------
+        data : tuple
+            (url, urls, variables) desde una fila de la tabla con datos de captura.
+
+        Returns
+        -------
+        MacroStateMap
+            Contiene reglas de mapeo, el ID del macro estado y su nombre.
+        str
+            Si no se encuentra un macro estado para el dato retorna la url (data[0]).
+        """
         for macroStateRules in self.rulesD.values():
             result = self.evaluateMapping(macroStateRules,data)
             if result is not False:
@@ -39,12 +71,26 @@ class MacroStateMapper:
         return data[0]
 
     def evaluateMapping(self, macroStateRule, data):
+        """ Evalua la regla 'macroStateRule' sobre el dato 'data'.
+
+        Parameters
+        ----------
+        macroStateRule : MacroStateRule
+        data : tuple
+            (url, urls, variables) desde una fila de la tabla con datos de captura.
+
+        Returns
+        -------
+
+        """
         ruleType = macroStateRule.getRuleType()
         varType = macroStateRule.getVarType()
         if data[0] is 'undefined':
             return False
+        # Manejo por defecto del dato de entrada.
         info = data[0] #url
 
+        # Manejo del dato de entrada en caso de que la regla se aplique para 'variables'
         if varType.startswith("variables"):
             pieces = varType.split(',')
             key = pieces[1]
@@ -53,7 +99,7 @@ class MacroStateMapper:
             info = json.loads(data[2]) # variables
             if not info:
                 return False
-
+        # Manejo del dato de entrada en caso de que la regla se aplique para 'urljson'
         if varType == 'urljson':
             info = data[1] # urls
             if not info:

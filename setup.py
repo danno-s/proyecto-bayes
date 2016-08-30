@@ -13,7 +13,7 @@ setup(
               'src.sessionParser', 'src.sessionParser.sessionizers',
               'src.featureExtractor', 'src.featureExtractor.features',
               'src.featureExtraction', 'src.sessionComparator',
-              'src.groundTruthLabeling', 'src.view', 'src.simulatedData'],
+              'src.view', 'src.simulatedData'],
     url='',
     license='',
     author='Sebastian Galvez, Constanza Escobar',
@@ -21,7 +21,6 @@ setup(
     description='Prototipo de clustering de sesiones y usuarios.',
     install_requires=[
         'pymysql',
-        'pyyaml',
         'numpy',
         'scikit-learn',
         'matplotlib',

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
-Mapeador de los macro estados del sitio para los datos capturados.
+Extractor de los macro estados del sitio.
 """
 from abc import ABCMeta, abstractmethod
 

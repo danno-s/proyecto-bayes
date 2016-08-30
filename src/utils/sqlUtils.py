@@ -199,6 +199,16 @@ class sqlWrapper:
             raise
 
     def setGlobalFKChecks(self,val):
+        """
+        Permite configurar la variable que habilita o deshabilita el chequeo de las llaves secundarias.
+        Parameters
+        ----------
+        val : 0 o 1.
+
+        Returns
+        -------
+
+        """
         cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
                                       host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
         cursor = cnx.cursor()

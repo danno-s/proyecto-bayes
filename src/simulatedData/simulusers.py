@@ -66,11 +66,11 @@ def simulusers(params, cluster, n):
 
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO " \
-               "users (user_id,username,profile) VALUES (%s, %s, %s)"
+               "users (capture_user_id,username,profile) VALUES (%s, %s, %s)"
 
     # Guardar usuarios
     sqlWrite = "INSERT INTO " \
-               "users (user_id,username,profile, simulated, label) " \
+               "users (capture_user_id,username,profile, simulated, label) " \
                "VALUES (%s, %s, %s, %s ,%s)"
 
     for i in range(n):
@@ -324,7 +324,7 @@ def newGenerate():
         multis.append(parametros)
         users += new_users
 
-    sqlWrite = "INSERT INTO nodes (user_id, clickDate, urls_id, profile,\
+    sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile,\
                 micro_id, simulated, label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 
@@ -389,14 +389,14 @@ def generate():
         pprint.pprint("prob: " + str(prob))
 
     sqlCD = sqlWrapper(db='CD')
-    readParams = "user_id, clickDate, urls_id, profile, micro_id"
+    readParams = "user_id, clickDate, macro_id, profile, micro_id"
     sqlWrite = "INSERT INTO nodes " \
-               "(user_id, clickDate, urls_id, profile, micro_id) " \
+               "(user_id, clickDate, macro_id, profile, micro_id) " \
                "VALUES (%s, %s, %s, %s, %s)"
     sqlCD.truncateSimulated("nodes", readParams, sqlWrite)
 
     sqlWrite = "INSERT INTO nodes " \
-               "(user_id, clickDate, urls_id, profile, micro_id, simulated, " \
+               "(user_id, clickDate, macro_id, profile, micro_id, simulated, " \
                "label) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s)"
 

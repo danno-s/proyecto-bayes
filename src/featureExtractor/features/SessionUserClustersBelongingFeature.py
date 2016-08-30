@@ -24,7 +24,7 @@ class SessionUserClustersBelongingFeature(SessionFeature):
         -------
         """
         SessionFeature.__init__(self)
-        self.userClusters = getAllUserClusters("UserURLsBelonging")
+        self.userClusters = getAllUserClusters("UserMacroStatesBelonging")
         self.vector = [0] * len(self.userClusters)
         self.session_id = int(session_id)
         self.user = getUserOfSession(self.session_id)

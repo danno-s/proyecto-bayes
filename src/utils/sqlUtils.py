@@ -71,9 +71,28 @@ class sqlWrapper:
     def truncateSimulated(self, table, readParams, sqlWrite):
         old_rows = self.read("SELECT " + readParams +
                              " FROM " + table + " WHERE simulated = 0")
-        self.truncate(table)
+        self.truncateRestricted(table)
         for row in old_rows:
             self.write(sqlWrite, row)
+
+    def truncateRestricted(self,table):
+        """Trunca la tabla indicada en el caso de contener restriccion de llaves. Usar con cuidado!
+
+        Parameters
+        ----------
+        table : str
+            El nombre de la tabla a truncar
+            Si existe, se realiza un 'DELETE FROM table'
+                                     'ALTER TABLE table AUTO_INCREMENT = 0'
+        """
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+        cursor = cnx.cursor()
+        cursor.execute('DELETE FROM ' + table)
+        cursor.execute('ALTER TABLE ' + table + ' AUTO_INCREMENT = 0')
+        cnx.commit()
+        cnx.close()
+
 
     def read(self, sqlRead):
         """Efectua la consulta sqlRead
@@ -128,6 +147,38 @@ class sqlWrapper:
         cnx.commit()
         cnx.close()
 
+    def writeMany(self, sqlWrite, items=None):
+        """Efectua la escritura sqlWrite para muchos items.
+
+        Notes
+            Se pueden incluir los valores dentro del atributo sqlWrite o ser pasados a traves de item. En cuyo caso,
+        el query debe contener los caracteres %s indicando cuantos valores son pasados.
+
+        Parameters
+        ----------
+        sqlWrite : str
+            La escritura a realizar
+        item : List
+            Los item a guardar en la base de datos
+
+        Returns
+        -------
+
+        """
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+        cursor = cnx.cursor()
+        if items is not None:
+            try:
+                cursor.executemany(sqlWrite, items)
+            except:
+                print(items)
+                raise
+        else:
+            cursor.executemany(sqlWrite)
+        cnx.commit()
+        cnx.close()
+
     def __loadConnections(self):
         """Carga archivo de conexiones con datos de acceso a cada base de datos y las asocia a las abreviaturas definidas.
         Returns
@@ -146,3 +197,22 @@ class sqlWrapper:
             self.conns['CL'] = connections['clusters']
         except:
             raise
+
+    def setGlobalFKChecks(self,val):
+        """
+        Permite configurar la variable que habilita o deshabilita el chequeo de las llaves secundarias.
+        Parameters
+        ----------
+        val : 0 o 1.
+
+        Returns
+        -------
+
+        """
+        cnx = pymysql.connect(user=self.conns[self.db]['user'], password=self.conns[self.db]['passwd'],
+                                      host=self.conns[self.db]['host'], database=self.conns[self.db]['db'])
+        cursor = cnx.cursor()
+        cursor.execute("SET GLOBAL FOREIGN_KEY_CHECKS = "+str(val)+";")
+        cnx.commit()
+        cnx.close()
+

@@ -7,17 +7,17 @@ from src.utils.sqlUtils import sqlWrapper
 from src.clusterClass.Cluster import Cluster
 
 
-class UserURLsBelongingClustering(UserClustering):
+class UserMacroStatesBelongingClustering(UserClustering):
     """
-    Clase UserURLsBelongingClustering implementa un UserClustering que realiza
-    clustering utilizando el feature UserURLsBelongingFeature.
+    Clase UserMacroStatesBelongingClustering implementa un UserClustering que realiza
+    clustering utilizando el feature UserMacroStatesBelongingFeature.
 
     See Also
-        UserURLsBelongingFeature
+        UserMacroStatesBelongingFeature
     """
-    xlabel = "URLs IDs"
-    ylabel = "Utilizacion de URLs"
-    title = "Uso de URLs por usuario representativo de cada cluster"
+    xlabel = "Macro Estados IDs"
+    ylabel = "Utilizacion de Macro Estados"
+    title = "Uso de Macro Estados por usuario representativo de cada cluster"
 
     def __init__(self, confD=None):
         """Constructor
@@ -35,7 +35,7 @@ class UserURLsBelongingClustering(UserClustering):
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
         sqlRead = 'select user_id,vector from userfeatures where feature_name = ' + \
-            "'UserURLsBelonging'"
+            "'UserMacroStatesBelonging'"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

@@ -122,10 +122,12 @@ class ClusterExtractor:
             sqlCL.write(c.getSQLWrite(), outliers.toSQLItem())
             self.sessionClusterD[clustering] = c
             self.performedClusteringsL.append(clustering)
-        except Exception:
+        except AssertionError:
+            print('No se obtuvieron clusters con ' + str(clustering.__name__))
+        except:
             import traceback
             traceback.print_exc()
-            print('No se obtuvieron clusters con ' + str(clustering.__name__))
+
 
     def printUserCluster(self, clustering):
         """Muestra en consola los clusters encontrados para el clustering de usuarios.

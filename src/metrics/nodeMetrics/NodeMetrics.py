@@ -10,7 +10,7 @@ import json
 
 class MacroDistance(NodeMetric):
     """
-    Clase que implementa la metrica como una heuristica calculada en base a los arboles de URLs del macro estado
+    Clase que implementa la metrica como una heuristica calculada en base a los arboles de macro_ids del macro estado
     de los nodos.
     """
 
@@ -57,15 +57,15 @@ class MacroDistance(NodeMetric):
             for child in d['children']:
                 self.getURLs(child, urlset)
 
-    # URLs = [json.loads(x[0]) for x in rows]  # Obtiene arboles completos de
-    # URLs del sitio en las capturas"
+    # macro_ids = [json.loads(x[0]) for x in rows]  # Obtiene arboles completos de
+    # macro_ids del sitio en las capturas"
 
     # TODO: filtrar parametros de urls ?asdsa=23 .. etc.
 
-    # for i,urltree in enumerate(URLs):
+    # for i,urltree in enumerate(macro_ids):
     #   print("ARBOL DE URL N"+str(i+1)+": " + json.dumps(urltree, indent=4))
 
-    # Funcion para encontrar URLs unicas dentro de un mismo arbol:
+    # Funcion para encontrar macro_ids unicas dentro de un mismo arbol:
 
     # def getURLs(d, urlset):
     #    for k,v in d.items():
@@ -78,10 +78,10 @@ class MacroDistance(NodeMetric):
     #                    urlset.add(urlT.keys())
     #
     # allurls = set()
-    # for urltr in URLs:
+    # for urltr in macro_ids:
     #    getURLs(urltr,allurls)
     #
-    # print("TOTAL URLs FOUND ("+str(len(allurls))+"): "+ str(allurls))
+    # print("TOTAL macro_ids FOUND ("+str(len(allurls))+"): "+ str(allurls))
 
 
 class MicroDistance(NodeMetric):

@@ -54,9 +54,9 @@ class UserLRSHistogramDistance(UserMetric):
         return getFeatureOfUser(user_id, 'UserLRSHistogram')
 
 
-class UserURLsBelongingDistance(UserMetric):
+class UserMacroStatesBelongingDistance(UserMetric):
     """
-    Clase que implementa la metrica como una distancia entre los vectores de pertenencia a URLs (URLs Belonging vector).
+    Clase que implementa la metrica como una distancia entre los vectores de pertenencia a macro_ids (macro_ids Belonging vector).
     """
 
     def __init__(self):
@@ -64,7 +64,7 @@ class UserURLsBelongingDistance(UserMetric):
 
     def distance(self, u1, u2):
         """Distancia de las usuarios s1 y s2 definida como la suma del valor absoluto de las diferencias
-         elemento a elemento de los vectores de pertenencia a URLs (URLs Belonging vectors).
+         elemento a elemento de los vectores de pertenencia a macro_ids (macro_ids Belonging vectors).
 
         Parameters
         ----------
@@ -77,14 +77,14 @@ class UserURLsBelongingDistance(UserMetric):
         float
             distancia calculada.
         """
-        v1 = self.getURLsBelongingVector(u1)
-        v2 = self.getURLsBelongingVector(u2)
+        v1 = self.getMacroStatesBelongingVector(u1)
+        v2 = self.getMacroStatesBelongingVector(u2)
         print(v1)
         print(v2)
         return float(sum([abs(x - y) for x, y in zip(v1, v2)]))
 
-    def getURLsBelongingVector(self, user_id):
-        """Retorna vector de pertenencia a URLs (URLs Belonging vector) del usuario indicado.
+    def getMacroStatesBelongingVector(self, user_id):
+        """Retorna vector de pertenencia a macro_ids (macro_ids Belonging vector) del usuario indicado.
 
         Parameters
         ----------
@@ -94,6 +94,6 @@ class UserURLsBelongingDistance(UserMetric):
         Returns
         -------
         [int]
-            vector de pertenencia a URLs (URLs Belonging vector) del usuario.
+            vector de pertenencia a macro_ids (macro_ids Belonging vector) del usuario.
         """
-        return getFeatureOfUser(user_id, 'UserURLsBelonging')
+        return getFeatureOfUser(user_id, 'UserMacroStatesBelonging')

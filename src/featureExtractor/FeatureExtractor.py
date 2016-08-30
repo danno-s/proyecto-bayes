@@ -1,5 +1,6 @@
 """
-Elemento encargado de extraer features (caracteristicas) de usuarios y sesiones capturadas.
+Elemento encargado de extraer features (caracteristicas) de usuarios y
+sesiones capturadas.
 """
 from src.utils.sqlUtils import sqlWrapper
 from src.utils.dataParsingUtils import getAllUserIDs
@@ -31,7 +32,9 @@ class FeatureExtractor:
         self.sessionIDs = getAllSessionIDs()
 
     def extractUserFeatures(self):
-        """Recorre todas las features de usuarios y realiza la extraccion de feature para cada una.
+        """
+        Recorre todas las features de usuarios y realiza la extraccion de
+        feature para cada una.
 
         Returns
         -------
@@ -40,8 +43,11 @@ class FeatureExtractor:
         for userFeature in self.userFeaturesL:
             self.__extractUserFeature(userFeature)
 
+
     def extractSessionFeatures(self):
-        """Recorre todas las features de sesiones y realiza la extraccion de feature para cada una.
+        """
+        Recorre todas las features de sesiones y realiza la extraccion de
+        feature para cada una.
 
         Returns
         -------
@@ -51,7 +57,9 @@ class FeatureExtractor:
             self.__extractSessionFeature(sessionFeature)
 
     def __extractUserFeature(self, feature):
-        """ Extrae el feature de cada usuario y lo agrega a la tabla correspondiente en la DB 'features'
+        """
+        Extrae el feature de cada usuario y lo agrega a la tabla
+        correspondiente en la DB 'features'
 
         Parameters
         ----------
@@ -71,7 +79,9 @@ class FeatureExtractor:
                 print(f)
 
     def __extractSessionFeature(self, feature):
-        """ Extrae el feature de cada sesion y lo agrega a la tabla correspondiente en la DB 'features'
+        """
+        Extrae el feature de cada sesion y lo agrega a la tabla correspondiente
+        en la DB 'features'
 
         Parameters
         ----------

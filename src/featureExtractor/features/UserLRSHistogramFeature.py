@@ -17,7 +17,8 @@ class UserLRSHistogramFeature(UserFeature):
         self.count = 0
 
     def extract(self):
-        """Implementacion de extraccion de feature
+        """
+        Implementacion de extraccion de feature
 
         Returns
         -------
@@ -28,7 +29,8 @@ class UserLRSHistogramFeature(UserFeature):
         sqlRead = 'select sequence from sessions where user_id=' + \
             str(self.user_id)
         userSeq = sqlCD.read(sqlRead)
-        assert len(userSeq) > 0
+        if len(userSeq) < 1:
+            print("Warning: userSeq vacia")
         # Calculo de histograma de uso de LRSs.
         for row in userSeq:
             seq = row[0].split(' ')
@@ -46,4 +48,5 @@ class UserLRSHistogramFeature(UserFeature):
         return str(self.user_id) + ": " + str(self.vector)
 
     def toSQLItem(self):
+        # que es esto?? - Pablo R.
         return str(self.user_id), ' '.join([str("%.4f" % x) for x in self.vector]), self.__class__.__name__[:-7]

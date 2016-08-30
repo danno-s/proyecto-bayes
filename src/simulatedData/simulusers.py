@@ -61,7 +61,8 @@ def simulusers(params, cluster, n):
     for i in range(n):
         user[i] = random.choice(username)
 
-    user_id = random.sample(range(80000), n)  # ids generados al azar
+    user_id = random.sample(range(10000, 100000), n)  # ids generados al azar
+    # TODO: Mejorar la manera de que no se repitan ids
 
     readParams = "user_id,username,profile"
     sqlWrite = "INSERT INTO " \

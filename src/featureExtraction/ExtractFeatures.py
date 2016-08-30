@@ -4,13 +4,16 @@
 Extrae vectores descriptores (features) de los datos
 """
 
-from src.featureExtractor.features.SessionLRSBelongingFeature import SessionLRSBelongingFeature
+from src.featureExtractor.features.SessionLRSBelongingFeature import \
+    SessionLRSBelongingFeature
 from src.featureExtractor.features.SessionUserClustersBelongingFeature import \
     SessionUserClustersBelongingFeature
-from src.featureExtractor.features.SessionDistanceFeature import SessionDistanceFeature
-
-from src.featureExtractor.features.UserLRSHistogramFeature import UserLRSHistogramFeature
-from src.featureExtractor.features.UserURLsBelongingFeature import UserURLsBelongingFeature
+from src.featureExtractor.features.SessionDistanceFeature import \
+    SessionDistanceFeature
+from src.featureExtractor.features.UserLRSHistogramFeature import \
+    UserLRSHistogramFeature
+from src.featureExtractor.features.UserURLsBelongingFeature import \
+    UserURLsBelongingFeature
 
 from src.featureExtractor.FeatureExtractor import FeatureExtractor
 from src.utils.loadConfig import Config
@@ -29,8 +32,10 @@ sessionPostClusteringFeaturesD = {
 
 
 def extractFeatures():
-    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuracion del sistema y que no
-    requieren de haber realizado clustering previamente.
+    """
+    Extrae todos los features de usuario y sesiones ingresados en el archivo de
+    configuracion del sistema y que no requieren de haber realizado clustering
+    previamente.
 
     Parameters
     ----------
@@ -53,14 +58,19 @@ def extractFeatures():
         if sf in sessionFeaturesD.keys():
             print(sf)
             sfL.append(sessionFeaturesD[sf])
+    # TODO: Fix this!!
+    if len(ufL) < 1 or len(sfL) < 1:
+        print("Warning")
     fE = FeatureExtractor(ufL, sfL)
     fE.extractUserFeatures()
     fE.extractSessionFeatures()
 
 
 def extractPostClusteringFeatures():
-    """ Extrae todos los features de usuario y sesiones ingresados en el archivo de configuracion del sistema
-    que requieren haber realizado clustering previamente.
+    """
+    Extrae todos los features de usuario y sesiones ingresados en el archivo de
+    configuracion del sistema que requieren haber realizado clustering
+    previamente.
 
     Parameters
     ----------

@@ -13,7 +13,8 @@ setup(
         'src.sessionParser', 'src.sessionParser.sessionizers',
         'src.featureExtractor', 'src.featureExtractor.features',
         'src.featureExtraction', 'src.sessionComparator',
-        'src.groundTruthLabeling', 'src.view', 'src.simulatedData'],
+        'src.groundTruthLabeling', 'src.view', 'src.simulatedData',
+        'src.executionSteps'],
 
     url='',
     license='',

@@ -8,8 +8,9 @@ from src.clusterClass.Cluster import Cluster
 
 
 class UserURLsBelongingClustering(UserClustering):
-    """Clase UserURLsBelongingClustering implementa un UserClustering que realiza clustering utilizando
-    el feature UserURLsBelongingFeature.
+    """
+    Clase UserURLsBelongingClustering implementa un UserClustering que realiza
+    clustering utilizando el feature UserURLsBelongingFeature.
 
     See Also
         UserURLsBelongingFeature

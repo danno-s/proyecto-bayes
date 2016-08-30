@@ -11,7 +11,8 @@ from src.clusterClass.OutliersGroup import OutliersGroup
 
 class Clustering:
     """
-    Clase abstracta que representa una forma de realizar clustering de usuarios o sesiones.
+    Clase abstracta que representa una forma de realizar clustering de usuarios
+    o sesiones.
     """
     __metaclass__ = ABCMeta
 
@@ -35,8 +36,10 @@ class Clustering:
         self.featuresDIM = self.__getDimension()
 
     def clusterize(self):
-        """Utiliza el algoritmo de clustering DBSCAN sobre los datos para encontrar clusters. Los resultados
-        quedan almacenados en la instancia del Clustering que ejecute esta funcion.
+        """
+        Utiliza el algoritmo de clustering DBSCAN sobre los datos para
+        encontrar clusters. Los resultados quedan almacenados en la instancia
+        del Clustering que ejecute esta funcion.
 
         Returns
         -------
@@ -45,18 +48,23 @@ class Clustering:
         # Compute DBSCAN
         if self.X is None:
             raise Exception  # TODO: Crear excepcion para esto.
+
         self.clusteringAlgorithm.fit(self.X)    # realizar clustering.
+
         # inicializar mascara de core samples.
         core_samples_mask = np.zeros_like(
             self.clusteringAlgorithm.labels_, dtype=bool)
+
         # mascara es True para indices de core samples
         core_samples_mask[self.clusteringAlgorithm.core_sample_indices_] = True
         unique_labels = set(self.clusteringAlgorithm.labels_)
         self.n_outliers = sum(
             [1 for x in self.clusteringAlgorithm.labels_ if x == -1])
         for k in unique_labels:
+
             # mascara de miembros de clase k.
             class_member_mask = (self.clusteringAlgorithm.labels_ == k)
+
             # Solo core sample de esa clase.
             xy = [(x, cl_id) for x, cl_id, i, j in zip(
                 self.X, self.ids, class_member_mask, core_samples_mask) if i & j]

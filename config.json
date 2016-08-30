@@ -1,113 +1,3 @@
-/*
-
-"session_tlimit": Maximium time in seconds between steps that allows the user
-                 to stay in the same session.
-
-"LRS_threshold" : Threshold used as minimum repetitions of a sequence in order
-                 to be considered as a LongestRepeatingSequence.
-
-"elementTypes" : Types for the MicroStateVectorExtractor to read and extract the
-                 corresponding vector.
-                  "elementTypes":
-                  [
-                    "TextAreas",
-                    "RadioButton",
-                    "Selects",
-                    "InputText",
-                    "Checkbox"
-                  ]
-"simulate":      If "true", simulates data and performs the UserEmpathetic process on
-                 that data. If "false", performs the UserEmpathetic process on the data
-                 captured and stored in the databases established in connections.json .
-
-"sessionizer_mode":  Name of the sessionizer mode to be used from SessionParser. Must be one of
-                the following:
-                  "Complete"
-                  "MacroComplete"
-                  "Edges"
-                  "MacroEdges"
-
-"user_features" : Types of user features for the FeatureExtractor to extract.
-                  "user_features":
-                  [
-                    "UserURLsBelonging",
-                    "UserLRSHistogram"
-                  ]
-
-"session_features":Types of session features for the FeatureExtractor to extract.
-                  "session_features":
-                  [
-                    "SessionLRSBelonging"
-                    "SessionUserClustersBelonging"
-                  ]
-
-  "user_clustering": Types of user clustering methods and their parameters (eps,min_samples,metric).
-
-  {
-    "UserURLsBelonging":
-    {
-      "eps": 0.8,
-      "min_samples": 5,
-      "metric":"euclidean"
-    },
-    "UserLRSHistogram":
-    {
-      "eps": 0.8,
-      "min_samples": 5,
-      "metric":"euclidean"
-    },
-    "FullUser":
-    {
-      "eps": 0.7,
-      "min_samples": 5,
-      "metric":"euclidean"
-    }
-  }
-
-
-  "session_clustering": Types of session clustering methods and their parameters (eps,min_samples,metric).
-                      The CompositeSession clustering method requires a list of features or metrics to
-                       be composed onto a single descriptor that is used for clustering.
-
-   {
-      "SessionLRSBelonging":
-      {
-        "eps": 0.3,
-        "min_samples": 5,
-        "metric":"euclidean"
-      },
-      "SessionUserClustersBelonging":
-      {
-        "eps":0.7,
-        "min_samples": 5,
-        "metric":"euclidean"
-      },
-      "CompositeSession":
-      {
-        "eps":0.7,
-        "min_samples": 5,
-        "metric":"euclidean",
-        "features":
-        [
-          "SessionLRSBelonging",
-          "SessionUserClustersBelonging"
-        ]
-      },
-      "DirectSession":
-      {
-        "eps":2.0,
-        "min_samples": 10,
-        "metric":"precomputed"
-      },
-      "FullSession":
-      {
-        "eps":0.8,
-        "min_samples":5,
-        "metric":"euclidean"
-      }
-    }
-
-*/
 {
   "session_tlimit": "20",
   "LRS_threshold": "20",
@@ -128,8 +18,8 @@
   "user_clustering": {
     "UserURLsBelonging":
     {
-      "eps": 0.8,
-      "min_samples": 5,
+      "eps": 0.999,
+      "min_samples": 50,
       "metric":"euclidean"
     },
     "UserLRSHistogram":

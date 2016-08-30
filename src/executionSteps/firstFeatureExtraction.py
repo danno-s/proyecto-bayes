@@ -4,10 +4,10 @@ Script para ejecucion de la primera extraccion de features.
 """
 from src.featureExtraction.ExtractFeatures import extractFeatures
 from src.utils.sqlUtils import sqlWrapper
-from src.executionSteps.main import start,finish
 
 
 def firstFeatureExtraction():
+    from src.executionSteps.main import start, finish
     start()
     sqlFT = sqlWrapper('FT')
     sqlFT.truncateRestricted('userfeatures')

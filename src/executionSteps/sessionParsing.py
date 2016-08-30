@@ -5,10 +5,10 @@ Paso 5
 Script para ejecucion del proceso de extraccion de Sesiones.
 """
 from src.dataParsing.parseSessions import parseSessions
-from src.executionSteps.main import start,finish
 
 
 def sessionParsing():
+    from src.executionSteps.main import start, finish
     start()
     parseSessions()
     finish()

@@ -3,10 +3,10 @@ Paso 7
 Script para ejecucion del proceso de extraccion de LRSs.
 """
 from src.featureExtraction.calcLRSs import calcLRSs
-from src.executionSteps.main import start,finish
 
 
 def lrsExtraction():
+    from src.executionSteps.main import start, finish
     start()
     calcLRSs()
     finish()

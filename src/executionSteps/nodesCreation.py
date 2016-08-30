@@ -5,10 +5,10 @@ Paso 4
 Script para ejecucion del proceso de creacion de nodos.
 """
 from src.dataParsing.dataParse import dataParse
-from src.executionSteps.main import start,finish
 
 
 def nodesCreation():
+    from src.executionSteps.main import start, finish
     start()
     dataParse()
     finish()

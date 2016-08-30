@@ -59,7 +59,7 @@ class CustomMacroStateExtractor(MacroStateExtractor):
         assert len(rows) > 0
         rulesD = dict()
         for row in rows:
-            msRule = MacroStateRule(_id=row[0],_arg=row[2],_ruleType=row[3],_weight=row[5],_varType=row[4])
+            msRule = MacroStateRule(_id=row[0],_arg=row[2],_ruleType=row[3],_weight=row[4],_varType=row[5])
             self.macroStatesD[row[1]].addRule(msRule)
             rulesD[row[0]]=msRule
         return rulesD

@@ -4,10 +4,10 @@ Script para ejecucion de la segunda extraccion de features (que requier clusteri
 """
 from src.featureExtraction.ExtractFeatures import extractPostClusteringFeatures
 from src.utils.sqlUtils import sqlWrapper
-from src.executionSteps.main import start,finish
 
 
 def secondFeatureExtraction():
+    from src.executionSteps.main import start, finish
     start()
     sqlFT = sqlWrapper('FT')
     sqlFT.truncate('sessionfeatures',

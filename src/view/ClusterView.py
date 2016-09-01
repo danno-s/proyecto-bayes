@@ -31,7 +31,7 @@ class ClusterView(object):
             ecolor="r",
             yerr=[
                 [x + y for x, y in zip(mid, var)],
-                [x - y for x, y in zip(mid, var)]],
+                [x - y for x, y in zip(var, mid)]],
             capsize=3,
             markersize=8)
 

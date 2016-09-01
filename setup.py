@@ -1,21 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='userempathetic',
     version='0.1',
-    packages=['src', 'src.simulatedData', 'src.utils',
-        'src.metrics', 'src.metrics.sessionMetrics', 'src.metrics.nodeMetrics',
-        'src.testing', 'src.nodeClass',
-        'src.clustering', 'src.clustering.clusterings',
-        'src.clustering.clusterings.userclusterings',
-        'src.clustering.clusterings.sessionclusterings',
-        'src.dataParsing', 'src.clusterClass', 'src.sessionClass',
-        'src.sessionParser', 'src.sessionParser.sessionizers',
-        'src.featureExtractor', 'src.featureExtractor.features',
-        'src.featureExtraction', 'src.sessionComparator',
-        'src.groundTruthLabeling', 'src.view', 'src.simulatedData',
-        'src.executionSteps'],
-
+    packages=find_packages(),
     url='',
     license='',
     author='Sebastian Galvez, Constanza Escobar, Pablo Reszczynski',

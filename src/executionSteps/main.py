@@ -1,7 +1,7 @@
 """
 Ejecuta todos los pasos del sistema a partir del paso indicado en consola.
 """
-from src.executionSteps.macroStatesExtraction import macroStateExtraction
+from src.executionSteps.macroStatesExtraction import macroStatesExtraction
 from src.executionSteps.urlExtraction import urlExtraction
 from src.executionSteps.userExtraction import userExtraction
 from src.executionSteps.contentElementsExtraction import contentElementsExtraction
@@ -14,7 +14,6 @@ from src.executionSteps.userClustering import userClustering
 from src.executionSteps.secondFeatureExtraction import secondFeatureExtraction
 from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
-
 simulate = False
 
 if __name__ == '__main__':
@@ -41,7 +40,7 @@ if __name__ == '__main__':
     if a <= 0:
         print("MacroStates Extraction...")
         #urlExtraction()
-        macroStateExtraction()
+        macroStatesExtraction()
         if b== 0: exit()
 
     if a <= 1:

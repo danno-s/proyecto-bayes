@@ -6,7 +6,7 @@ Script para ejecucion del proceso de extraccion de MacroEstados.
 from src.dataParsing.ExtractMacroStates import extractMacroStates
 
 
-def macroStateExtraction():
+def macroStatesExtraction():
     from src.executionSteps.main import start, finish
     start()
     extractMacroStates()

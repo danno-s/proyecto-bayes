@@ -64,15 +64,15 @@ def simulusers(params, cluster, n):
     user_id = random.sample(range(10000, 100000), n)  # ids generados al azar
     # TODO: Mejorar la manera de que no se repitan ids
 
-    readParams = "user_id,username,profile"
+    readParams = "id,username,profile"
     sqlWrite = "INSERT INTO " \
-               "users (capture_user_id,username,profile) VALUES (%s, %s, %s)"
+               "users (id,username,profile) VALUES (%s, %s, %s)"
 
     # Guardar usuarios
     sqlWrite = "INSERT INTO " \
-               "users (capture_user_id,username,profile, simulated, label) " \
+               "users (id,username,profile, simulated, label) " \
                "VALUES (%s, %s, %s, %s ,%s)"
-
+    # TODO: usar captureuserid
     for i in range(n):
         n1 = params[i][0]
         n2 = params[i][1]
@@ -233,7 +233,8 @@ def getsession():
 
 
 def cleanDB():
-    sqlCD = sqlWrapper(db='CD')
+    #TODO: deshabilitar foreign key check
+    sqlCD = sqlWrapper(db='CD').setGlobalFkCheck(0)
     sqlPD = sqlWrapper(db='PD')
     deleteUsers = "DELETE FROM users WHERE simulated = 1"
     deleteSessions = "DELETE FROM sessions WHERE simulated = 1"

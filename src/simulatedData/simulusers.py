@@ -11,9 +11,11 @@ import re
 import os
 from collections import namedtuple
 import pprint
+import math
 
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
+from src.utils.progressBar import progress
 
 DEBUG = False
 
@@ -40,8 +42,12 @@ def simulusers(params, cluster, n):
 
     Parameters
     ----------
+    params: list
+        Parametros de la dirichlet del cluster
+    cluster: Int
+        Número del cluster perteneciente
     n : Int
-        El numero de usuarios simulados
+        El numero de usuarios por simular
 
     Returns
     -------
@@ -61,17 +67,17 @@ def simulusers(params, cluster, n):
     for i in range(n):
         user[i] = random.choice(username)
 
-    user_id = random.sample(range(10000, 100000), n)  # ids generados al azar
+    sample_size = (cluster + 1) * n + 1000
+
+    user_id = random.sample(range(sample_size, n + sample_size), n)  # ids generados al azar
     # TODO: Mejorar la manera de que no se repitan ids
 
     readParams = "id,username,profile"
-    sqlWrite = "INSERT INTO " \
-               "users (id,username,profile) VALUES (%s, %s, %s)"
 
     # Guardar usuarios
     sqlWrite = "INSERT INTO " \
-               "users (id,username,profile, simulated, label) " \
-               "VALUES (%s, %s, %s, %s ,%s)"
+               "users (id,username,profile, simulated, label, capture_userid) " \
+               "VALUES (%s, %s, %s, %s,%s, %s)"
     # TODO: usar captureuserid
     for i in range(n):
         n1 = params[i][0]
@@ -85,7 +91,11 @@ def simulusers(params, cluster, n):
             for j in range(diff):
                 profile.append(2)
         users.append(User(user_id[i], user[i], profile[i]))
-        sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i], True, cluster))
+
+        digits = math.floor(math.log10(user_id[i])) + 2
+        user_id[i] += ((cluster + 1) * (10 ** digits))
+
+        sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i], True, cluster, 'simulated'))
 
     return users
 
@@ -233,8 +243,8 @@ def getsession():
 
 
 def cleanDB():
-    #TODO: deshabilitar foreign key check
-    sqlCD = sqlWrapper(db='CD').setGlobalFkCheck(0)
+    sqlCD = sqlWrapper(db='CD')
+    sqlCD.setGlobalFKChecks(0)
     sqlPD = sqlWrapper(db='PD')
     deleteUsers = "DELETE FROM users WHERE simulated = 1"
     deleteSessions = "DELETE FROM sessions WHERE simulated = 1"
@@ -318,6 +328,7 @@ def newGenerate():
     multis = []
 
     # Se generan los usuarios
+    print("Inicializa generacion de usuarios")
     users = []
     for i in range(n_Clusters):
         parametros = dirichlet(param_dirich[i], n_usuarios[i])
@@ -326,13 +337,18 @@ def newGenerate():
         users += new_users
 
     sqlWrite = "INSERT INTO nodes (user_id, clickDate, macro_id, profile,\
-                micro_id, simulated, label) VALUES " \
-               "(%s,%s,%s,%s,%s,%s,%s)"
+                micro_id, simulated, label, pageview_id) VALUES " \
+               "(%s,%s,%s,%s,%s,%s,%s,%s)"
 
     # Se asignan las sesiones
     sessions = getsession()
     numSessions = len(sessions)
     print("numsessions: ", numSessions)
+
+    total = len(users) * numSessions
+    count = 1
+
+    print("Inicializa asignacion de sesiones")
 
     for user in users:  # (id, perfil, label)
         userId = user.id
@@ -343,10 +359,9 @@ def newGenerate():
         multi = multis[label][userIdx]
         idx = np.nonzero(multi == 1)[0][0] #idx = multi.index(1)
         session = sessions[idx]
-        print(userIdx)
-        print(multi)
 
         for i in range(numSessions):
+            progress(count, total, "Simulacion")
             # Timestamp de inicio
             date = random.randint(1450000000, 1462534931)
             for subSession in session:
@@ -357,9 +372,9 @@ def newGenerate():
                 else:
                     url = subSession
                     microId = None
-                insert = [userId, date, url, profile, microId, True, label]
-                print(insert)
+                insert = [userId, date, url, profile, microId, True, label, 0]
                 sqlCD.write(sqlWrite, insert)
+            count += 1
 
 
 def generate():

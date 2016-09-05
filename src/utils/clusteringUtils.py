@@ -260,7 +260,9 @@ def getUserOutliersIDs(clustering):
 
 
 def getUserClusters(clustering):
-    """ Retorna un diccionario con los clusters obtenidos para el clustering indicado.
+    """
+    Retorna un diccionario con los clusters obtenidos para el clustering
+    indicado.
 
     Parameters
     ----------
@@ -276,14 +278,21 @@ def getUserClusters(clustering):
     labels = getUserClusterLabels(clustering)
     userClusterD = dict()
     for k in labels:
-        rows = sqlCL.read("SELECT members,vectors FROM userclusters WHERE clustering_name = '" +
-                          str(clustering.__name__[:-10]) + "' AND cluster_id = " + str(k))
+        sqlread = "SELECT members, vectors " + \
+                  "FROM userclusters " + \
+                  "WHERE clustering_name = '" + \
+                  str(clustering.__name__[:10]) + \
+                  "' AND cluster_id = " + str(k)
+        rows = sqlCL.read(sqlread)
         for row in rows:
             ids = [int(x) for x in row[0].split(' ')]
             vectors = [[float(y) for y in x.split(' ')]
                        for x in row[1].split(';')]
             userClusterD[k] = Cluster(
-                ids=ids, vectors=vectors, label=k, clusteringType=clustering.__name__[:-10])
+                ids=ids,
+                vectors=vectors,
+                label=k,
+                clusteringType=clustering.__name__[:-10])
     return userClusterD
 
 

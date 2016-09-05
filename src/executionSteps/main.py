@@ -14,7 +14,7 @@ from src.executionSteps.userClustering import userClustering
 from src.executionSteps.secondFeatureExtraction import secondFeatureExtraction
 from src.executionSteps.sessionClustering import sessionClustering
 from src.executionSteps.clusterVisualization import clusterVisualization
-simulate = False
+simulate = True
 
 if __name__ == '__main__':
 

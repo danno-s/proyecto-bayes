@@ -60,6 +60,7 @@ def extractFeatures():
             print(sf)
             sfL.append(sessionFeaturesD[sf])
     # TODO: Fix this!!
+    # ufL o sfL nunca deberian estar vacios, sin embargo lo estan
     if len(ufL) < 1 or len(sfL) < 1:
         print("Warning")
     fE = FeatureExtractor(ufL, sfL)

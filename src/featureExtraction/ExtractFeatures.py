@@ -59,7 +59,7 @@ def extractFeatures():
         if sf in sessionFeaturesD.keys():
             print(sf)
             sfL.append(sessionFeaturesD[sf])
-    # TODO: Fix this!!
+    # FIXME
     # ufL o sfL nunca deberian estar vacios, sin embargo lo estan
     if len(ufL) < 1 or len(sfL) < 1:
         print("Warning")

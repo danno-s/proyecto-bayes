@@ -9,8 +9,9 @@ class UserMacroStatesBelongingFeature(UserFeature):
     Esto indica los arboles de macro_ids usados por el usuario, en todas sus sesiones conocidas.
     """
     tablename = 'userfeatures'
-    sqlWrite = 'INSERT INTO ' + tablename + \
-        ' (user_id,vector,feature_name) VALUES (%s,%s,%s)'
+    sqlWrite = 'INSERT INTO ' + \
+               tablename + \
+            ' (user_id,vector,feature_name, simulated) VALUES (%s,%s,%s,%s)'
 
     def __init__(self, user_id):
         """
@@ -28,6 +29,7 @@ class UserMacroStatesBelongingFeature(UserFeature):
         self.macro_ids = DataParser().getAllMacroStateIDs()
         self.vector = [0] * len(self.macro_ids)
         self.user = int(user_id)
+        self.simulated = False
 
     def extract(self):
         """Implementacion de extraccion de feature.
@@ -38,13 +40,16 @@ class UserMacroStatesBelongingFeature(UserFeature):
         """
         # Lectura de nodos de usuario desde 'coreData'
         sqlCD = sqlWrapper(db='CD')
-        sqlRead = 'select macro_id, user_id from nodes where user_id=' + \
+        sqlRead = \
+            'select macro_id, user_id, simulated from nodes where user_id=' + \
             str(self.user)
         userMacroStates = sqlCD.read(sqlRead)
         assert len(userMacroStates) > 0
         # Calculo de vector de uso de macro_ids.
         for row in userMacroStates:
             l = row[0]
+            if row[2]:
+                self.simulated = True
             for i in range(len(self.macro_ids)):
                 if self.macro_ids[i] == l:
                     self.vector[i] = 1
@@ -53,4 +58,8 @@ class UserMacroStatesBelongingFeature(UserFeature):
         return str(self.user) + ": " + str(self.vector)
 
     def toSQLItem(self):
-        return str(self.user), ' '.join([str(x) for x in self.vector]), self.__class__.__name__[:-7]
+        return str(self.user), \
+               ' '.join([str(x) for x in self.vector]), \
+               self.__class__.__name__[:-7], \
+               self.simulated
+

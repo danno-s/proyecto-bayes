@@ -23,6 +23,7 @@ class ClusterView(object):
             self.session_clustering_dict[performed_c] = \
                     getSessionClusters(performed_c)
 
+
     def _set_errorbar(self, axis, idx, low, mid, up, var):
         axis.errorbar(
             idx,
@@ -78,19 +79,22 @@ class ClusterView(object):
 
     def view_cluster(self, cluster_dict, outliersId_fun):
         """
-        Dibuja en pyplot un diccionario de con clusters.
+        Dibuja en pyplot un diccionario de los clusters para un
+        clustering específico.
 
         Parameters
         ----------
         cluster_dict: Dictionary
-        Un diccionario con clusters.
+            Un diccionario con clusters.
+        outliersId_fun: Function
+            Una función que saca la los outliers del clustering.
         """
         plot_count = 0
         for clustering in cluster_dict.keys():
             cluster = cluster_dict[clustering]
             len_cd = len(cluster)
-            if len_cd <= 1:
-                continue
+            # if len_cd <= 1:
+            #     continue
 
             fig, axis = plt.subplots(len_cd, sharex=True, sharey=True,\
                 num=plot_count)
@@ -114,8 +118,12 @@ class ClusterView(object):
                 try:
                     self._set_errorbar(axis[k], idx, low, mid, up, var)
                     self._set_text(axis[k], k, v)
-                except IndexError as error:
-                    print(error, k)
+                except TypeError as tp:
+                    print(tp, k)
+                    self._set_errorbar(axis, idx, low, mid, up, var)
+                    self._set_text(axis, k, v)
+                except IndexError as ie:
+                    print(ie, k)
 
                 last_k = k
 
@@ -129,8 +137,16 @@ class ClusterView(object):
                 axis[0].set_title(clustering.title)
 
                 fig.suptitle(clustering.__name__)
-            except IndexError as error:
-                print(error, k)
+            except TypeError as tp:
+                print(tp, last_k)
+                outliers = outliersId_fun(clustering)
+                n_outliers = len(outliers)
+                self._set_plt(clustering, fig, axis, n_outliers, features_dim)
+                axis.set_ylabel(clustering.ylabel)
+                axis.set_title(clustering.title)
+            except IndexError as ie:
+                print(ie, last_k)
+                raise ie
         plt.show()
 
     def view(self):
@@ -146,6 +162,7 @@ class ClusterView(object):
         """
         self.view_cluster(self.user_clustering_dict, getUserOutliersIDs)
         self.view_cluster(self.session_clustering_dict, getSessionOutliersIDs)
+
 
 if __name__ == '__main__':
     cv = ClusterView()

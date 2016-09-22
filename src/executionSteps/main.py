@@ -61,7 +61,7 @@ if __name__ == '__main__':
         if b == 4: exit()
     if a <= 5 and simulate == True:
         print("Simulating new Users, Nodes and Sessions...")
-        simulation(generation=False)
+        simulation(generation=simulate)
         if b == 5: exit()
     if a <= 6:
         print("LRSs Extraction...")

@@ -33,6 +33,7 @@ class Cluster:
         self.size = len(self.vectors)
         assert self.size > 0
         self.features_dim = len(self.vectors[0])
+        #FIXME acaso vectors no era [float] ??
         self.clusteringType = clusteringType or "unnamed"
 
     def getCentroid(self):
@@ -49,7 +50,8 @@ class Cluster:
         [float] | [int]
             vector caracteristico del centroide del cluster
         """
-        return [sum([value[x] / self.size for value in self.vectors]) for x in range(self.features_dim)]
+        return [sum([value[x] / self.size \
+                for value in self.vectors]) for x in range(self.features_dim)]
 
     def getMax(self):
         """
@@ -98,10 +100,15 @@ class Cluster:
                 for x in range(self.features_dim)]
 
     def __str__(self):
-        return "Cluster " + str(self.label) + ",\t#" + str(self.size) + " inliers" \
-                                                                        "\n Members IDs:\n\t" + str(self.ids) + \
-            "\n Representative Member(s):\n\t" + \
-            str(self.getRepresentativeMember())
+        return "Cluster " + \
+                str(self.label) + \
+                ",\t#" + \
+                str(self.size) + \
+                " inliers"  \
+                "\n Members IDs:\n\t" + \
+                str(self.ids) + \
+                "\n Representative Member(s):\n\t" + \
+                str(self.getRepresentativeMember())
         #"\n Elements Features:\n\t" + str(self.elements) + \
 
     def toSQLItem(self):
@@ -112,11 +119,14 @@ class Cluster:
         Returns
         -------
         (str,str,str,str,str)
-            Tupla de str definida por (label,ids,centroide,clusteringType,vectores)
+            Tupla de str definida por (label,ids,centroide,clusteringType,
+            vectores)
         """
-        return str(self.label), ' '.join([str(x) for x in self.ids]), ' '.join([str(x) for x in self.getCentroid()]), \
-            self.clusteringType, ';'.join(
-                [' '.join(map(str, x)) for x in self.vectors])
+        return str(self.label), \
+                ' '.join([str(x) for x in self.ids]), \
+                ' '.join([str(x) for x in self.getCentroid()]), \
+                self.clusteringType, \
+                ';'.join([' '.join(map(str, x)) for x in self.vectors])
 
     def getRepresentativeMember(self):
         """
@@ -128,7 +138,8 @@ class Cluster:
         str:
             Informacion del miembro representativo del cluster.
         """
-        if 'User' in self.clusteringType and self.clusteringType != 'SessionUserClustersBelonging':
+        if 'User' in self.clusteringType and \
+                self.clusteringType != 'SessionUserClustersBelonging':
             return self.__getRepresentativeUser()
         elif 'Session' in self.clusteringType:
             return self.__getRepresentativeSession()

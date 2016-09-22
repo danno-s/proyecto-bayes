@@ -24,23 +24,28 @@ class UserLRSHistogramClustering(UserClustering):
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"
 
-    def __init__(self, confD=None):
+    def __init__(self, confD=None, onlySimulated=False):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self, confD=confD)
+        UserClustering.__init__(self, confD=confD, onlySimulated=onlySimulated)
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
+        return DBSCAN(eps=self.confD['eps'],
+                      min_samples=self.confD['min_samples'],
+                      metric=self.confD['metric'])
 
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,vector from userfeatures where feature_name = ' + \
+        sqlRead = \
+            'select user_id,vector from userfeatures where feature_name = '\
             "'UserLRSHistogram'"
+        if self.onlySimulated:
+            sqlRead += " and simulated = 1"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

@@ -20,14 +20,14 @@ class FullUserClustering(UserClustering):
     ylabel = "Valor"
     title = "Valores en cada dimension de usuario representativo de cada cluster"
 
-    def __init__(self, confD=None):
+    def __init__(self, confD=None, onlySimulated=False):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self, confD=confD)
+        UserClustering.__init__(self, confD=confD, onlySimulated=onlySimulated)
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])

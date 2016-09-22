@@ -17,11 +17,12 @@ class ClusterExtractor:
         Parameters
         ----------
         userClusteringsConfD :{class:dict}
-            Diccionario con clases UserClustering como llaves, y cuyos valores son diccionarios con valores
-            de configuracion del clustering.
+            Diccionario con clases UserClustering como llaves, y cuyos valores
+            son diccionarios con valores de configuracion del clustering.
         sessionClusteringsConfD : {class:dict}
-            Diccionario con clases SessionClustering como llaves, y cuyos valores son diccionarios con valores
-            de configuracion del clustering.
+            Diccionario con clases SessionClustering como llaves, y cuyos
+            valores son diccionarios con valores de configuracion del
+            clustering.
 
         Returns
         -------
@@ -39,7 +40,9 @@ class ClusterExtractor:
         self.sessionClusterD = dict()
 
     def extractUserClusters(self):
-        """Recorre todos los clustering de usuarios y realiza el clustering para cada uno.
+        """
+        Recorre todos los clustering de usuarios y realiza el clustering para
+        cada uno.
 
         Returns
         -------
@@ -52,7 +55,9 @@ class ClusterExtractor:
             self.printUserCluster(userClustering)
 
     def extractSessionClusters(self):
-        """Recorre todos los clustering de sesiones y realiza el clustering para cada uno.
+        """
+        Recorre todos los clustering de sesiones y realiza el clustering para
+        cada uno.
 
         Returns
         -------
@@ -65,7 +70,9 @@ class ClusterExtractor:
             self.printSessionCluster(sessionClustering)
 
     def __clusterizeUsers(self, clustering):
-        """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
+        """
+        Extrae los clusters de cada usuario y los agrega a la tabla
+        correspondiente en la DB.
 
         Parameters
         ----------
@@ -79,7 +86,8 @@ class ClusterExtractor:
         sqlCL = sqlWrapper('CL')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
-            c = clustering(confD=self.userClusteringsConfD[clustering])
+            c = clustering(confD=self.userClusteringsConfD[clustering],
+                           onlySimulated=True)
             c.clusterize()
             clusters = c.getClusters()
             print('Estimated number of User clusters: %d' % c.n_clusters, '\n')
@@ -96,7 +104,9 @@ class ClusterExtractor:
             print(e)
 
     def __clusterizeSessions(self, clustering):
-        """Extrae los clusters de cada usuario y los agrega a la tabla correspondiente en la DB.
+        """
+        Extrae los clusters de cada usuario y los agrega a la tabla
+        correspondiente en la DB.
 
         Parameters
         ----------
@@ -130,7 +140,9 @@ class ClusterExtractor:
 
 
     def printUserCluster(self, clustering):
-        """Muestra en consola los clusters encontrados para el clustering de usuarios.
+        """
+        Muestra en consola los clusters encontrados para el clustering de
+        usuarios.
 
         Parameters
         ----------
@@ -151,8 +163,14 @@ class ClusterExtractor:
                 first = False
             print(v)
 
+    def printAllUserClusters(self):
+        for clustering in self.performedClusteringsL:
+            self.printUserCluster(clustering)
+
     def printSessionCluster(self, clustering):
-        """Muestra en consola los clusters encontrados para el clustering de sesiones.
+        """
+        Muestra en consola los clusters encontrados para el clustering de
+        sesiones.
 
         Parameters
         ----------
@@ -172,3 +190,8 @@ class ClusterExtractor:
                 print(v.clusteringType + " Clusters")
                 first = False
             print(v)
+
+if __name__ == "__main__":
+    ce = ClusterExtractor()
+    ce.extractUserClusters()
+    ce.printAllUserClusters()

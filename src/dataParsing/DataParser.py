@@ -40,7 +40,9 @@ class DataParser:
             sqlPD = sqlWrapper(db='PD')
         except:
             raise
-        sqlRead = "select id,capture_userid,profile from users"
+        sqlRead = "select id,capture_userid,profile from users " \
+                  "where simulated = 1"
+        #FIXME solucion parcial
         rows = sqlPD.read(sqlRead)
         userD = dict()
         for row in rows:

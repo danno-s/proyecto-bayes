@@ -90,10 +90,11 @@ def simulusers(params, cluster, n):
         if diff > 0:
             for j in range(diff):
                 profile.append(2)
-        users.append(User(user_id[i], user[i], profile[i]))
 
         digits = math.floor(math.log10(user_id[i])) + 2
         user_id[i] += ((cluster + 1) * (10 ** digits))
+
+        users.append(User(user_id[i], user[i], profile[i]))
 
         sqlPD.write(sqlWrite, (user_id[i], user[i], profile[i], True, cluster, 'simulated'))
 
@@ -258,7 +259,7 @@ def cleanDB():
 def showSimulated():
     sqlCD = sqlWrapper(db='CD')
     sqlPD = sqlWrapper(db='PD')
-    getUsers = "SELECT * FROM users WHERE simulated = 1 AND label = %s"
+    getUsers = "SELECT count(*) FROM users WHERE simulated = 1 AND label = %s"
     getSessions = "SELECT * FROM sessions WHERE simulated = 1"
     getNodes = "SELECT * FROM nodes WHERE simulated = 1"
     getClusters = "SELECT DISTINCT label FROM users WHERE simulated = 1"
@@ -272,7 +273,7 @@ def showSimulated():
             pass
         print("Label: " + str(label))
         print("\tUsers:")
-        print([i[0] for i in sqlPD.read(getUsers % label)])
+        print("\t", sqlPD.read(getUsers % label)[0])
     print("Sessions:")
     print([i[0] for i in sqlCD.read(getSessions)])
     print("Nodes:")
@@ -347,9 +348,11 @@ def newGenerate():
 
     total = len(users) * numSessions
     count = 1
-
     print("Inicializa asignacion de sesiones")
 
+    # La simulacion es muy lenta!
+    # TODO: Ver si se puede encolar los insert en vez de hacer uno en cada
+    # loop
     for user in users:  # (id, perfil, label)
         userId = user.id
         profile = user.profile

@@ -104,7 +104,9 @@ def getPerformedUserClusterings():
     sqlCL = sqlWrapper('CL')
     performedClusteringsL = list()
 
-    sqlRead = 'SELECT DISTINCT clustering_name FROM userclusters WHERE cluster_id IS NOT NULL'
+    sqlRead = 'SELECT DISTINCT clustering_name ' \
+              'FROM userclusters ' \
+              'WHERE cluster_id IS NOT NULL'
     rows = sqlCL.read(sqlRead)
     for row in rows:
         performedClusteringsL.append(Config.userClusteringsD[row[0]])
@@ -125,7 +127,9 @@ def getPerformedSessionClusterings():
     sqlCL = sqlWrapper('CL')
     performedClusteringsL = list()
 
-    sqlRead = 'SELECT DISTINCT clustering_name FROM sessionclusters WHERE cluster_id IS NOT NULL'
+    sqlRead = 'SELECT DISTINCT clustering_name ' \
+              'FROM sessionclusters ' \
+              'WHERE cluster_id IS NOT NULL'
     rows = sqlCL.read(sqlRead)
     for row in rows:
         performedClusteringsL.append(Config.sessionClusteringsD[row[0]])
@@ -253,9 +257,13 @@ def getUserOutliersIDs(clustering):
     rows = sqlCL.read("SELECT members FROM userclusters WHERE clustering_name = '" +
                       str(clustering.__name__[:-10]) + "' AND cluster_id = -1")
     L = list()
-    for row in rows:
-        for x in row[0].split(' '):
-            L.append(int(x))
+    try:
+        for row in rows:
+            for x in row[0].split(' '):
+                L.append(int(x))
+    except ValueError as ve:
+        print('Outlier vacio, ', ve)
+        pass
     return L
 
 
@@ -281,9 +289,11 @@ def getUserClusters(clustering):
         sqlread = "SELECT members, vectors " + \
                   "FROM userclusters " + \
                   "WHERE clustering_name = '" + \
-                  str(clustering.__name__[:10]) + \
+                  str(clustering.__name__[:-10]) + \
                   "' AND cluster_id = " + str(k)
+        print(sqlread)
         rows = sqlCL.read(sqlread)
+        assert(len(rows) > 0)
         for row in rows:
             ids = [int(x) for x in row[0].split(' ')]
             vectors = [[float(y) for y in x.split(' ')]

@@ -18,7 +18,7 @@ def progress(count, total, title=''):
     percents = round(100.0 * count / float(total), 1)
     bar = '=' * filled_len + '-' * (bar_len - filled_len)
 
-    sys.stderr.write('[%s] %s%s ...%s\r' % (bar, percents, '%', title))
+    sys.stderr.write('[%s] %s%s ...%s\r\n' % (bar, percents, '%', title))
 
 if __name__ == "__main__":
     import time

@@ -9,8 +9,8 @@ from src.clusterClass.Cluster import Cluster
 
 class UserMacroStatesBelongingClustering(UserClustering):
     """
-    Clase UserMacroStatesBelongingClustering implementa un UserClustering que realiza
-    clustering utilizando el feature UserMacroStatesBelongingFeature.
+    Clase UserMacroStatesBelongingClustering implementa un UserClustering que
+    realiza clustering utilizando el feature UserMacroStatesBelongingFeature.
 
     See Also
         UserMacroStatesBelongingFeature
@@ -19,7 +19,7 @@ class UserMacroStatesBelongingClustering(UserClustering):
     ylabel = "Utilizacion de Macro Estados"
     title = "Uso de Macro Estados por usuario representativo de cada cluster"
 
-    def __init__(self, confD=None):
+    def __init__(self, confD=None, onlySimulated=False):
         """Constructor
 
         Returns
@@ -27,15 +27,21 @@ class UserMacroStatesBelongingClustering(UserClustering):
 
         """
         UserClustering.__init__(self, confD=confD)
+        self.onlySimulated = onlySimulated
 
     def initClusteringAlgorithm(self):
-        return DBSCAN(eps=self.confD['eps'], min_samples=self.confD['min_samples'], metric=self.confD['metric'])
+        return DBSCAN(
+            eps=self.confD['eps'],
+            min_samples=self.confD['min_samples'],
+            metric=self.confD['metric'])
 
     @classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
-        sqlRead = 'select user_id,vector from userfeatures where feature_name = ' + \
+        sqlRead = \
+            'select user_id,vector from userfeatures where feature_name = '\
             "'UserMacroStatesBelonging'"
+        sqlRead += " and simulated = 1"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

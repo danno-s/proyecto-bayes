@@ -24,7 +24,6 @@ class UserClassifier(object):
         print(type(self.user_clusters))
         print(type(self.user_features))
 
-
     def predict(self, features):
         """
 
@@ -37,11 +36,14 @@ class UserClassifier(object):
             clasificador.
 
         """
-        return 0
+        cluster = self.algorithm.predict(features)
+        return cluster
 
 if __name__ == "__main__":
     # Macrostate belonging cluster
     cl = getPerformedUserClusterings()[0]
     uc = UserClassifier(cl)
+
+    print(cl, uc)
 
 

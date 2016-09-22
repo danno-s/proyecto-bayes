@@ -156,11 +156,13 @@ class UserClustering(Clustering):
     """
     Clase abstracta Clustering, representa una forma de realizar clustering de usuarios.
     """
+    onlySimulated = False
     __metaclass__ = ABCMeta
     tablename = 'userclusters'
 
-    def __init__(self, confD=None):
+    def __init__(self, confD=None, onlySimulated=False):
         Clustering.__init__(self, confD)
+        self.onlySimulated = onlySimulated
 
     @abstractmethod
     def initClusteringAlgorithm(self): pass

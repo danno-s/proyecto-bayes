@@ -24,14 +24,15 @@ class UserLRSHistogramClustering(UserClustering):
     ylabel = "Frecuencia relativa del LRS"
     title = "Histograma de LRSs de usuario representativo de cada cluster"
 
-    def __init__(self, confD=None, onlySimulated=False):
+    def __init__(self, confD=None):
         """Constructor
 
         Returns
         -------
 
         """
-        UserClustering.__init__(self, confD=confD, onlySimulated=onlySimulated)
+        UserClustering.__init__(self, confD=confD)
+        self.onlySimulated = confD['only_simulated']
 
     def initClusteringAlgorithm(self):
         return DBSCAN(eps=self.confD['eps'],

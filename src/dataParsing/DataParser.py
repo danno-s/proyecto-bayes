@@ -5,31 +5,38 @@ from src.nodeClass.MicroNode import MicroNode
 
 from src.utils.sqlUtils import sqlWrapper
 
+
 import json
 
 
 class DataParser:
     """
-    Clase encargada de extraer los datos necesarios para definir nodos, almacenarlos en diccionarios y posteriormente
-    generar nodos a partir de cada captura.
+    Clase encargada de extraer los datos necesarios para definir nodos,
+    almacenarlos en diccionarios y posteriormente generar nodos a partir de
+    cada captura.
     """
     __instance = None
 
     def __new__(cls):
         """
-        Constructor segun patron Singleton para que se carguen los datos una sola vez sobre una unica instancia.
+        Constructor segun patron Singleton para que se carguen los datos una
+        sola vez sobre una unica instancia.
         Returns
         -------
 
         """
         if DataParser.__instance is None:
             DataParser.__instance = object.__new__(cls)
-            DataParser.__instance.userD = DataParser.__instance.__loadUsers()
-            DataParser.__instance.macroStatesD = DataParser.__instance.__loadMacroStates()
-            DataParser.__instance.macroStateMapper = DataParser.__instance.getMacroMapper()
+            DataParser.__instance.userD = DataParser.__instance\
+                .__loadUsers(onlySimulated=True)
+            #FIXME solucion temporal
+            DataParser.__instance.macroStatesD = \
+                DataParser.__instance.__loadMacroStates()
+            DataParser.__instance.macroStateMapper = \
+                DataParser.__instance.getMacroMapper()
         return DataParser.__instance
 
-    def __loadUsers(self):
+    def __loadUsers(self, onlySimulated=False):
         """
         Carga usuarios de base de datos "parseddata"
         Returns
@@ -40,9 +47,9 @@ class DataParser:
             sqlPD = sqlWrapper(db='PD')
         except:
             raise
-        sqlRead = "select id,capture_userid,profile from users " \
-                  "where simulated = 1"
-        #FIXME solucion parcial
+        sqlRead = "select id,capture_userid,profile from users"
+        if onlySimulated:
+            sqlRead += " where simulated = 1"
         rows = sqlPD.read(sqlRead)
         userD = dict()
         for row in rows:
@@ -75,7 +82,8 @@ class DataParser:
         Returns
         -------
         {microid: MicroNode}, {jsonContentElements : microid}
-            Diccionarios con microestados y representacion en json del microestado
+            Diccionarios con microestados y representacion en json del
+            microestado
         """
 
         try:
@@ -83,7 +91,8 @@ class DataParser:
             sqlPD = sqlWrapper(db='PD')
         except:
             raise
-        sqlRead = "SELECT id,macro_id,TextAreas,InputText,RadioButton,Selects,Checkbox,raw FROM contentElements"
+        sqlRead = \
+            "SELECT id,macro_id,TextAreas,InputText,RadioButton,Selects,Checkbox,raw FROM contentElements"
         rows = sqlPD.read(sqlRead)
         microStatesD = dict()
         rawD = dict()
@@ -305,7 +314,9 @@ class DataParser:
             n) + ", "+ str(bufferSize)
 
     def parseData(self):
-        """Extrae datos desde capture_table y los guarda en nodes en un formato adecuado
+        """
+        Extrae datos desde capture_table y los guarda en nodes en un formato
+        adecuado.
         Returns
         -------
 

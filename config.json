@@ -154,20 +154,24 @@
     {
       "eps": 0.8,
       "min_samples": 1,
-      "metric":"euclidean"
+      "metric":"euclidean",
+      "only_simulated": true
     },
     "UserLRSHistogram":
     {
       "eps": 0.8,
       "min_samples": 1,
-      "metric":"euclidean"
+      "metric":"euclidean",
+      "only_simulated": true
     },
     "FullUser":
     {
       "eps": 0.7,
       "min_samples": 1,
-      "metric":"euclidean"
-    }
+      "metric":"euclidean",
+      "only_simulated": true
+    },
+    "only_simulated": true
   },
   "session_clustering_config":{
       "SessionLRSBelonging":

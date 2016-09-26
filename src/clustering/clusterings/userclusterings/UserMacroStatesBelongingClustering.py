@@ -19,7 +19,7 @@ class UserMacroStatesBelongingClustering(UserClustering):
     ylabel = "Utilizacion de Macro Estados"
     title = "Uso de Macro Estados por usuario representativo de cada cluster"
 
-    def __init__(self, confD=None, onlySimulated=False):
+    def __init__(self, confD=None):
         """Constructor
 
         Returns
@@ -27,7 +27,7 @@ class UserMacroStatesBelongingClustering(UserClustering):
 
         """
         UserClustering.__init__(self, confD=confD)
-        self.onlySimulated = onlySimulated
+        self.onlySimulated = confD['only_simulated']
 
     def initClusteringAlgorithm(self):
         return DBSCAN(

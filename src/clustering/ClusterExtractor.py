@@ -86,8 +86,7 @@ class ClusterExtractor:
         sqlCL = sqlWrapper('CL')
         print("\n" + str(clustering.__name__) + ":\n")
         try:
-            c = clustering(confD=self.userClusteringsConfD[clustering],
-                           onlySimulated=True)
+            c = clustering(confD=self.userClusteringsConfD[clustering])
             c.clusterize()
             clusters = c.getClusters()
             print('Estimated number of User clusters: %d' % c.n_clusters, '\n')

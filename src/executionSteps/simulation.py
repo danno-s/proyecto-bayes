@@ -2,8 +2,7 @@
 Paso 6 (OPCIONAL)
 Script para ejecucion del proceso de simulacion de usuarios y nodos.
 """
-from src.simulatedData.simulusers import newGenerate
-from src.dataParsing.parseSessions import parseSessions
+from src.simulatedData.simulusers import newGenerate, cleanDB
 
 
 def simulation(generation=False):
@@ -11,6 +10,7 @@ def simulation(generation=False):
     start()
     if generation is True:
         print("\n\n...Generating data...\n\n")
+        cleanDB()
         newGenerate()
     #parseSessions(simulation=True)
     finish()

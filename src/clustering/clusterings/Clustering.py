@@ -131,6 +131,12 @@ class Clustering:
     def getSQLWrite(self):
         return 'INSERT INTO ' + self.tablename + ' (cluster_id,members,centroid,clustering_name,vectors) VALUES (%s,%s,%s,%s,%s)'
 
+    def __str__(self):
+        clusters = ""
+        for k, d in self.clustersD.items():
+            clusters += str(d) + "\n"
+        return clusters
+
 
 class SessionClustering(Clustering):
     """

@@ -35,13 +35,14 @@ class UserMacroStatesBelongingClustering(UserClustering):
             min_samples=self.confD['min_samples'],
             metric=self.confD['metric'])
 
-    @classmethod
+    #@classmethod
     def getData(self):
         sqlFT = sqlWrapper(db='FT')
         sqlRead = \
             'select user_id,vector from userfeatures where feature_name = '\
             "'UserMacroStatesBelonging'"
-        sqlRead += " and simulated = 1"
+        if (self.confD['only_simulated']):
+            sqlRead += " and simulated = 1"
         rows = sqlFT.read(sqlRead)
         assert len(rows) > 0
         X = list()

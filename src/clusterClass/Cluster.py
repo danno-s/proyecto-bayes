@@ -8,7 +8,7 @@ class Cluster:
     respectiva.
     """
 
-    def __init__(self, vectors, ids, label, clusteringType=None):
+    def __init__(self, vectors, ids, label, clusteringType=None, center=None):
         """
         Constructor
 
@@ -35,6 +35,7 @@ class Cluster:
         self.features_dim = len(self.vectors[0])
         #FIXME acaso vectors no era [float] ??
         self.clusteringType = clusteringType or "unnamed"
+        self.center = center
 
     def getCentroid(self):
         """
@@ -100,7 +101,8 @@ class Cluster:
                 for x in range(self.features_dim)]
 
     def __str__(self):
-        return "Cluster " + \
+        return self.clusteringType + ":\n" +\
+                "Cluster " + \
                 str(self.label) + \
                 ",\t#" + \
                 str(self.size) + \
@@ -138,7 +140,9 @@ class Cluster:
         str:
             Informacion del miembro representativo del cluster.
         """
-        if 'User' in self.clusteringType and \
+        if self.clusteringType == 'UMSBCKMeans' and self.center is not None:
+            return self.center
+        elif 'User' in self.clusteringType and \
                 self.clusteringType != 'SessionUserClustersBelonging':
             return self.__getRepresentativeUser()
         elif 'Session' in self.clusteringType:

@@ -1,6 +1,5 @@
 from src.utils.clusteringUtils import getUserClusters, \
     getPerformedUserClusterings
-from src.featureExtraction.ExtractFeatures import extractPostClusteringFeatures
 from sklearn.linear_model import LogisticRegression
 
 
@@ -19,10 +18,15 @@ class UserClassifier(object):
         self.algorithm = LogisticRegression()
 
         self.user_clusters = getUserClusters(clustering)
-        self.user_features = extractPostClusteringFeatures()
 
-        print(type(self.user_clusters))
-        print(type(self.user_features))
+        X = []
+        Y = []
+        for label, cluster in self.user_clusters.items():
+            for vector in cluster.vectors:
+                X.append(vector)
+                Y.append(label)
+                print(vector)
+        self.algorithm.fit(X, Y)
 
     def predict(self, features):
         """
@@ -38,12 +42,5 @@ class UserClassifier(object):
         """
         cluster = self.algorithm.predict(features)
         return cluster
-
-if __name__ == "__main__":
-    # Macrostate belonging cluster
-    cl = getPerformedUserClusterings()[0]
-    uc = UserClassifier(cl)
-
-    print(cl, uc)
 
 

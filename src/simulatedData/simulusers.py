@@ -360,10 +360,16 @@ def newGenerate():
         userIdx = users.index(user) % n_usuarios[label]
 
         multi = multis[label][userIdx]
-        idx = np.nonzero(multi == 1)[0][0] #idx = multi.index(1)
+        idx = np.nonzero(multi == 1)[0][0] #hack para idx = multi.index(1)
+        #FIXME: la sesion asignada es el primer 1 en multi. Esto está mal y causa
+        # que las sesiones simuladas sean muy irreales
         session = sessions[idx]
 
         for i in range(numSessions):
+            # Por cada sesion existente, por cada subsesion de la sesion,
+            # se crea un nodo con las urls de la subsesion. Esto crea una
+            # secuencia de nodos en un periodo de tiempo aleatorio pero acotado,
+            # creando así, una sesión.
             progress(count, total, "Simulacion")
             # Timestamp de inicio
             date = random.randint(1450000000, 1462534931)

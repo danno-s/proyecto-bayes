@@ -291,7 +291,6 @@ def getUserClusters(clustering):
                   "WHERE clustering_name = '" + \
                   str(clustering.__name__[:-10]) + \
                   "' AND cluster_id = " + str(k)
-        print(sqlread)
         rows = sqlCL.read(sqlread)
         assert(len(rows) > 0)
         for row in rows:

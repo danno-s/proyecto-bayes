@@ -5,6 +5,8 @@ from src.utils.clusteringUtils import getPerformedUserClusterings
 import unittest
 
 class TestUserClassifier(unittest.TestCase):
+    #TODO: Usar mocks para generar datos en vez de usar los de sql
+    #TODO: Crear un test con cross validation
     cl = getPerformedUserClusterings()[0]
     uc = UserClassifier(cl)
     def test_predict(self):

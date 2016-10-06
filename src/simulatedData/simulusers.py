@@ -12,6 +12,7 @@ import os
 from collections import namedtuple
 import pprint
 import math
+import sys
 
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
@@ -80,16 +81,25 @@ def simulusers(params, cluster, n):
                "VALUES (%s, %s, %s, %s,%s, %s)"
     # TODO: usar captureuserid
     for i in range(n):
-        n1 = params[i][0]
-        n2 = params[i][1]
-        n3 = params[i][2]
+        # TODO: revisar que hacia esto, y si el fix de abajo (for)
+        # resuelve el problema
 
-        profile = [0] * int(n1 * n) + [1] * int(n2 * n) + \
-            [2] * int(n3 * n)
-        diff = n - len(profile)
-        if diff > 0:
-            for j in range(diff):
-                profile.append(2)
+        # n1 = params[i][0]
+        # n2 = params[i][1]
+        # n3 = params[i][2]
+        #
+        # profile = [0] * int(n1 * n) + [1] * int(n2 * n) + \
+        #     [2] * int(n3 * n)
+        # diff = n - len(profile)
+        # if diff > 0:
+        #     for j in range(diff):
+        #         profile.append(2)
+
+        for j in range(len(params[i])):
+            if params[i][j]!=0:
+                profile=[j]
+                break
+
 
         digits = math.floor(math.log10(user_id[i])) + 2
         user_id[i] += ((cluster + 1) * (10 ** digits))
@@ -341,6 +351,7 @@ def newGenerate():
                 micro_id, simulated, label, pageview_id) VALUES " \
                "(%s,%s,%s,%s,%s,%s,%s,%s)"
 
+
     # Se asignan las sesiones
     sessions = getsession()
     numSessions = len(sessions)
@@ -348,6 +359,7 @@ def newGenerate():
 
     total = len(users) * numSessions
     count = 1
+
     print("Inicializa asignacion de sesiones")
 
     # La simulacion es muy lenta!
@@ -408,7 +420,7 @@ def generate():
         list({len(x) for y in session for x in y if len(x) >= 3}))
 
     if _DEBUG:
-        pprint.pprint("dirich: " + str(dirich))
+        #pprint.pprint("dirich: " + str(dirich))
         pprint.pprint("session: " + str(session))
         pprint.pprint("sprob: " + str(sprob))
         pprint.pprint("prob: " + str(prob))

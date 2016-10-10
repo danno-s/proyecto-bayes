@@ -81,11 +81,17 @@ class Sessionizer:
         profile = prevStep[2]
         micro_id = prevStep[3]
 
+        simulated = False
+        label = None
+
         sb = SessionBuffer()  # Buffer de sesion.
         sb.append(self.toIDPair(macro_id, micro_id))
         for step in stepsGen:
             macro_id = step[1]
             micro_id = step[3]
+            if len(step) > 4:
+                simulated = step[4]
+                label = step[5]
             # condicion para mantenerse en sesion actual
             if step[0] - prevStep[0] <= self.tlimit:
                 if self.bufferAccepts(sb, prevStep, step):
@@ -97,7 +103,7 @@ class Sessionizer:
                 if sb.first() == sb.at(1):
                     sb.remove(0)
                 sessions.append(
-                    self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar sesion actual del usuario
+                    self.toSession(sb.dump(), profile, initTime, endTime, user_id, simulated=simulated, label=label))  # guardar sesion actual del usuario
 
                 # inicializar nueva sesion
                 sb.append(self.toIDPair(step[1], step[3]))
@@ -110,11 +116,11 @@ class Sessionizer:
             if sb.first() == sb.at(1):
                 sb.remove(0)
             sessions.append(
-                self.toSession(sb.dump(), profile, initTime, endTime, user_id))  # guardar ultima sesion del usuario.
+                self.toSession(sb.dump(), profile, initTime, endTime, user_id, simulated=simulated, label=label))  # guardar ultima sesion del usuario.
 
         return sessions
 
-    def toSession(self, sessionData, profile, initTime, endTime, user_id):
+    def toSession(self, sessionData, profile, initTime, endTime, user_id, simulated=False, label=None):
         """ Retorna un objeto Session con los datos ingresados.
 
         Parameters
@@ -136,7 +142,8 @@ class Sessionizer:
             una Sesion con los datos cargados.
         """
         return Session(sessionData, profile=profile, initTime=datetime.fromtimestamp(initTime).isoformat(' '),
-                       endTime=datetime.fromtimestamp(endTime).isoformat(' '), user_id=user_id)
+                       endTime=datetime.fromtimestamp(endTime).isoformat(' '), user_id=user_id,
+                       simulated=simulated, label=label)
 
     @abstractmethod
     def bufferAccepts(self, sb, prevStep, step):

@@ -28,7 +28,7 @@ class DataParser:
         if DataParser.__instance is None:
             DataParser.__instance = object.__new__(cls)
             DataParser.__instance.userD = DataParser.__instance\
-                .__loadUsers(onlySimulated=True)
+                .__loadUsers(onlySimulated=False)
             #FIXME solucion temporal
             DataParser.__instance.macroStatesD = \
                 DataParser.__instance.__loadMacroStates()

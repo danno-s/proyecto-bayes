@@ -13,6 +13,8 @@ from collections import namedtuple
 import pprint
 import math
 import sys
+from functools import reduce
+from operator import add
 
 from src.utils.loadConfig import Config
 from src.utils.sqlUtils import sqlWrapper
@@ -97,7 +99,7 @@ def simulusers(params, cluster, n):
 
         for j in range(len(params[i])):
             if params[i][j]!=0:
-                profile=[j]
+                profile=[j]*n
                 break
 
 
@@ -316,7 +318,7 @@ def dirichlet(alpha, size=200):
         # print(multi)
         multis.append(multi)
     assert(len(multis) == size)
-    return multis
+    return dirich
 
 
 def newGenerate():
@@ -354,7 +356,7 @@ def newGenerate():
 
     # Se asignan las sesiones
     sessions = getsession()
-    numSessions = len(sessions)
+    numSessions = reduce(add, conf["N_sesiones"])
     print("numsessions: ", numSessions)
 
     total = len(users) * numSessions
@@ -372,17 +374,17 @@ def newGenerate():
         userIdx = users.index(user) % n_usuarios[label]
 
         multi = multis[label][userIdx]
-        idx = np.nonzero(multi == 1)[0][0] #hack para idx = multi.index(1)
-        #FIXME: la sesion asignada es el primer 1 en multi. Esto está mal y causa
-        # que las sesiones simuladas sean muy irreales
-        session = sessions[idx]
 
-        for i in range(numSessions):
+        for i in range(conf["N_sesiones"][label]):
             # Por cada sesion existente, por cada subsesion de la sesion,
             # se crea un nodo con las urls de la subsesion. Esto crea una
             # secuencia de nodos en un periodo de tiempo aleatorio pero acotado,
             # creando así, una sesión.
             progress(count, total, "Simulacion")
+            #muestreo
+            idx = np.random.multinomial(n=1, pvals=multi, size=1)[0].tolist().\
+                    index(1)
+            session = sessions[idx]
             # Timestamp de inicio
             date = random.randint(1450000000, 1462534931)
             for subSession in session:

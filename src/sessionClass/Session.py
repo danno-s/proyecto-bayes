@@ -12,7 +12,8 @@ class Session:
     Clase Session, representa una sesion en el sistema
     """
 
-    def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None):
+    def __init__(self, sequence, profile="", initTime="", endTime="", user_id="", session_id=None,
+                 simulated=False, label=None):
         """ Constructor de una Session.
 
         Parameters
@@ -39,6 +40,8 @@ class Session:
         self.user_id = user_id
         self.profile = profile
         self.sequence = sequence
+        self.simulated = simulated
+        self.label = label
         if session_id:
             self.session_id = session_id
 
@@ -155,4 +158,6 @@ class Session:
             else:
                 step = str(x[0])
             steps.append(step)
+        if self.simulated and self.label:
+            return (self.profile, ' '.join(steps), self.user_id, self.initTime, self.endTime, self.simulated, self.label)
         return (self.profile, ' '.join(steps), self.user_id, self.initTime, self.endTime)

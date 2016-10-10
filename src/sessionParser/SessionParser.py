@@ -48,21 +48,32 @@ class SessionParser:
 
         """
         self.sessions = self.sessionizer.sessionize(self)
+
+        def isSimulated(ses):
+            return (ses.simulated == True)
+
+        self.sessions = list(filter(isSimulated, self.sessions))
         sqlCD = sqlWrapper('CD')
         if self.simulation:  # Borrar solo los datos simulados anteriores.
             readParams = "profile, sequence, user_id, inittime, endtime"
-            sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
-                "(%s,%s,%s,%s,%s)"
+            sqlWrite = 'INSERT INTO sessions ' \
+                       '(profile, sequence, user_id, inittime, endtime) VALUES ' \
+                       '(%s,%s,%s,%s,%s)'
             sqlCD.truncateSimulated('sessions', readParams, sqlWrite)
 
-            sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
-                "(%s,%s,%s,%s,%s,%s,%s)"
-            sqlCD.write(sqlWrite, [session.toSQLItem() + (True, None) for session in self.sessions])
-        else:               # Borrar toda la tabla.
+            sqlWrite = "INSERT INTO sessions " \
+                       "(profile, sequence, user_id, inittime, endtime, simulated, label) VALUES " \
+                       "(%s,%s,%s,%s,%s,%s,%s)"
+            values = [session.toSQLItem() for session in self.sessions]
+            assert (len(session == 7) for session in self.sessions)
+            for val in values:
+                sqlCD.write(sqlWrite, val)
+        else:  # Borrar toda la tabla.
             sqlCD.truncateRestricted('sessions')
             sqlWrite = "INSERT INTO sessions (profile, sequence, user_id, inittime, endtime) VALUES " \
-                "(%s,%s,%s,%s,%s)"
-            sqlCD.writeMany(sqlWrite, [session.toSQLItem() for session in self.sessions])
+                       "(%s,%s,%s,%s,%s)"
+            sqlCD.writeMany(sqlWrite,
+                            [session.toSQLItem() for session in self.sessions])
 
     def printSessions(self):
         """Imprime en consola las sesiones contenidas en el SessionParser.

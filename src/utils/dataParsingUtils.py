@@ -134,12 +134,12 @@ def userStepsGen(user_id):
         """
     sqlCD = sqlWrapper('CD')
     rows = sqlCD.read(
-        'SELECT clickDate,user_id,macro_id,profile,micro_id '
+        'SELECT clickDate,macro_id,profile,micro_id '
         'FROM nodes WHERE user_id={0} AND simulated = 0'.format(
             str(user_id)))
     for row in rows:
-        # (clickDate, macro_id, profile, micro_id, simulated)
-        yield (row[0], row[2], row[3], row[4], row[5])
+        # (clickDate, macro_id, profile, micro_id)
+        yield (row[0], row[1], row[2], row[3])
 
 
 def simulUserStepsGen(user_id):

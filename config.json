@@ -124,7 +124,7 @@
 
 */
 {
-  "capture_table": "pageview2",
+  "capture_table": "pageview",
   "macrostate_extractor": "Custom",
   "session_tlimit": "100",
   "LRS_threshold": "500",

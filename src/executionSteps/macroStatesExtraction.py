@@ -13,4 +13,4 @@ def macroStatesExtraction():
     finish()
 
 if __name__ == '__main__':
-    macroStateExtraction()
+    macroStatesExtraction()

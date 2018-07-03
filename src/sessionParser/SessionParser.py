@@ -52,9 +52,9 @@ class SessionParser:
         def isSimulated(ses):
             return (ses.simulated == True)
 
-        self.sessions = list(filter(isSimulated, self.sessions))
         sqlCD = sqlWrapper('CD')
         if self.simulation:  # Borrar solo los datos simulados anteriores.
+            self.sessions = list(filter(isSimulated, self.sessions))
             readParams = "profile, sequence, user_id, inittime, endtime"
             sqlWrite = 'INSERT INTO sessions ' \
                        '(profile, sequence, user_id, inittime, endtime) VALUES ' \

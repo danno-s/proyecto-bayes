@@ -1,7 +1,0 @@
-jsmin==2.2.1
-PyMySQL==0.7.6
-matplotlib==2.0.0b3
-numpy==1.11.1
-scipy==0.18.0
-scikit_learn==0.17.1
-PyYAML==3.11

@@ -1,0 +1,5 @@
+mysqlclient
+pandas
+numpy
+matplotlib
+seaborn

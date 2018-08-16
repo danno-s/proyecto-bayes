@@ -1,0 +1,125 @@
+% Template:     Informe/Reporte LaTeX
+% Documento:    Archivo principal
+% Versión:      4.7.4 (04/04/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Manual template: [http://latex.ppizarror.com/Template-Informe/]
+% Licencia MIT:    [https://opensource.org/licenses/MIT/]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[letterpaper,11pt]{article} % Articulo tamaño carta, 11pt
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\titulodelinforme {Entrega 1}
+\def\temaatratar {Clusterización de Sesiones de Usuarios Web}
+
+\def\autordeldocumento {Daniel Soto}
+\def\nombredelcurso {Aprendizaje Automático Bayesiano}
+\def\codigodelcurso {CC5113-1}
+
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de Ciencias de la Computación}
+\def\imagendepartamento {departamentos/dcc}
+\def\imagendepartamentoescala {0.2}
+\def\localizacionuniversidad {Santiago, Chile}
+
+% INTEGRANTES, PROFESORES Y FECHAS
+\def\tablaintegrantes {
+\begin{tabular}{ll}
+	Alumno:
+		& \begin{tabular}[t]{@{}l@{}}
+			Daniel Soto
+		\end{tabular} \\
+	Profesor:
+		& \begin{tabular}[t]{@{}l@{}}
+			Pablo Guerrero
+		\end{tabular} \\
+
+	\multicolumn{2}{l}{Fecha de entrega: \today} \\
+	\multicolumn{2}{l}{\localizacionuniversidad}
+\end{tabular}
+}
+
+% CONFIGURACIONES
+\input{lib/config}
+
+% IMPORTACIÓN DE LIBRERÍAS
+\input{lib/imports}
+
+% IMPORTACIÓN DE FUNCIONES
+\input{lib/function/core}
+\input{lib/function/elements}
+\input{lib/function/equation}
+\input{lib/function/image}
+\input{lib/function/title}
+
+% IMPORTACIÓN DE ENTORNOS
+\input{lib/environments}
+
+% IMPORTACIÓN DE ESTILOS
+\input{lib/styles}
+
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+\input{lib/initconf}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+
+% PORTADA
+\input{lib/portrait}
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\input{lib/pageconf}
+
+% CONFIGURACIONES FINALES
+\input{lib/finalconf}
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\section{Introducción}
+	El objetivo de este proyecto es encontrar clusterizaciones para las sesiones de usuarios de una página web en específico. Estas sesiones fueron obtenidas desde una base de datos de un repositorio que también busca hacer esto, y están basadas en la página nosfuimos.cl. Cada dato contiene los índices de las páginas visitadas en cada sesión, en el orden en el que fueron visitadas, junto al usuario que realizó la sesión y tiempos de inicio y fin de la sesión. En la base de datos existen alrededor de 12000 sesiones totales, las cuales componen 2100 sesiones únicas (sin repetición de sesiones).
+
+\section{Metodología}
+	El proyecto se está llevando a cabo en un computador personal, debido a que no es necesario demasiado poder computacional para calcular las distancias entre 2000 sesiones. El análisis se lleva a cabo en notebook de jupyter.
+
+\section{Repositorio}
+	El repositorio de github donde se lleva a cabo el proyecto es \href{https://github.com/danno-s/proyecto-bayes}{el siguiente}.
+
+\section{Avances}
+	Hasta ahora se ha realizado una exploración de datos sobre el dataset, la cual reveló que las métricas más obvias del dataset, como tiempos de inicio, fin y longitud de sesiones, no revelan ningún patrón particularmente interesante sobre las sesiones. Se crearon por lo tanto medidas como la originalidad de una sesión, la cual logra segmentar los datos un poco mejor, por lo que se podría usar en alguna medida de distancia más adelante.
+
+	\begin{figure}[H]
+		\centering
+		\begin{equation*}
+			\theta = \Sigma c_{p_i}^{-1}
+		\end{equation*}
+		\caption{Originalidad: medida propuesta para describir una sesión compuesta por las páginas $p_i$, donde $c_{p_i}$ es el número de veces que la página $p_i$ fue visitada en una sesión.}
+	\end{figure}
+
+	Debido a que los datos son sesiones discretas de largo arbitrario, se tuvo que implementar una versión de K-Means que utiliza una función de distancia entregada por el usuario para el paso de asignación de clusters y cálculo de centroides.
+
+	Para definir un número de clusters apropiado para generar, se decidió hacer un gráfico de las distancias entre puntos de cada cluster, con la intención de encontrar el \textit{codo} donde se encontraría un buen número de clusters. Los resultados fueron bastante inesperados, pues en las clusterizaciones generadas esta medida era estrictamente creciente.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{images/WCSS}
+		\caption{Gráfico de la WCSS generada, desde 1 hasta 10 clusters.}
+	\end{figure}
+	
+\section{Tareas faltantes}
+	Aún resta optimizar el algoritmo para realizar cálculos de centroides y generar el modelo y métricas sobre él más rápido. Luego de esto restaría evaluar la calidad de las clusterizaciones generadas y generar otras con distintas medidas de distancia entre las sesiones.
+
+	También podría ser un buen objetivo el analizar el porqué de los resultados inesperados obtenidos al aumentar el número de clusters a generar.
+
+\section{Instrucciones de uso}
+	Para probar el avance actual, se debe generar una instancia del modelo DiscreteKMeans incluído en la entrega del notebook de jupyter, junto a una función de distancia, y luego se llama al método \texttt{fit} con un vector que contenga a los datos deseados. Este modelo luego tendrá un campo \texttt{clusters}, que contendrá un diccionario con los centroides como llaves, y una lista de sesiones asociadas a cada centroide como valor. El código del modelo se encuentra bien comentado para resolver dudas sobre su uso y/o funcionamiento.
+
+% FIN DEL DOCUMENTO
+\end{document}
